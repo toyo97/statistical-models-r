@@ -1,13 +1,9 @@
-Welcome! 
+# Statistical Models in R 
+> _An R tutorial for the course in Statistical Models at Politecnico di Torino_
 
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
+## How do I read the book?
 
-This template provides a skeleton file structure that you can edit to create your book. 
+Simple! Just look over the right panel of this GitHub page
+and look for the link below the *About* paragraph.
 
-The contents inside the .Rmd files provide some pointers to help you get started, but feel free to also delete the content in each file and start fresh.
-
-Additional resources:
-
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
-
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
+Even simpler: click [here](toyo97.github.io/statistical-models-r).
