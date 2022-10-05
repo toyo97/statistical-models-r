@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Some elementary statistics problems | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Some elementary statistics problems | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Some elementary statistics problems | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+
+
+<meta name="date" content="2022-10-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="some-elementary-statistics-problems" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Some elementary statistics problems<a href="some-elementary-statistics-problems.html#some-elementary-statistics-problems" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In the following paragraphs, we will see some applications of the R
+software to solve elementary statistics problems.</p>
+<div id="hypothesis-testing" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Hypothesis testing<a href="some-elementary-statistics-problems.html#hypothesis-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="example" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Example<a href="some-elementary-statistics-problems.html#example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The rector of Politecnico di Torino wants to monitor the spread of Covid-19
+virus inside the university, to check whether it is in line with the overall
+diffusion on the Italian territory, or whether it is higher,
+and therefore requires extra safety measures.</p>
+<p>Tests are made on a sample of <span class="math inline">\(n = 250\)</span> students out of the total <span class="math inline">\(N = 5000\)</span>
+students (because of whatever reasons, such as economic or sustainability
+concerns). We assume that the tests are <em>perfect</em>, meaning that they have
+<span class="math inline">\(100\%\)</span> sensitivity (true positive rate) and specificity (true negative rate).</p>
+<p>We know that <span class="math inline">\(p_0 = 0.015\)</span> is the prevalence of the virus in the Italian
+population at the end of 2021, and we are given a <em>warning</em> threshold for the
+prevalence of <span class="math inline">\(p_1 = 0.04\)</span>, above which the rector will have reasons to adopt
+more restrictive measures.</p>
+</div>
+<div id="false-alarm" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> False alarm<a href="some-elementary-statistics-problems.html#false-alarm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<blockquote>
+<p><strong>Question</strong>: given a threshold <span class="math inline">\(x_0\)</span> of positive tests, what are the false
+alarm and the false non-alarm probabilities?</p>
+</blockquote>
+<p>Formally, a false alarm (type I error) probability is defined as
+the probability of the r.v. counting the positive tests <span class="math inline">\(X\)</span> being greater than
+or equal to the threshold <span class="math inline">\(x_0\)</span>, conditioned on the fact that the prevalence
+is not different than the Italian reference value <span class="math inline">\(p_0\)</span>. I.e.</p>
+<p><span class="math display">\[
+P(X \geq x_0 | p = p_0)
+\]</span>
+Recall that <span class="math inline">\(X \sim \text{Hypergeometric}(N, K, n)\)</span> where <span class="math inline">\(p = K/N\)</span>.</p>
+<p>The pmf is the following</p>
+<p><span class="math display">\[
+P(X = x) = \frac{\binom{K}{x}\binom{N - K}{n - x}}{\binom{N}{n}}\,,
+\]</span>
+which leads to the false alarm probability computation</p>
+<p><span class="math display">\[
+P(X \geq x_0 | p = p_0) = \sum_{k = x_0}^{n}P(X = k) = \sum_{k = x_0}^{n}\frac{\binom{K}{k}
+\binom{N - K}{n - k}}{\binom{N}{n}}\,.
+\]</span></p>
+<p>When <span class="math inline">\(N\)</span> is large enough and <span class="math inline">\(p\)</span> small enough, we can use the Binomial
+approximation. To be clear, with such approximation,
+we assume that while sampling from the population, the proportion of positives
+stays the same (which in our case it is safe to assume).</p>
+<p>Therefore we approximate the false alarm probability with</p>
+<p><span class="math display">\[
+P(X \geq x_0 | p = p_0) = \alpha \approx \sum_{k = x_0}^{n}{\binom{n}{k}}p^{k}(1-p)^{n-k}\,.
+\]</span></p>
+<p>Similarly, we compute the false non-alarm probability (type II error), defined
+as the probability of the r.v. counting the positive tests <span class="math inline">\(X\)</span> being lower than
+the threshold <span class="math inline">\(x_0\)</span>, conditioned on the fact that the prevalence is the one we
+identified as worrying, i.e. <span class="math inline">\(p = p_1\)</span>.</p>
+<p><span class="math display">\[
+P(X &lt; x_0 | p = p_1) = \beta \approx \sum_{k = 0}^{x_0 - 1}{\binom{n}{k}}p^{k}(1-p)^{n-k}\,.
+\]</span>
+Let’s now compute these quantities using R, for several values of <span class="math inline">\(x_0\)</span>.</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="some-elementary-statistics-problems.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import the main libraries</span></span>
+<span id="cb165-2"><a href="some-elementary-statistics-problems.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="some-elementary-statistics-problems.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set random seed for reproducibility</span></span>
+<span id="cb166-2"><a href="some-elementary-statistics-problems.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb166-3"><a href="some-elementary-statistics-problems.html#cb166-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-4"><a href="some-elementary-statistics-problems.html#cb166-4" aria-hidden="true" tabindex="-1"></a><span class="co"># define the parameters of the test</span></span>
+<span id="cb166-5"><a href="some-elementary-statistics-problems.html#cb166-5" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb166-6"><a href="some-elementary-statistics-problems.html#cb166-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb166-7"><a href="some-elementary-statistics-problems.html#cb166-7" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> .<span class="dv">015</span> </span>
+<span id="cb166-8"><a href="some-elementary-statistics-problems.html#cb166-8" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> .<span class="dv">04</span></span>
+<span id="cb166-9"><a href="some-elementary-statistics-problems.html#cb166-9" aria-hidden="true" tabindex="-1"></a>K0 <span class="ot">&lt;-</span> <span class="fu">floor</span>(N <span class="sc">*</span> p0) <span class="co"># get the lower integer part in case the product is not natural</span></span>
+<span id="cb166-10"><a href="some-elementary-statistics-problems.html#cb166-10" aria-hidden="true" tabindex="-1"></a>K1 <span class="ot">&lt;-</span> <span class="fu">floor</span>(N <span class="sc">*</span> p1)</span>
+<span id="cb166-11"><a href="some-elementary-statistics-problems.html#cb166-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-12"><a href="some-elementary-statistics-problems.html#cb166-12" aria-hidden="true" tabindex="-1"></a><span class="co"># false positive (check phyper params with ?phyper)</span></span>
+<span id="cb166-13"><a href="some-elementary-statistics-problems.html#cb166-13" aria-hidden="true" tabindex="-1"></a><span class="co"># we subtract 1 to x0 because we are looking for P(X &gt;= x0) = 1 - P(X &lt; x0-1), not P(X &gt; x0)</span></span>
+<span id="cb166-14"><a href="some-elementary-statistics-problems.html#cb166-14" aria-hidden="true" tabindex="-1"></a>fp_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x0 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb166-15"><a href="some-elementary-statistics-problems.html#cb166-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">hyp =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">phyper</span>(x0 <span class="sc">-</span> <span class="dv">1</span>, K0, N <span class="sc">-</span> K0, n),</span>
+<span id="cb166-16"><a href="some-elementary-statistics-problems.html#cb166-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">bin =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(x0 <span class="sc">-</span> <span class="dv">1</span>, n, p0))</span>
+<span id="cb166-17"><a href="some-elementary-statistics-problems.html#cb166-17" aria-hidden="true" tabindex="-1"></a><span class="co"># let&#39;s view the result</span></span>
+<span id="cb166-18"><a href="some-elementary-statistics-problems.html#cb166-18" aria-hidden="true" tabindex="-1"></a>fp_df</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##       x0     hyp     bin
+##    &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1     1 0.979   0.977  
+##  2     2 0.896   0.890  
+##  3     3 0.732   0.725  
+##  4     4 0.521   0.517  
+##  5     5 0.321   0.322  
+##  6     6 0.171   0.176  
+##  7     7 0.0795  0.0847 
+##  8     8 0.0325  0.0364 
+##  9     9 0.0118  0.0141 
+## 10    10 0.00382 0.00494</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="some-elementary-statistics-problems.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># false negative</span></span>
+<span id="cb168-2"><a href="some-elementary-statistics-problems.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="co"># again, we subtract 1: P(X &lt; x0) = P(X &lt;= x0-1) and pbinom(x, n, p) := P(X &lt;= x; n, p)</span></span>
+<span id="cb168-3"><a href="some-elementary-statistics-problems.html#cb168-3" aria-hidden="true" tabindex="-1"></a>fn_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x0 =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb168-4"><a href="some-elementary-statistics-problems.html#cb168-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">hyp =</span> <span class="fu">phyper</span>(x0 <span class="sc">-</span> <span class="dv">1</span>, K1, N <span class="sc">-</span> K1, n),</span>
+<span id="cb168-5"><a href="some-elementary-statistics-problems.html#cb168-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">bin =</span> <span class="fu">pbinom</span>(x0 <span class="sc">-</span> <span class="dv">1</span>, n, p1))</span>
+<span id="cb168-6"><a href="some-elementary-statistics-problems.html#cb168-6" aria-hidden="true" tabindex="-1"></a>fn_df</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 3
+##       x0       hyp       bin
+##    &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1 0.0000283 0.0000370
+##  2     2 0.000339  0.000422 
+##  3     3 0.00203   0.00242  
+##  4     4 0.00810   0.00930  
+##  5     5 0.0243    0.0270   
+##  6     6 0.0587    0.0633   
+##  7     7 0.119     0.125    
+##  8     8 0.208     0.215    
+##  9     9 0.322     0.328    
+## 10    10 0.452     0.455</code></pre>
+<p>We observe that with <span class="math inline">\(x_0 = 8\)</span> we have
+<span class="math display">\[
+\alpha = 0.033,  \beta = 0.208
+\]</span>
+but in order to get a more complete overview, we could plot those values together</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="some-elementary-statistics-problems.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales) <span class="co"># to define custom scale on axes</span></span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="some-elementary-statistics-problems.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join the two dataframes</span></span>
+<span id="cb171-2"><a href="some-elementary-statistics-problems.html#cb171-2" aria-hidden="true" tabindex="-1"></a>tot_df <span class="ot">&lt;-</span> <span class="fu">left_join</span>(fp_df, fn_df,</span>
+<span id="cb171-3"><a href="some-elementary-statistics-problems.html#cb171-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">by =</span> <span class="st">&quot;x0&quot;</span>, <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>))</span>
+<span id="cb171-4"><a href="some-elementary-statistics-problems.html#cb171-4" aria-hidden="true" tabindex="-1"></a>tot_df <span class="sc">%&gt;%</span></span>
+<span id="cb171-5"><a href="some-elementary-statistics-problems.html#cb171-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb171-6"><a href="some-elementary-statistics-problems.html#cb171-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(x0, hypalpha, <span class="at">fill =</span> <span class="st">&quot;alpha&quot;</span>), <span class="at">alpha =</span> .<span class="dv">3</span>, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb171-7"><a href="some-elementary-statistics-problems.html#cb171-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(x0, hypbeta, <span class="at">fill =</span> <span class="st">&quot;beta&quot;</span>), <span class="at">alpha =</span> .<span class="dv">3</span>, <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb171-8"><a href="some-elementary-statistics-problems.html#cb171-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(x0, binalpha, <span class="at">color =</span> <span class="st">&quot;alpha&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb171-9"><a href="some-elementary-statistics-problems.html#cb171-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(x0, binbeta, <span class="at">color =</span> <span class="st">&quot;beta&quot;</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb171-10"><a href="some-elementary-statistics-problems.html#cb171-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;thresh&quot;</span>, <span class="at">y =</span> <span class="st">&quot;prob&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;hyper&quot;</span>, <span class="at">color =</span> <span class="st">&quot;binom&quot;</span>) <span class="sc">+</span></span>
+<span id="cb171-11"><a href="some-elementary-statistics-problems.html#cb171-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">pretty_breaks</span>(<span class="dv">10</span>)) <span class="co"># print integers on the x axis</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;
+## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="672" />
+The plot suggests that a good compromise could also be
+<span class="math inline">\(x_0 = 7\)</span>, but there is no rule in choosing such threshold, and in fact,
+we might be more interested in a safer threshold in terms of lower
+false alarm probability, or lower false non-alarm probability.</p>
+<p>This decision process can be thought as two simple hypotheses test:
+we consider the null hypothesis <span class="math inline">\(H_0: p = p_0\)</span>. Given our observation, i.e. <span class="math inline">\(x\)</span>,
+count of positive tests, realization of the <span class="math inline">\(X\)</span> r.v.</p>
+<ul>
+<li>if <span class="math inline">\(x &lt; x_0\)</span> we have no reasons to reject <span class="math inline">\(H_0\)</span></li>
+<li>if <span class="math inline">\(x \geq x_0\)</span> we reject <span class="math inline">\(H_0\)</span> and accept the alternative hypothesis</li>
+</ul>
+</div>
+<div id="the-binomial-approximation" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> The Binomial approximation<a href="some-elementary-statistics-problems.html#the-binomial-approximation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Exercise</strong>: The plot above shows that the Binomial distribution offers indeed
+a good approximation of the Hypergeometric. However, as an exercise, we can
+repeat the experiment changing the values of <span class="math inline">\(N\)</span> and <span class="math inline">\(p\)</span>.</p>
+<blockquote>
+<p>repeat the computations above tweaking the parameters and observe the
+resulting plot. With which parameters do you observe a poor approximation of
+the Hypergeometric with the Binomial distribution? Feel free to plot different
+quantities, such as the density instead of the cumulative distribution</p>
+</blockquote>
+</div>
+</div>
+<div id="confidence-intervals" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Confidence intervals<a href="some-elementary-statistics-problems.html#confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In case we have two samples <span class="math inline">\(\mathbf{X} = X_1, ..., X_m\)</span> and
+<span class="math inline">\(\mathbf{Y} = Y_1, ..., Y_n\)</span> coming from two unknown Normal distributions, we
+might want to test whether they come from distributions with same mean, or in
+other words, whether they are both scattered around a common value. For example,
+we could be interested in checking whether a set of jewelry items, which have
+some variability in weight, has been produced in the same original
+factory or if it is counterfeit.</p>
+<p>After defining a confidence level <span class="math inline">\(1-\alpha\)</span> and a variable that
+we want to limit with some “confidence”, we can compute the confidence interval
+<span class="math inline">\((\Delta_l, \Delta_u)\)</span>. The confidence interval tells us where the
+real value of the variable of interest can fall, with some
+confidence given the evidence.
+The higher is the confidence that we want to enforce, the larger the interval
+will be, but remember that a wide confidence interval is often not useful.</p>
+<div id="example-1" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Example<a href="some-elementary-statistics-problems.html#example-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s start with a simple example, where we have two normal samples,
+of which we know nothing (not the mean, nor the variance):</p>
+<p><span class="math display">\[
+X_1, ..., X_m \stackrel{\text{i.i.d.}}{\sim} \mathcal N (\mu_x, \sigma_x^2)\,,\quad
+Y_1, ..., Y_n \stackrel{\text{i.i.d.}}{\sim} \mathcal N (\mu_y, \sigma_y^2)
+\]</span>
+The goal is to get a confidence interval for the variable <span class="math inline">\(\mu_x - \mu_y\)</span>,
+therefore an interval in which we can expect the two means difference to be
+with confidence <span class="math inline">\(1 - \alpha\)</span>.
+Assuming equal variance in the two samples and both <span class="math inline">\(n, m\)</span> sufficiently
+large, the CI is computed as</p>
+<p><span class="math display">\[
+\bar{\mathbf{x}} - \bar{\mathbf{y}} \pm z_{\alpha/2}\sqrt{\frac{s_x^2}{m} +
+\frac{s_y^2}{n}}\,.
+\]</span></p>
+<p>Let’s simulate some data and use R to get the confidence interval, using as
+paramters <span class="math inline">\(\mu_x = 10, \sigma_x^2 = 36\)</span> and <span class="math inline">\(\mu_y = 10, \sigma_y^2 = 49\)</span>. We
+draw <span class="math inline">\(m = 100\)</span> and <span class="math inline">\(n = 120\)</span> samples respectively.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="some-elementary-statistics-problems.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the parameters</span></span>
+<span id="cb173-2"><a href="some-elementary-statistics-problems.html#cb173-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb173-3"><a href="some-elementary-statistics-problems.html#cb173-3" aria-hidden="true" tabindex="-1"></a>mu_x <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb173-4"><a href="some-elementary-statistics-problems.html#cb173-4" aria-hidden="true" tabindex="-1"></a>sigma_x <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb173-5"><a href="some-elementary-statistics-problems.html#cb173-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb173-6"><a href="some-elementary-statistics-problems.html#cb173-6" aria-hidden="true" tabindex="-1"></a>mu_y <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb173-7"><a href="some-elementary-statistics-problems.html#cb173-7" aria-hidden="true" tabindex="-1"></a>sigma_y <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb173-8"><a href="some-elementary-statistics-problems.html#cb173-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb173-9"><a href="some-elementary-statistics-problems.html#cb173-9" aria-hidden="true" tabindex="-1"></a><span class="co"># use rnorm to draw independent and identically distributed samples</span></span>
+<span id="cb173-10"><a href="some-elementary-statistics-problems.html#cb173-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(m, mu_x, sigma_x)</span>
+<span id="cb173-11"><a href="some-elementary-statistics-problems.html#cb173-11" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu_y, sigma_y)</span></code></pre></div>
+<p>At this point we can define the confidence level and compute the CI.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="some-elementary-statistics-problems.html#cb174-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># typical value for alpha</span></span>
+<span id="cb174-2"><a href="some-elementary-statistics-problems.html#cb174-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-3"><a href="some-elementary-statistics-problems.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="co"># define a custom function based on the formula above</span></span>
+<span id="cb174-4"><a href="some-elementary-statistics-problems.html#cb174-4" aria-hidden="true" tabindex="-1"></a>confidence_interval <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, alpha) {</span>
+<span id="cb174-5"><a href="some-elementary-statistics-problems.html#cb174-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># note that mean() is the sample mean</span></span>
+<span id="cb174-6"><a href="some-elementary-statistics-problems.html#cb174-6" aria-hidden="true" tabindex="-1"></a>  dev <span class="ot">&lt;-</span> <span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb174-7"><a href="some-elementary-statistics-problems.html#cb174-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># var() is the sample variance, not the actual variance</span></span>
+<span id="cb174-8"><a href="some-elementary-statistics-problems.html#cb174-8" aria-hidden="true" tabindex="-1"></a>  delta <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span> <span class="sc">-</span> alpha<span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">var</span>(x) <span class="sc">/</span> m <span class="sc">+</span> <span class="fu">var</span>(y) <span class="sc">/</span> n)</span>
+<span id="cb174-9"><a href="some-elementary-statistics-problems.html#cb174-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(dev <span class="sc">-</span> delta, dev <span class="sc">+</span> delta))</span>
+<span id="cb174-10"><a href="some-elementary-statistics-problems.html#cb174-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb174-11"><a href="some-elementary-statistics-problems.html#cb174-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-12"><a href="some-elementary-statistics-problems.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="fu">confidence_interval</span>(x, y, alpha)</span></code></pre></div>
+<pre><code>## [1] -0.859210  2.540521</code></pre>
+<p>We notice that the interval contains the value 0, and this
+is due to the fact that both samples have same mean, therefore the
+sample means will also be, with enough samples, very similar, thus with
+zero (or close to zero) difference.</p>
+</div>
+<div id="the-four-cases" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> The four cases<a href="some-elementary-statistics-problems.html#the-four-cases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To better clarify, we can divide the confidence intervals over
+two samples in four cases:</p>
+<ol style="list-style-type: decimal">
+<li>we know the variances of the two samples, <span class="math inline">\(\sigma_x^2, \sigma_y^2\)</span>,</li>
+<li>we don’t know the variances, but the samples sizes are large enough,</li>
+<li>we don’t know the variances and we cannot assume large sample size, but we
+assume homoscedasticity (equal variances),</li>
+<li>we don’t know the variances, samples size is not large and homoscedasticity
+cannot be assumed.</li>
+</ol>
+<div id="case-1" class="section level4 hasAnchor" number="2.2.2.1">
+<h4><span class="header-section-number">2.2.2.1</span> Case 1<a href="some-elementary-statistics-problems.html#case-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The variable of interest is, just like in any of the following cases,
+<span class="math inline">\(\mu_x - \mu_y\)</span>, which we don’t know.</p>
+<p>What we do know, given normality of the samples and from some background theory,
+is that</p>
+<p><span class="math display">\[
+\overline{\mathbf X} - \overline{\mathbf Y}\sim \mathcal N(\mu_x -
+\mu_y, \frac{\sigma_x^2}{m} + \frac{\sigma_y^2}{n})\,.
+\]</span>
+Normalizing, we get</p>
+<p><span class="math display">\[
+\frac{\overline{\mathbf X} - \overline{\mathbf Y} - (\mu_x -
+\mu_y)}{\sqrt{\frac{\sigma_x^2}{m} +
+\frac{\sigma_y^2}{n}}}\sim \mathcal N(0, 1)\,,
+\]</span>
+and thus, to get a confidence interval, we simply write the
+<em>coverage probability</em></p>
+<p><span class="math display">\[
+P(- z_{\alpha/2} &lt; \frac{\overline{\mathbf X} - \overline{\mathbf Y} - (\mu_x -
+\mu_y)}{\sqrt{\frac{\sigma_x^2}{m} +
+\frac{\sigma_y^2}{n}}} &lt; z_{\alpha/2} ; \mu_x, \mu_y) \equiv 1 - \alpha
+\]</span>
+and rearranging the terms we find the confidence interval for <span class="math inline">\(\mu_x - \mu_y\)</span>
+in case 1:</p>
+<p><span class="math display">\[
+\left( \overline{\mathbf X} - \overline{\mathbf Y} - z_{\alpha/2}
+\sqrt{\frac{\sigma_x^2}{m} +
+\frac{\sigma_y^2}{n}},  \overline{\mathbf X} - \overline{\mathbf Y} + z_{\alpha/2}
+\sqrt{\frac{\sigma_x^2}{m} +
+\frac{\sigma_y^2}{n}}\right)
+\]</span></p>
+</div>
+<div id="case-2" class="section level4 hasAnchor" number="2.2.2.2">
+<h4><span class="header-section-number">2.2.2.2</span> Case 2<a href="some-elementary-statistics-problems.html#case-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>If <span class="math inline">\(m, n\)</span> are “large”, then the sample variance will asymptotically get
+closer to the variance. In the previous example we assumed large sample
+size, that’s why we simply replaced <span class="math inline">\(\sigma\)</span> with <span class="math inline">\(s\)</span> in the above formula.</p>
+<p>The interval
+<span class="math display">\[
+\bar{\mathbf{x}} - \bar{\mathbf{y}} \pm z_{\alpha/2}\sqrt{\frac{s_x^2}{m} +
+\frac{s_y^2}{n}}\,.
+\]</span>
+is a confidence interval for <span class="math inline">\(\mu_x - \mu_y\)</span> with <em>approximately</em> level <span class="math inline">\(1-\alpha\)</span>.</p>
+</div>
+<div id="case-3" class="section level4 hasAnchor" number="2.2.2.3">
+<h4><span class="header-section-number">2.2.2.3</span> Case 3<a href="some-elementary-statistics-problems.html#case-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In case we assume homoscedasticity, we leverage on the observation as much as we
+can, therefore we compute a weighted average (<em>pooled</em>) of the sample variances
+and we use that estimator to approximate the common variance.</p>
+<p><span class="math display">\[
+s_p^2 = \frac{(m - 1) s_x^2 + (n - 1) s_y^2}{m + n - 2}\,.
+\]</span>
+One can prove that the r.v
+<span class="math inline">\(\frac{(m + n - 2) s_p^2}{\sigma^2} \sim \chi^2(m + n - 2)\)</span> and from that
+follows</p>
+<p><span class="math display">\[
+\frac{\overline{\mathbf X} - \overline{\mathbf Y} - (\mu_x -
+\mu_y)}{\sqrt{s_p^2 \left( \frac{1}{m} +
+\frac{1}{n}\right)}} \sim t(m + n - 2)\,,
+\]</span>
+Where <span class="math inline">\(t(d)\)</span> is a T-student distribution with <span class="math inline">\(d\)</span> degrees of freedom and,
+compared to a standard Normal distribution, has larger tails, which means that
+the quantiles over small values such as <span class="math inline">\(\alpha\)</span> will be higher wrt the std
+normal.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="some-elementary-statistics-problems.html#cb176-1" aria-hidden="true" tabindex="-1"></a>x_dt <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span> <span class="dv">5</span>, <span class="dv">5</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb176-2"><a href="some-elementary-statistics-problems.html#cb176-2" aria-hidden="true" tabindex="-1"></a>norm_t_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x_dt, <span class="at">p_dt =</span> <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">3</span>), <span class="at">p_nt =</span> <span class="fu">dnorm</span>(x))  </span>
+<span id="cb176-3"><a href="some-elementary-statistics-problems.html#cb176-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-4"><a href="some-elementary-statistics-problems.html#cb176-4" aria-hidden="true" tabindex="-1"></a>norm_t_df <span class="sc">%&gt;%</span></span>
+<span id="cb176-5"><a href="some-elementary-statistics-problems.html#cb176-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb176-6"><a href="some-elementary-statistics-problems.html#cb176-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, p_dt, <span class="at">color =</span> <span class="st">&quot;t-stud&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb176-7"><a href="some-elementary-statistics-problems.html#cb176-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, p_nt, <span class="at">color =</span> <span class="st">&quot;norm&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb176-8"><a href="some-elementary-statistics-problems.html#cb176-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;T-student with df = 3 and Std Normal comparison&quot;</span>,</span>
+<span id="cb176-9"><a href="some-elementary-statistics-problems.html#cb176-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;p(x)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p>Following the same approach of the previous cases, the confidence interval
+is found using the quantiles of the specific T-student distributions.</p>
+<p>Before we computed the CI “manually”, but luckily there exists a function which already implements this formula
+(and not only this):</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="some-elementary-statistics-problems.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set var.equal = TRUE for pooled variance</span></span>
+<span id="cb177-2"><a href="some-elementary-statistics-problems.html#cb177-2" aria-hidden="true" tabindex="-1"></a>test_obj <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x, y, <span class="at">conf.level =</span> <span class="dv">1</span> <span class="sc">-</span> alpha, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb177-3"><a href="some-elementary-statistics-problems.html#cb177-3" aria-hidden="true" tabindex="-1"></a>test_obj <span class="co"># outputs some information</span></span></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  x and y
+## t = 0.9646, df = 218, p-value = 0.3358
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.8770073  2.5583183
+## sample estimates:
+## mean of x mean of y 
+## 10.195089  9.354433</code></pre>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="some-elementary-statistics-problems.html#cb179-1" aria-hidden="true" tabindex="-1"></a>test_obj<span class="sc">$</span>conf.int <span class="co"># we&#39;re interested in the confidence interval</span></span></code></pre></div>
+<pre><code>## [1] -0.8770073  2.5583183
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+</div>
+<div id="case-4" class="section level4 hasAnchor" number="2.2.2.4">
+<h4><span class="header-section-number">2.2.2.4</span> Case 4<a href="some-elementary-statistics-problems.html#case-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Otherwise, in case we cannot assume that the two samples have the same variance.
+In R this specific confidence interval can be computed setting the <code>var.equal</code>
+flag to false in <code>t.test()</code>.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="some-elementary-statistics-problems.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or leaving it to default = F</span></span>
+<span id="cb181-2"><a href="some-elementary-statistics-problems.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, y, <span class="at">var.equal =</span> <span class="cn">FALSE</span>) <span class="co"># conf.level = 0.95 by default</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  x and y
+## t = 0.96929, df = 214.36, p-value = 0.3335
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.8688616  2.5501726
+## sample estimates:
+## mean of x mean of y 
+## 10.195089  9.354433</code></pre>
+<p>This is called the Welch-Satterthwaite approximation.</p>
+</div>
+</div>
+</div>
+<div id="p-value" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> P-value<a href="some-elementary-statistics-problems.html#p-value" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In the context of hypothesis testing, the <em>p-value</em> is the probability,
+under the null hypothesis, that we obtain a test statistic at least as
+contradictory to <span class="math inline">\(H_0\)</span> as the statistic from the available sample.
+In other words, it’s a measure of the null hypothesis support in a 0 to 1 range.</p>
+<div id="example-2" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Example<a href="some-elementary-statistics-problems.html#example-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In a fair French roulette, the red probability is 18/37.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>we observe 20 reds out of 30. Compute the p-value of the null hypothesis
+of the roulette being fair, with respect to the alternative hypothesis
+of the roulette being skewed towards the red,</p></li>
+<li><p>in the same situation, compute the p-value of the null hypothesis
+of the roulette being fair wrt the alternative hypothesis of it not
+being fair,</p></li>
+<li><p>repeat a. and b. with 200 reds out of 380 as outcome.</p></li>
+<li><p>Given <span class="math inline">\(X = \#\text{reds}\)</span>, we can compute the following probability
+under the null hypothesis,
+noticing that <span class="math inline">\(X \sim \text{Binomial}(n, p)\)</span> with <span class="math inline">\(n = 30\)</span>:</p></li>
+</ol>
+<p><span class="math display">\[
+P(X \geq 20 | H_0) = \sum_{k = 20}^{30} {30 \choose k}
+\left(\frac{18}{37}\right)^k\left(\frac{19}{37}\right)^{(30-k)}
+\]</span>
+Note that we specify the condition <span class="math inline">\(\geq 20\)</span> as the p-value stands for the
+probability of observing an outcome <strong>at least</strong> as contradictory as the one
+observed.</p>
+<p>In R, we can compute it “by hand”:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="some-elementary-statistics-problems.html#cb183-1" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">=</span> <span class="dv">18</span><span class="sc">/</span><span class="dv">37</span></span>
+<span id="cb183-2"><a href="some-elementary-statistics-problems.html#cb183-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">30</span></span>
+<span id="cb183-3"><a href="some-elementary-statistics-problems.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &gt; 19) \equiv P(X &gt;= 20)</span></span>
+<span id="cb183-4"><a href="some-elementary-statistics-problems.html#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">19</span>, n, p0, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="co"># notice the lower.tail flag</span></span></code></pre></div>
+<pre><code>## [1] 0.03598703</code></pre>
+<p>or use the Binomial test function</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="some-elementary-statistics-problems.html#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check how it works</span></span>
+<span id="cb185-2"><a href="some-elementary-statistics-problems.html#cb185-2" aria-hidden="true" tabindex="-1"></a>?binom.test</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="some-elementary-statistics-problems.html#cb186-1" aria-hidden="true" tabindex="-1"></a>bin_test <span class="ot">&lt;-</span> <span class="fu">binom.test</span>(<span class="dv">20</span>, n, p0, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span>
+<span id="cb186-2"><a href="some-elementary-statistics-problems.html#cb186-2" aria-hidden="true" tabindex="-1"></a>bin_test</span></code></pre></div>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  20 and n
+## number of successes = 20, number of trials = 30, p-value = 0.03599
+## alternative hypothesis: true probability of success is greater than 0.4864865
+## 95 percent confidence interval:
+##  0.5005613 1.0000000
+## sample estimates:
+## probability of success 
+##              0.6666667</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="some-elementary-statistics-problems.html#cb188-1" aria-hidden="true" tabindex="-1"></a>bin_test<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.03598703</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="some-elementary-statistics-problems.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sketch of &quot;greater&quot; type p-value</span></span>
+<span id="cb190-2"><a href="some-elementary-statistics-problems.html#cb190-2" aria-hidden="true" tabindex="-1"></a>sketch_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span>n, <span class="at">px =</span> <span class="fu">dbinom</span>(x, n, p0))</span>
+<span id="cb190-3"><a href="some-elementary-statistics-problems.html#cb190-3" aria-hidden="true" tabindex="-1"></a>sketch_df <span class="sc">%&gt;%</span></span>
+<span id="cb190-4"><a href="some-elementary-statistics-problems.html#cb190-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb190-5"><a href="some-elementary-statistics-problems.html#cb190-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, px)) <span class="sc">+</span></span>
+<span id="cb190-6"><a href="some-elementary-statistics-problems.html#cb190-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(x <span class="sc">&gt;=</span> <span class="dv">20</span>),</span>
+<span id="cb190-7"><a href="some-elementary-statistics-problems.html#cb190-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> px), <span class="at">color =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>If the alternative hypothesis is just <span class="math inline">\(H_1: p \neq 18/37\)</span> then the
+contradiction can happen both on the left and on the right side of the curve,
+i.e. the roulette favors the red or the roulette favors the black.
+Therefore we have to sum the two probabilities:</li>
+</ol>
+<p><span class="math display">\[
+P(X \geq 20 | H_0) + P(X &lt; 10 | H_0)\,.
+\]</span>
+We compute this quantity first using <code>pbinom</code> as before</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="some-elementary-statistics-problems.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">19</span>, n, p0, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">pbinom</span>(<span class="dv">9</span>, n, p0) </span></code></pre></div>
+<pre><code>## [1] 0.06614782</code></pre>
+<p>and then using the test function</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="some-elementary-statistics-problems.html#cb193-1" aria-hidden="true" tabindex="-1"></a>bin_test_2 <span class="ot">&lt;-</span> <span class="fu">binom.test</span>(<span class="dv">20</span>, n, p0, <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>)</span>
+<span id="cb193-2"><a href="some-elementary-statistics-problems.html#cb193-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb193-3"><a href="some-elementary-statistics-problems.html#cb193-3" aria-hidden="true" tabindex="-1"></a>bin_test_2</span></code></pre></div>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  20 and n
+## number of successes = 20, number of trials = 30, p-value = 0.06615
+## alternative hypothesis: true probability of success is not equal to 0.4864865
+## 95 percent confidence interval:
+##  0.4718800 0.8271258
+## sample estimates:
+## probability of success 
+##              0.6666667</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="some-elementary-statistics-problems.html#cb195-1" aria-hidden="true" tabindex="-1"></a>bin_test_2<span class="sc">$</span>p.value</span></code></pre></div>
+<pre><code>## [1] 0.06614782</code></pre>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="some-elementary-statistics-problems.html#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sketch of bilateral type p-value</span></span>
+<span id="cb197-2"><a href="some-elementary-statistics-problems.html#cb197-2" aria-hidden="true" tabindex="-1"></a>sketch_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span>n, <span class="at">px =</span> <span class="fu">dbinom</span>(x, n, p0))</span>
+<span id="cb197-3"><a href="some-elementary-statistics-problems.html#cb197-3" aria-hidden="true" tabindex="-1"></a>sketch_df <span class="sc">%&gt;%</span></span>
+<span id="cb197-4"><a href="some-elementary-statistics-problems.html#cb197-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb197-5"><a href="some-elementary-statistics-problems.html#cb197-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, px)) <span class="sc">+</span></span>
+<span id="cb197-6"><a href="some-elementary-statistics-problems.html#cb197-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(x <span class="sc">&gt;=</span> <span class="dv">20</span>),</span>
+<span id="cb197-7"><a href="some-elementary-statistics-problems.html#cb197-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> px), <span class="at">color =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb197-8"><a href="some-elementary-statistics-problems.html#cb197-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(x <span class="sc">&lt;</span> <span class="dv">10</span>),</span>
+<span id="cb197-9"><a href="some-elementary-statistics-problems.html#cb197-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> px), <span class="at">color =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>When <span class="math inline">\(n\)</span> increases, and we can consider it large enough, we can
+use the normal approximation of the binomial (for the CLT), i.e.</li>
+</ol>
+<p><span class="math display">\[
+Z = \frac{X - np}{\sqrt{np(1-p)}} \stackrel{n\rightarrow +\infty}{\approx} \mathcal
+N(0,1)\,.
+\]</span>
+Under the null hypothesis, in the unilateral case, we compute the p-value as</p>
+<p><span class="math display">\[
+P(Z \geq z | H_0) = 1 - \Phi(z)\,,
+\]</span>
+where <span class="math inline">\(z\)</span> is the realization of <span class="math inline">\(Z\)</span> given that the realization of
+<span class="math inline">\(X\)</span> is <span class="math inline">\(x = 20\)</span>.</p>
+<p>In R:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="some-elementary-statistics-problems.html#cb198-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">380</span></span>
+<span id="cb198-2"><a href="some-elementary-statistics-problems.html#cb198-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (<span class="dv">200</span> <span class="sc">-</span> n <span class="sc">*</span> p0)<span class="sc">/</span><span class="fu">sqrt</span>(n <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p0))</span>
+<span id="cb198-3"><a href="some-elementary-statistics-problems.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.06016385</code></pre>
+<p>or, using the R proportion test <code>prop.test</code></p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="some-elementary-statistics-problems.html#cb200-1" aria-hidden="true" tabindex="-1"></a>?prop.test</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="some-elementary-statistics-problems.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">200</span>, n, <span class="at">p =</span> p0) <span class="co"># uses continuity correction</span></span></code></pre></div>
+<pre><code>## 
+##  1-sample proportions test with continuity correction
+## 
+## data:  200 out of n, null probability p0
+## X-squared = 2.2562, df = 1, p-value = 0.1331
+## alternative hypothesis: true p is not equal to 0.4864865
+## 95 percent confidence interval:
+##  0.4747919 0.5772992
+## sample estimates:
+##         p 
+## 0.5263158</code></pre>
+<p>Notice that the result is not exactly the same. This is due to the fact
+that we are approximating a discrete probability sum with an integral of
+a Gaussian. To correct for this, it’s enough to subtract (or add, depending
+on the case) <code>.5</code> to the <span class="math inline">\(x\)</span> value.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="some-elementary-statistics-problems.html#cb203-1" aria-hidden="true" tabindex="-1"></a>z_corr <span class="ot">&lt;-</span> (<span class="dv">200</span> <span class="sc">-</span> .<span class="dv">5</span> <span class="sc">-</span> n <span class="sc">*</span> p0)<span class="sc">/</span><span class="fu">sqrt</span>(n <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p0))</span>
+<span id="cb203-2"><a href="some-elementary-statistics-problems.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z_corr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.06653798</code></pre>
+<blockquote>
+<p>The bilateral case with Normal approximation is left to the reader as exercise</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02_elementary_stat.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

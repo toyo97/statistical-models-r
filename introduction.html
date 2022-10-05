@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Introduction | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Introduction | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Introduction | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+
+
+<meta name="date" content="2022-10-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="some-elementary-statistics-problems.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction<a href="introduction.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="r-and-rstudio" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> R and RStudio<a href="introduction.html#r-and-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p><a href="https://www.r-project.org/"><strong>R</strong></a>: programming language, tailored for
+statisticians</p></li>
+<li><p><a href="https://www.rstudio.com/"><strong>RStudio</strong></a>: development environment, software for
+editing and running R (and Python) applications</p>
+<p>It’s going to change name soon, see <a href="https://posit.co/">Posit</a></p></li>
+</ul>
+<div id="installation" class="section level3 hasAnchor" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> Installation<a href="introduction.html#installation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>First install R programming language (from <a href="https://cran.rstudio.com/">here</a>),
+then RStudio environment (from
+<a href="https://www.rstudio.com/products/rstudio/download/#download">here</a>).</p>
+</div>
+</div>
+<div id="r-syntax" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> R syntax<a href="introduction.html#r-syntax" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here a brief overview of the main components of the R language.</p>
+<p><em>Note: this is not a complete guide on the language nor on programming in</em>
+<em>general, but rather a quick-start introduction with the most used operations</em>
+<em>and structures, which assumes some very basic programming skills.</em>
+<em>For all the rest, Google is your friend (it really is).</em></p>
+<div id="basic-operations" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Basic operations<a href="introduction.html#basic-operations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R can be used as a fully featured calculator, typically directly
+from the console (see bottom panel in RStudio).</p>
+<p>Some examples:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introduction.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span> <span class="co"># calculator-style</span></span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>) <span class="sc">*</span> <span class="dv">4</span> <span class="co"># vector operations</span></span></code></pre></div>
+<pre><code>## [1]  4  8 12</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)),</span>
+<span id="cb5-2"><a href="introduction.html#cb5-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)) <span class="co"># matrix operations (transpose) </span></span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4</code></pre>
+<p>As any other programming language, it allows for variables declaration.
+Variables hold a value which can be assigned, modified, and used for
+other computations.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction.html#cb7-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># assign values to variables</span></span>
+<span id="cb7-2"><a href="introduction.html#cb7-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">=</span> a <span class="sc">+</span> <span class="dv">2</span> <span class="co"># equal sign also valid, but...</span></span>
+<span id="cb7-3"><a href="introduction.html#cb7-3" aria-hidden="true" tabindex="-1"></a>b</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>The arrow sign <code>&lt;-</code> is the traditional sign for the assignment operation,
+but also <code>=</code> works. Check <a href="introduction.html#arrow-sign">this examples</a> to see why <code>&lt;-</code>
+is recommended.</p>
+<p>Conditional statements and loops have straightforward syntax (similar to C/C++
+, but more compact).</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (b <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> a <span class="sc">&gt;</span> <span class="dv">0</span>) { <span class="co"># if-else statement</span></span>
+<span id="cb9-2"><a href="introduction.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  out <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb9-3"><a href="introduction.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>b) { <span class="co"># for loop</span></span>
+<span id="cb9-4"><a href="introduction.html#cb9-4" aria-hidden="true" tabindex="-1"></a>    out <span class="ot">&lt;-</span> <span class="fu">paste</span>(out, <span class="fu">class</span>(b)) <span class="co"># concatenate two or more strings</span></span>
+<span id="cb9-5"><a href="introduction.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-6"><a href="introduction.html#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(out) <span class="co"># print string to output</span></span>
+<span id="cb9-7"><a href="introduction.html#cb9-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb9-8"><a href="introduction.html#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;error&quot;</span>) <span class="co"># stop program and exit</span></span>
+<span id="cb9-9"><a href="introduction.html#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] &quot; numeric numeric numeric numeric&quot;</code></pre>
+<p>While <code>&lt;-</code> is only used for variable assignment, i.e. filling up the variable
+allocated space with some value, the <code>=</code> is both used for assignment and
+function argument passing (as introduced in <a href="introduction.html#functions">Functions</a>).</p>
+</div>
+</div>
+<div id="functions" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Functions<a href="introduction.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Functions are called with the <code>()</code> operator and present named arguments.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get Normal samples with 0 (default) mean and 10 standard deviation</span></span>
+<span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument, </span></span>
+<span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
+<span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
+<pre><code>##  [1] 13.9451393 -7.1176737 -9.4431784  8.8934239  4.6542653  5.3000924
+##  [7] 14.5690151  0.9156836 18.9044585 -6.7012162</code></pre>
+<p>You can explicitly call the arguments to which you want to pass the parameters
+(e.g. sd of the Gaussian). In this case it is necessary, because the second
+position argument is the mean, but we want it to be the default.</p>
+<div id="definition" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Definition<a href="introduction.html#definition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To define a custom function</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introduction.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># implements power operation</span></span>
+<span id="cb13-2"><a href="introduction.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb13-3"><a href="introduction.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x a real number</span></span>
+<span id="cb13-4"><a href="introduction.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param n a natural number, defaults to 2</span></span>
+<span id="cb13-5"><a href="introduction.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return n-th power of x</span></span>
+<span id="cb13-6"><a href="introduction.html#cb13-6" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">n =</span> <span class="dv">2</span>) {</span>
+<span id="cb13-7"><a href="introduction.html#cb13-7" aria-hidden="true" tabindex="-1"></a>  ans <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb13-8"><a href="introduction.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb13-9"><a href="introduction.html#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
+<span id="cb13-10"><a href="introduction.html#cb13-10" aria-hidden="true" tabindex="-1"></a>      ans <span class="ot">&lt;-</span> ans <span class="sc">*</span> x</span>
+<span id="cb13-11"><a href="introduction.html#cb13-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb13-12"><a href="introduction.html#cb13-12" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (n <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb13-13"><a href="introduction.html#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do nothing, ans is already set to 1</span></span>
+<span id="cb13-14"><a href="introduction.html#cb13-14" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb13-15"><a href="introduction.html#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;error: n must be non-negative&quot;</span>)</span>
+<span id="cb13-16"><a href="introduction.html#cb13-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-17"><a href="introduction.html#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ans)</span>
+<span id="cb13-18"><a href="introduction.html#cb13-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-19"><a href="introduction.html#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="introduction.html#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;3^5 = &quot;</span>, <span class="fu">pow</span>(<span class="dv">3</span>, <span class="dv">5</span>),</span>
+<span id="cb13-21"><a href="introduction.html#cb13-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;, 4^2 = &quot;</span>, <span class="fu">pow</span>(<span class="dv">4</span>),</span>
+<span id="cb13-22"><a href="introduction.html#cb13-22" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;, 5^0 = &quot;</span>, <span class="fu">pow</span>(<span class="dv">5</span>, <span class="dv">0</span>)))</span></code></pre></div>
+<pre><code>## [1] &quot;3^5 =  243 , 4^2 =  16 , 5^0 =  1&quot;</code></pre>
+<p>The <code>return()</code> call can be omitted (but it’s better not to).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introduction.html#cb15-1" aria-hidden="true" tabindex="-1"></a>pow <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb15-2"><a href="introduction.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  ans <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb15-3"><a href="introduction.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
+<span id="cb15-4"><a href="introduction.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># last expression is returned</span></span>
+<span id="cb15-5"><a href="introduction.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  ans <span class="co"># this is equivalent to write return(ans)</span></span>
+<span id="cb15-6"><a href="introduction.html#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="data-types" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Data types<a href="introduction.html#data-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Every variable in R is an object, which holds a value (or collection of values) and some other attributes, properties or methods.</p>
+<div id="base-types" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> Base types<a href="introduction.html#base-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>There are 5 basic data types:</p>
+<ul>
+<li><strong>numeric</strong> (real numbers)</li>
+<li><strong>integer</strong></li>
+<li><strong>logical</strong> (aka boolean)</li>
+<li><strong>character</strong></li>
+<li><strong>complex</strong> (complex numbers)</li>
+</ul>
+<div id="numeric" class="section level4 hasAnchor" number="1.4.1.1">
+<h4><span class="header-section-number">1.4.1.1</span> Numeric<a href="introduction.html#numeric" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>When you write numbers in R, they are going to
+default to numeric type values</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introduction.html#cb16-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fl">3.4</span> <span class="co"># decimal</span></span>
+<span id="cb16-2"><a href="introduction.html#cb16-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="sc">-</span>.<span class="dv">30</span> <span class="co"># signed decimal</span></span>
+<span id="cb16-3"><a href="introduction.html#cb16-3" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="dv">42</span> <span class="co"># also without dot, it&#39;s numeric</span></span>
+<span id="cb16-4"><a href="introduction.html#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="introduction.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&quot;data types | a:&quot;</span>, <span class="fu">class</span>(a),</span>
+<span id="cb16-6"><a href="introduction.html#cb16-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;, b:&quot;</span>, <span class="fu">class</span>(b),</span>
+<span id="cb16-7"><a href="introduction.html#cb16-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">&quot;, c:&quot;</span>, <span class="fu">class</span>(c)))</span></code></pre></div>
+<pre><code>## [1] &quot;data types | a:numeric, b:numeric, c:numeric&quot;</code></pre>
+</div>
+<div id="integer" class="section level4 hasAnchor" number="1.4.1.2">
+<h4><span class="header-section-number">1.4.1.2</span> Integer<a href="introduction.html#integer" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Integer numbers can be enforced typing an <code>L</code> next to the digits.
+Casting is implicit when the result of an operation involving integers
+is not an integer</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introduction.html#cb18-1" aria-hidden="true" tabindex="-1"></a>int_num <span class="ot">&lt;-</span> 50L <span class="co"># 50 stored as integer</span></span>
+<span id="cb18-2"><a href="introduction.html#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="introduction.html#cb18-3" aria-hidden="true" tabindex="-1"></a>non_casted_num <span class="ot">&lt;-</span> int_num <span class="sc">-</span> 2L <span class="co"># result is exactly 48, still int</span></span>
+<span id="cb18-4"><a href="introduction.html#cb18-4" aria-hidden="true" tabindex="-1"></a>casted_num <span class="ot">&lt;-</span> int_num <span class="sc">/</span> 7L <span class="co"># implicit cast to numeric type to store decimals</span></span>
+<span id="cb18-5"><a href="introduction.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="fu">class</span>(int_num), <span class="fu">class</span>(non_casted_num), <span class="fu">class</span>(casted_num), <span class="at">sep =</span> <span class="st">&quot;, &quot;</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;integer, integer, numeric&quot;</code></pre>
+</div>
+<div id="logical" class="section level4 hasAnchor" number="1.4.1.3">
+<h4><span class="header-section-number">1.4.1.3</span> Logical<a href="introduction.html#logical" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The <code>logical</code> type can only hold <code>TRUE</code> or <code>FALSE</code> (in capital letters)</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="introduction.html#cb20-1" aria-hidden="true" tabindex="-1"></a>bool_a <span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb20-2"><a href="introduction.html#cb20-2" aria-hidden="true" tabindex="-1"></a>bool_b <span class="ot">&lt;-</span> T <span class="co"># T and F are short for TRUE and FALSE</span></span>
+<span id="cb20-3"><a href="introduction.html#cb20-3" aria-hidden="true" tabindex="-1"></a>bool_a <span class="sc">|</span> <span class="sc">!</span>bool_b <span class="co"># logical or between F and not-T</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>You can test the value of a boolean also using <code>0,1</code></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introduction.html#cb22-1" aria-hidden="true" tabindex="-1"></a>bool_a <span class="sc">==</span> <span class="dv">0</span> <span class="co"># if &#39;A&#39; is not equal to &#39;not B&#39;, raise an error</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>and a sum between logical values, treats <code>FALSE = 0</code> and <code>TRUE = 1</code>,
+which is useful when counting true values in logical arrays</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introduction.html#cb24-1" aria-hidden="true" tabindex="-1"></a>bool_a <span class="sc">+</span> bool_b <span class="sc">+</span> bool_b <span class="co"># FALSE + TRUE + TRUE (it&#39;s not an OR operation)</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+</div>
+<div id="character" class="section level4 hasAnchor" number="1.4.1.4">
+<h4><span class="header-section-number">1.4.1.4</span> Character<a href="introduction.html#character" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A character is any number of characters enclosed in quotes <code>' '</code> or double
+quotes <code>" "</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introduction.html#cb26-1" aria-hidden="true" tabindex="-1"></a>char_a <span class="ot">&lt;-</span> <span class="st">&quot;,&quot;</span> <span class="co"># single character</span></span>
+<span id="cb26-2"><a href="introduction.html#cb26-2" aria-hidden="true" tabindex="-1"></a>char_b <span class="ot">&lt;-</span> <span class="st">&quot;bird&quot;</span> <span class="co"># string</span></span>
+<span id="cb26-3"><a href="introduction.html#cb26-3" aria-hidden="true" tabindex="-1"></a>char_c <span class="ot">&lt;-</span> <span class="st">&#39;word&#39;</span> <span class="co"># single quotes</span></span>
+<span id="cb26-4"><a href="introduction.html#cb26-4" aria-hidden="true" tabindex="-1"></a>full_char <span class="ot">&lt;-</span> <span class="fu">paste</span>(char_b, char_a, char_c) <span class="co"># concatenate chars</span></span>
+<span id="cb26-5"><a href="introduction.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(full_char) <span class="co"># still a character</span></span></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+<div id="complex" class="section level4 hasAnchor" number="1.4.1.5">
+<h4><span class="header-section-number">1.4.1.5</span> Complex<a href="introduction.html#complex" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introduction.html#cb28-1" aria-hidden="true" tabindex="-1"></a>complex_num <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="sc">+</span> 4i</span>
+<span id="cb28-2"><a href="introduction.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Mod</span>(complex_num) <span class="co"># try all complex operations, e.g. modulus</span></span></code></pre></div>
+<pre><code>## [1] 6.403124</code></pre>
+</div>
+<div id="special-values" class="section level4 hasAnchor" number="1.4.1.6">
+<h4><span class="header-section-number">1.4.1.6</span> Special values<a href="introduction.html#special-values" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<ul>
+<li><code>NA</code>: “not available”, missing value</li>
+<li><code>Inf</code>: infinity</li>
+<li><code>NaN</code>: “not-a-number”, undefined value</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introduction.html#cb30-1" aria-hidden="true" tabindex="-1"></a>missing_val <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb30-2"><a href="introduction.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(missing_val) <span class="co"># test if value is missing</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Every operation involving missing values, will output <code>NA</code></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="introduction.html#cb32-1" aria-hidden="true" tabindex="-1"></a>missing_val <span class="sc">==</span> <span class="cn">NA</span> <span class="co"># cannot use ==</span></span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="introduction.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(</span>
+<span id="cb34-2"><a href="introduction.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;1/0 = &quot;</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">0</span>,</span>
+<span id="cb34-3"><a href="introduction.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;, 0/0 = &quot;</span>, <span class="dv">0</span><span class="sc">/</span><span class="dv">0</span></span>
+<span id="cb34-4"><a href="introduction.html#cb34-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<pre><code>## [1] &quot;1/0 =  Inf , 0/0 =  NaN&quot;</code></pre>
+<p>These special values are not necessarily unwanted, but they require
+extra care. E.g. <code>Inf</code> can appear also in case of numerical <em>overflow</em>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introduction.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">1000</span>)</span></code></pre></div>
+<pre><code>## [1] Inf</code></pre>
+</div>
+<div id="conversion" class="section level4 hasAnchor" number="1.4.1.7">
+<h4><span class="header-section-number">1.4.1.7</span> Conversion<a href="introduction.html#conversion" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Variables types can be converted with <code>as.&lt;typename&gt;()</code>-like functions, as long
+as conversion makes sense. Some examples:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="introduction.html#cb38-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> T</span>
+<span id="cb38-2"><a href="introduction.html#cb38-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="st">&quot;0&quot;</span></span>
+<span id="cb38-3"><a href="introduction.html#cb38-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">3.2</span></span>
+<span id="cb38-4"><a href="introduction.html#cb38-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> 2L</span>
+<span id="cb38-5"><a href="introduction.html#cb38-5" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="st">&quot;F&quot;</span></span>
+<span id="cb38-6"><a href="introduction.html#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">paste</span>( </span>
+<span id="cb38-7"><a href="introduction.html#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(x, <span class="fu">as.integer</span>(x), <span class="at">sep =</span> <span class="st">&quot; =&gt; &quot;</span>), <span class="co"># from numeric to integer</span></span>
+<span id="cb38-8"><a href="introduction.html#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(y, <span class="fu">as.numeric</span>(y), <span class="at">sep =</span> <span class="st">&quot; =&gt; &quot;</span>), <span class="co"># from integer to numeric</span></span>
+<span id="cb38-9"><a href="introduction.html#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(y, <span class="fu">as.character</span>(y), <span class="at">sep =</span> <span class="st">&quot; =&gt; &quot;</span>),  <span class="co"># from integer to character</span></span>
+<span id="cb38-10"><a href="introduction.html#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(w, <span class="fu">as.numeric</span>(w), <span class="at">sep =</span> <span class="st">&quot; =&gt; &quot;</span>),  <span class="co"># from number-char to numeric</span></span>
+<span id="cb38-11"><a href="introduction.html#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste</span>(v, <span class="fu">as.numeric</span>(v), <span class="at">sep =</span> <span class="st">&quot; =&gt; &quot;</span>), <span class="co"># from logical to numeric</span></span>
+<span id="cb38-12"><a href="introduction.html#cb38-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span></span>
+<span id="cb38-13"><a href="introduction.html#cb38-13" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<pre><code>## 3.2 =&gt; 3
+## 2 =&gt; 2
+## 2 =&gt; 2
+## 0 =&gt; 0
+## TRUE =&gt; 1</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introduction.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(z)  <span class="co"># from character to numeric (coercion warning - NA)</span></span></code></pre></div>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## [1] NA</code></pre>
+</div>
+</div>
+<div id="vectors-and-matrices" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> Vectors and matrices<a href="introduction.html#vectors-and-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="vectors" class="section level4 hasAnchor" number="1.4.2.1">
+<h4><span class="header-section-number">1.4.2.1</span> Vectors<a href="introduction.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Vectors are build with the <code>c()</code> function.
+A vector holds values of the same type.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="introduction.html#cb43-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">9</span>, <span class="dv">5</span>, <span class="dv">8</span>)</span>
+<span id="cb43-2"><a href="introduction.html#cb43-2" aria-hidden="true" tabindex="-1"></a>vec1</span></code></pre></div>
+<pre><code>## [1] 4 3 9 5 8</code></pre>
+<p>Vector operations and aggregation of values is as intuitive as it can be.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="introduction.html#cb45-1" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">&lt;-</span> vec1 <span class="sc">-</span> <span class="dv">1</span> <span class="co"># subtract 1 to all values (broadcast)</span></span>
+<span id="cb45-2"><a href="introduction.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(vec1) <span class="co"># sum all values in vec1</span></span></code></pre></div>
+<pre><code>## [1] 29</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="introduction.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(vec2) <span class="co"># compute the mean</span></span></code></pre></div>
+<pre><code>## [1] 4.8</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introduction.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(vec1, <span class="at">decreasing =</span> <span class="cn">TRUE</span>) <span class="co"># sort elements in decreasing order</span></span></code></pre></div>
+<pre><code>## [1] 9 8 5 4 3</code></pre>
+<p>Conversion is still possible and it’s made element by element.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="introduction.html#cb51-1" aria-hidden="true" tabindex="-1"></a>char_vec <span class="ot">&lt;-</span> <span class="fu">as.character</span>(vec1) <span class="co"># convert every value in vec1 to char</span></span>
+<span id="cb51-2"><a href="introduction.html#cb51-2" aria-hidden="true" tabindex="-1"></a>char_vec</span></code></pre></div>
+<pre><code>## [1] &quot;4&quot; &quot;3&quot; &quot;9&quot; &quot;5&quot; &quot;8&quot;</code></pre>
+<p>Range vectors (unit-stepped intervals) are built with <code>start:end</code> syntax.
+Note: the type of range vectors is <code>integer</code>, not <code>numeric</code>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="introduction.html#cb53-1" aria-hidden="true" tabindex="-1"></a>x_range <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb53-2"><a href="introduction.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x_range)</span></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<p>They are particularly useful in loops statements:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introduction.html#cb55-1" aria-hidden="true" tabindex="-1"></a>vec3 <span class="ot">&lt;-</span> <span class="fu">c</span>() <span class="co"># declare an empty vector</span></span>
+<span id="cb55-2"><a href="introduction.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate all the indices along vec1</span></span>
+<span id="cb55-3"><a href="introduction.html#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(vec1)) {</span>
+<span id="cb55-4"><a href="introduction.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  vec3[i] <span class="ot">&lt;-</span> vec1[i] <span class="sc">*</span> i <span class="co"># access with [idx]</span></span>
+<span id="cb55-5"><a href="introduction.html#cb55-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb55-6"><a href="introduction.html#cb55-6" aria-hidden="true" tabindex="-1"></a>vec3</span></code></pre></div>
+<pre><code>## [1]  4  6 27 20 40</code></pre>
+<p>Vector elements are selected with square
+brackets <code>[]</code>. Putting vectors inside brackets performs
+slicing</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="introduction.html#cb57-1" aria-hidden="true" tabindex="-1"></a>vec1[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="co"># first 3 elements</span></span></code></pre></div>
+<pre><code>## [1] 4 3 9</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="introduction.html#cb59-1" aria-hidden="true" tabindex="-1"></a>vec1[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="co"># only first and third element</span></span></code></pre></div>
+<pre><code>## [1] 4 9</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="introduction.html#cb61-1" aria-hidden="true" tabindex="-1"></a>vec1[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)] <span class="co"># all but elements 1 to 3</span></span></code></pre></div>
+<pre><code>## [1] 5 8</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="introduction.html#cb63-1" aria-hidden="true" tabindex="-1"></a>vec1[<span class="fu">seq</span>(<span class="dv">1</span>, <span class="fu">length</span>(vec1), <span class="dv">2</span>)] <span class="co"># odd position elements</span></span></code></pre></div>
+<pre><code>## [1] 4 9 8</code></pre>
+<p>To find an element in a vector and get its index/indices,
+the <code>which()</code> function can be used</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="introduction.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(vec1 <span class="sc">==</span> <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introduction.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(vec1 <span class="sc">&lt;</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>## [1] 1 2</code></pre>
+<p>And finally, to filter only values that satisfy a
+certain condition, we can combine <code>which</code> with
+splicing.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introduction.html#cb69-1" aria-hidden="true" tabindex="-1"></a>vec1[<span class="fu">which</span>(vec1 <span class="sc">&gt;=</span> <span class="dv">5</span>)]</span></code></pre></div>
+<pre><code>## [1] 9 5 8</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="introduction.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or, equivalently, using logical masking</span></span>
+<span id="cb71-2"><a href="introduction.html#cb71-2" aria-hidden="true" tabindex="-1"></a>vec1[vec1 <span class="sc">&gt;=</span> <span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] 9 5 8</code></pre>
+</div>
+<div id="matrices" class="section level4 hasAnchor" number="1.4.2.2">
+<h4><span class="header-section-number">1.4.2.2</span> Matrices<a href="introduction.html#matrices" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Matrices are built with <code>matrix()</code></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="introduction.html#cb73-1" aria-hidden="true" tabindex="-1"></a>mat1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>,</span>
+<span id="cb73-2"><a href="introduction.html#cb73-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb73-3"><a href="introduction.html#cb73-3" aria-hidden="true" tabindex="-1"></a>mat1 <span class="co"># filled column-wise (default)</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    7   13   19
+## [2,]    2    8   14   20
+## [3,]    3    9   15   21
+## [4,]    4   10   16   22
+## [5,]    5   11   17   23
+## [6,]    6   12   18   24</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introduction.html#cb75-1" aria-hidden="true" tabindex="-1"></a>mat2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>,</span>
+<span id="cb75-2"><a href="introduction.html#cb75-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">nrow =</span> <span class="dv">6</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb75-3"><a href="introduction.html#cb75-3" aria-hidden="true" tabindex="-1"></a>mat2 <span class="co"># filled row-wise</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    2    3    4
+## [2,]    5    6    7    8
+## [3,]    9   10   11   12
+## [4,]   13   14   15   16
+## [5,]   17   18   19   20
+## [6,]   21   22   23   24</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introduction.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mat2) <span class="co"># get dimensions</span></span></code></pre></div>
+<pre><code>## [1] 6 4</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="introduction.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">nrow</span>(mat2), <span class="fu">ncol</span>(mat2)) <span class="co"># get number of rows and cols separately</span></span></code></pre></div>
+<pre><code>## [1] 6 4</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="introduction.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or, equivalently </span></span>
+<span id="cb81-2"><a href="introduction.html#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(mat2)[<span class="dv">1</span>] <span class="co"># nrow</span></span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<p>All indexing operations available on vectors, are also available on
+matrices</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="introduction.html#cb83-1" aria-hidden="true" tabindex="-1"></a>mat2[<span class="dv">1</span>, <span class="dv">1</span>] <span class="co"># element 1,1</span></span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="introduction.html#cb85-1" aria-hidden="true" tabindex="-1"></a>mat2[<span class="dv">3</span>, ] <span class="co"># third row (empty space for all elements)</span></span></code></pre></div>
+<pre><code>## [1]  9 10 11 12</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="introduction.html#cb87-1" aria-hidden="true" tabindex="-1"></a>mat2[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="co"># upper left 2x2 sub-matrix</span></span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]    1    2
+## [2,]    5    6</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="introduction.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(mat2) <span class="co"># transposed matrix</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    5    9   13   17   21
+## [2,]    2    6   10   14   18   22
+## [3,]    3    7   11   15   19   23
+## [4,]    4    8   12   16   20   24</code></pre>
+<p>Operations with matrix and vectors can be both element-wise
+and matrix operations (e.g. scalar product).
+Note that a vector built with <code>c()</code> is a column vector by default.
+Some examples:</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="introduction.html#cb91-1" aria-hidden="true" tabindex="-1"></a>diagonal_mat <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="at">nrow =</span> <span class="dv">4</span>) <span class="co"># 4x4 identity matrix</span></span>
+<span id="cb91-2"><a href="introduction.html#cb91-2" aria-hidden="true" tabindex="-1"></a> <span class="co"># element by element</span></span>
+<span id="cb91-3"><a href="introduction.html#cb91-3" aria-hidden="true" tabindex="-1"></a>diagonal_mat <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span> <span class="co"># note: 1:2 is repeated to match the matrix dimensions </span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    2    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    2</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="introduction.html#cb93-1" aria-hidden="true" tabindex="-1"></a>diagonal_mat <span class="sc">%*%</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">2</span>) <span class="co"># matrix multiplication (4,4) x (4, 1) -&gt; (4, 1)</span></span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    2
+## [2,]    4
+## [3,]    6
+## [4,]    8</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="introduction.html#cb95-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb95-2"><a href="introduction.html#cb95-2" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span></span>
+<span id="cb95-3"><a href="introduction.html#cb95-3" aria-hidden="true" tabindex="-1"></a>v1 <span class="sc">%*%</span> v2 <span class="co"># here v1 is implicitly converted to row vector</span></span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]   20</code></pre>
+</div>
+<div id="arrays" class="section level4 hasAnchor" number="1.4.2.3">
+<h4><span class="header-section-number">1.4.2.3</span> Arrays<a href="introduction.html#arrays" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Arrays are multi-dimensional vectors (generalization
+of a matrix with more than two dimensions).
+They work pretty much like matrices.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="introduction.html#cb97-1" aria-hidden="true" tabindex="-1"></a>arr1 <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>, <span class="at">dim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb97-2"><a href="introduction.html#cb97-2" aria-hidden="true" tabindex="-1"></a>arr1</span></code></pre></div>
+<pre><code>## , , 1
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    3    5    7
+## [2,]    2    4    6    8
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    9   11   13   15
+## [2,]   10   12   14   16
+## 
+## , , 3
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]   17   19   21   23
+## [2,]   18   20   22   24</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="introduction.html#cb99-1" aria-hidden="true" tabindex="-1"></a>arr1[<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>] <span class="co"># get one element</span></span></code></pre></div>
+<pre><code>## [1] 18</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="introduction.html#cb101-1" aria-hidden="true" tabindex="-1"></a>sliced_arr <span class="ot">&lt;-</span> arr1[, <span class="dv">2</span>, ] <span class="co"># slice at column 2</span></span>
+<span id="cb101-2"><a href="introduction.html#cb101-2" aria-hidden="true" tabindex="-1"></a>sliced_arr</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    3   11   19
+## [2,]    4   12   20</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="introduction.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sliced_arr) <span class="co"># reduces ndims by one (dimension selected is dropped)</span></span></code></pre></div>
+<pre><code>## [1] 2 3</code></pre>
+</div>
+</div>
+<div id="lists-and-dataframes" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> Lists and dataframes<a href="introduction.html#lists-and-dataframes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Lists are containers that can hold different data types. Each entry,
+which can even be another list, has a position in the list and can also
+be named.</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="introduction.html#cb105-1" aria-hidden="true" tabindex="-1"></a>list1  <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="cn">TRUE</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))</span>
+<span id="cb105-2"><a href="introduction.html#cb105-2" aria-hidden="true" tabindex="-1"></a>list1</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] 1 2 3
+## 
+## [[2]]
+## [1] TRUE
+## 
+## $x
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="introduction.html#cb107-1" aria-hidden="true" tabindex="-1"></a>list1[[<span class="dv">3</span>]] <span class="co"># access with through index</span></span></code></pre></div>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="introduction.html#cb109-1" aria-hidden="true" tabindex="-1"></a>list1<span class="sc">$</span>x <span class="co"># access through name</span></span></code></pre></div>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<p>Dataframes are collections of columns that have the same length.
+Contrarily to matrices, columns in dataframes can be of different types.
+They are the most common way of representing structured data and
+most of the dataset will be stored in dataframes.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="introduction.html#cb111-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,</span>
+<span id="cb111-2"><a href="introduction.html#cb111-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">char =</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>), <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb111-3"><a href="introduction.html#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-4"><a href="introduction.html#cb111-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="co"># x was set to just one value and gets repeated (&#39;recycled&#39;)</span></span></code></pre></div>
+<pre><code>##    x  y char
+## 1  1  1    b
+## 2  1  2    a
+## 3  1  3    a
+## 4  1  4    a
+## 5  1  5    b
+## 6  1  6    a
+## 7  1  7    a
+## 8  1  8    a
+## 9  1  9    a
+## 10 1 10    b</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
+<pre><code>##  [1] &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot;</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
+<pre><code>##   x y char
+## 2 1 2    a
+## 3 1 3    a
+## 4 1 4    a</code></pre>
+<p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
+the effective features of Base R <code>data.frame</code> and none of the
+deprecated functionalities. It’s simply a newer version of dataframes (therefore
+recommended over the old one).</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="introduction.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tibble&quot;</span>)</span>
+<span id="cb121-2"><a href="introduction.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">z =</span> x <span class="sc">/</span> y) <span class="co"># tibble dataframe </span></span></code></pre></div>
+<pre><code>## # A tibble: 15 × 3
+##        x     y     z
+##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1     1     1     1
+##  2     2     1     2
+##  3     3     1     3
+##  4     4     1     4
+##  5     5     1     5
+##  6     6     1     6
+##  7     7     1     7
+##  8     8     1     8
+##  9     9     1     9
+## 10    10     1    10
+## 11    11     1    11
+## 12    12     1    12
+## 13    13     1    13
+## 14    14     1    14
+## 15    15     1    15</code></pre>
+<p>For more information on tibble and its advantages with respect to traditional
+dataframes, type <code>vignette("tibble")</code> in an R console.
+Notice that you can convert datasets to tibble with <code>as_tibble()</code>, while
+with <code>as.data.frame()</code> you will get a Base R dataframe.</p>
+</div>
+</div>
+<div id="data-manipulation" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Data manipulation<a href="introduction.html#data-manipulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that we know what a dataframe is and how it is generated,
+we can focus on data manipulation.</p>
+<p>The <code>dplyr</code> library provides an intuitive way of working with datasets.
+For instance, let’s consider the <code>mtcars</code> dataset.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="introduction.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="introduction.html#cb127-1" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>modelname <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mtcars) <span class="co"># name column with models</span></span>
+<span id="cb127-2"><a href="introduction.html#cb127-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(mtcars) <span class="co"># convert to tibble</span></span>
+<span id="cb127-3"><a href="introduction.html#cb127-3" aria-hidden="true" tabindex="-1"></a>mtcars <span class="co"># display the raw data</span></span></code></pre></div>
+<pre><code>## # A tibble: 32 × 12
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb modelname  
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      
+##  1  21       6  160    110  3.9   2.62  16.5     0     1     4     4 Mazda RX4  
+##  2  21       6  160    110  3.9   2.88  17.0     0     1     4     4 Mazda RX4 …
+##  3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1 Datsun 710 
+##  4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1 Hornet 4 D…
+##  5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2 Hornet Spo…
+##  6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1 Valiant    
+##  7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4 Duster 360 
+##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2 Merc 240D  
+##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2 Merc 230   
+## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4 Merc 280   
+## # … with 22 more rows</code></pre>
+<p>Let’s say we want to get the cars with more than 100 hp, and we are just
+interested in the car model name and we want the data to be sorted in alphabetic
+order.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="introduction.html#cb129-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="co"># send the data into the transformation pipe</span></span>
+<span id="cb129-2"><a href="introduction.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(hp <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="co"># filter rows with hp &gt; 100</span></span>
+<span id="cb129-3"><a href="introduction.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(modelname) <span class="sc">%&gt;%</span> <span class="co"># filter columns (select only modelname col)</span></span>
+<span id="cb129-4"><a href="introduction.html#cb129-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(modelname) <span class="co"># display in alphabetic order</span></span></code></pre></div>
+<pre><code>## # A tibble: 23 × 1
+##    modelname         
+##    &lt;chr&gt;             
+##  1 AMC Javelin       
+##  2 Cadillac Fleetwood
+##  3 Camaro Z28        
+##  4 Chrysler Imperial 
+##  5 Dodge Challenger  
+##  6 Duster 360        
+##  7 Ferrari Dino      
+##  8 Ford Pantera L    
+##  9 Hornet 4 Drive    
+## 10 Hornet Sportabout 
+## # … with 13 more rows</code></pre>
+<p>There are many other dplyr functions for data transformation. This useful
+<a href="https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf">cheatsheet</a>
+summarizes most of them for quick access.</p>
+</div>
+<div id="plotting" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Plotting<a href="introduction.html#plotting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In base R plots are built with several calls to functions, each of which
+edit the current canvas. For instance, to plot some points and a line:</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="introduction.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate synthetic data</span></span>
+<span id="cb131-2"><a href="introduction.html#cb131-2" aria-hidden="true" tabindex="-1"></a>n_points <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb131-3"><a href="introduction.html#cb131-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>n_points</span>
+<span id="cb131-4"><a href="introduction.html#cb131-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">rnorm</span>(n_points) </span>
+<span id="cb131-5"><a href="introduction.html#cb131-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb131-6"><a href="introduction.html#cb131-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb131-7"><a href="introduction.html#cb131-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>However, the <code>ggplot</code> library is now the new standard plotting library.
+In ggplot, a plot is decomposed in three main components: data, coordinate
+system and visual marks, called <em>geoms</em>.
+The plot is built by stacking up layers of visualization objects.
+Data is in form of dataframes and the columns are selected in the aesthetics
+arguments.</p>
+<p>The same plot shown before can be drawn with ggplot in the following way.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="introduction.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb132-2"><a href="introduction.html#cb132-2" aria-hidden="true" tabindex="-1"></a>gg_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb132-3"><a href="introduction.html#cb132-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-4"><a href="introduction.html#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gg_df) <span class="sc">+</span></span>
+<span id="cb132-5"><a href="introduction.html#cb132-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb132-6"><a href="introduction.html#cb132-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>This is just a brief example. More will be seen in the next lessons.
+Check out this
+<a href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf">cheatsheet</a>
+for quick look-up on ggplot functions.</p>
+</div>
+<div id="examples-plot-and-data-manipulation" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Examples: plot and data manipulation<a href="introduction.html#examples-plot-and-data-manipulation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Combining altogether, here a data visualization workflow on the
+<a href="https://www.gapminder.org/data/">Gapminder</a> dataset.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="introduction.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb133-2"><a href="introduction.html#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="co"># have a quick look at the Gapminder dataset</span></span>
+<span id="cb133-3"><a href="introduction.html#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gapminder)</span></code></pre></div>
+<pre><code>## tibble [1,704 × 6] (S3: tbl_df/tbl/data.frame)
+##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int [1:1704] 1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num [1:1704] 28.8 30.3 32 34 36.1 ...
+##  $ pop      : int [1:1704] 8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num [1:1704] 779 821 853 836 740 ...</code></pre>
+<p>A factor, which we haven’t seen yet, is just a data-type characterizing a
+discrete categorical variable; the levels of a factor describe how many
+distinct categories it can take value from (e.g. the variable <code>continent</code> takes
+values from the set <code>{Africa, Americas, Asia, Europe, Oceania}</code>).</p>
+<p>Let’s say we want to compare the GDP per capita of some
+different countries (Italy, Japan, Brasil and Ethiopia),
+plotted against time (year by year).</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="introduction.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transform the dataset according to what is necessary</span></span>
+<span id="cb135-2"><a href="introduction.html#cb135-2" aria-hidden="true" tabindex="-1"></a>wanted_countries <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Italy&quot;</span>, <span class="st">&quot;Japan&quot;</span>, <span class="st">&quot;Brazil&quot;</span>, <span class="st">&quot;Ethiopia&quot;</span>)</span>
+<span id="cb135-3"><a href="introduction.html#cb135-3" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb135-4"><a href="introduction.html#cb135-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries) <span class="sc">%&gt;%</span></span>
+<span id="cb135-5"><a href="introduction.html#cb135-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># now feed the filtered data to ggplot (using the pipe op)</span></span>
+<span id="cb135-6"><a href="introduction.html#cb135-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb135-7"><a href="introduction.html#cb135-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, gdpPercap, <span class="at">color =</span> country))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>If we want to add some information about the same measure over the whole
+continent, showing for instance the boundaries of GDP among all countries
+in the same continent of the four selected countries, this
+is more or less what we can do</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="introduction.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># give all the data to ggplot, we&#39;ll filter later</span></span>
+<span id="cb136-2"><a href="introduction.html#cb136-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb136-3"><a href="introduction.html#cb136-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb136-4"><a href="introduction.html#cb136-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
+<span id="cb136-5"><a href="introduction.html#cb136-5" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries),</span>
+<span id="cb136-6"><a href="introduction.html#cb136-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(year, gdpPercap, <span class="at">color =</span> country)) <span class="sc">+</span> </span>
+<span id="cb136-7"><a href="introduction.html#cb136-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now group by continent and get the upper/lower bounds</span></span>
+<span id="cb136-8"><a href="introduction.html#cb136-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span></span>
+<span id="cb136-9"><a href="introduction.html#cb136-9" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(gdpPercap)) <span class="sc">%&gt;%</span> <span class="co"># min(NA) = NA, make sure NAs are excluded</span></span>
+<span id="cb136-10"><a href="introduction.html#cb136-10" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span> <span class="co"># gather all entries for each continent separately</span></span>
+<span id="cb136-11"><a href="introduction.html#cb136-11" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">minGdp =</span> <span class="fu">min</span>(gdpPercap), <span class="at">maxGdp =</span> <span class="fu">max</span>(gdpPercap), <span class="fu">across</span>()) <span class="sc">%&gt;%</span> <span class="co"># compute aggregated quantity (min/max)</span></span>
+<span id="cb136-12"><a href="introduction.html#cb136-12" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries),</span>
+<span id="cb136-13"><a href="introduction.html#cb136-13" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">ymin =</span> minGdp, <span class="at">ymax =</span> maxGdp,</span>
+<span id="cb136-14"><a href="introduction.html#cb136-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> year, <span class="at">color =</span> country, <span class="at">fill =</span> country),</span>
+<span id="cb136-15"><a href="introduction.html#cb136-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="ot">-&gt;</span> plt</span>
+<span id="cb136-16"><a href="introduction.html#cb136-16" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;continent&#39;, &#39;year&#39;. You can override using
+## the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+But, since it looks a bit confusing, we might want four separate plots.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="introduction.html#cb138-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
+<span id="cb138-2"><a href="introduction.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries) <span class="sc">%&gt;%</span></span>
+<span id="cb138-3"><a href="introduction.html#cb138-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(continent) <span class="sc">%&gt;%</span> <span class="co"># extract one column from a dataframe (different from select)</span></span>
+<span id="cb138-4"><a href="introduction.html#cb138-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="ot">-&gt;</span> wanted_continents</span>
+<span id="cb138-5"><a href="introduction.html#cb138-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb138-6"><a href="introduction.html#cb138-6" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb138-7"><a href="introduction.html#cb138-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(continent <span class="sc">%in%</span> wanted_continents) <span class="sc">%&gt;%</span></span>
+<span id="cb138-8"><a href="introduction.html#cb138-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb138-9"><a href="introduction.html#cb138-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> </span>
+<span id="cb138-10"><a href="introduction.html#cb138-10" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries),</span>
+<span id="cb138-11"><a href="introduction.html#cb138-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(year, gdpPercap, <span class="at">color =</span> country)) <span class="sc">+</span> </span>
+<span id="cb138-12"><a href="introduction.html#cb138-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># now group by continent and get the upper/lower bounds</span></span>
+<span id="cb138-13"><a href="introduction.html#cb138-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_ribbon</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span></span>
+<span id="cb138-14"><a href="introduction.html#cb138-14" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(gdpPercap)) <span class="sc">%&gt;%</span> <span class="co"># min(NA) = NA, make sure NAs are excluded</span></span>
+<span id="cb138-15"><a href="introduction.html#cb138-15" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span> <span class="co"># gather all entries for each continent separately</span></span>
+<span id="cb138-16"><a href="introduction.html#cb138-16" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">minGdp =</span> <span class="fu">min</span>(gdpPercap), <span class="at">maxGdp =</span> <span class="fu">max</span>(gdpPercap), <span class="fu">across</span>()) <span class="sc">%&gt;%</span> <span class="co"># compute aggregated quantity (min/max)</span></span>
+<span id="cb138-17"><a href="introduction.html#cb138-17" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries),</span>
+<span id="cb138-18"><a href="introduction.html#cb138-18" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">ymin =</span> minGdp, <span class="at">ymax =</span> maxGdp,</span>
+<span id="cb138-19"><a href="introduction.html#cb138-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> year, <span class="at">color =</span> country, <span class="at">fill =</span> country),</span>
+<span id="cb138-20"><a href="introduction.html#cb138-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb138-21"><a href="introduction.html#cb138-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(continent)) <span class="sc">+</span></span>
+<span id="cb138-22"><a href="introduction.html#cb138-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">&quot;Country GDP per capita compared with&quot;</span>,</span>
+<span id="cb138-23"><a href="introduction.html#cb138-23" aria-hidden="true" tabindex="-1"></a>           <span class="st">&quot;continent lower and upper bounds&quot;</span>),</span>
+<span id="cb138-24"><a href="introduction.html#cb138-24" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;GDP per capita (PPP dollars)&quot;</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;continent&#39;, &#39;year&#39;. You can override using
+## the `.groups` argument.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+</div>
+<div id="probability" class="section level2 hasAnchor" number="1.8">
+<h2><span class="header-section-number">1.8</span> Probability<a href="introduction.html#probability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Base R provide functions to handle almost any probability distribution.
+These functions are usually divided into four categories:</p>
+<ul>
+<li>density function</li>
+<li>distribution function</li>
+<li>quantile function</li>
+<li>random function (sampling)</li>
+</ul>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction.html#cb140-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb140-2"><a href="introduction.html#cb140-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
+<span id="cb140-3"><a href="introduction.html#cb140-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
+<pre><code>##  [1] -1.116223972 -1.100568677 -1.130466838  0.001286327 -0.601195239
+##  [6] -0.483271908  0.312010652 -0.090273060  2.202108137 -0.769163806</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># compute the density function (over another Normal)</span></span></code></pre></div>
+<pre><code>##  [1] 0.003106171 0.003261065 0.002971020 0.054130001 0.013540814 0.018274325
+##  [7] 0.095982197 0.044889145 0.390876986 0.008625153</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="introduction.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># cumulative distribution function</span></span></code></pre></div>
+<pre><code>##  [1] 0.1321631 0.1355422 0.1291398 0.5005132 0.2738550 0.3144513 0.6224838
+##  [8] 0.4640351 0.9861712 0.2208980</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="introduction.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># get the quantiles of a normal</span></span></code></pre></div>
+<pre><code>## [1] -1.644854  1.644854</code></pre>
+</div>
+<div id="extras" class="section level2 hasAnchor" number="1.9">
+<h2><span class="header-section-number">1.9</span> Extras<a href="introduction.html#extras" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="file-system-and-helper" class="section level3 hasAnchor" number="1.9.1">
+<h3><span class="header-section-number">1.9.1</span> File system and helper<a href="introduction.html#file-system-and-helper" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R language provides several tools for management of files and function help.
+Here some useful console commands. Note that most of them are also available
+on RStudio through the graphic interface (buttons).</p>
+<p>R saves all the variables and you can display them with <code>ls()</code>.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="introduction.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>()) <span class="co"># clear up the space removing all variables stored so far</span></span>
+<span id="cb148-2"><a href="introduction.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co"># let&#39;s add some variables</span></span>
+<span id="cb148-3"><a href="introduction.html#cb148-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb148-4"><a href="introduction.html#cb148-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x[x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>]</span>
+<span id="cb148-5"><a href="introduction.html#cb148-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb148-6"><a href="introduction.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span>() <span class="co"># check variables in the environment</span></span></code></pre></div>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot;</code></pre>
+<p>The working directory is the folder located on your computer from which R
+navigates the filesystem.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="introduction.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>() <span class="co"># check your wd</span></span></code></pre></div>
+<pre><code>## [1] &quot;/Users/zemp/phd/teach_ms/statistical-models-r&quot;</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="introduction.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;./tmp&quot;</span>) <span class="co"># set the working directory to an arbitrary (existing) folder</span></span>
+<span id="cb152-2"><a href="introduction.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="co"># save the current environment</span></span>
+<span id="cb152-3"><a href="introduction.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;./01_test.RData&quot;</span>)</span>
+<span id="cb152-4"><a href="introduction.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="co"># check that it&#39;s on the working directory</span></span>
+<span id="cb152-5"><a href="introduction.html#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>()</span></code></pre></div>
+<p>RStudio typically save the environment automatically,
+but sometimes (if not every time you close R) you should
+clear the environment variables, because loading many variables
+when opening RStudio might fill up too much memory.</p>
+<p>You can also read function helpers simply by typing <code>?function_name</code>. This
+will open a formatted page with information about a specific R function or object.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="introduction.html#cb153-1" aria-hidden="true" tabindex="-1"></a>?quit <span class="co"># help for the quit function</span></span>
+<span id="cb153-2"><a href="introduction.html#cb153-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb153-3"><a href="introduction.html#cb153-3" aria-hidden="true" tabindex="-1"></a>?Arithmetic <span class="co"># help for more general syntax information</span></span>
+<span id="cb153-4"><a href="introduction.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(Trig) <span class="co"># or use help(name)</span></span></code></pre></div>
+</div>
+<div id="packages" class="section level3 hasAnchor" number="1.9.2">
+<h3><span class="header-section-number">1.9.2</span> Packages<a href="introduction.html#packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Packages can be installed via command line using
+<code>install.packages("package_name")</code>, or through RStudio graphical interface.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="introduction.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="co"># the following function call is commented because package installation should</span></span>
+<span id="cb154-2"><a href="introduction.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="co"># not be included in a script (but you can find it commented, showing that the</span></span>
+<span id="cb154-3"><a href="introduction.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="co"># script requires a package as dependency)</span></span>
+<span id="cb154-4"><a href="introduction.html#cb154-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-5"><a href="introduction.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;tidyverse&quot;)</span></span></code></pre></div>
+<p>And then you can load the package with <code>library</code>.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="introduction.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ tidyr   1.2.1     ✔ stringr 1.4.1
+## ✔ readr   2.1.2     ✔ forcats 0.5.2
+## ✔ purrr   0.3.4     
+## ── Conflicts ────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div id="arrow-sign" class="section level3 hasAnchor" number="1.9.3">
+<h3><span class="header-section-number">1.9.3</span> Arrow sign<a href="introduction.html#arrow-sign" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The difference between <code>&lt;-</code> and <code>=</code> is not just programming <em>style</em> preference.
+Here an example where using <code>=</code> rather than <code>&lt;-</code> makes a difference:</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="introduction.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># gives error: argument &#39;b&#39; is not part of &#39;within&#39;</span></span>
+<span id="cb157-2"><a href="introduction.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a=</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), <span class="at">b =</span> a<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
+<pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="introduction.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
+<span id="cb159-2"><a href="introduction.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
+<pre><code>##              a            b
+## 1 -0.006336495 4.015117e-05
+## 2 -0.894681269 8.004546e-01</code></pre>
+<p>Although this event might never occur in one’s programming experience, it’s
+safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
+<p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes
+result to variables.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="introduction.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb161-2"><a href="introduction.html#cb161-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-3"><a href="introduction.html#cb161-3" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span></span>
+<span id="cb161-4"><a href="introduction.html#cb161-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">bmi =</span> mass <span class="sc">/</span> ((height <span class="sc">/</span> <span class="dv">100</span>) <span class="sc">^</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb161-5"><a href="introduction.html#cb161-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(bmi)) <span class="sc">%&gt;%</span></span>
+<span id="cb161-6"><a href="introduction.html#cb161-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb161-7"><a href="introduction.html#cb161-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">bmi =</span> <span class="fu">mean</span>(bmi)) <span class="sc">%&gt;%</span></span>
+<span id="cb161-8"><a href="introduction.html#cb161-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(bmi)) <span class="ot">-&gt;</span> x</span>
+<span id="cb161-9"><a href="introduction.html#cb161-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-10"><a href="introduction.html#cb161-10" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## # A tibble: 32 × 2
+##    species          bmi
+##    &lt;chr&gt;          &lt;dbl&gt;
+##  1 Hutt           443. 
+##  2 Vulptereen      50.9
+##  3 Yoda&#39;s species  39.0
+##  4 Kaleesh         34.1
+##  5 Droid           32.7
+##  6 Dug             31.9
+##  7 Trandoshan      31.3
+##  8 Sullustan       26.6
+##  9 Zabrak          26.1
+## 10 Besalisk        26.0
+## # … with 22 more rows</code></pre>
+</div>
+</div>
+<div id="exercises" class="section level2 hasAnchor" number="1.10">
+<h2><span class="header-section-number">1.10</span> Exercises<a href="introduction.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>LogSumExp trick</li>
+</ol>
+<p>Try to implement the log-sum-exp trick in a function that takes as argument
+three <code>numeric</code> variables and computed the log of the sum of the exponentials
+in a numerically stable way.
+See this
+<a href="https://en.wikipedia.org/wiki/LogSumExp#log-sum-exp_trick_for_log-domain_calculations">Wiki paragraph</a>
+if you don’t know the trick yet.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="introduction.html#cb163-1" aria-hidden="true" tabindex="-1"></a>log_sum_exp3 <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b, c) {</span>
+<span id="cb163-2"><a href="introduction.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># delete this function and re-write it using the trick</span></span>
+<span id="cb163-3"><a href="introduction.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in order to make it work</span></span>
+<span id="cb163-4"><a href="introduction.html#cb163-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">log</span>(<span class="fu">exp</span>(a) <span class="sc">+</span> <span class="fu">exp</span>(b) <span class="sc">+</span> <span class="fu">exp</span>(c)))</span>
+<span id="cb163-5"><a href="introduction.html#cb163-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb163-6"><a href="introduction.html#cb163-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-7"><a href="introduction.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="co"># test - this result is obviously wrong: edit the function above</span></span>
+<span id="cb163-8"><a href="introduction.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="fu">log_sum_exp3</span>(<span class="at">a =</span> <span class="sc">-</span><span class="dv">1000</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">1001</span>, <span class="at">c =</span> <span class="sc">-</span><span class="dv">999</span>) <span class="co"># should give -998.5924</span></span></code></pre></div>
+<pre><code>## [1] -Inf</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="some-elementary-statistics-problems.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01_intro.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
