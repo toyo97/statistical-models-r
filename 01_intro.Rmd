@@ -1,0 +1,712 @@
+# Introduction
+
+## R and RStudio
+
+- [**R**](https://www.r-project.org/): programming language, tailored for
+statisticians
+- [**RStudio**](https://www.rstudio.com/): development environment, software for
+editing and running R (and Python) applications
+  
+  It's going to change name soon, see [Posit](https://posit.co/)
+  
+### Installation
+
+First install R programming language (from [here](https://cran.rstudio.com/)),
+then RStudio environment (from
+[here](https://www.rstudio.com/products/rstudio/download/#download)).
+
+## R syntax
+
+Here a brief overview of the main components of the R language.
+
+*Note: this is not a complete guide on the language nor on programming in*
+*general, but rather a quick-start introduction with the most used operations*
+*and structures, which assumes some very basic programming skills.*
+*For all the rest, Google is your friend (it really is).*
+
+### Basic operations
+
+R can be used as a fully featured calculator, typically directly
+from the console (see bottom panel in RStudio).
+
+Some examples:
+```{r}
+2 + 2 # calculator-style
+c(1, 2, 3) * 4 # vector operations
+t(matrix(c(c(1, 2, 3, 4)),
+         nrow = 2, ncol = 2)) # matrix operations (transpose) 
+```
+As any other programming language, it allows for variables declaration.
+Variables hold a value which can be assigned, modified, and used for
+other computations.
+```{r}
+a <- 2 # assign values to variables
+b = a + 2 # equal sign also valid, but...
+b
+```
+The arrow sign `<-` is the traditional sign for the assignment operation, 
+but also `=` works. Check [this examples](#arrow-sign) to see why `<-` 
+is recommended.
+
+Conditional statements and loops have straightforward syntax (similar to C/C++
+, but more compact).
+```{r}
+if (b == 4 & a > 0) { # if-else statement
+  out <- ""
+  for (i in 1:b) { # for loop
+    out <- paste(out, class(b)) # concatenate two or more strings
+  }
+  print(out) # print string to output
+} else {
+  stop("error") # stop program and exit
+}
+```
+
+While `<-` is only used for variable assignment, i.e. filling up the variable
+allocated space with some value, the `=` is both used for assignment and
+function argument passing (as introduced in [Functions](#functions)).
+
+## Functions
+
+Functions are called with the `()` operator and present named arguments.
+```{r}
+# get Normal samples with 0 (default) mean and 10 standard deviation
+array <- rnorm(10, sd = 10) # sd is an argument, 
+                            # the mean is left to the default 0
+array
+```
+You can explicitly call the arguments to which you want to pass the parameters
+(e.g. sd of the Gaussian). In this case it is necessary, because the second
+position argument is the mean, but we want it to be the default.
+
+### Definition
+
+To define a custom function
+
+```{r}
+# implements power operation
+#'
+#' @param x a real number
+#' @param n a natural number, defaults to 2
+#' @return n-th power of x
+pow <- function(x, n = 2) {
+  ans <- 1
+  if (n > 0) {
+    for (i in 1:n) {
+      ans <- ans * x
+    }
+  } else if (n == 0) {
+    # do nothing, ans is already set to 1
+  } else {
+    stop("error: n must be non-negative")
+  }
+  return(ans)
+}
+
+print(paste("3^5 = ", pow(3, 5),
+            ", 4^2 = ", pow(4),
+            ", 5^0 = ", pow(5, 0)))
+```
+The `return()` call can be omitted (but it's better not to).
+
+```{r, eval=FALSE}
+pow <- function(a, b) {
+  ans <- 1
+  # ...
+  # last expression is returned
+  ans # this is equivalent to write return(ans)
+}
+```
+
+
+## Data types
+
+Every variable in R is an object, which holds a value (or collection of values) and some other attributes, properties or methods.
+
+### Base types
+
+There are 5 basic data types:
+
+- **numeric** (real numbers)
+- **integer**
+- **logical** (aka boolean)
+- **character**
+- **complex** (complex numbers)
+
+#### Numeric
+When you write numbers in R, they are going to
+default to numeric type values
+
+```{r}
+a <- 3.4 # decimal
+b <- -.30 # signed decimal
+c <- 42 # also without dot, it's numeric
+
+print(paste0("data types | a:", class(a),
+            ", b:", class(b),
+            ", c:", class(c)))
+
+```
+#### Integer
+
+Integer numbers can be enforced typing an `L` next to the digits.
+Casting is implicit when the result of an operation involving integers
+is not an integer
+
+```{r}
+int_num <- 50L # 50 stored as integer
+
+non_casted_num <- int_num - 2L # result is exactly 48, still int
+casted_num <- int_num / 7L # implicit cast to numeric type to store decimals
+print(paste(class(int_num), class(non_casted_num), class(casted_num), sep = ", "))
+```
+
+#### Logical
+
+The `logical` type can only hold `TRUE` or `FALSE` (in capital letters)
+```{r}
+bool_a <- FALSE
+bool_b <- T # T and F are short for TRUE and FALSE
+bool_a | !bool_b # logical or between F and not-T
+```
+You can test the value of a boolean also using `0,1`
+```{r}
+bool_a == 0 # if 'A' is not equal to 'not B', raise an error
+```
+and a sum between logical values, treats `FALSE = 0` and `TRUE = 1`,
+which is useful when counting true values in logical arrays
+```{r}
+bool_a + bool_b + bool_b # FALSE + TRUE + TRUE (it's not an OR operation)
+```
+#### Character
+
+A character is any number of characters enclosed in quotes `' '` or double
+quotes `" "`.
+```{r}
+char_a <- "," # single character
+char_b <- "bird" # string
+char_c <- 'word' # single quotes
+full_char <- paste(char_b, char_a, char_c) # concatenate chars
+class(full_char) # still a character
+```
+
+#### Complex
+
+```{r}
+complex_num <- 5 + 4i
+Mod(complex_num) # try all complex operations, e.g. modulus
+```
+
+#### Special values
+
+- `NA`: "not available", missing value
+- `Inf`: infinity
+- `NaN`: "not-a-number", undefined value
+
+```{r}
+missing_val <- NA
+is.na(missing_val) # test if value is missing
+```
+
+Every operation involving missing values, will output `NA`
+```{r}
+missing_val == NA # cannot use ==
+```
+```{r}
+print(paste(
+  "1/0 = ", 1/0,
+  ", 0/0 = ", 0/0
+))
+```
+These special values are not necessarily unwanted, but they require
+extra care. E.g. `Inf` can appear also in case of numerical *overflow*.
+```{r}
+exp(1000)
+```
+
+#### Conversion
+
+Variables types can be converted with `as.<typename>()`-like functions, as long
+as conversion makes sense. Some examples:
+
+```{r}
+v <- T
+w <- "0"
+x <- 3.2
+y <- 2L
+z <- "F"
+cat(paste( 
+  paste(x, as.integer(x), sep = " => "), # from numeric to integer
+  paste(y, as.numeric(y), sep = " => "), # from integer to numeric
+  paste(y, as.character(y), sep = " => "),  # from integer to character
+  paste(w, as.numeric(w), sep = " => "),  # from number-char to numeric
+  paste(v, as.numeric(v), sep = " => "), # from logical to numeric
+  sep = "\n"
+))
+```
+
+```{r, error=TRUE}
+as.numeric(z)  # from character to numeric (coercion warning - NA)
+```
+
+### Vectors and matrices
+
+#### Vectors
+
+Vectors are build with the `c()` function. 
+A vector holds values of the same type.
+
+```{r}
+vec1 <- c(4, 3, 9, 5, 8)
+vec1
+```
+Vector operations and aggregation of values is as intuitive as it can be.
+```{r}
+vec2 <- vec1 - 1 # subtract 1 to all values (broadcast)
+sum(vec1) # sum all values in vec1
+mean(vec2) # compute the mean
+sort(vec1, decreasing = TRUE) # sort elements in decreasing order
+```
+
+Conversion is still possible and it's made element by element.
+```{r}
+char_vec <- as.character(vec1) # convert every value in vec1 to char
+char_vec
+```
+
+Range vectors (unit-stepped intervals) are built with `start:end` syntax.
+Note: the type of range vectors is `integer`, not `numeric`.
+```{r}
+x_range <- 1:10
+class(x_range)
+```
+
+They are particularly useful in loops statements:
+```{r}
+vec3 <- c() # declare an empty vector
+# iterate all the indices along vec1
+for (i in 1:length(vec1)) {
+  vec3[i] <- vec1[i] * i # access with [idx]
+}
+vec3
+```
+
+Vector elements are selected with square
+brackets `[]`. Putting vectors inside brackets performs
+slicing
+
+```{r}
+vec1[1:3] # first 3 elements
+vec1[c(1,3)] # only first and third element
+vec1[-c(1:3)] # all but elements 1 to 3
+vec1[seq(1, length(vec1), 2)] # odd position elements
+```
+
+To find an element in a vector and get its index/indices,
+the `which()` function can be used
+
+```{r}
+which(vec1 == 3)
+which(vec1 < 5)
+```
+
+And finally, to filter only values that satisfy a 
+certain condition, we can combine `which` with 
+splicing.
+
+```{r}
+vec1[which(vec1 >= 5)]
+
+# or, equivalently, using logical masking
+vec1[vec1 >= 5]
+```
+
+#### Matrices
+
+Matrices are built with `matrix()`
+```{r}
+mat1 <- matrix(1:24,
+               nrow = 6, ncol = 4)
+mat1 # filled column-wise (default)
+```
+
+```{r}
+mat2 <- matrix(1:24,
+               nrow = 6, ncol = 4, byrow = TRUE)
+mat2 # filled row-wise
+```
+
+```{r}
+dim(mat2) # get dimensions
+c(nrow(mat2), ncol(mat2)) # get number of rows and cols separately
+
+# or, equivalently 
+dim(mat2)[1] # nrow
+```
+All indexing operations available on vectors, are also available on 
+matrices
+
+```{r}
+mat2[1, 1] # element 1,1
+mat2[3, ] # third row (empty space for all elements)
+mat2[1:2, 1:2] # upper left 2x2 sub-matrix
+t(mat2) # transposed matrix
+```
+
+Operations with matrix and vectors can be both element-wise
+and matrix operations (e.g. scalar product).
+Note that a vector built with `c()` is a column vector by default.
+Some examples:
+
+```{r}
+diagonal_mat <- diag(nrow = 4) # 4x4 identity matrix
+ # element by element
+diagonal_mat * 1:2 # note: 1:2 is repeated to match the matrix dimensions 
+diagonal_mat %*% seq(2, 8, 2) # matrix multiplication (4,4) x (4, 1) -> (4, 1)
+
+v1 <- 1:4
+v2 <- 4:1
+v1 %*% v2 # here v1 is implicitly converted to row vector
+```
+
+#### Arrays 
+
+Arrays are multi-dimensional vectors (generalization
+of a matrix with more than two dimensions).
+They work pretty much like matrices.
+
+```{r}
+arr1 <- array(1:24, dim = c(2, 4, 3))
+arr1
+arr1[2, 1, 3] # get one element
+sliced_arr <- arr1[, 2, ] # slice at column 2
+sliced_arr
+dim(sliced_arr) # reduces ndims by one (dimension selected is dropped)
+```
+
+### Lists and dataframes
+
+Lists are containers that can hold different data types. Each entry,
+which can even be another list, has a position in the list and can also
+be named.
+
+```{r}
+list1  <- list(1:3, TRUE, x = c("a", "b", "c"))
+list1
+list1[[3]] # access with through index
+list1$x # access through name
+```
+
+Dataframes are collections of columns that have the same length.
+Contrarily to matrices, columns in dataframes can be of different types.
+They are the most common way of representing structured data and 
+most of the dataset will be stored in dataframes.
+
+```{r}
+df1 <- data.frame(x = 1, y = 1:10,
+           char = sample(c("a", "b"), 10, replace = TRUE))
+
+df1 # x was set to just one value and gets repeated ('recycled')
+df1[[2]] # access through column index
+df1$x # access through column name
+df1[, 3] # access with matrix-style index
+df1[2:4, ] # can also select subset of rows
+```
+
+The `dplyr` library provides another dataframe object (called *tibble*) which has all 
+the effective features of Base R `data.frame` and none of the 
+deprecated functionalities. It's simply a newer version of dataframes (therefore
+recommended over the old one).
+
+```{r}
+library("tibble")
+tibble(x = 1:15, y = 1, z = x / y) # tibble dataframe 
+```
+
+For more information on tibble and its advantages with respect to traditional
+dataframes, type `vignette("tibble")` in an R console.
+Notice that you can convert datasets to tibble with `as_tibble()`, while 
+with `as.data.frame()` you will get a Base R dataframe.
+
+## Data manipulation
+
+Now that we know what a dataframe is and how it is generated,
+we can focus on data manipulation.
+
+The `dplyr` library provides an intuitive way of working with datasets.
+For instance, let's consider the `mtcars` dataset.
+
+```{r}
+library(dplyr)
+
+mtcars$modelname <- rownames(mtcars) # name column with models
+mtcars <- as_tibble(mtcars) # convert to tibble
+mtcars # display the raw data
+```
+Let's say we want to get the cars with more than 100 hp, and we are just
+interested in the car model name and we want the data to be sorted in alphabetic
+order.
+
+```{r}
+mtcars %>% # send the data into the transformation pipe
+  dplyr::filter(hp > 100) %>% # filter rows with hp > 100
+  dplyr::select(modelname) %>% # filter columns (select only modelname col)
+  dplyr::arrange(modelname) # display in alphabetic order
+```
+There are many other dplyr functions for data transformation. This useful
+[cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf)
+summarizes most of them for quick access.
+
+## Plotting
+
+In base R plots are built with several calls to functions, each of which
+edit the current canvas. For instance, to plot some points and a line:
+
+```{r}
+# generate synthetic data
+n_points <- 20
+x = 1:n_points
+y = 3 * x + 2 * rnorm(n_points) 
+
+plot(x, y)
+abline(a = 0, b = 3, col = 'red')
+```
+
+However, the `ggplot` library is now the new standard plotting library.
+In ggplot, a plot is decomposed in three main components: data, coordinate 
+system and visual marks, called *geoms*.
+The plot is built by stacking up layers of visualization objects.
+Data is in form of dataframes and the columns are selected in the aesthetics
+arguments.
+
+The same plot shown before can be drawn with ggplot in the following way.
+
+```{r}
+library(ggplot2)
+gg_df <- tibble(x = x, y = y)
+
+ggplot(gg_df) +
+  geom_point(mapping = aes(x, y)) +
+  geom_abline(mapping = aes(intercept = 0, slope = 3), color = "red")
+```
+
+This is just a brief example. More will be seen in the next lessons.
+Check out this
+[cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)
+for quick look-up on ggplot functions.
+
+## Examples: plot and data manipulation
+
+Combining altogether, here a data visualization workflow on the 
+[Gapminder](https://www.gapminder.org/data/) dataset.
+
+```{r}
+library(gapminder)
+# have a quick look at the Gapminder dataset
+str(gapminder)
+```
+A factor, which we haven't seen yet, is just a data-type characterizing a
+discrete categorical variable; the levels of a factor describe how many
+distinct categories it can take value from (e.g. the variable `continent` takes
+values from the set `{Africa, Americas, Asia, Europe, Oceania}`).
+
+Let's say we want to compare the GDP per capita of some
+different countries (Italy, Japan, Brasil and Ethiopia), 
+plotted against time (year by year).
+
+```{r}
+# transform the dataset according to what is necessary
+wanted_countries <- c("Italy", "Japan", "Brazil", "Ethiopia")
+gapminder %>%
+  dplyr::filter(country %in% wanted_countries) %>%
+  # now feed the filtered data to ggplot (using the pipe op)
+  ggplot() +
+    geom_line(aes(year, gdpPercap, color = country))
+```
+
+If we want to add some information about the same measure over the whole
+continent, showing for instance the boundaries of GDP among all countries
+in the same continent of the four selected countries, this
+is more or less what we can do
+
+```{r}
+# give all the data to ggplot, we'll filter later
+gapminder %>%
+  ggplot() +
+    geom_line(data = . %>% 
+      dplyr::filter(country %in% wanted_countries),
+              aes(year, gdpPercap, color = country)) + 
+    # now group by continent and get the upper/lower bounds
+    geom_ribbon(data = . %>%
+      dplyr::filter(!is.na(gdpPercap)) %>% # min(NA) = NA, make sure NAs are excluded
+      dplyr::group_by(continent, year) %>% # gather all entries for each continent separately
+      dplyr::summarize(minGdp = min(gdpPercap), maxGdp = max(gdpPercap), across()) %>% # compute aggregated quantity (min/max)
+      dplyr::filter(country %in% wanted_countries),
+              aes(ymin = minGdp, ymax = maxGdp,
+                  x = year, color = country, fill = country),
+              alpha = 0.1, linetype = "dashed", size = 0.2) -> plt
+plt
+```
+But, since it looks a bit confusing, we might want four separate plots.
+
+```{r}
+gapminder %>% 
+  dplyr::filter(country %in% wanted_countries) %>%
+  dplyr::pull(continent) %>% # extract one column from a dataframe (different from select)
+  unique() -> wanted_continents
+
+gapminder %>%
+  dplyr::filter(continent %in% wanted_continents) %>%
+  ggplot() +
+    geom_line(data = . %>% 
+      dplyr::filter(country %in% wanted_countries),
+              aes(year, gdpPercap, color = country)) + 
+    # now group by continent and get the upper/lower bounds
+    geom_ribbon(data = . %>%
+      dplyr::filter(!is.na(gdpPercap)) %>% # min(NA) = NA, make sure NAs are excluded
+      dplyr::group_by(continent, year) %>% # gather all entries for each continent separately
+      dplyr::summarize(minGdp = min(gdpPercap), maxGdp = max(gdpPercap), across()) %>% # compute aggregated quantity (min/max)
+      dplyr::filter(country %in% wanted_countries),
+              aes(ymin = minGdp, ymax = maxGdp,
+                  x = year, color = country, fill = country),
+              alpha = 0.1, linetype = "dashed", size = 0.2) +
+      facet_wrap(vars(continent)) +
+      labs(title = paste("Country GDP per capita compared with",
+           "continent lower and upper bounds"),
+           x = "year", y = "GDP per capita (PPP dollars)")
+```
+
+## Probability
+
+Base R provide functions to handle almost any probability distribution.
+These functions are usually divided into four categories:
+
+- density function
+- distribution function
+- quantile function
+- random function (sampling)
+
+```{r}
+n <- 10
+normal_samples <- rnorm(n = n, mean = 0, sd = 1) # sample 10 Gaussian samples
+normal_samples
+
+dnorm(normal_samples, mean = 2, sd = 1) # compute the density function (over another Normal)
+pnorm(normal_samples, mean = 0, sd = 1) # cumulative distribution function
+
+qnorm(c(0.05, 0.95), mean = 0, sd = 1) # get the quantiles of a normal
+```
+
+## Extras
+
+### File system and helper
+
+R language provides several tools for management of files and function help.
+Here some useful console commands. Note that most of them are also available
+on RStudio through the graphic interface (buttons).
+
+R saves all the variables and you can display them with `ls()`.
+```{r}
+rm(list = ls()) # clear up the space removing all variables stored so far
+# let's add some variables
+x <- 1:10
+y <- x[x %% 2 == 0]
+
+ls() # check variables in the environment
+```
+
+The working directory is the folder located on your computer from which R
+navigates the filesystem.
+```{r}
+getwd() # check your wd
+```
+```{r, eval=FALSE}
+setwd("./tmp") # set the working directory to an arbitrary (existing) folder
+# save the current environment
+save.image("./01_test.RData")
+# check that it's on the working directory
+dir()
+```
+RStudio typically save the environment automatically,
+but sometimes (if not every time you close R) you should
+clear the environment variables, because loading many variables 
+when opening RStudio might fill up too much memory.
+
+You can also read function helpers simply by typing `?function_name`. This
+will open a formatted page with information about a specific R function or object.
+
+```{r, eval=FALSE}
+?quit # help for the quit function
+
+?Arithmetic # help for more general syntax information
+help(Trig) # or use help(name)
+```
+
+### Packages
+
+Packages can be installed via command line using 
+`install.packages("package_name")`, or through RStudio graphical interface.
+```{r}
+# the following function call is commented because package installation should
+# not be included in a script (but you can find it commented, showing that the
+# script requires a package as dependency)
+
+# install.packages("tidyverse")
+
+```
+And then you can load the package with `library`.
+```{r}
+library(tidyverse)
+```
+
+### Arrow sign
+
+The difference between `<-` and `=` is not just programming *style* preference.
+Here an example where using `=` rather than `<-` makes a difference:
+
+```{r, error=TRUE}
+# gives error: argument 'b' is not part of 'within'
+within(data.frame(a= rnorm(2)), b = a^2) 
+# 'b<-a^2' is the value passed to the expr argument of within()
+within(data.frame(a = rnorm(2)), b <- a^2) 
+```
+Although this event might never occur in one's programming experience, it's
+safer (and more elegant) to use `<-` when assigning variable.
+
+Besides, `->` is also valid and it is used (more intuitive) when assigning pipes
+result to variables.
+
+```{r,message=FALSE}
+library(dplyr)
+
+starwars %>%
+  dplyr::mutate(bmi = mass / ((height / 100) ^ 2)) %>%
+  dplyr::filter(!is.na(bmi)) %>%
+  dplyr::group_by(species) %>%
+  dplyr::summarise(bmi = mean(bmi)) %>%
+  dplyr::arrange(desc(bmi)) -> x
+
+x
+```
+
+## Exercises
+
+1. LogSumExp trick
+
+Try to implement the log-sum-exp trick in a function that takes as argument
+three `numeric` variables and computed the log of the sum of the exponentials
+in a numerically stable way.
+See this
+[Wiki paragraph](https://en.wikipedia.org/wiki/LogSumExp#log-sum-exp_trick_for_log-domain_calculations)
+if you don't know the trick yet.
+
+```{r}
+log_sum_exp3 <- function(a, b, c) {
+  # delete this function and re-write it using the trick
+  # in order to make it work
+  return(log(exp(a) + exp(b) + exp(c)))
+}
+
+# test - this result is obviously wrong: edit the function above
+log_sum_exp3(a = -1000, b = -1001, c = -999) # should give -998.5924
+```
