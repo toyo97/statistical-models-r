@@ -19,4 +19,4 @@ github-repo: toyo97/statistical-models-r
 The book is built upon the course in Statistical Models at
 Politecnico di Torino, but it is self-contained and thus is 
 accessible by any interested reader. For any feedback, send me 
-an email: [](mailto:zampinetti@gmail.com). Thank you!
+an email: [zampinetti@gmail.com](mailto:zampinetti@gmail.com). Thank you!
