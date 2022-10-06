@@ -1,6 +1,8 @@
 --- 
 title: "Statistical Models in R"
-author: "Vittorio Zampinetti"
+author: 
+ - Vittorio Zampinetti^[Politecnico di Torino]
+ - Mauro Gasparini^[Politecnico di Torino]
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -11,7 +13,7 @@ description: |
   A modern R tutorial focused on statistical analysis and modeling.
 
 link-citations: yes
-nocite: '@*'
+# nocite: '@*'
 github-repo: toyo97/statistical-models-r
 ---
 
