@@ -3,6 +3,8 @@ _book/
 _bookdown_files/
 libs/
 **/*.bib
+# keep static references
+!**/book.bib
 **/*.html 
 # ignore all html files except:
 !**/mathjax_header.html
