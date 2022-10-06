@@ -1,0 +1,8 @@
+```{r, echo=FALSE}
+knitr::write_bib(c(.packages(), "bookdown"), "packages.bib")
+```
+
+`r if (knitr:::is_html_output()) '
+# References {-}
+'`
+

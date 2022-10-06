@@ -1,3 +1,7 @@
+```{r, echo=FALSE}
+rm(list = ls())
+```
+
 # Some elementary statistics problems
 
 In the following paragraphs, we will see some applications of the R
@@ -491,3 +495,9 @@ pnorm(z_corr, lower.tail = FALSE)
 ```
 
 > The bilateral case with Normal approximation is left to the reader as exercise
+
+## Requirements {-}
+
+```{r}
+.packages()
+```

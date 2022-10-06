@@ -1,0 +1,5 @@
+tidyverse
+scales
+dplyr
+ggplot2
+gapminder
