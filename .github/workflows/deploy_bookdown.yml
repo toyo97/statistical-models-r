@@ -49,9 +49,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
           EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
+          BUILD_DIR: _book/
         with:
           email: zampinetti@gmail.com
-          build_dir: _book                    # "_site/" by default
+          build_dir: _book/                    # "_site/" by default
 
     
  
