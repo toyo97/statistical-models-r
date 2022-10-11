@@ -1,7 +1,7 @@
-dplyr
-ggplot2
-gapminder
 tidyverse
 scales
 reshape2
 GGally
+dplyr
+ggplot2
+gapminder
