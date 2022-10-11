@@ -6,7 +6,7 @@ rm(list = ls())
 
 ## Iris Dataset
 
-Download the dataset at this link ([https://archive.ics.uci.edu/ml/datsets/iris](https://archive.ics.uci.edu/ml/datsets/iris))
+Download the dataset at this link ([https://archive.ics.uci.edu/ml/datasets/iris](https://archive.ics.uci.edu/ml/datasets/iris))
 (look for the `iris.data` file) and place the file together with your R script (for simplicity).
 At that web page, you can also get some information regarding the origin and
 nature of the data.
@@ -24,8 +24,18 @@ the function arguments. Also, you might need to manually add the column names.
 To check which column names should be added and in which order,
 check under **"attribute information"** on the dataset reference page linked above.
 
-```{r, echo=FALSE, message=FALSE}
+```{r, message=FALSE}
 library(tidyverse) # we will use tibble, dplyr, ggplot, readr, ...
+```
+
+```{r}
+iris_df <- read_csv("./datasets/iris.csv",
+  col_names = c(
+    "sepal_length", "sepal_width",
+    "petal_length", "petal_width", "class"
+  )
+)
+iris_df
 ```
 
 Answer these questions:
@@ -33,10 +43,32 @@ Answer these questions:
 - How many observations does the dataset consist of?
 - Which are the different classes?
 
+```{r}
+iris_df %>%
+  nrow()
+
+iris_df %>%
+  pull(class) %>%
+  unique()
+```
+
 ## Exploratory Data Analysis (EDA)
 
 First compute the mean and standard deviation of each measure for each
 class separately.
+
+```{r}
+iris_df %>%
+  group_by(class) %>%
+  summarize(
+    msl = mean(sepal_length), msw = mean(sepal_width),
+    mpl = mean(petal_length), mpw = mean(petal_width),
+    ssl = sd(sepal_length), ssw = sd(sepal_width),
+    spl = sd(petal_length), spw = sd(petal_width)
+  )
+```
+[//]: # TODO: maybe save this dataframe and use the statistics
+[//]: # to generate synthetic data as in the lab1 script datagen
 
 - What can you infer? Is there any measure which is more indicative of a certain class?
 
@@ -51,6 +83,16 @@ are from each other.
 transform the dataset, and then plot the various densities with
 color encoding on the four measures.
 
+```{r}
+library(reshape2)
+iris_df %>%
+  melt(value.name = "measure") %>% # collapse all measures in one col
+  # then add a column with the measure name
+  ggplot() +
+  geom_density(aes(measure, color = class)) +
+  facet_wrap(vars(variable), nrow = 2, scales = "free")
+```
+
 We can also visualize the four measures on a set of plots that shows
 the correlation between variables, two-by-two. This is easily
 done with a pair plot.
@@ -60,30 +102,62 @@ done with a pair plot.
 > Hint: install the package with `install.packages("GGally")` and load it with `library(GGally)`, then
 read the help document of the `ggpairs()` function. You can also use R base `pairs()` function.
 
+```{r}
+library(GGally)
+
+iris_df %>%
+  ggpairs(mapping = aes(color = class), columns = 1:4)
+```
 
 ## Confidence intervals
 
 Let's make our decision more statistically relevant.
 Select only one class, the Setosa type, and one measure, petal length.
 
-Now, under the null hypothesis $H_0: \mu = \mu_0$ where we fix $\mu_0$ to the
-sample mean of the setosa petal length measures, build a 95% CI around the mean value of the Setosa petal length.
+Now build a 95% CI around the mean value of the Setosa petal length.
 Assume $\sigma$ unknown.
 
-Formally, we want to find $x_l, x_u$ s.t.
+Formally, we want to find $x_l, x_u$ s.t. the true mean $\mu$
+of the Setosa petal length falls in the interval with probability 95%:
 
 $$
-P(x_l \leq \bar{X} \leq x_u) = 95\%\,.
+P(x_l \leq \mu \leq x_u) = 95\%\,.
 $$
 
 - Find such CI, using only R base operators (`mean`, `sd`).
 
 To do this, remember that
 
-- $\frac{(\bar{X} - \mu_0)\sqrt{n}}{s} \sim T(n-1)$ where $s$ is the sample standard deviation
+- $\frac{(\bar{X} - \mu)\sqrt{n}}{s} \sim T(n-1)$ where $s$ is the sample standard deviation
 - `qt()` is the R function for the t-distribution quantile
 
 - Validate your result by using `t.test()` to get the CI.
+
+```{r}
+setosa_petal_length <- iris_df %>%
+  filter(class == "Iris-setosa") %>%
+  pull(petal_length)
+
+alpha <- .05
+
+nspl <- length(setosa_petal_length)
+crit_t <- qt(1 - alpha / 2, nspl - 1) # critical value
+
+# retransform the critical value multiplying the se
+# and subtracting it to the sample mean
+xbar <- mean(setosa_petal_length)
+se <- sd(setosa_petal_length) / sqrt(nspl)
+delta <- crit_t * se
+
+ci <- c(xbar - delta, xbar + delta)
+ci
+```
+
+With `t.test`
+
+```{r}
+t.test(setosa_petal_length, conf.level = 0.95)
+```
 
 Compare this confidence interval to the mean and std-dev
 values you got for each class for the petal length measure.
@@ -116,14 +190,27 @@ to quantify our confidence.
 
 - What is the *p-value* of this sample, only looking at the 
   petal length, against the null hypothesis that the
-  samples are coming from the Setosa type?
+  samples are coming from the Setosa type? We set the null
+  hypothesis to be $H_0: \mu = \mu_0 = \bar{x}$
 
   Remember that the *p-value* is defined as
 
-$$ P\left(T \geq \frac{(\bar{\mathbf{x}} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)$$
+$$ P\left(T \geq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)$$
 
 - Based on the value you found, what can you say
   about the class of this sample?
+
+```{r}
+# manually
+mu0 <- xbar
+nx <- nrow(x_sample)
+t_stat <- (mean(x_sample$petal_length) - mu0) * sqrt(nx) /
+  sd(x_sample$petal_length)
+pt(t_stat, df = nx - 1, lower.tail = FALSE)
+
+# with t-test
+t.test(x_sample$petal_length, mu = mu0)
+```
 
 Now take this other sample:
 
@@ -140,4 +227,17 @@ y_sample <- tibble(
 - Is it higher or lower than 0.025?
 - Could we guess the answer to this last question
   without computing it?
+
+```{r}
+# manually
+ny <- nrow(y_sample)
+t_stat <- (mean(y_sample$petal_length) - mu0) * sqrt(ny) / sd(y_sample$petal_length)
+pt(t_stat, df = ny - 1, lower.tail = FALSE)
+
+# with t-test
+t.test(y_sample$petal_length, mu = mu0)
+```
+
+[//]: # Hint: check the confidence interval, which has
+[//]: # 0.025 at the boundaries
 

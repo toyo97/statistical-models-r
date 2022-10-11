@@ -2,3 +2,10 @@ delete_merged_file: true
 language:
   ui:
     chapter_name: "Chapter "
+rmd_files: [
+  "index.Rmd",
+  "./lessons/01_intro.Rmd",
+  "./lessons/02_elementary_stat.Rmd",
+  "./labs/L01_iris.Rmd",
+  "tail.Rmd"
+]

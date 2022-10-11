@@ -1,5 +1,7 @@
-tidyverse
-scales
 dplyr
 ggplot2
 gapminder
+tidyverse
+scales
+reshape2
+GGally
