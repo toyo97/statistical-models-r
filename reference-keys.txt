@@ -42,3 +42,9 @@ case-3
 case-4
 p-value
 example-2
+lab-1
+iris-dataset
+import-data
+exploratory-data-analysis-eda
+confidence-intervals-1
+p-value-1

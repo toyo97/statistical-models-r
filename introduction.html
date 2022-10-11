@@ -21,9 +21,10 @@
   
 
 <meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2022-10-05" />
+<meta name="date" content="2022-10-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -92,7 +93,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -105,7 +106,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -133,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><a href="./">A Minimal Book Example</a></li>
+<li><a href="./">Statistical Models in R</a></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
@@ -168,6 +169,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
 </ul></li>
 <li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#requirements"><i class="fa fa-check"></i>Requirements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
 <ul>
@@ -186,7 +188,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#requirements-1"><i class="fa fa-check"></i>Requirements</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>3</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>3.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="3.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>3.2</b> Import data</a></li>
+<li class="chapter" data-level="3.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>3.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="3.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>3.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="3.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>3.5</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -280,8 +292,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument, </span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1] 13.9451393 -7.1176737 -9.4431784  8.8934239  4.6542653  5.3000924
-##  [7] 14.5690151  0.9156836 18.9044585 -6.7012162</code></pre>
+<pre><code>##  [1]   1.299141   5.203532   5.531483   1.615528  -6.054201 -12.067996
+##  [7] -12.928280  12.495717 -11.234622  -7.298042</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -633,13 +645,13 @@ most of the dataset will be stored in dataframes.</p>
 <span id="cb111-3"><a href="introduction.html#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb111-4"><a href="introduction.html#cb111-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="co"># x was set to just one value and gets repeated (&#39;recycled&#39;)</span></span></code></pre></div>
 <pre><code>##    x  y char
-## 1  1  1    b
-## 2  1  2    a
-## 3  1  3    a
-## 4  1  4    a
-## 5  1  5    b
-## 6  1  6    a
-## 7  1  7    a
+## 1  1  1    a
+## 2  1  2    b
+## 3  1  3    b
+## 4  1  4    b
+## 5  1  5    a
+## 6  1  6    b
+## 7  1  7    b
 ## 8  1  8    a
 ## 9  1  9    a
 ## 10 1 10    b</code></pre>
@@ -648,12 +660,12 @@ most of the dataset will be stored in dataframes.</p>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
-## 2 1 2    a
-## 3 1 3    a
-## 4 1 4    a</code></pre>
+## 2 1 2    b
+## 3 1 3    b
+## 4 1 4    b</code></pre>
 <p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
 the effective features of Base R <code>data.frame</code> and none of the
 deprecated functionalities. It’s simply a newer version of dataframes (therefore
@@ -752,7 +764,7 @@ edit the current canvas. For instance, to plot some points and a line:</p>
 <span id="cb131-5"><a href="introduction.html#cb131-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb131-6"><a href="introduction.html#cb131-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
 <span id="cb131-7"><a href="introduction.html#cb131-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p>However, the <code>ggplot</code> library is now the new standard plotting library.
 In ggplot, a plot is decomposed in three main components: data, coordinate
 system and visual marks, called <em>geoms</em>.
@@ -766,7 +778,7 @@ arguments.</p>
 <span id="cb132-4"><a href="introduction.html#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gg_df) <span class="sc">+</span></span>
 <span id="cb132-5"><a href="introduction.html#cb132-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb132-6"><a href="introduction.html#cb132-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>This is just a brief example. More will be seen in the next lessons.
 Check out this
 <a href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf">cheatsheet</a>
@@ -800,7 +812,7 @@ plotted against time (year by year).</p>
 <span id="cb135-5"><a href="introduction.html#cb135-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># now feed the filtered data to ggplot (using the pipe op)</span></span>
 <span id="cb135-6"><a href="introduction.html#cb135-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb135-7"><a href="introduction.html#cb135-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, gdpPercap, <span class="at">color =</span> country))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>If we want to add some information about the same measure over the whole
 continent, showing for instance the boundaries of GDP among all countries
 in the same continent of the four selected countries, this
@@ -823,7 +835,7 @@ is more or less what we can do</p>
 <span id="cb136-16"><a href="introduction.html#cb136-16" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;continent&#39;, &#39;year&#39;. You can override using
 ## the `.groups` argument.</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 But, since it looks a bit confusing, we might want four separate plots.</p>
 <div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="introduction.html#cb138-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb138-2"><a href="introduction.html#cb138-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries) <span class="sc">%&gt;%</span></span>
@@ -851,7 +863,7 @@ But, since it looks a bit confusing, we might want four separate plots.</p>
 <span id="cb138-24"><a href="introduction.html#cb138-24" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">&quot;year&quot;</span>, <span class="at">y =</span> <span class="st">&quot;GDP per capita (PPP dollars)&quot;</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;continent&#39;, &#39;year&#39;. You can override using
 ## the `.groups` argument.</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 </div>
 <div id="probability" class="section level2 hasAnchor" number="1.8">
 <h2><span class="header-section-number">1.8</span> Probability<a href="introduction.html#probability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -866,14 +878,14 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction.html#cb140-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb140-2"><a href="introduction.html#cb140-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb140-3"><a href="introduction.html#cb140-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1] -1.116223972 -1.100568677 -1.130466838  0.001286327 -0.601195239
-##  [6] -0.483271908  0.312010652 -0.090273060  2.202108137 -0.769163806</code></pre>
+<pre><code>##  [1]  0.03740584 -0.43918667  1.53597195 -0.19405344 -1.24446482  0.39971510
+##  [7]  0.87685120  0.17448283  1.67398166 -0.63496982</code></pre>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># compute the density function (over another Normal)</span></span></code></pre></div>
-<pre><code>##  [1] 0.003106171 0.003261065 0.002971020 0.054130001 0.013540814 0.018274325
-##  [7] 0.095982197 0.044889145 0.390876986 0.008625153</code></pre>
+<pre><code>##  [1] 0.058144357 0.020368731 0.358223012 0.035941100 0.002065848 0.110870280
+##  [7] 0.212317995 0.075381379 0.378294415 0.012394883</code></pre>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="introduction.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># cumulative distribution function</span></span></code></pre></div>
-<pre><code>##  [1] 0.1321631 0.1355422 0.1291398 0.5005132 0.2738550 0.3144513 0.6224838
-##  [8] 0.4640351 0.9861712 0.2208980</code></pre>
+<pre><code>##  [1] 0.5149193 0.3302631 0.9377274 0.4230670 0.1066643 0.6553168 0.8097163
+##  [8] 0.5692570 0.9529329 0.2627240</code></pre>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="introduction.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># get the quantiles of a normal</span></span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
 </div>
@@ -895,7 +907,7 @@ on RStudio through the graphic interface (buttons).</p>
 <p>The working directory is the folder located on your computer from which R
 navigates the filesystem.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="introduction.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>() <span class="co"># check your wd</span></span></code></pre></div>
-<pre><code>## [1] &quot;/Users/zemp/phd/teach_ms/statistical-models-r&quot;</code></pre>
+<pre><code>## [1] &quot;/Users/runner/work/statistical-models-r-dup/statistical-models-r-dup&quot;</code></pre>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="introduction.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;./tmp&quot;</span>) <span class="co"># set the working directory to an arbitrary (existing) folder</span></span>
 <span id="cb152-2"><a href="introduction.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="co"># save the current environment</span></span>
 <span id="cb152-3"><a href="introduction.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;./01_test.RData&quot;</span>)</span>
@@ -923,11 +935,11 @@ will open a formatted page with information about a specific R function or objec
 <span id="cb154-5"><a href="introduction.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;tidyverse&quot;)</span></span></code></pre></div>
 <p>And then you can load the package with <code>library</code>.</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="introduction.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────────────────────────────── tidyverse 1.3.2 ──
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ tidyr   1.2.1     ✔ stringr 1.4.1
-## ✔ readr   2.1.2     ✔ forcats 0.5.2
-## ✔ purrr   0.3.4     
-## ── Conflicts ────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✔ readr   2.1.3     ✔ forcats 0.5.2
+## ✔ purrr   0.3.5     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
@@ -940,9 +952,9 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default</code></pre>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="introduction.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb159-2"><a href="introduction.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##              a            b
-## 1 -0.006336495 4.015117e-05
-## 2 -0.894681269 8.004546e-01</code></pre>
+<pre><code>##            a         b
+## 1 -0.1591172 0.0253183
+## 2 -0.5943720 0.3532780</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes
@@ -993,6 +1005,10 @@ if you don’t know the trick yet.</p>
 <span id="cb163-7"><a href="introduction.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="co"># test - this result is obviously wrong: edit the function above</span></span>
 <span id="cb163-8"><a href="introduction.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="fu">log_sum_exp3</span>(<span class="at">a =</span> <span class="sc">-</span><span class="dv">1000</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">1001</span>, <span class="at">c =</span> <span class="sc">-</span><span class="dv">999</span>) <span class="co"># should give -998.5924</span></span></code></pre></div>
 <pre><code>## [1] -Inf</code></pre>
+</div>
+<div id="requirements" class="section level2 unnumbered hasAnchor">
+<h2>Requirements<a href="introduction.html#requirements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="introduction.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.packages</span>()</span></code></pre></div>
 
 </div>
 </div>
@@ -1033,7 +1049,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01_intro.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/01_intro.Rmd",
 "text": "Edit"
 },
 "history": {
