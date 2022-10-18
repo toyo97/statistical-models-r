@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Normal sampling | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Normal sampling | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Normal sampling | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
+
+
+<meta name="date" content="2022-10-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="some-elementary-statistics-problems.html"/>
+<link rel="next" href="lab-1.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistical Models in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#requirements"><i class="fa fa-check"></i>Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#requirements-1"><i class="fa fa-check"></i>Requirements</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#random-and-non-random-normal-samples"><i class="fa fa-check"></i><b>3.1</b> Random and non-random normal samples</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="normal-sampling.html"><a href="normal-sampling.html#autocorrelated-sample"><i class="fa fa-check"></i><b>3.1.1</b> Autocorrelated sample</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#exchangeable-normal-random-variables"><i class="fa fa-check"></i><b>3.2</b> Exchangeable normal random variables</a></li>
+<li class="chapter" data-level="3.3" data-path="normal-sampling.html"><a href="normal-sampling.html#multivariate-normal-random-samples"><i class="fa fa-check"></i><b>3.3</b> Multivariate Normal random samples</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#solutions"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>4</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>4.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="4.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>4.2</b> Import data</a></li>
+<li class="chapter" data-level="4.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>4.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="4.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>4.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="4.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>4.5</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="normal-sampling" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Normal sampling<a href="normal-sampling.html#normal-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="random-and-non-random-normal-samples" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Random and non-random normal samples<a href="normal-sampling.html#random-and-non-random-normal-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First we look at the simplest case: independent and identically distributed
+Normal random variables.</p>
+<p><span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(
+\begin{pmatrix}
+\mu \\ \vdots \\ \mu
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma^2 &amp; &amp; &amp; &amp; \\
+ &amp; &amp; &amp; 0 &amp; \\
+ &amp; &amp; \ddots &amp; &amp;  \\
+ &amp; 0 &amp; &amp; &amp; \\
+ &amp; &amp; &amp; &amp; \sigma^2
+\end{pmatrix}
+\right)
+\]</span></p>
+<p>In order to simulate a sample of i.i.d. Normal r.v.,
+we need to call the <code>rnorm</code> function, which uses R pseudo-random number generator.
+Like every pseudo-RNG, it allows for specifying a seed, that
+is useful for reproducibility purposes
+(see <a href="https://en.wikipedia.org/wiki/Pseudorandom_number_generator">pseudo-RNG wiki</a> for
+more details).</p>
+<p>This is how you can simulate a
+sample with <span class="math inline">\(n = 50\)</span> i.i.d. Normal random variables in R.</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="normal-sampling.html#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb207-2"><a href="normal-sampling.html#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># plotting</span></span>
+<span id="cb207-3"><a href="normal-sampling.html#cb207-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># dataframe manipulation</span></span>
+<span id="cb207-4"><a href="normal-sampling.html#cb207-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble) <span class="co"># tibble</span></span>
+<span id="cb207-5"><a href="normal-sampling.html#cb207-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-6"><a href="normal-sampling.html#cb207-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb207-7"><a href="normal-sampling.html#cb207-7" aria-hidden="true" tabindex="-1"></a>rnorm_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n) <span class="co"># mu = 0, sigma = 1, for instance</span></span>
+<span id="cb207-8"><a href="normal-sampling.html#cb207-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-9"><a href="normal-sampling.html#cb207-9" aria-hidden="true" tabindex="-1"></a>iidplt <span class="ot">&lt;-</span> rnorm_sample <span class="sc">%&gt;%</span></span>
+<span id="cb207-10"><a href="normal-sampling.html#cb207-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>() <span class="sc">%&gt;%</span> <span class="co"># creates tibble with name,value columns</span></span>
+<span id="cb207-11"><a href="normal-sampling.html#cb207-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb207-12"><a href="normal-sampling.html#cb207-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb207-13"><a href="normal-sampling.html#cb207-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Random sample&quot;</span>) <span class="sc">+</span> <span class="co"># add title and labels to the plot</span></span>
+<span id="cb207-14"><a href="normal-sampling.html#cb207-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;i&quot;</span>) <span class="sc">+</span></span>
+<span id="cb207-15"><a href="normal-sampling.html#cb207-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb207-16"><a href="normal-sampling.html#cb207-16" aria-hidden="true" tabindex="-1"></a>iidplt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p>If the random variables are independent but distributed with different mean,
+we can identify two notable cases: <strong>mean shift</strong> and <strong>mean drift</strong>.</p>
+<p>In the first case, we write</p>
+<p><strong>Mean shift</strong>:
+<span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(
+\begin{pmatrix}
+\mu_0 \\ \vdots \\ \mu_0 \\ \mu_1 \\ \vdots \\ \mu_1
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma^2 &amp; &amp; &amp; &amp; \\
+ &amp; &amp; &amp; 0 &amp; \\
+ &amp; &amp; \ddots &amp; &amp;  \\
+ &amp; 0 &amp; &amp; &amp; \\
+ &amp; &amp; &amp; &amp; \sigma^2
+\end{pmatrix}
+\right)\,,
+\]</span></p>
+<p>and in R we can simulate such sample as follows</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="normal-sampling.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (optional) creates a function to simplify other plots</span></span>
+<span id="cb208-2"><a href="normal-sampling.html#cb208-2" aria-hidden="true" tabindex="-1"></a>plot_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">xlab =</span> <span class="cn">NULL</span>, <span class="at">ylab =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb208-3"><a href="normal-sampling.html#cb208-3" aria-hidden="true" tabindex="-1"></a>  plt <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb208-4"><a href="normal-sampling.html#cb208-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">enframe</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb208-5"><a href="normal-sampling.html#cb208-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb208-6"><a href="normal-sampling.html#cb208-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb208-7"><a href="normal-sampling.html#cb208-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title) <span class="sc">+</span></span>
+<span id="cb208-8"><a href="normal-sampling.html#cb208-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(xlab) <span class="sc">+</span></span>
+<span id="cb208-9"><a href="normal-sampling.html#cb208-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(ylab)</span>
+<span id="cb208-10"><a href="normal-sampling.html#cb208-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(plt)</span>
+<span id="cb208-11"><a href="normal-sampling.html#cb208-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb208-12"><a href="normal-sampling.html#cb208-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-13"><a href="normal-sampling.html#cb208-13" aria-hidden="true" tabindex="-1"></a><span class="co"># first half with mean = 0, second half with mean = 3</span></span>
+<span id="cb208-14"><a href="normal-sampling.html#cb208-14" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate by concatenating two rnorm samples</span></span>
+<span id="cb208-15"><a href="normal-sampling.html#cb208-15" aria-hidden="true" tabindex="-1"></a>ms_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)), <span class="fu">rnorm</span>(n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>), <span class="dv">3</span>))</span>
+<span id="cb208-16"><a href="normal-sampling.html#cb208-16" aria-hidden="true" tabindex="-1"></a><span class="co"># or equivalently, by concatenating two mean vectors in one rnorm call</span></span>
+<span id="cb208-17"><a href="normal-sampling.html#cb208-17" aria-hidden="true" tabindex="-1"></a>ms_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="fu">c</span>(</span>
+<span id="cb208-18"><a href="normal-sampling.html#cb208-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)),</span>
+<span id="cb208-19"><a href="normal-sampling.html#cb208-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">3</span>, n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>))</span>
+<span id="cb208-20"><a href="normal-sampling.html#cb208-20" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb208-21"><a href="normal-sampling.html#cb208-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb208-22"><a href="normal-sampling.html#cb208-22" aria-hidden="true" tabindex="-1"></a><span class="co"># save the plot in a variable for later use</span></span>
+<span id="cb208-23"><a href="normal-sampling.html#cb208-23" aria-hidden="true" tabindex="-1"></a>msplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(ms_sample, <span class="st">&quot;Mean-shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb208-24"><a href="normal-sampling.html#cb208-24" aria-hidden="true" tabindex="-1"></a>msplt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p>For the mean drift, the mean changes variable by variable</p>
+<p><strong>Mean drift</strong>:
+<span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(
+\begin{pmatrix}
+\mu_1 \\ \mu_2 \\ \vdots \\ \mu_n
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma^2 &amp; &amp; &amp; &amp; \\
+ &amp; &amp; &amp; 0 &amp; \\
+ &amp; &amp; \ddots &amp; &amp;  \\
+ &amp; 0 &amp; &amp; &amp; \\
+ &amp; &amp; &amp; &amp; \sigma^2
+\end{pmatrix}
+\right)\,,
+\]</span></p>
+<p>Similarly, in R, we can simulate a mean drift with
+mean going from <span class="math inline">\(0\)</span> to <span class="math inline">\(n-1\)</span> with unitary step.</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="normal-sampling.html#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean is a range vector</span></span>
+<span id="cb209-2"><a href="normal-sampling.html#cb209-2" aria-hidden="true" tabindex="-1"></a>md_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb209-3"><a href="normal-sampling.html#cb209-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-4"><a href="normal-sampling.html#cb209-4" aria-hidden="true" tabindex="-1"></a>mdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(md_sample, <span class="st">&quot;Mean drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb209-5"><a href="normal-sampling.html#cb209-5" aria-hidden="true" tabindex="-1"></a>mdplt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p>The same concept is applied also to random variables
+drawn by a normal with changing variance.</p>
+<p><strong>Variance shift</strong>:
+<span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(
+\begin{pmatrix}
+\mu \\ \vdots \\ \mu
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma_0^2 &amp; &amp; &amp; &amp; &amp; \\
+ &amp; \ddots &amp; &amp; &amp; 0 &amp; \\
+ &amp; &amp; \sigma_0^2 &amp; &amp; &amp; \\
+ &amp; &amp; &amp; \sigma_1^2 &amp; &amp; \\
+ &amp; 0 &amp; &amp; &amp; \ddots &amp; \\
+ &amp; &amp; &amp; &amp; &amp; \sigma_1^2
+\end{pmatrix}
+\right)\,,
+\]</span></p>
+<p>in R:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="normal-sampling.html#cb210-1" aria-hidden="true" tabindex="-1"></a>vs_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb210-2"><a href="normal-sampling.html#cb210-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)), <span class="co"># first half</span></span>
+<span id="cb210-3"><a href="normal-sampling.html#cb210-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>), <span class="at">sd =</span> <span class="dv">4</span>)</span>
+<span id="cb210-4"><a href="normal-sampling.html#cb210-4" aria-hidden="true" tabindex="-1"></a>) <span class="co"># second half</span></span>
+<span id="cb210-5"><a href="normal-sampling.html#cb210-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb210-6"><a href="normal-sampling.html#cb210-6" aria-hidden="true" tabindex="-1"></a>vsplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vs_sample, <span class="st">&quot;Variance shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb210-7"><a href="normal-sampling.html#cb210-7" aria-hidden="true" tabindex="-1"></a>vsplt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><strong>Variance drift</strong></p>
+<p><span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(
+\begin{pmatrix}
+\mu \\ \vdots \\ \mu
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma_1^2 &amp; &amp; &amp; &amp; \\
+ &amp; &amp; &amp; 0 &amp; \\
+ &amp; &amp; \ddots &amp; &amp;  \\
+ &amp; 0 &amp; &amp; &amp; \\
+ &amp; &amp; &amp; &amp; \sigma_n^2
+\end{pmatrix}
+\right)\,,
+\]</span></p>
+<p>in R:</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="normal-sampling.html#cb211-1" aria-hidden="true" tabindex="-1"></a>vd_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb211-2"><a href="normal-sampling.html#cb211-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb211-3"><a href="normal-sampling.html#cb211-3" aria-hidden="true" tabindex="-1"></a>vdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vd_sample, <span class="st">&quot;Variance drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb211-4"><a href="normal-sampling.html#cb211-4" aria-hidden="true" tabindex="-1"></a>vdplt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<div id="autocorrelated-sample" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Autocorrelated sample<a href="normal-sampling.html#autocorrelated-sample" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(\mathbf{Y} = Y_1, ..., Y_{n+1}\)</span> an i.i.d. standard
+Normal random sample (i.e. <span class="math inline">\(Y_i \sim \mathcal{N}(0, 1)\)</span>).</p>
+<p>Then <span class="math inline">\(\mathbf{X} = X_1, ..., X_n\)</span> such that <span class="math inline">\(X_i = Y_{i+1} - Y_i\)</span> is
+a Normal non-random sample with such distribution</p>
+<p><span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(
+\begin{pmatrix}
+0 \\ \vdots \\ 0
+\end{pmatrix}, 
+\begin{pmatrix}
+2 &amp; -1 &amp;  &amp;  &amp;  \\
+-1 &amp; 2 &amp; &amp; 0 &amp; \\
+ &amp; &amp; &amp; &amp; \\
+ &amp; \ddots &amp; \ddots &amp; \ddots &amp;  \\
+ &amp; &amp; &amp; &amp;  \\
+ &amp; 0 &amp; &amp; 2 &amp; -1 \\
+ &amp; &amp; &amp; -1 &amp; 2
+\end{pmatrix}
+\right)\,.
+\]</span></p>
+<p>The proof is left as exercise to the reader.</p>
+<blockquote>
+<p>Hint: first compute <span class="math inline">\(E[X_i]\)</span>, then <span class="math inline">\(\text{Var}(X_i)\)</span> and finally <span class="math inline">\(\text{Cov}(X_{i+1}, X_i)\)</span></p>
+</blockquote>
+<p>In R, we build this simulation by simulating <span class="math inline">\(\mathbf Y\)</span> and deriving <span class="math inline">\(\mathbf X\)</span></p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="normal-sampling.html#cb212-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb212-2"><a href="normal-sampling.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="co"># index by removing first and last elements</span></span>
+<span id="cb212-3"><a href="normal-sampling.html#cb212-3" aria-hidden="true" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> y[<span class="sc">-</span>n]</span>
+<span id="cb212-4"><a href="normal-sampling.html#cb212-4" aria-hidden="true" tabindex="-1"></a><span class="co"># equivalent to</span></span>
+<span id="cb212-5"><a href="normal-sampling.html#cb212-5" aria-hidden="true" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y[<span class="dv">2</span><span class="sc">:</span>n] <span class="sc">-</span> y[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)]</span></code></pre></div>
+<p>or, simpler</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="normal-sampling.html#cb213-1" aria-hidden="true" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y <span class="sc">%&gt;%</span></span>
+<span id="cb213-2"><a href="normal-sampling.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span>
+<span id="cb213-3"><a href="normal-sampling.html#cb213-3" aria-hidden="true" tabindex="-1"></a>auto_sample</span></code></pre></div>
+<pre><code>##  [1]  0.76486294 -0.72125125  0.69608123 -0.88154477  0.08858529  0.54025680
+##  [7]  0.51057417 -2.23933913  1.21290797 -0.03747466 -0.68795847 -0.27543871
+## [13]  0.40362741  1.21753967 -1.00313038 -0.36856515  0.94830413 -1.40013055
+## [19]  2.28258801 -1.53046919  0.67372423 -0.13812248 -0.05124700  1.80962271
+## [25] -2.63471000  1.97079841 -1.11389726 -0.86677899  0.76644216  0.81553534
+## [31] -1.17229042 -0.34656350  0.92484634  0.83583274 -1.06205518 -1.31356822
+## [37]  0.08035065  0.53828058  0.24128720  0.50568106  0.69192514 -1.10511511
+## [43] -0.67926274  1.72098578 -0.33164903  0.88189010 -2.83982793  1.76979995
+## [49]  1.26604281</code></pre>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="normal-sampling.html#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sample</span>(auto_sample)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p>From this plot it is almost impossible to spot the correlation between variables.
+It’s more visible with a plot having <span class="math inline">\(X_i\)</span> on one axis and <span class="math inline">\(X_{i+1}\)</span> on the other.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="normal-sampling.html#cb216-1" aria-hidden="true" tabindex="-1"></a>autoplt <span class="ot">&lt;-</span> auto_sample <span class="sc">%&gt;%</span></span>
+<span id="cb216-2"><a href="normal-sampling.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  { <span class="co"># group in curly brackets so that tibble is called</span></span>
+<span id="cb216-3"><a href="normal-sampling.html#cb216-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># without passing auto_sample as first implicit argument</span></span>
+<span id="cb216-4"><a href="normal-sampling.html#cb216-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">x =</span> .[<span class="sc">-</span><span class="fu">length</span>(.)], <span class="at">y =</span> .[<span class="sc">-</span><span class="dv">1</span>]) <span class="co"># dot as placeholder</span></span>
+<span id="cb216-5"><a href="normal-sampling.html#cb216-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># equivalent (but more efficient) to:</span></span>
+<span id="cb216-6"><a href="normal-sampling.html#cb216-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tibble(x = auto_sample[-length(auto_sample)], y = auto_sample[-1])</span></span>
+<span id="cb216-7"><a href="normal-sampling.html#cb216-7" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">%&gt;%</span></span>
+<span id="cb216-8"><a href="normal-sampling.html#cb216-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb216-9"><a href="normal-sampling.html#cb216-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb216-10"><a href="normal-sampling.html#cb216-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;autocorrelation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb216-11"><a href="normal-sampling.html#cb216-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;x_i&quot;</span>) <span class="sc">+</span></span>
+<span id="cb216-12"><a href="normal-sampling.html#cb216-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_{i+1}&quot;</span>)</span>
+<span id="cb216-13"><a href="normal-sampling.html#cb216-13" aria-hidden="true" tabindex="-1"></a>autoplt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p>Maybe it’s even more clear if the number of observations increases. Try with larger n.</p>
+<p><strong>Questions</strong>:</p>
+<ul>
+<li>how is <span class="math inline">\(X_i\)</span> distributed?</li>
+<li>what is the correlation between two subsequent samples i.e. <span class="math inline">\(\rho(X_{i+1}, X_{i})\)</span></li>
+</ul>
+<p><strong>Exercise</strong>: build <code>Xpos</code> such that correlation is positive</p>
+<p>We can compare these models by grouping all the plots in one
+single picture.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="normal-sampling.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;ggpubr&quot;)</span></span>
+<span id="cb217-2"><a href="normal-sampling.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb217-3"><a href="normal-sampling.html#cb217-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(iidplt, msplt, mdplt, vsplt, vdplt, autoplt,</span>
+<span id="cb217-4"><a href="normal-sampling.html#cb217-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span></span>
+<span id="cb217-5"><a href="normal-sampling.html#cb217-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+</div>
+</div>
+<div id="exchangeable-normal-random-variables" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Exchangeable normal random variables<a href="normal-sampling.html#exchangeable-normal-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let <span class="math inline">\(\mathbf{X} = (X_1, ..., X_n)\)</span> be a random vector whose elements
+follow the conditional distribution
+<span class="math display">\[
+X_i | \mu \sim \mathcal{N}(\mu, \sigma^2)
+\]</span>
+with <span class="math inline">\(\mu\)</span> being another normally distributed r.v.
+<span class="math display">\[
+\mu \sim \mathcal{N}(\mu_0, \sigma_0^2)\,.
+\]</span></p>
+<p><span class="math inline">\(X_i\)</span> are conditionally independent given <span class="math inline">\(\mu\)</span>, and also,
+their joint distribution is equal for any permutation
+of the random vector elements (exchangeable).
+But if we don’t know <span class="math inline">\(\mu\)</span>, what is the distribution of
+<span class="math inline">\(X_i\)</span> (marginal distribution)?</p>
+<p>It’s</p>
+<p><span class="math display">\[
+\mathbf{X} \sim \mathcal{N}\left(\begin{pmatrix}
+\mu_0 \\ \vdots \\ \mu_0
+\end{pmatrix}, 
+\begin{pmatrix}
+\sigma^2 + \sigma_0^2 &amp; &amp; &amp; &amp; \\
+ &amp; \ddots &amp; &amp; \sigma_0^2 &amp; \\
+ &amp; &amp; \ddots &amp; &amp;  \\
+ &amp; \sigma_0^2 &amp; &amp; \ddots &amp; \\
+ &amp; &amp; &amp; &amp; \sigma^2 + \sigma_0^2
+\end{pmatrix}
+\right)
+\]</span></p>
+<p><strong>Exercise</strong>: prove it (i.e. find expected value, variance and covariance).</p>
+<blockquote>
+<p>Hint: <span class="math inline">\(E[X_i] = E_{f\sim \mu}[E_{f\sim X_i | \mu}[X_i | \mu]]\)</span></p>
+</blockquote>
+<p>In R, we simply simulate a realization of the mean r.v., then
+use that value to simulate the <span class="math inline">\(\mathbf X\)</span> Normal sample given <span class="math inline">\(\mu\)</span>.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="normal-sampling.html#cb218-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb218-2"><a href="normal-sampling.html#cb218-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu)</span></code></pre></div>
+</div>
+<div id="multivariate-normal-random-samples" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Multivariate Normal random samples<a href="normal-sampling.html#multivariate-normal-random-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Multivariate normal distribution functions are provided by the <code>mvtnorm</code> library.</p>
+<p>Take this as an example:</p>
+<p><span class="math display">\[
+\begin{pmatrix} X \\ S \end{pmatrix} \sim
+\mathcal{N} \left(
+\begin{pmatrix}
+0 \\ 0
+\end{pmatrix},
+\begin{pmatrix}
+1 &amp; 1 \\ 1 &amp; 3
+\end{pmatrix}
+\right)
+\]</span></p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="normal-sampling.html#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;mvtnorm&quot;)</span></span>
+<span id="cb219-2"><a href="normal-sampling.html#cb219-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb219-3"><a href="normal-sampling.html#cb219-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-4"><a href="normal-sampling.html#cb219-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate n bivariate normal r.v.</span></span>
+<span id="cb219-5"><a href="normal-sampling.html#cb219-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">2</span>) <span class="co"># mean vector</span></span>
+<span id="cb219-6"><a href="normal-sampling.html#cb219-6" aria-hidden="true" tabindex="-1"></a>vcov_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>) <span class="co"># Sigma</span></span>
+<span id="cb219-7"><a href="normal-sampling.html#cb219-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb219-8"><a href="normal-sampling.html#cb219-8" aria-hidden="true" tabindex="-1"></a><span class="co"># specify mean vector and var-cov matrix</span></span>
+<span id="cb219-9"><a href="normal-sampling.html#cb219-9" aria-hidden="true" tabindex="-1"></a>bvt_samples <span class="ot">&lt;-</span> mvtnorm<span class="sc">::</span><span class="fu">rmvnorm</span>(n, m, vcov_mat)</span>
+<span id="cb219-10"><a href="normal-sampling.html#cb219-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bvt_samples, <span class="dv">10</span>) <span class="co"># print only the first 10 elements</span></span></code></pre></div>
+<pre><code>##              [,1]       [,2]
+##  [1,] -0.78186845 -0.2389248
+##  [2,] -0.17599524 -0.9582082
+##  [3,] -0.92364519 -0.3863103
+##  [4,]  1.17077708  2.7456040
+##  [5,] -2.03263913 -1.9171945
+##  [6,] -0.92418665 -2.9286612
+##  [7,] -0.99088212 -1.6003554
+##  [8,] -1.50519809 -3.9739964
+##  [9,] -0.04465341 -0.9858018
+## [10,]  1.70934985  1.9264325</code></pre>
+<p>Let’s plot this sample</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="normal-sampling.html#cb221-1" aria-hidden="true" tabindex="-1"></a>bvt_samples_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> bvt_samples[, <span class="dv">1</span>], <span class="at">s =</span> bvt_samples[, <span class="dv">2</span>])</span>
+<span id="cb221-2"><a href="normal-sampling.html#cb221-2" aria-hidden="true" tabindex="-1"></a>bvt_scatter <span class="ot">&lt;-</span> bvt_samples_df <span class="sc">%&gt;%</span></span>
+<span id="cb221-3"><a href="normal-sampling.html#cb221-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb221-4"><a href="normal-sampling.html#cb221-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, s)) <span class="sc">+</span></span>
+<span id="cb221-5"><a href="normal-sampling.html#cb221-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span>
+<span id="cb221-6"><a href="normal-sampling.html#cb221-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb221-7"><a href="normal-sampling.html#cb221-7" aria-hidden="true" tabindex="-1"></a>bvt_scatter</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="normal-sampling.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the true distribution</span></span>
+<span id="cb222-2"><a href="normal-sampling.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a grid (many points with fixed space between them)</span></span>
+<span id="cb222-3"><a href="normal-sampling.html#cb222-3" aria-hidden="true" tabindex="-1"></a>bvt_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb222-4"><a href="normal-sampling.html#cb222-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">200</span>), <span class="co"># seq builds a sequence vector starting from</span></span>
+<span id="cb222-5"><a href="normal-sampling.html#cb222-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3 until 3 with step such that the number of elements in the vector is 200</span></span>
+<span id="cb222-6"><a href="normal-sampling.html#cb222-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">s =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb222-7"><a href="normal-sampling.html#cb222-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb222-8"><a href="normal-sampling.html#cb222-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-9"><a href="normal-sampling.html#cb222-9" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the density at each coordinate of the grid</span></span>
+<span id="cb222-10"><a href="normal-sampling.html#cb222-10" aria-hidden="true" tabindex="-1"></a>probs <span class="ot">&lt;-</span> <span class="fu">dmvnorm</span>(bvt_grid, m, vcov_mat)</span>
+<span id="cb222-11"><a href="normal-sampling.html#cb222-11" aria-hidden="true" tabindex="-1"></a>bvt_grid <span class="sc">%&gt;%</span></span>
+<span id="cb222-12"><a href="normal-sampling.html#cb222-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> probs) <span class="sc">%&gt;%</span> <span class="co"># add a column (?dplyr::mutate)</span></span>
+<span id="cb222-13"><a href="normal-sampling.html#cb222-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb222-14"><a href="normal-sampling.html#cb222-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(x, s, <span class="at">z =</span> prob)) <span class="sc">+</span> <span class="co"># or geom_contour_filled</span></span>
+<span id="cb222-15"><a href="normal-sampling.html#cb222-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<div id="exercises-1" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Exercises<a href="normal-sampling.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Take two bivariate random variables (the same as before, <span class="math inline">\(X, S\)</span>).
+Complete these tasks:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Compute <span class="math inline">\(P(X &lt; 0 \cap S &lt; 0)\)</span> with <code>pmvnorm</code></li>
+<li>Compute <span class="math inline">\(P(X &lt; 0 \cap S&lt; 0)\)</span> by simulation (Monte Carlo estimate)</li>
+<li>Compute <span class="math inline">\(P(X &gt; 1 \cap S &lt; 0)\)</span> by simulation. Can you do it with <code>pmvnorm</code>?
+(hint: check <code>?pmvnorm</code>)</li>
+</ol>
+</div>
+<div id="solutions" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Solutions<a href="normal-sampling.html#solutions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="normal-sampling.html#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pmvnorm</span>(<span class="at">upper =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat)</span></code></pre></div>
+<pre><code>## [1] 0.3479566
+## attr(,&quot;error&quot;)
+## [1] 1e-15
+## attr(,&quot;msg&quot;)
+## [1] &quot;Normal Completion&quot;</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="normal-sampling.html#cb225-1" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(<span class="dv">100000</span>, <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat) <span class="co"># simulate enough samples</span></span>
+<span id="cb225-2"><a href="normal-sampling.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="co"># count all the observations satisfying the condition</span></span>
+<span id="cb225-3"><a href="normal-sampling.html#cb225-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and divide by the number of total obs to obtain a ratio</span></span>
+<span id="cb225-4"><a href="normal-sampling.html#cb225-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mean() applied to logical values is the proportion of true vars</span></span>
+<span id="cb225-5"><a href="normal-sampling.html#cb225-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sim[, <span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> sim[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 0.34856</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li></li>
+</ol>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="normal-sampling.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sim[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0238</code></pre>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="normal-sampling.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use lower and upper limits as described in the pmvnorm docs</span></span>
+<span id="cb229-2"><a href="normal-sampling.html#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmvnorm</span>(<span class="at">lower =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="cn">Inf</span>), <span class="at">upper =</span> <span class="fu">c</span>(<span class="cn">Inf</span>, <span class="dv">0</span>), <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat)</span></code></pre></div>
+<pre><code>## [1] 0.0240375
+## attr(,&quot;error&quot;)
+## [1] 1e-15
+## attr(,&quot;msg&quot;)
+## [1] &quot;Normal Completion&quot;</code></pre>
+<p>Increasing the Monte Carlo samples you will get a more accurate estimate
+of the probability measure.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="some-elementary-statistics-problems.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/03_normal_sampling.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

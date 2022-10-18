@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2022-10-11" />
+<meta name="date" content="2022-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -190,13 +190,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#requirements-1"><i class="fa fa-check"></i>Requirements</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>3</b> Lab 1</a>
+<li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>3.1</b> Iris Dataset</a></li>
-<li class="chapter" data-level="3.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>3.2</b> Import data</a></li>
-<li class="chapter" data-level="3.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>3.3</b> Exploratory Data Analysis (EDA)</a></li>
-<li class="chapter" data-level="3.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>3.4</b> Confidence intervals</a></li>
-<li class="chapter" data-level="3.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>3.5</b> P-value</a></li>
+<li class="chapter" data-level="3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#random-and-non-random-normal-samples"><i class="fa fa-check"></i><b>3.1</b> Random and non-random normal samples</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="normal-sampling.html"><a href="normal-sampling.html#autocorrelated-sample"><i class="fa fa-check"></i><b>3.1.1</b> Autocorrelated sample</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#exchangeable-normal-random-variables"><i class="fa fa-check"></i><b>3.2</b> Exchangeable normal random variables</a></li>
+<li class="chapter" data-level="3.3" data-path="normal-sampling.html"><a href="normal-sampling.html#multivariate-normal-random-samples"><i class="fa fa-check"></i><b>3.3</b> Multivariate Normal random samples</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#solutions"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>4</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>4.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="4.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>4.2</b> Import data</a></li>
+<li class="chapter" data-level="4.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>4.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="4.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>4.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="4.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>4.5</b> P-value</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -292,8 +305,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument, </span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1]   1.299141   5.203532   5.531483   1.615528  -6.054201 -12.067996
-##  [7] -12.928280  12.495717 -11.234622  -7.298042</code></pre>
+<pre><code>##  [1]  -7.107981  -4.383361 -16.714115   7.998916  -5.609377   1.793821
+##  [7]  -4.160567  -6.733058  -1.089758   4.925431</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -645,27 +658,27 @@ most of the dataset will be stored in dataframes.</p>
 <span id="cb111-3"><a href="introduction.html#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb111-4"><a href="introduction.html#cb111-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="co"># x was set to just one value and gets repeated (&#39;recycled&#39;)</span></span></code></pre></div>
 <pre><code>##    x  y char
-## 1  1  1    a
-## 2  1  2    b
+## 1  1  1    b
+## 2  1  2    a
 ## 3  1  3    b
-## 4  1  4    b
+## 4  1  4    a
 ## 5  1  5    a
-## 6  1  6    b
-## 7  1  7    b
-## 8  1  8    a
+## 6  1  6    a
+## 7  1  7    a
+## 8  1  8    b
 ## 9  1  9    a
-## 10 1 10    b</code></pre>
+## 10 1 10    a</code></pre>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot;</code></pre>
+<pre><code>##  [1] &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
-## 2 1 2    b
+## 2 1 2    a
 ## 3 1 3    b
-## 4 1 4    b</code></pre>
+## 4 1 4    a</code></pre>
 <p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
 the effective features of Base R <code>data.frame</code> and none of the
 deprecated functionalities. It’s simply a newer version of dataframes (therefore
@@ -878,14 +891,14 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction.html#cb140-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb140-2"><a href="introduction.html#cb140-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb140-3"><a href="introduction.html#cb140-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1]  0.03740584 -0.43918667  1.53597195 -0.19405344 -1.24446482  0.39971510
-##  [7]  0.87685120  0.17448283  1.67398166 -0.63496982</code></pre>
+<pre><code>##  [1]  0.03630644 -0.15589276  1.47735139 -1.58783867  0.52057328  0.86192661
+##  [7]  1.10482115  1.09634938  0.60857280 -1.03509714</code></pre>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># compute the density function (over another Normal)</span></span></code></pre></div>
-<pre><code>##  [1] 0.058144357 0.020368731 0.358223012 0.035941100 0.002065848 0.110870280
-##  [7] 0.212317995 0.075381379 0.378294415 0.012394883</code></pre>
+<pre><code>##  [1] 0.0580190007 0.0390514479 0.3480116513 0.0006392393 0.1335485429
+##  [6] 0.2087654186 0.2672392063 0.2652106776 0.1515297413 0.0039864831</code></pre>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="introduction.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># cumulative distribution function</span></span></code></pre></div>
-<pre><code>##  [1] 0.5149193 0.3302631 0.9377274 0.4230670 0.1066643 0.6553168 0.8097163
-##  [8] 0.5692570 0.9529329 0.2627240</code></pre>
+<pre><code>##  [1] 0.51448099 0.43805878 0.93020927 0.05616141 0.69866796 0.80563605
+##  [7] 0.86538145 0.86353705 0.72859618 0.15031177</code></pre>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="introduction.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># get the quantiles of a normal</span></span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
 </div>
@@ -952,9 +965,9 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default</code></pre>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="introduction.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb159-2"><a href="introduction.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##            a         b
-## 1 -0.1591172 0.0253183
-## 2 -0.5943720 0.3532780</code></pre>
+<pre><code>##           a         b
+## 1 1.7138258 2.9371989
+## 2 0.8674734 0.7525102</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes

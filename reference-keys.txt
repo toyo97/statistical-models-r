@@ -42,6 +42,13 @@ case-3
 case-4
 p-value
 example-2
+normal-sampling
+random-and-non-random-normal-samples
+autocorrelated-sample
+exchangeable-normal-random-variables
+multivariate-normal-random-samples
+exercises-1
+solutions
 lab-1
 iris-dataset
 import-data
