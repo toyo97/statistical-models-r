@@ -169,7 +169,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
 </ul></li>
 <li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html#requirements"><i class="fa fa-check"></i>Requirements</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
 <ul>
@@ -188,7 +187,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#requirements-1"><i class="fa fa-check"></i>Requirements</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
 <ul>
@@ -305,8 +303,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument, </span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1]  -7.107981  -4.383361 -16.714115   7.998916  -5.609377   1.793821
-##  [7]  -4.160567  -6.733058  -1.089758   4.925431</code></pre>
+<pre><code>##  [1]  10.8837444   6.7989252 -12.9583565  -3.1014299  -4.2556705   5.7348895
+##  [7]   1.5498329  -2.1128799   0.1357968  12.9736815</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -659,24 +657,24 @@ most of the dataset will be stored in dataframes.</p>
 <span id="cb111-4"><a href="introduction.html#cb111-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="co"># x was set to just one value and gets repeated (&#39;recycled&#39;)</span></span></code></pre></div>
 <pre><code>##    x  y char
 ## 1  1  1    b
-## 2  1  2    a
+## 2  1  2    b
 ## 3  1  3    b
 ## 4  1  4    a
 ## 5  1  5    a
-## 6  1  6    a
-## 7  1  7    a
+## 6  1  6    b
+## 7  1  7    b
 ## 8  1  8    b
-## 9  1  9    a
-## 10 1 10    a</code></pre>
+## 9  1  9    b
+## 10 1 10    b</code></pre>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot;</code></pre>
+<pre><code>##  [1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
-## 2 1 2    a
+## 2 1 2    b
 ## 3 1 3    b
 ## 4 1 4    a</code></pre>
 <p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
@@ -891,14 +889,14 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="introduction.html#cb140-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb140-2"><a href="introduction.html#cb140-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb140-3"><a href="introduction.html#cb140-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1]  0.03630644 -0.15589276  1.47735139 -1.58783867  0.52057328  0.86192661
-##  [7]  1.10482115  1.09634938  0.60857280 -1.03509714</code></pre>
+<pre><code>##  [1]  0.89279866 -0.33389029 -0.47705815 -2.53133833  0.31642973 -0.61220745
+##  [7]  0.09235882 -0.01609202 -0.33544102 -0.16638486</code></pre>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># compute the density function (over another Normal)</span></span></code></pre></div>
-<pre><code>##  [1] 0.0580190007 0.0390514479 0.3480116513 0.0006392393 0.1335485429
-##  [6] 0.2087654186 0.2672392063 0.2652106776 0.1515297413 0.0039864831</code></pre>
+<pre><code>##  [1] 2.161277e-01 2.618783e-02 1.855813e-02 1.387458e-05 9.669989e-02
+##  [6] 1.315764e-02 6.466818e-02 5.227422e-02 2.609319e-02 3.817592e-02</code></pre>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="introduction.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># cumulative distribution function</span></span></code></pre></div>
-<pre><code>##  [1] 0.51448099 0.43805878 0.93020927 0.05616141 0.69866796 0.80563605
-##  [7] 0.86538145 0.86353705 0.72859618 0.15031177</code></pre>
+<pre><code>##  [1] 0.814017499 0.369231174 0.316660358 0.005681409 0.624161822 0.270200257
+##  [7] 0.536793522 0.493580491 0.368646214 0.433927044</code></pre>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="introduction.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># get the quantiles of a normal</span></span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
 </div>
@@ -965,9 +963,9 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default</code></pre>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="introduction.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb159-2"><a href="introduction.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##           a         b
-## 1 1.7138258 2.9371989
-## 2 0.8674734 0.7525102</code></pre>
+<pre><code>##            a         b
+## 1  1.0891066 1.1861533
+## 2 -0.5799111 0.3362969</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes
@@ -1018,10 +1016,6 @@ if you don’t know the trick yet.</p>
 <span id="cb163-7"><a href="introduction.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="co"># test - this result is obviously wrong: edit the function above</span></span>
 <span id="cb163-8"><a href="introduction.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="fu">log_sum_exp3</span>(<span class="at">a =</span> <span class="sc">-</span><span class="dv">1000</span>, <span class="at">b =</span> <span class="sc">-</span><span class="dv">1001</span>, <span class="at">c =</span> <span class="sc">-</span><span class="dv">999</span>) <span class="co"># should give -998.5924</span></span></code></pre></div>
 <pre><code>## [1] -Inf</code></pre>
-</div>
-<div id="requirements" class="section level2 unnumbered hasAnchor">
-<h2>Requirements<a href="introduction.html#requirements" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="introduction.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.packages</span>()</span></code></pre></div>
 
 </div>
 </div>
