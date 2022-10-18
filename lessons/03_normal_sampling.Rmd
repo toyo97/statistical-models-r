@@ -1,3 +1,7 @@
+```{r, echo=FALSE}
+rm(list = ls())
+```
+
 # Normal sampling
 
 ## Random and non-random normal samples
@@ -415,3 +419,4 @@ pmvnorm(lower = c(1, -Inf), upper = c(Inf, 0), mean = m, sigma = vcov_mat)
 
 Increasing the Monte Carlo samples you will get a more accurate estimate 
 of the probability measure.
+

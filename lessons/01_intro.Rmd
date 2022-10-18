@@ -715,8 +715,3 @@ log_sum_exp3 <- function(a, b, c) {
 log_sum_exp3(a = -1000, b = -1001, c = -999) # should give -998.5924
 ```
 
-## Requirements {-}
-
-```{r}
-.packages()
-```

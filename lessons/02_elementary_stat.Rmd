@@ -496,8 +496,3 @@ pnorm(z_corr, lower.tail = FALSE)
 
 > The bilateral case with Normal approximation is left to the reader as exercise
 
-## Requirements {-}
-
-```{r}
-.packages()
-```
