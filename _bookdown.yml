@@ -6,6 +6,7 @@ rmd_files: [
   "index.Rmd",
   "./lessons/01_intro.Rmd",
   "./lessons/02_elementary_stat.Rmd",
+  "./lessons/03_elementary_stat.Rmd",
   "./labs/L01_iris.Rmd",
   "tail.Rmd"
 ]
