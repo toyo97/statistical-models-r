@@ -467,13 +467,14 @@ $$
 P(Z \geq z | H_0) = 1 - \Phi(z)\,,
 $$
 where $z$ is the realization of $Z$ given that the realization of 
-$X$ is $x = 20$.
+$X$ is $x = 200$ (considered to be large enough for the approximation).
 
 In R:
 
 ```{r}
-n <- 380
-z <- (200 - n * p0)/sqrt(n * p0 * (1-p0))
+n <- 300
+x <- 200
+z <- (x - n * p0)/sqrt(n * p0 * (1-p0))
 pnorm(z, lower.tail = FALSE)
 ```
 or, using the R proportion test `prop.test`
@@ -482,7 +483,7 @@ or, using the R proportion test `prop.test`
 ```
 
 ```{r}
-prop.test(200, n, p = p0) # uses continuity correction
+prop.test(x, n, p = p0, alternative = "greater") # uses continuity correction
 ```
 Notice that the result is not exactly the same. This is due to the fact
 that we are approximating a discrete probability sum with an integral of
@@ -490,7 +491,7 @@ a Gaussian. To correct for this, it's enough to subtract (or add, depending
 on the case) `.5` to the $x$ value.
 
 ```{r}
-z_corr <- (200 - .5 - n * p0)/sqrt(n * p0 * (1-p0))
+z_corr <- (x - .5 - n * p0)/sqrt(n * p0 * (1-p0))
 pnorm(z_corr, lower.tail = FALSE)
 ```
 
