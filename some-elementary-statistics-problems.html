@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2022-10-18" />
+<meta name="date" content="2022-10-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -697,33 +697,34 @@ Under the null hypothesis, in the unilateral case, we compute the p-value as</p>
 P(Z \geq z | H_0) = 1 - \Phi(z)\,,
 \]</span>
 where <span class="math inline">\(z\)</span> is the realization of <span class="math inline">\(Z\)</span> given that the realization of
-<span class="math inline">\(X\)</span> is <span class="math inline">\(x = 20\)</span>.</p>
+<span class="math inline">\(X\)</span> is <span class="math inline">\(x = 200\)</span> (considered to be large enough for the approximation).</p>
 <p>In R:</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="some-elementary-statistics-problems.html#cb198-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">380</span></span>
-<span id="cb198-2"><a href="some-elementary-statistics-problems.html#cb198-2" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (<span class="dv">200</span> <span class="sc">-</span> n <span class="sc">*</span> p0)<span class="sc">/</span><span class="fu">sqrt</span>(n <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p0))</span>
-<span id="cb198-3"><a href="some-elementary-statistics-problems.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 0.06016385</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="some-elementary-statistics-problems.html#cb198-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">300</span></span>
+<span id="cb198-2"><a href="some-elementary-statistics-problems.html#cb198-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb198-3"><a href="some-elementary-statistics-problems.html#cb198-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (x <span class="sc">-</span> n <span class="sc">*</span> p0)<span class="sc">/</span><span class="fu">sqrt</span>(n <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p0))</span>
+<span id="cb198-4"><a href="some-elementary-statistics-problems.html#cb198-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 2.133891e-10</code></pre>
 <p>or, using the R proportion test <code>prop.test</code></p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="some-elementary-statistics-problems.html#cb200-1" aria-hidden="true" tabindex="-1"></a>?prop.test</span></code></pre></div>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="some-elementary-statistics-problems.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(<span class="dv">200</span>, n, <span class="at">p =</span> p0) <span class="co"># uses continuity correction</span></span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="some-elementary-statistics-problems.html#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(x, n, <span class="at">p =</span> p0, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>) <span class="co"># uses continuity correction</span></span></code></pre></div>
 <pre><code>## 
 ##  1-sample proportions test with continuity correction
 ## 
-## data:  200 out of n, null probability p0
-## X-squared = 2.2562, df = 1, p-value = 0.1331
-## alternative hypothesis: true p is not equal to 0.4864865
+## data:  x out of n, null probability p0
+## X-squared = 38.268, df = 1, p-value = 3.083e-10
+## alternative hypothesis: true p is greater than 0.4864865
 ## 95 percent confidence interval:
-##  0.4747919 0.5772992
+##  0.6188788 1.0000000
 ## sample estimates:
 ##         p 
-## 0.5263158</code></pre>
+## 0.6666667</code></pre>
 <p>Notice that the result is not exactly the same. This is due to the fact
 that we are approximating a discrete probability sum with an integral of
 a Gaussian. To correct for this, it’s enough to subtract (or add, depending
 on the case) <code>.5</code> to the <span class="math inline">\(x\)</span> value.</p>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="some-elementary-statistics-problems.html#cb203-1" aria-hidden="true" tabindex="-1"></a>z_corr <span class="ot">&lt;-</span> (<span class="dv">200</span> <span class="sc">-</span> .<span class="dv">5</span> <span class="sc">-</span> n <span class="sc">*</span> p0)<span class="sc">/</span><span class="fu">sqrt</span>(n <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p0))</span>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="some-elementary-statistics-problems.html#cb203-1" aria-hidden="true" tabindex="-1"></a>z_corr <span class="ot">&lt;-</span> (x <span class="sc">-</span> .<span class="dv">5</span> <span class="sc">-</span> n <span class="sc">*</span> p0)<span class="sc">/</span><span class="fu">sqrt</span>(n <span class="sc">*</span> p0 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p0))</span>
 <span id="cb203-2"><a href="some-elementary-statistics-problems.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(z_corr, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 0.06653798</code></pre>
+<pre><code>## [1] 3.082581e-10</code></pre>
 <blockquote>
 <p>The bilateral case with Normal approximation is left to the reader as exercise</p>
 </blockquote>
