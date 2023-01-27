@@ -1,0 +1,3 @@
+when: 26 weeks BEFORE and 30 weeks AFTER insulating
+temp: average weekly external temperature in Celsius 
+cons: fuel consuption (in ft^3). 

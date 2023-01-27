@@ -1,7 +1,3 @@
-```{r, echo=FALSE}
-rm(list = ls())
-```
-
 # Some elementary statistics problems
 
 In the following paragraphs, we will see some applications of the R

@@ -1,0 +1,199 @@
+# Three JAGS examples
+
+## Rats - Simple linear regression
+
+We use the data from [@rats] and select the 9th
+observation which features the weight at 5 different
+time points of a single rat.
+
+We estimate the intercept and the coefficient 
+in a Bayesian framework using JAGS, 
+then validate our result with the traditional `lm`.
+This example is taken from [@bugs]
+
+```{r}
+set.seed(101)
+# load data
+# install.packages("R2MLwiN")
+
+data(rats, package = "R2MLwiN")
+y <- unlist(rats[9, 1:5])
+x <- c(8, 15, 22, 29, 36)
+```
+```{r}
+library(R2jags)
+
+model_code <- "
+model {
+  for (i in 1:5) {
+    y[i] ~ dnorm(mu[i], tau)
+    mu[i] <- alpha + beta*x[i]
+  }
+
+  alpha ~ dnorm(0, 10^-5)
+  beta ~ dnorm(0, 10^-5)
+  tau ~ dgamma(0.0001, 0.0001)
+  sigma2 <- 1 / tau
+}
+"
+model_data <- list(y = y, x = x)
+model_params <- c("alpha", "beta", "sigma2")
+model_run <- jags(
+  data = model_data,
+  parameters.to.save = model_params,
+  model.file = textConnection(model_code),
+  n.chains = 2, n.burnin = 500, n.iter = 5000
+)
+model_run$BUGSoutput
+```
+```{r}
+library(tibble)
+
+lmfit <- lm(y ~ x, data = tibble(x = x, y = y))
+summary(lmfit)
+```
+We obtain same values for $\alpha$ (intercept) and $\beta$ (slope).
+
+## ZIP model
+
+We generate some synthetic data according to a set of
+pre-defined parameters ($p, \lambda$).
+
+```{r}
+library(ggplot2)
+
+n <- 100
+pp <- .3 # probability of zero event
+ll <- 5
+zi_sample <- rbinom(n, 1, 1 - pp)
+zi_sample[zi_sample == 1] <- rpois(sum(zi_sample), lambda = ll) # sample poisson
+
+tibble(y = zi_sample) %>%
+  ggplot() +
+  geom_histogram(aes(y))
+```
+
+```{r}
+model_code <- "
+model {
+  for (i in 1:N) {
+    y[i] ~ dpois(m[i])
+    m[i] <- group[i] * mu
+    group[i] ~ dbern(p)
+  }
+
+  p ~ dunif(0, 1) # probability of y being drawn from a Poisson
+  mu ~ dgamma(0.5, 0.0001)
+}
+"
+
+model_data <- list(y = zi_sample, N = n)
+model_params <- c("mu", "p")
+model_run <- jags(
+  data = model_data,
+  parameters.to.save = model_params,
+  model.file = textConnection(model_code),
+  n.chains = 2, n.burnin = 500, n.iter = 2000
+)
+model_run$BUGSoutput
+```
+
+Check that:
+- the true values fall inside the 95% CI
+- Rhat is close to 1 (chain convergence)
+
+## Gaussian Mixture Model (GMM)
+
+GMMs are used for clustering data, i.e. group
+observations which are similar and come from a Gaussian
+with same mean.
+It is called _mixture_ in that every observation comes from
+a Gaussian with a certain mean, and the mean depends in turn on
+the component/cluster to which it belongs. Therefore the mean is
+a random variable selected among multiple means (Categorical distributed).
+
+Other mixture models are the ZIP model (mixture of a Poisson and a Bernoulli
+distribution) and the Negative Binomial (mixture of a Poisson and a Gamma -
+[details](https://en.wikipedia.org/wiki/Negative_binomial_distribution#Gamma%E2%80%93Poisson_mixture)).
+
+We generate a sample from a GMM with just two components, arbitrarily
+defining the true parameters.
+
+```{r}
+# synthetic dataset
+n <- 500
+group_prob <- .2
+means <- c(4., 9.)
+stdev <- 2 # same sd for simplicity
+
+# sample the component to which the observation
+mixt_groups <- rbinom(n, 1, group_prob) # bernoulli trials
+# sample the Gaussian variable setting the mean
+# equal to means[1] or means[2] depending on the
+# group to which each observation belongs
+mixt_sample <- rnorm(n,
+  mean = unlist(lapply(mixt_groups, FUN = function(g) means[g + 1])),
+  sd = stdev
+)
+
+# plot the data
+tibble(y = mixt_sample) %>%
+  ggplot() +
+  geom_histogram(aes(y), binwidth = 0.4)
+```
+
+```{r}
+model_code <- "
+model {
+  for(i in 1:N) {
+    y[i] ~ dnorm(mu[i] , tau)
+    mu[i] <- mu_clust[clust[i] + 1]
+    clust[i] ~ dbern(gp)
+  }
+
+  # priors
+  gp ~ dbeta(1, 1) # uniform prior
+  tau ~ dgamma(0.01, 0.01)
+  sigma <- sqrt(1/tau)
+
+  mu_clust_raw[1] ~ dnorm(0, 10^-2)
+  mu_clust_raw[2] ~ dnorm(0, 10^-2)
+
+  mu_clust <- sort(mu_clust_raw) # ensure order to prevent label switch
+}
+"
+
+model_data <- list(y = mixt_sample, N = n)
+# save the parameters and, optionally, the
+# `clust` variable representing the labeling
+# of each observation (clust[i] = 1 if y[i] is found
+# to belong to the second cluster, 0 otherwise)
+model_params <- c(
+  "mu_clust", "gp", "sigma"
+  # , "clust"
+)
+model_run <- jags(
+  data = model_data,
+  parameters.to.save = model_params,
+  model.file = textConnection(model_code),
+  n.chains = 2, n.burnin = 1000, n.iter = 5000
+)
+model_run$BUGSoutput
+```
+
+We can plot the chain samples in order to verify that the
+components correctly represent the two clusters.
+
+```{r}
+library(coda)
+jags_model <- jags.model(
+  file = textConnection(model_code),
+  data = model_data,
+  n.chains = 2,
+  n.adapt = 1000
+)
+samps <- coda.samples(jags_model, model_params, n.iter = 5000)
+par(mar = c(4, 2, 2, 4)) # correct plot size
+plot(samps)
+```
+

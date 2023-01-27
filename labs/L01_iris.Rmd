@@ -1,7 +1,3 @@
-```{r, echo=FALSE}
-rm(list = ls())
-```
-
 # Lab 1
 
 ## Iris Dataset
@@ -86,7 +82,7 @@ color encoding on the four measures.
 ```{r}
 library(reshape2)
 iris_df %>%
-  melt(value.name = "measure") %>% # collapse all measures in one col
+  reshape2::melt(value.name = "measure") %>% # collapse all measures in one col
   # then add a column with the measure name
   ggplot() +
   geom_density(aes(measure, color = class)) +

@@ -1,7 +1,3 @@
-```{r, echo=FALSE}
-rm(list = ls())
-```
-
 # Introduction
 
 ## R and RStudio

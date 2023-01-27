@@ -1,7 +1,3 @@
-```{r, echo=FALSE}
-rm(list = ls())
-```
-
 # Normal sampling
 
 ## Random and non-random normal samples

@@ -1,0 +1,160 @@
+# JAGS lab - Gaussian Mixture Model
+
+A 5-stars hotel stocks up a whole bunch of bread loafs from a
+local bakery on a daily bases. Every stock of loafs counts
+50 pieces, each of which varies slightly, but not trascurably,
+in size (volume in cm<sup>3</sup>) and weight (grams).
+This happens because the bakery
+doesn't have a precise recipe and therefore every baker
+produces different kinds of bread.
+
+You get the chance of measuring weight and size of each
+loaf the hotel buys for an entire month and from those data
+you want to estimate the number of bakers that worked at the
+bakery in that month.
+
+Read the data provided in the `bread.csv` file, get some insights
+on the nature of the data (summaries, plots, etc.) and write
+down a JAGS model which captures it. You should define a
+Gaussian Mixture Model, just like the one from previous lecture,
+but with the number of components $K$ (number of bakers) as parameter.
+
+> Hint: Maybe plot the data and get a feeling of a range of components
+you would like to try out. You can compare them in several ways, for 
+instance preferring the one that gives the largest log-likelihood,
+printing the [DIC](https://en.wikipedia.org/wiki/Deviance_information_criterion)
+(similar to AIC, add the flag `DIC = TRUE` in the `jags()` function call)
+or just by checking how many clusters give accurate estimates.
+
+Some notes that may be useful for writing the model:
+
+- note that `ddirich(alpha)` is the JAGS call for a Dirichlet distribution
+  with concentration `alpha`.
+- avoid the _label switching_ problem by sorting the current clusters probabilities
+  properly. The call `order(v)` is an alternative to `sort(v)`, such that
+  `v[order(v)] == sort(v)` (gives a permutation of the indices that orders
+  the elements of a vector in ascending order).
+- to inspect the likelihood, you can define a new model node 
+  e.g. `complete_loglik` as such:
+
+  ```
+  model {
+
+    #
+    # ... here's the main model
+    #
+    
+    # likelihood
+    for (i in 1:N) {
+      loglikx[i] <- logdensity.norm(x[i], mux_clust[clust[i]], taux)
+      logliky[i] <- logdensity.norm(y[i], muy_clust[clust[i]], tauy)
+    }
+    complete_loglik <- sum(loglikx) + sum(logliky)
+  }
+  ```
+
+The simulation shouldn't take more than one/two minute. If it runs for too long it's
+either unnecessary or wrong. Decrease the number of iterations/chains.
+
+Good luck!
+
+```{r}
+set.seed(42)
+# read data
+library(readr)
+library(tibble)
+library(ggplot2)
+
+bread <- read_csv("./datasets/bread.csv")
+
+bread %>%
+  ggplot(aes(weight, size)) +
+  geom_point()
+```
+
+```{r}
+library(R2jags)
+
+model_code <- "
+model {
+  # Likelihood:
+  for(i in 1:N) {
+    x[i] ~ dnorm(mux[i], taux)
+    y[i] ~ dnorm(muy[i], tauy)
+    mux[i] <- mux_clust[clust[i]]
+    muy[i] <- muy_clust[clust[i]]
+    clust[i] ~ dcat(lambda[1:K]) # categorical
+  }
+
+  # priors
+  taux ~ dgamma(0.01, 0.01)
+  tauy ~ dgamma(0.01, 0.01)
+  sigmax <- 1 / sqrt(taux)
+  sigmay <- 1 / sqrt(tauy)
+
+  for (k in 1:K) {
+    mux_clust_raw[k] ~ dnorm(0, 10^-6)
+    muy_clust_raw[k] ~ dnorm(0, 10^-6)
+  }
+
+  perm <- order(mux_clust_raw) # same ordering for both!
+  for (k in 1:K) {
+    mux_clust[k] <- mux_clust_raw[perm[k]]
+    muy_clust[k] <- muy_clust_raw[perm[k]]
+  }
+  lambda[1:K] ~ ddirch(ones)
+
+  # likelihood
+  for (i in 1:N) {
+    loglikx[i] <- logdensity.norm(x[i], mux_clust[clust[i]], taux)
+    logliky[i] <- logdensity.norm(y[i], muy_clust[clust[i]], tauy)
+  }
+  complete_loglik <- sum(loglikx) + sum(logliky)
+}
+"
+
+K <- 4 # change this and see what's best
+model_data <- list(
+  x = bread$weight, y = bread$size, ones = rep(1, K),
+  K = K, N = nrow(bread)
+)
+model_params <- c(
+  "mux_clust", "muy_clust", "sigmax", "sigmay"
+  # ,"clust"
+  , "lambda", "complete_loglik"
+)
+model_inits <- function() {
+  list(
+    mux_clust_raw = rnorm(K, 500, 1e4), muy_clust_raw = rnorm(K, 500, 1e4),
+    taux = rgamma(0.1, 0.1), tauy = rgamma(0.1, 0.1),
+    clust = sample(1:K, size = nrow(bread), replace = TRUE, prob = rep(1 / K, K))
+  )
+}
+model_run <- jags(
+  data = model_data,
+  parameters.to.save = model_params,
+  inits = model_inits,
+  model.file = textConnection(model_code),
+  n.chains = 2,
+  n.iter = 5000,
+  n.burnin = 1000,
+  n.thin = 5,
+  DIC = TRUE
+)
+model_run$BUGSoutput
+
+gmm_mcmc <- as.mcmc(model_run)
+# save to pdf
+# pdf(file = "./lab3/mcmc_out.pdf")
+# plot(gmm_mcmc)
+# dev.off()
+```
+
+```{r}
+mux <- model_run$BUGSoutput$mean$mux_clust
+muy <- model_run$BUGSoutput$mean$muy_clust
+
+ggplot() +
+  geom_point(aes(bread$weight, bread$size)) +
+  geom_point(aes(mux, muy), col = "red")
+```

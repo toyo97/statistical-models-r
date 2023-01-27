@@ -1,0 +1,319 @@
+# Generalized Linear Models (Poisson)
+
+## Warpbreaks dataset
+
+We want to analyse how the number of breaks in a wool thread
+depends on both the type of wool and the tension applied.
+
+- `breaks`: number of breaks (integer)
+- `wool`: wool type
+- `tension`: tension level (low, medium or high)
+
+This dataset is already embedded in base R, thus we don't need
+to read any external file and we can simply refer to it
+with its name.
+
+```{r}
+head(warpbreaks)
+```
+```{r}
+summary(warpbreaks)
+```
+
+## EDA
+
+This dataset is peculiar since we have two predictors, both qualitative.
+Some descriptive statistics might be useful.
+
+Printing out the contingency table we observe that the dataset
+is balanced.
+
+```{r}
+table(warpbreaks[, -1])
+```
+
+Moreover, we can inspect the response variable distribution
+along each combination of the two qualitative variables.
+
+```{r}
+library(dplyr)
+warpbreaks %>%
+  group_by(wool, tension) %>%
+  summarise(mean = mean(breaks), var = var(breaks))
+```
+
+### Plots
+
+The above information can be easily visualized with
+boxplots. Below we see a variation of the boxplot, called
+*violin plot*, together with some fancy coloring which
+highlights the nature of the `tension` variable (discrete
+but with ordered levels, i.e. _low_, _medium_, _high_).
+
+```{r}
+library(ggplot2)
+warpbreaks %>%
+  ggplot() +
+  geom_violin(aes(tension, breaks, fill = as.integer(tension))) +
+  scale_fill_gradient(name = "tension", low = "#FFFAD7", high = "#E97777") +
+  facet_wrap(~wool) +
+  theme(legend.position = "none")
+```
+
+## Poisson Family GLM
+
+Let's now fit a generalized linear model with log-link function
+(i.e. Poisson family).
+
+```{r}
+breaks_glm <- glm(breaks ~ tension + wool,
+  data = warpbreaks,
+  family = "poisson"
+)
+summary(breaks_glm)
+```
+
+The output is similar to the one from the Binomial family seen
+in the previous lecture, although here all the coefficients are
+related to discrete variables.
+
+### Response
+
+The link function is simply
+
+$$
+\eta_i = g(\mu_i) = \log(\mu_i)
+$$
+
+therefore, it's enough to exponentiate the logits to obtain
+the response.
+
+```{r}
+breaks_glm$fitted.values
+# equals to
+exp(predict(breaks_glm, newdata = warpbreaks))
+```
+
+### Contrasts
+
+We can use contrasts to compare the coefficients and
+understand whether two levels of a single variable report
+significantly different effects on the response variable.
+For instance, below we compare the _medium_ tension level
+with the _high_ tension level.
+
+The reason why we use contrasts is that it provides
+statistically relevant information on the difference between
+two coefficients.
+I.e. looking at the GLM summary, we observe that the difference
+between `M` and `H` is `r diff(breaks_glm$coefficients[3:2])`,
+but how do we know if it's statistically relevant?
+
+```{r}
+library(contrast)
+cont <- contrast(breaks_glm,
+  list(tension = "M", wool = "A"),
+  list(tension = "H", wool = "A"),
+  type = "individual"
+)
+# X = TRUE prints the design matrix used
+print(cont, X = TRUE)
+```
+
+A low p-value lets us reject the hypothesis that the two coefficients
+are equal.
+
+> Note: the `X = TRUE` parameter is actually a parameter of the
+`contrast` object, which tells the print function to show the 
+contrast coefficients used.
+
+Remember that the data is transformed into a model matrix
+by the `glm` function and it can be retrieved as follows.
+
+```{r}
+# extract the dummy variables dataset
+x <- model.matrix(breaks_glm)
+head(x)
+```
+
+Let's compute the contrast output values manually:
+
+```{r}
+# constants interc, tensM, tensH, woolB
+coeff <- breaks_glm$coefficients
+v <- c(0, 1, -1, 0) # contrast coefficients
+coeff %*% v # contrast (difference between coeffs)
+```
+
+```{r}
+# covariance matrix of the coefficients
+covmatJ <- solve(t(x) %*% diag(breaks_glm$weights) %*% x)
+```
+
+Weights are related to each combination of the (qualitative)
+predictors. E.g. every row with the same predictor values will have
+the same weight.
+
+```{r}
+dif <- v %*% coeff
+se <- sqrt(v %*% covmatJ %*% v)
+se # standard error
+```
+
+```{r}
+tvalue <- dif / se
+tvalue # t-statistic
+```
+
+```{r}
+df <- nrow(x) - ncol(x)
+df # degrees of freedom of the T-student variable
+```
+The p-value is computed taking the two extremes (bilateral).
+```{r}
+pt(tvalue, df, lower.tail = FALSE) + pt(-tvalue, df, lower.tail = TRUE)
+```
+
+We can provide multiple levels at once to contrasts:
+
+```{r}
+cont_multi <- contrast(breaks_glm,
+  list(tension = "H", wool = levels(warpbreaks$wool)),
+  list(tension = "M", wool = levels(warpbreaks$wool)),
+  type = "individual"
+)
+print(cont_multi, X = TRUE)
+```
+
+## Tests
+
+Since we know that the difference of the deviances
+is Chi-squared distributed, we can perform some tests.
+
+```{r}
+str(summary(breaks_glm)) # to view the attribute names
+d0 <- summary(breaks_glm)$null.deviance # Msat - Mnull
+df0 <- summary(breaks_glm)$df.null
+d1 <- summary(breaks_glm)$deviance # Msat - Mfit
+df1 <- summary(breaks_glm)$df.residual
+```
+
+```{r}
+deltaD <- d0 - d1 # chisq statistic of the model (Mfit - Mnull)
+dfD <- df0 - df1 # chisq degrees of freedom
+pchisq(deltaD, dfD, lower.tail = FALSE)
+```
+Since the p-value is very low, we can reject the hypothesis
+that the fitted model is equal to a null model, thus the
+model is useful.
+
+_Is it as good as the saturated one?_
+No (of course, it's not a perfect model).
+
+```{r}
+pchisq(d1, df1, lower.tail = FALSE)
+```
+
+Graphic representation:
+
+```{r}
+tibble(
+  x = seq(0, 220, length.out = 100),
+  y = dchisq(x, df1)
+) %>%
+  ggplot() +
+  geom_line(aes(x, y)) +
+  geom_vline(aes(xintercept = d1), color = "red")
+```
+The plot tells us how far is the fitted model from being equal 
+to the saturated one. It would be more useful though to
+observe the distance between the fitted and the null models.
+
+> Exercise: plot the same graph for the deviance between the fit
+and the null model. Comment it.
+
+## Influence measures
+
+For each data-point in the dataset, we can measure how that
+observation impacts the fit. The `influence.measures` function
+fits a new model with all observations but one, then compares the
+coefficients (in a sort of sensitivity analysis), and does this for
+every observation. The bigger is the difference in the coefficients,
+the higher is the influence of that datum.
+Note that the results depend from the parametrization of the model,
+(e.g. it changes when the reference level for tension is M or H).
+
+```{r}
+infmeas <- influence.measures(breaks_glm)
+str(infmeas)
+infmeasmat <- infmeas$infmat
+head(infmeasmat)
+```
+
+We can plot the observations influences:
+
+```{r}
+summary(infmeas)
+s <- list(s = 1:nrow(warpbreaks))
+# we plot col 1, 2, 3 of influence measures
+library(reshape2)
+bind_cols(infmeasmat, s, warpbreaks) %>%
+  reshape2::melt(
+    measure.vars = 1:4,
+    variable.name = "infl_name",
+    value.name = "measure"
+  ) %>%
+  ggplot() +
+  geom_point(aes(s, measure)) +
+  facet_wrap(~infl_name)
+```
+
+## Interaction
+
+Let's add interaction.
+
+```{r}
+# some other equivalent ways of writing breaks ~ tension*wool...
+int_glm <- glm(breaks ~ tension + wool + tension:wool,
+  data = warpbreaks, family = "poisson"
+)
+head(model.matrix(int_glm))
+
+# as you can see from the design.matrix, it's the same model
+int_glm2 <- glm(breaks ~ (tension + wool)^2,
+  data = warpbreaks, family = "poisson"
+)
+head(model.matrix(int_glm2))
+```
+
+```{r}
+summary(int_glm)
+```
+
+> Exercise: draw an interaction plot and check if the data
+relate to an additive model or not. On the x-axis put the tension levels, on
+the y-axis the breaks. Draw two lines, one for wool A and one for wool B,
+passing through the mean number of breaks. How do you interpret the graph?
+
+### Testing interaction
+
+Is a more complex model worth the additional parameters?
+
+```{r}
+AIC(breaks_glm, int_glm)
+```
+
+Yes, it is. And, again, we can test it against the
+null model.
+
+```{r}
+d2 <- int_glm$deviance
+df2 <- int_glm$df.residual
+```
+
+```{r}
+anova(breaks_glm, int_glm, test = "Chisq")
+pchisq(d1 - d2, df1 - df2, lower.tail = FALSE) # Mfit - Mnull
+```
+
+

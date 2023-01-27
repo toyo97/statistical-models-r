@@ -1,0 +1,3 @@
+golfer_id: int
+brand: categorical A-D (4-levels factor) 
+distance: in meters (continuous)

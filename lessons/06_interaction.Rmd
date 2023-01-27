@@ -1,0 +1,247 @@
+# Interactions and qualitative predictors
+
+## Transformations
+
+Formulae in R linear models are much more powerful than
+what seen so far. In some cases we might be interested in
+transforming a variable before fitting the linear model.
+
+### A simple example
+
+For instance, let's take this synthetic dataset:
+
+```{r}
+library(tibble)
+n <- 100
+synth <- tibble(
+  x = seq(from = 1, to = 30, length.out = n),
+  y = log(x) + rnorm(n, 0, 0.2)
+)
+```
+
+which looks like this:
+
+```{r}
+library(ggplot2)
+ggplot(synth) +
+  geom_point(aes(x, y))
+```
+
+Of course, we can try to fit a linear model without any
+extra effort
+
+```{r}
+naive_lm <- lm(y ~ x, data = synth)
+ggplot(naive_lm, mapping = aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red")
+```
+
+but if we plot the residuals, we can detect some issues for low
+values of $y$ (definitely not uncorrelated).
+
+```{r}
+synth %>%
+  mutate(res = naive_lm$residuals) %>% # adds the residual column
+  ggplot() +
+  geom_point(aes(y, res))
+```
+
+By understanding how $x$ is distributed, we can fix this issue
+and fit the model on a transformation of itself, clearly $\log(x)$.
+We do this simply by adding the desired transformation in the 
+formula, meaning that we don't have to tranform the dataset beforehand.
+
+```{r}
+log_lm <- lm(y ~ log(x), data = synth)
+ggplot(log_lm,
+  mapping = aes(`log(x)`, y)
+) + # notice the backticks!
+  geom_point() +
+  geom_smooth(method = "lm", color = "red")
+```
+
+and the residuals plot.
+
+```{r}
+synth %>%
+  mutate(res = log_lm$residuals) %>% # adds the residual column
+  ggplot() +
+  geom_point(aes(y, res))
+```
+
+### On _advertising_
+
+Back to our real dataset.
+
+```{r}
+library(readr)
+advertising <- read_csv("./datasets/advertising.csv")
+```
+
+Let's try applying a transformation to the most promising
+predictor, in particular let's us $\sqrt{TV}$. The choice
+of the square root transformation comes from a first look
+at the scatter plot shown previously (TV against Sales),
+where we can detect a slightly curved trend which resembles
+a curve $y = \sqrt{x}$.
+
+Let's plot the data after the transformation and observe
+that it's trend better fit a straight line.
+
+```{r}
+advertising %>%
+  dplyr::select(Sales, TV) %>%
+  dplyr::mutate(sqrtTV = sqrt(TV)) %>%
+  ggplot(aes(sqrtTV, Sales)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red")
+```
+
+We can fit a linear model. It's `summary` table
+will show a better $R^2$ score.
+
+```{r}
+trans_lm <- lm(Sales ~ sqrt(TV), data = advertising)
+```
+
+> *Exercise*: plot the regression line and compare it with
+the simple model fitted on the raw data
+
+The following two commands might help in inspecting
+a linear model with transformed data.
+
+```{r}
+head(model.matrix(trans_lm)) # prints the design matrix
+trans_lm$terms # inspect the linear model specifics
+```
+
+## Model selection
+
+### R-squared
+
+One of the indicators computed with `summary` on a fitted linear model
+is the $R^2$ index (R-squared, or coefficient of determination). It is defined as
+
+$$
+R^2 = 1 - \frac{\sum_i (y_i - \hat y_i)^2}{\sum_i (y_i - \bar y)^2}
+$$
+
+and shows the impact of the residuals proportionately to the variance
+of the response variable. It can be used to compare different models
+although it should not be considered as an absolute score of the model.
+The closer it is to 1, the better is the model fit.
+
+This output, for instance, shows how the transformation used above 
+seems to improve the accuracy of the regression task.
+
+```{r}
+simple_lm <- lm(Sales ~ TV, data = advertising)
+summary(simple_lm)$r.squared
+summary(trans_lm)$r.squared
+```
+
+### ANOVA
+
+Another way of comparing two models, in particular one model with
+a smaller nested model, is the ANOVA test, which is an instance
+of the F-test.
+A low p-value for the F statistic means that we can reject the hypothesis that
+the smaller model explains the data well enough.
+
+Here we compare the model with a single predictor (squared root of TV), which
+is the *smaller* model, with a model with also the Radio data as 
+additional predictor.
+
+```{r}
+double_lm <- lm(Sales ~ sqrt(TV) + Radio, data = advertising)
+anova(trans_lm, double_lm)
+```
+
+## Qualitative predictors
+
+Qualitative predictors are represented in R through *factors*.
+Although it's not always necessary, it is always best to
+explicitly tell R to interpret qualitative predictors data as factors.
+This can be done with `read_csv`, first by reading the data as it is
+and then calling the `spec()` function over the new tibble.
+
+```{r}
+wide_golf <- read_csv("./datasets/golfer.csv")
+spec(wide_golf) # prints information about the detected data types
+```
+
+In this case, the output is saying that the first column has
+been detected as `numeric`, which is false, because the golfer
+number is just an identification number.
+Therefore we correct this by copying the output, manually editing
+the first column type from `col_double()` to `col_factor()` and
+setting the `read_csv` parameter `col_types` to that.
+
+```{r}
+wide_golf <- read_csv("./datasets/golfer.csv", col_types = cols(
+  golfer = col_factor(),
+  A = col_double(),
+  B = col_double(),
+  C = col_double(),
+  D = col_double()
+))
+
+library(dplyr)
+# need to switch from wide to long format
+golf <- wide_golf %>%
+  gather(brand, distance, -golfer)
+
+## if using data.frame, you can use `melt()` from
+## reshape2
+# golf <- melt(wide_golf, id.vars = 1,
+#             variable.name = "brand",
+#             value.name = "distance")
+```
+
+Now, for example, we fit a linear model using all the 
+available columns
+
+```{r}
+complete_lm <- lm(distance ~ ., data = golf)
+```
+
+and we can compare it to a smaller model with ANOVA test.
+
+```{r}
+small_lm <- lm(distance ~ golfer, data = golf)
+anova(small_lm, complete_lm)
+```
+
+Another variance test can be performed with `aov`.
+Check the function documentation for more details.
+```{r}
+aov(distance ~ golfer + brand, data = golf)
+```
+
+## Predict
+
+Especially when dealing with qualitative data, predictions for
+new unseen data can be easily computed with the `predict` function,
+which simply applies the regression coefficients to the provided data
+(arbitrarily generated below inside a tibble).
+
+```{r}
+predict(complete_lm, tibble(golfer = c("1", "1", "2"), brand = c("A", "B", "B")),
+  interval = "confidence"
+)
+```
+
+## Interactions
+
+Interactions are added in the `lm` formula. More specifically:
+
+
+- `a:b` (colon op) includes the cross-variable between two predictors
+- `a*b` (asterisk op) includes the two predictors individually and the
+  cross-variable (i.e. writing `y ~ a + b + a:b` is equivalent to 
+  writing `y ~ a*b`)
+
+```{r}
+inter_lm <- lm(distance ~ golfer * brand, data = golf)
+```

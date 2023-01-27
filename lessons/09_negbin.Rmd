@@ -1,0 +1,390 @@
+# Negative Binomial and Zero-Inflation
+
+## Dataset
+
+It is a sample of 4,406 individuals, aged 66 and over, who were covered by Medicare
+in 1988. One of the variables the data provide is number of physician office visits.
+The dataset is provided by the AER package [@aer].
+
+Our goal is to model the number of visits given the other attributes (chronic conditions,
+status, gender etc.). For sake of simplicity, we only select a subset of attributes which
+are considered to be relevant.
+
+| variable | description |
+|:-|:-|
+|        visits |    Number of physician office visits (integer outcome) |
+|       nvisits | |
+|        ovisits | |
+|       novisits | |
+|       emergency | |
+|       hospital |    Number of hospital stays (integer) |
+|     health |    Self-perceived health status (poor, average, excellent) |
+|   chronic |    Number of chronic condition (integer) |
+|    adl | |
+|    region | |
+|       age | |
+|     afam | |
+|    gender |    Gender (female, male) |
+|   married | |
+|    school |    Number of years of education (integer) |
+|    income | |
+|  employed | |
+|   insurance |    Private insurance indicator (no, yes) |
+|  medicaid | |
+
+```{r}
+# load data from package
+# install.package("AER")
+library(AER)
+data("NMES1988")
+nmes <- NMES1988[, c(1, 6:8, 13, 15, 18)] # select variables of interest
+summary(nmes)
+head(nmes)
+```
+
+## EDA
+
+As always, let's start with some descriptive plots.
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+
+# analyse response
+visits_scatter <- nmes %>%
+  arrange(visits) %>%
+  ggplot() +
+  geom_point(aes(1:nrow(nmes), visits), alpha = .3)
+visits_bar <- nmes %>%
+  ggplot() +
+  geom_bar(aes(visits))
+ggarrange(visits_scatter, visits_bar, ncol = 2)
+```
+
+The response presents high variability, we can reduce this by taking the log.
+
+```{r}
+logvisits_scatter <- nmes %>%
+  mutate(visits = log(visits + .5)) %>%
+  arrange(visits) %>%
+  ggplot() +
+  geom_point(aes(1:nrow(nmes), visits), alpha = .3)
+logvisits_bar <- nmes %>%
+  mutate(visits = log(visits + .5)) %>%
+  ggplot() +
+  geom_histogram(aes(visits), binwidth = .1)
+
+ggarrange(logvisits_scatter, logvisits_bar, ncol = 2)
+```
+
+Now we analyse the relationship with the number of chronic diseases.
+
+```{r}
+# saturate
+sat <- function(x, sat_point) {
+  x[x > sat_point] <- sat_point # saturate values above 3
+  lev <- as.character(0:sat_point) # define levels
+  lev[length(lev)] <- paste0(lev[length(lev)], "+")
+  x <- as.factor(x) # switch from numeric to factor
+  levels(x) <- lev
+  return(x)
+}
+
+# analyse predictor "chronic"
+unbalanced_plt <- nmes %>%
+  ggplot() +
+  geom_bar(aes(chronic))
+unbalanced_plt
+```
+This variable seems to have too low support on values from 4 above. This will lead
+to low accuracy in the visit estimation when we observe a number of chronic diseases higher than 4.
+We may fix this issue by assuming that a patient having 4 or more diseases will get visited as
+frequently as a patient with 3 chronic diseases. This means that we set a saturation point at 3
+and we transform the data accordingly.
+
+```{r}
+balanced_plt <- nmes %>%
+  mutate(chronic_sat = sat(chronic, 3)) %>%
+  ggplot() +
+  geom_bar(aes(chronic_sat))
+
+ggarrange(unbalanced_plt, balanced_plt)
+```
+
+To summarize, here the two data transformations discussed so far (which we can compare to the
+original dataset). With a log-transform we fix the highly skewed distribution on the response
+variable, while with a saturation point on the `chronic` predictor, we create balanced classes.
+
+```{r}
+# let's add two columns
+nmes <- nmes %>%
+  mutate(
+    chronic_sat = sat(chronic, 3),
+    log_visits = log(visits + .5)
+  )
+
+# bivariate analysis
+biv <- nmes %>%
+  ggplot() +
+  geom_boxplot(aes(as.factor(chronic), visits))
+tr_biv <- nmes %>%
+  ggplot() +
+  geom_boxplot(aes(chronic_sat, log_visits))
+
+ggarrange(biv, tr_biv, ncol = 2)
+```
+There are many less outliers and less variability among classes,
+which suggests that we can better capture its distribution
+
+Here some other bi-variate plots which can be useful for further inspection
+of the available data.
+
+```{r}
+library(tidyr)
+
+plts <- list()
+
+plts$health <- nmes %>%
+  ggplot(aes(health, log_visits)) +
+  geom_boxplot()
+plts$chronic <- nmes %>%
+  ggplot(aes(chronic_sat, log_visits)) +
+  geom_boxplot()
+plts$insurance <- nmes %>%
+  ggplot(aes(insurance, log_visits)) +
+  geom_boxplot()
+plts$hospital <- nmes %>%
+  mutate(hospital_sat = sat(hospital, 3)) %>%
+  ggplot(aes(hospital_sat, log_visits)) +
+  geom_boxplot()
+plts$gender <- nmes %>%
+  ggplot(aes(gender, log_visits)) +
+  geom_boxplot()
+plts$school <- nmes %>%
+  mutate(school = sat(school, 6)) %>%
+  ggplot(aes(school, log_visits)) +
+  geom_boxplot()
+
+do.call(ggarrange, plts)
+```
+
+## Negative binomial regression
+
+The overdispersion of the data can be captured by a Negative Binomial
+model, which differs from the Poisson model in that the variance can
+be different than the mean. Therefore it can account for underdispersed and
+overdispersed count variates.
+
+First we try with a simple Poisson regression
+
+```{r}
+# define a formula (select the relevant/interesting predictors)
+fml <- visits ~ hospital + health + chronic_sat + gender + school + insurance
+
+pois_model <- glm(
+  formula = fml, family = poisson(link = "log"), # family object "poisson"
+  data = nmes
+)
+summary(pois_model)
+```
+> Note: if we print out the coefficient, and we change the scale to match the
+counts, we see that, for instance, excellent health brings a decrease in the visits,
+while a number of chronic disease of three or higher, dramatically increases
+the visits count.
+
+```{r}
+coef(pois_model)
+exp(coef(pois_model))
+```
+
+Then we compare the results with a regression fit on a GLM with Negative Binomial family.
+
+```{r}
+# fit the equivalent NB model
+# check
+library(MASS)
+nb_model <- glm.nb(formula = fml, data = nmes)
+summary(nb_model)
+```
+
+Among the fit information we can see that the `glm.nb` function estimates
+the dispersion parameter of the Negative Binomial. Keep in mind that there are
+several parametrization of this distribution, one of which consists of, indeed,
+mean $\mu$ and dispersion $r$ i.e. $NB(\mu, r)$ such that
+
+$$
+\sigma^2 = \mu + \frac{\mu^2}{r}\,,\qquad p = \frac{m}{\sigma^2}
+$$
+
+```{r}
+# coefficients again
+exp(coef(nb_model))
+```
+
+Let's compare the coefficients and the confidence intervals:
+
+```{r}
+rbind(exp(coef(pois_model)), exp(coef(nb_model)))
+
+cbind(confint.default(pois_model), confint.default(nb_model))
+
+cbind(
+  confint.default(pois_model)[, 2] - confint.default(pois_model)[, 1],
+  confint.default(nb_model)[, 2] - confint.default(nb_model)[, 1]
+)
+```
+
+The confidence intervals are wider, which is an effect of the Negative Binomial
+letting more uncertainty in the model.
+
+## Zero-Inflation
+
+With a regression fit, we only obtain the means of the Poisson, or Negative Binomial,
+distributions for each observations. These are the *fitted values*. However,
+many observations have response variable counting 0 visits.
+How many zeros does our model predicts?
+
+```{r}
+mu <- predict(pois_model, type = "response") # get the poisson mean
+expected_zero_count <- sum(dpois(x = 0, lambda = mu)) # sum_i (1(yi == 0) * p(yi == 0))
+round(expected_zero_count)
+```
+
+How many are actually 0? Many more...
+
+```{r}
+# actual 0 visits
+sum(nmes$visits == 0)
+```
+
+For this reason we introduce a composite model called Zero-Inflated Poisson:
+it's a mixture between a Poisson and a discrete distribution over zero.
+
+$$
+P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!}
+$$
+
+Let's have a look at the generative model and the distribution of ZIP variates.
+It can be seen as a two-steps process:
+
+1. Sample a Bernoulli variable which states whether the observation is
+zero or not-zero
+2. If it is not zero, then sample a Poisson variable with a given mean
+
+```{r}
+n <- 100
+pp <- .3 # probability of zero event
+ll <- 5
+zi_samples <- rbinom(n, 1, 1 - pp)
+zi_samples[zi_samples == 1] <- rpois(sum(zi_samples), lambda = ll) # sample poisson
+tibble(y = zi_samples) %>%
+  ggplot() +
+  geom_histogram(aes(y))
+```
+
+With our data, we do not observe something really like a zero inflation
+model, but still, with a ZI model, we can have more insight on the
+presence of many zeros.
+
+```{r}
+nmes %>%
+  ggplot() +
+  geom_histogram(aes(visits)) +
+  xlim(0, 30)
+```
+
+```{r}
+nmes %>%
+  mutate(gtz = as.factor(ifelse(visits > 0, ">0", "0"))) %>%
+  ggplot() +
+  geom_bar(aes(gtz))
+```
+
+Let's try to fit a zero inflation model.
+
+Notice how the `zeroinfl` function infers two models:
+the count (pois) and the zero model (logistic regression).
+
+```{r}
+library(pscl)
+
+zip_model <- zeroinfl(formula = fml, data = nmes)
+summary(zip_model)
+
+round(sum(predict(zip_model, type = "zero"))) # better captures the zero
+
+# can account also for overdispersion
+zinb_model <- zeroinfl(formula = fml, dist = "negbin", data = nmes)
+summary(zinb_model)
+
+exp_coeff <- exp(coef(zip_model))
+exp_coeff <- matrix(exp_coeff, ncol = 2)
+colnames(exp_coeff) <- c("count", "zero")
+exp_coeff
+```
+
+We can also set different models for the two parts
+
+E.g. from the previous summary it seems that health does not affect the visits count. 
+Maybe we can remove it:
+
+```{r}
+zinb_2model <- zeroinfl(
+  formula = visits ~
+    hospital + health + chronic_sat + gender + school + insurance | # count
+      hospital + chronic_sat + gender + school + insurance, # zero
+  dist = "negbin",
+  data = nmes
+)
+summary(zinb_2model)
+```
+And since the regression model is composed of two models, also the
+prediction can be split into the two parts as such:
+
+```{r}
+# two models predictions and combined
+predict(zip_model, type = "zero")[1:5]
+predict(zip_model, type = "count")[1:5]
+predict(zip_model, type = "response")[1:5]
+```
+
+And finally we can test the models one against the other, comparing the likelihood or
+using the AIC score.
+
+```{r}
+library(lmtest)
+# likelihood test
+lmtest::lrtest(zip_model, zinb_2model)
+# p-value tells whether the logLikelihood difference is significant
+
+# AIC for model selection based on complexity/performance tradeoff
+AIC(pois_model, nb_model, zip_model, zinb_2model)
+```
+### Hurdle v. ZI
+
+In general, zeros can come both from the zero model and the count model. Sometimes we might
+want to model a zero as a separate event. The Hurdle model in fact, alternatively to the ZI model,
+makes a clear distinction between counts that are zero and counts that are 1 or more. Here
+is the Hurdle-Poisson model for instance:
+
+$$
+P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!} \bm{1}(y > 0)
+$$
+This is particularly useful when the data consist of large counts on average, but for 
+some reasons (e.g. reading errors) many values are 0 instead. It probably doesn't make
+sense, in those cases, to account for the probability of that zero being drawn from the same
+Poisson of that of all the other larger counts.
+
+In R, this can be done by using the `hurdle` function from the same library.
+
+```{r}
+hurdle_model <- hurdle(formula = fml, data = nmes)
+summary(hurdle_model)
+
+z_pred <- predict(hurdle_model, type = "zero")[1:5]
+c_pred <- predict(hurdle_model, type = "count")[1:5]
+predict(hurdle_model, type = "response")[1:5]
+# here the composite prediction is merely the product of the two
+# models predictions
+z_pred * c_pred
+```
