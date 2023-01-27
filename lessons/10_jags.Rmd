@@ -10,7 +10,9 @@ We estimate the intercept and the coefficient
 in a Bayesian framework using JAGS, 
 then validate our result with the traditional `lm`.
 This example is taken from [@bugs]
-
+```{r eval=FALSE, include=FALSE}
+library(R2MLwiN)
+```
 ```{r}
 set.seed(101)
 # load data
