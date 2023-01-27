@@ -179,13 +179,15 @@ the first column type from `col_double()` to `col_factor()` and
 setting the `read_csv` parameter `col_types` to that.
 
 ```{r}
-wide_golf <- read_csv("./datasets/golfer.csv", col_types = cols(
-  golfer = col_factor(),
-  A = col_double(),
-  B = col_double(),
-  C = col_double(),
-  D = col_double()
-))
+wide_golf <- read_csv("./datasets/golfer.csv",
+  col_types = cols(
+    golfer = readr::col_factor(),
+    A = col_double(),
+    B = col_double(),
+    C = col_double(),
+    D = col_double()
+  )
+)
 
 library(dplyr)
 # need to switch from wide to long format

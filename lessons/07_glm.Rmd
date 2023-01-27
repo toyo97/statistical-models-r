@@ -9,6 +9,10 @@ from general, academic and technic (_vocation_)
 - `schtyp`: school type
 - `read, write, math, science`: grade/score for each subject
 
+```{r, include=FALSE, cache=FALSE}
+col_factor <- readr::col_factor
+```
+
 ```{r}
 library(readr)
 # load the data

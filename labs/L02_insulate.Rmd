@@ -21,6 +21,10 @@ You might answer these questions:
 Although it's not necessary in this case, we explicitly specify
 that the `when` variable needs to be parsed as factor.
 
+```{r, include=FALSE, cache=FALSE}
+col_factor <- readr::col_factor
+```
+
 ```{r}
 library(dplyr)
 library(readr)
