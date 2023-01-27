@@ -13,3 +13,4 @@ libs/
 .Rhistory
 .RData
 .Ruserdata
+*.txt

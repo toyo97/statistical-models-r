@@ -1,12 +1,23 @@
 delete_merged_file: true
+before_chapter_script: "./cleanup.r"
 language:
   ui:
     chapter_name: "Chapter "
+# new_session: yes
 rmd_files: [
   "index.Rmd",
   "./lessons/01_intro.Rmd",
   "./lessons/02_elementary_stat.Rmd",
   "./lessons/03_normal_sampling.Rmd",
+  "./lessons/04_linear_regression.Rmd",
+  "./lessons/05_lm_tools.Rmd",
+  "./lessons/06_interaction.Rmd",
+  "./lessons/07_glm.Rmd",
+  "./lessons/08_pois_glm.Rmd",
+  "./lessons/09_negbin.Rmd",
+  "./lessons/10_jags.Rmd",
   "./labs/L01_iris.Rmd",
+  "./labs/L02_insulate.Rmd",
+  "./labs/L03_bread.Rmd",
   "tail.Rmd"
 ]
