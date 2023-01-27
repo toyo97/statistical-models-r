@@ -14,3 +14,4 @@ libs/
 .RData
 .Ruserdata
 *.txt
+.DS_Store
