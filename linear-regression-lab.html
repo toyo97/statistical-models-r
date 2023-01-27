@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 12 Linear regression lab | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 12 Linear regression lab | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 12 Linear regression lab | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
+
+
+<meta name="date" content="2023-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lab-1.html"/>
+<link rel="next" href="jags-lab---gaussian-mixture-model.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistical Models in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#random-and-non-random-normal-samples"><i class="fa fa-check"></i><b>3.1</b> Random and non-random normal samples</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="normal-sampling.html"><a href="normal-sampling.html#autocorrelated-sample"><i class="fa fa-check"></i><b>3.1.1</b> Autocorrelated sample</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#exchangeable-normal-random-variables"><i class="fa fa-check"></i><b>3.2</b> Exchangeable normal random variables</a></li>
+<li class="chapter" data-level="3.3" data-path="normal-sampling.html"><a href="normal-sampling.html#multivariate-normal-random-samples"><i class="fa fa-check"></i><b>3.3</b> Multivariate Normal random samples</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#solutions"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
+<li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#plot"><i class="fa fa-check"></i><b>4.4.1</b> Plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#summary"><i class="fa fa-check"></i><b>4.4.2</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html"><i class="fa fa-check"></i><b>5</b> Tools for linear regression analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#plot-1"><i class="fa fa-check"></i><b>5.1</b> Plot</a></li>
+<li class="chapter" data-level="5.2" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#multiple-predictors"><i class="fa fa-check"></i><b>5.2</b> Multiple predictors</a></li>
+<li class="chapter" data-level="5.3" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#confidence-regions"><i class="fa fa-check"></i><b>5.3</b> Confidence regions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html"><i class="fa fa-check"></i><b>6</b> Interactions and qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#transformations"><i class="fa fa-check"></i><b>6.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#a-simple-example"><i class="fa fa-check"></i><b>6.1.1</b> A simple example</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#on-advertising"><i class="fa fa-check"></i><b>6.1.2</b> On <em>advertising</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#students-dataset"><i class="fa fa-check"></i><b>7.1</b> Students dataset</a></li>
+<li class="chapter" data-level="7.2" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#eda"><i class="fa fa-check"></i><b>7.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#plots"><i class="fa fa-check"></i><b>7.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#test"><i class="fa fa-check"></i><b>7.3</b> Test</a></li>
+<li class="chapter" data-level="7.4" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#generalized-linear-model"><i class="fa fa-check"></i><b>7.4</b> Generalized Linear Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#predictions"><i class="fa fa-check"></i><b>7.4.1</b> Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#graphic-interpretation"><i class="fa fa-check"></i><b>7.5</b> Graphic interpretation</a></li>
+<li class="chapter" data-level="7.6" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#other-tests"><i class="fa fa-check"></i><b>7.6</b> Other tests</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html"><i class="fa fa-check"></i><b>8</b> Generalized Linear Models (Poisson)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#warpbreaks-dataset"><i class="fa fa-check"></i><b>8.1</b> Warpbreaks dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#eda-1"><i class="fa fa-check"></i><b>8.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#plots-1"><i class="fa fa-check"></i><b>8.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Poisson Family GLM</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#response"><i class="fa fa-check"></i><b>8.3.1</b> Response</a></li>
+<li class="chapter" data-level="8.3.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#contrasts"><i class="fa fa-check"></i><b>8.3.2</b> Contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#tests"><i class="fa fa-check"></i><b>8.4</b> Tests</a></li>
+<li class="chapter" data-level="8.5" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#influence-measures"><i class="fa fa-check"></i><b>8.5</b> Influence measures</a></li>
+<li class="chapter" data-level="8.6" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#interaction"><i class="fa fa-check"></i><b>8.6</b> Interaction</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#testing-interaction"><i class="fa fa-check"></i><b>8.6.1</b> Testing interaction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html"><i class="fa fa-check"></i><b>9</b> Negative Binomial and Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#dataset"><i class="fa fa-check"></i><b>9.1</b> Dataset</a></li>
+<li class="chapter" data-level="9.2" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#eda-2"><i class="fa fa-check"></i><b>9.2</b> EDA</a></li>
+<li class="chapter" data-level="9.3" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#negative-binomial-regression"><i class="fa fa-check"></i><b>9.3</b> Negative binomial regression</a></li>
+<li class="chapter" data-level="9.4" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#zero-inflation"><i class="fa fa-check"></i><b>9.4</b> Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#hurdle-v.-zi"><i class="fa fa-check"></i><b>9.4.1</b> Hurdle v. ZI</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="three-jags-examples.html"><a href="three-jags-examples.html"><i class="fa fa-check"></i><b>10</b> Three JAGS examples</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="three-jags-examples.html"><a href="three-jags-examples.html#rats---simple-linear-regression"><i class="fa fa-check"></i><b>10.1</b> Rats - Simple linear regression</a></li>
+<li class="chapter" data-level="10.2" data-path="three-jags-examples.html"><a href="three-jags-examples.html#zip-model"><i class="fa fa-check"></i><b>10.2</b> ZIP model</a></li>
+<li class="chapter" data-level="10.3" data-path="three-jags-examples.html"><a href="three-jags-examples.html#gaussian-mixture-model-gmm"><i class="fa fa-check"></i><b>10.3</b> Gaussian Mixture Model (GMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>11</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>11.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="11.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>11.2</b> Import data</a></li>
+<li class="chapter" data-level="11.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>11.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.5" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#plotting-intervals"><i class="fa fa-check"></i><b>12.5</b> Plotting intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="jags-lab---gaussian-mixture-model.html"><a href="jags-lab---gaussian-mixture-model.html"><i class="fa fa-check"></i><b>13</b> JAGS lab - Gaussian Mixture Model</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-regression-lab" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Linear regression lab<a href="linear-regression-lab.html#linear-regression-lab" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This lab focuses on linear models and on the R functions
+dedicated to fitted linear models inspection.</p>
+<p>For the following tasks, we will use a real dataset
+featuring two predictors and one response variable (fuel consumption).
+You can read some information inside the <code>insulate.names</code> text file.</p>
+<div id="eda-20-min" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> EDA (20 min)<a href="linear-regression-lab.html#eda-20-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Start by loading the <code>insulate.csv</code> data in the R environment,
+making sure that the type of the parsed variables is correctly inferred,
+then explore it using the tools seen in the lectures (e.g. dimension,
+summary, plots, etc.).</p>
+<p>You might answer these questions:</p>
+<ul>
+<li>How many observations does the dataset provide?</li>
+</ul>
+<p>Although it’s not necessary in this case, we explicitly specify
+that the <code>when</code> variable needs to be parsed as factor.</p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="linear-regression-lab.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb601-2"><a href="linear-regression-lab.html#cb601-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb601-3"><a href="linear-regression-lab.html#cb601-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read the dataset</span></span>
+<span id="cb601-4"><a href="linear-regression-lab.html#cb601-4" aria-hidden="true" tabindex="-1"></a>insulate <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/insulate.csv&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb601-5"><a href="linear-regression-lab.html#cb601-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">when =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb601-6"><a href="linear-regression-lab.html#cb601-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">temp =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb601-7"><a href="linear-regression-lab.html#cb601-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cons =</span> <span class="fu">col_double</span>()</span>
+<span id="cb601-8"><a href="linear-regression-lab.html#cb601-8" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb601-9"><a href="linear-regression-lab.html#cb601-9" aria-hidden="true" tabindex="-1"></a>insulate</span></code></pre></div>
+<pre><code>## # A tibble: 56 × 3
+##    when    temp  cons
+##    &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 before  -0.8   7.2
+##  2 before  -0.7   6.9
+##  3 before   0.4   6.4
+##  4 before   2.5   6  
+##  5 before   2.9   5.8
+##  6 before   3.2   5.8
+##  7 before   3.6   5.6
+##  8 before   3.9   4.7
+##  9 before   4.2   5.8
+## 10 before   4.3   5.2
+## # … with 46 more rows</code></pre>
+<p>The dataset consists of 56 records.</p>
+<ul>
+<li>What are the predictors? Are they qualitative or quantitative?</li>
+</ul>
+<p>The predictors are <code>when, temp</code>.
+<code>when</code> is a qualitative predictor with two levels (<code>before, after</code>)
+while <code>temp</code> is a continuous variable in the range <span class="math inline">\([-0.8, 10.2]\)</span>.</p>
+<ul>
+<li>What is the relationship between the response variable and the two
+predictors taken individually?
+<ul>
+<li>Draw some <em>useful</em> plot and interpret what you see.</li>
+</ul></li>
+</ul>
+<p>One of the most powerful plotting function is the <em>pairs</em> plot.
+In <code>ggplot</code> it’s straightforward:</p>
+<blockquote>
+<p>Note: beware that when dealing with bigger datasets (more
+predictors), as the number of plots scales with the square
+of the number of columns.</p>
+</blockquote>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="linear-regression-lab.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot (pair plot)</span></span>
+<span id="cb603-2"><a href="linear-regression-lab.html#cb603-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb603-3"><a href="linear-regression-lab.html#cb603-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(insulate)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
+<p>From these plots we can see that, as we could imagine,
+the consumption goes down with higher temperatures
+and also there is a clear difference in the consumption
+mean before and after insulation.</p>
+</div>
+<div id="fitting-a-linear-model-15-min" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Fitting a linear model (15 min)<a href="linear-regression-lab.html#fitting-a-linear-model-15-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now use the <code>lm()</code> function to fit two linear models:
+one which only uses the temperature as predictor, and one
+with both predictors.</p>
+<ul>
+<li>Which one is better? Why?</li>
+</ul>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="linear-regression-lab.html#cb605-1" aria-hidden="true" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> insulate)</span>
+<span id="cb605-2"><a href="linear-regression-lab.html#cb605-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = cons ~ temp, data = insulate)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6324 -0.7119 -0.2047  0.8187  1.5327 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   5.4862     0.2357  23.275  &lt; 2e-16 ***
+## temp         -0.2902     0.0422  -6.876 6.55e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8606 on 54 degrees of freedom
+## Multiple R-squared:  0.4668, Adjusted R-squared:  0.457 
+## F-statistic: 47.28 on 1 and 54 DF,  p-value: 6.545e-09</code></pre>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="linear-regression-lab.html#cb607-1" aria-hidden="true" tabindex="-1"></a>additive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> ., <span class="at">data =</span> insulate)</span>
+<span id="cb607-2"><a href="linear-regression-lab.html#cb607-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(additive_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = cons ~ ., data = insulate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.74236 -0.22291  0.04338  0.24377  0.74314 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  6.55133    0.11809   55.48   &lt;2e-16 ***
+## whenafter   -1.56520    0.09705  -16.13   &lt;2e-16 ***
+## temp        -0.33670    0.01776  -18.95   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3574 on 53 degrees of freedom
+## Multiple R-squared:  0.9097, Adjusted R-squared:  0.9063 
+## F-statistic: 267.1 on 2 and 53 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The R-squared index is much higher in the complete model,
+suggesting that the <code>when</code> attribute retains valuable information.</p>
+<ul>
+<li>Plot both regression lines (you can use any plotting
+tool that you prefer)</li>
+</ul>
+<p>The additive model regression line actually consists of two (parallel)
+lines, one for each level of the qualitative predictor <code>when</code>.
+Using color encoding in ggplot, we can differentiate between the two.</p>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="linear-regression-lab.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb609-2"><a href="linear-regression-lab.html#cb609-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> insulate, <span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span></span>
+<span id="cb609-3"><a href="linear-regression-lab.html#cb609-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">linetype =</span> <span class="st">&quot;simple&quot;</span>, <span class="at">intercept =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>], <span class="at">slope =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb609-4"><a href="linear-regression-lab.html#cb609-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb609-5"><a href="linear-regression-lab.html#cb609-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">&quot;complete&quot;</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;after&quot;</span>, <span class="st">&quot;before&quot;</span>),</span>
+<span id="cb609-6"><a href="linear-regression-lab.html#cb609-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">c</span>(</span>
+<span id="cb609-7"><a href="linear-regression-lab.html#cb609-7" aria-hidden="true" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>],</span>
+<span id="cb609-8"><a href="linear-regression-lab.html#cb609-8" aria-hidden="true" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb609-9"><a href="linear-regression-lab.html#cb609-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb609-10"><a href="linear-regression-lab.html#cb609-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span>
+<span id="cb609-11"><a href="linear-regression-lab.html#cb609-11" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
+<div id="interaction-10-min" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Interaction (10 min)<a href="linear-regression-lab.html#interaction-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this setting, we are mostly interested in whether we should
+include the interaction between the two predictors or not.
+If the effects of the predictors are additive, we don’t need
+interaction.</p>
+<ul>
+<li>Are the two effects additive? To answer this, follow the task in
+the next bullet point.</li>
+<li>Draw a plot showing the consumption trend against the temperature,
+separately for before and after insulation. You may (or may not)
+use the following code as template, which is enough to fulfill the
+task after replacing the ellipsis with the proper function arguments:</li>
+</ul>
+<blockquote>
+<p>Hint: remember that, in order to differentiate between
+classes (i.e. <em>before</em> and <em>after</em>) in the same plot,
+you can select the class to be interpreted as color encoding
+for the points/line: <code>aes(..., color = when)</code>.</p>
+</blockquote>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="linear-regression-lab.html#cb610-1" aria-hidden="true" tabindex="-1"></a>insulate <span class="sc">%&gt;%</span> <span class="co"># dataset</span></span>
+<span id="cb610-2"><a href="linear-regression-lab.html#cb610-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span> <span class="co"># main ggplot call</span></span>
+<span id="cb610-3"><a href="linear-regression-lab.html#cb610-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb610-4"><a href="linear-regression-lab.html#cb610-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="co"># trend line</span></span></code></pre></div>
+<p>The two lines are not parallel, which suggests that an additive model
+is not very accurate and we might try to include interaction.</p>
+<ul>
+<li>Fit a linear model which includes interaction between <code>temp</code> and <code>when</code>.</li>
+</ul>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="linear-regression-lab.html#cb611-1" aria-hidden="true" tabindex="-1"></a>interact_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> when <span class="sc">*</span> temp, <span class="at">data =</span> insulate)</span>
+<span id="cb611-2"><a href="linear-regression-lab.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interact_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = cons ~ when * temp, data = insulate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.97802 -0.18011  0.03757  0.20930  0.63803 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     6.85383    0.13596  50.409  &lt; 2e-16 ***
+## whenafter      -2.12998    0.18009 -11.827 2.32e-16 ***
+## temp           -0.39324    0.02249 -17.487  &lt; 2e-16 ***
+## whenafter:temp  0.11530    0.03211   3.591 0.000731 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.323 on 52 degrees of freedom
+## Multiple R-squared:  0.9277, Adjusted R-squared:  0.9235 
+## F-statistic: 222.3 on 3 and 52 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ul>
+<li>How many additional parameters does the model have to estimate?</li>
+</ul>
+<p>Just one additional parameter is required.</p>
+</div>
+</div>
+<div id="aic-and-model-selection-10-min" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> AIC and model selection (10 min)<a href="linear-regression-lab.html#aic-and-model-selection-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Looking at the R-squared index, the model with interaction seems
+to perform a bit better. However, this doesn’t mean that the interaction
+model is a better choice.</p>
+<ul>
+<li>After assessing that we can compare the additive with interaction models
+through the ANOVA test, checking the main prerequisite (nested models),
+run an ANOVA test comparing the two models, analyze the result,
+draw a conclusion.</li>
+</ul>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="linear-regression-lab.html#cb613-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(additive_lm, interact_lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: cons ~ when + temp
+## Model 2: cons ~ when * temp
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     53 6.7704                                  
+## 2     52 5.4252  1    1.3451 12.893 0.0007307 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Interaction with <code>*</code> also includes the singular
+variables, therefore the additive model is nested into interaction.</p>
+<p>Another criterion used for model selection is the <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike Information
+Criterion</a>,
+which is defined as</p>
+<p><span class="math display">\[
+\text{AIC} = 2k - 2\ln(\hat L)
+\]</span></p>
+<p>where <span class="math inline">\(\hat L\)</span> is the maximized likelihood of the data
+i.e. <span class="math inline">\(p(y | \hat \beta)\)</span>. The AIC takes into consideration
+the model complexity (number of predictors considered),
+favoring small models over the bigger ones.</p>
+<ul>
+<li>Find the AIC index using the dedicated function <code>AIC()</code>.
+Which model is better according to the AIC? Why?</li>
+</ul>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="linear-regression-lab.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(additive_lm, interact_lm)</span></code></pre></div>
+<pre><code>##             df      AIC
+## additive_lm  4 48.60465
+## interact_lm  5 38.20098</code></pre>
+<p>A lower index for the interaction model means that the
+additional parameter is worth the higher complexity
+in favor of better fit (likelihood).</p>
+</div>
+<div id="prediction-intervals-35-min" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Prediction intervals (35 min)<a href="linear-regression-lab.html#prediction-intervals-35-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Imagine we have a new unseen (<em>future</em>) row of observed measures <span class="math inline">\(x_f\)</span>,
+with no true response observation (<span class="math inline">\(Y_f\)</span> is unknown).</p>
+<p>We are interested in making inference on the mean <span class="math inline">\(x_f \beta\)</span>.
+As you’ve seen in the theory lectures, this is a particular case of the
+inference of <span class="math inline">\(C \beta\)</span>. Being just one row, the F-type intervals can be
+translated to T-type intervals:</p>
+<p><span class="math display">\[
+F_{\alpha}(1, n-p) = t^2_{\frac{\alpha}{2}}(n-p)
+\]</span></p>
+<p>These are standard confidence intervals, and you can find
+them with <code>predict.lm(..., interval = "confidence")</code>.</p>
+<ul>
+<li>Find a prediction for the following additional rows using the best model you
+found so far, together with their confidence intervals.</li>
+</ul>
+<pre><code>when,temp
+before,5.8
+before,-1.0
+after,4.8
+after,9.8</code></pre>
+<p>With new observations, instead of making inference on the coefficients <span class="math inline">\(\beta\)</span>,
+we can make inference on the unseen response variable <span class="math inline">\(Y_f\)</span>. In this
+case we are not doing either estimation or testing, but rather just <em>prediction</em>.
+In <em>machine learning</em> the focus of inference is prediction: neural networks, for
+instance, have a large set of parameters which are learnt automatically from the data,
+but their values are most of the times non-interpretable, thus not useful per se, while
+the output of interest is <span class="math inline">\(\hat Y_f\)</span>, eventually together with its uncertainty.</p>
+<p>Inference on <span class="math inline">\(Y_f\)</span> can be derived similarly to how you did with confidence intervals.
+Formally (but not too much in detail):</p>
+<p><span class="math display">\[
+Y_f \sim \mathcal N(x_f&#39;\beta, \sigma^2)
+\]</span></p>
+<p>independent from <span class="math inline">\(Y_1, ..., Y_n\)</span>. Under the homogeneity assumption of the future
+response with respect to the past,</p>
+<p><span class="math display">\[
+x_f&#39;\hat\beta = \hat Y \sim \mathcal N(x_f&#39;\beta, \sigma^2 x_f&#39; (X&#39;X)^{-1}x_f)\,.
+\]</span></p>
+<p>This leads to</p>
+<p><span class="math display">\[
+Y_f - \hat Y_f \sim \mathcal N(0, \sigma(1 + x_f&#39;(X&#39;X)^{-1}x_f))\,,
+\]</span></p>
+<p>which gives us the prediction intervals:</p>
+<p><span class="math display">\[
+\hat Y_f \pm t_{\frac{\alpha}{2}}(n-p)\sqrt{\text{MSR}(1 + x_f&#39;(X&#39;X)^{-1}x_f)}\,.
+\]</span></p>
+<ul>
+<li>Using this formula, compute the prediction intervals for <em>one</em> of the
+four new future observations written above (from scratch).</li>
+</ul>
+<blockquote>
+<p>Hint: We’ve seen how to compute the <span class="math inline">\(\text{MSR}\)</span> (or <span class="math inline">\(\text{RMS}\)</span>) in the first
+linear regression R lecture</p>
+</blockquote>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="linear-regression-lab.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute RMS</span></span>
+<span id="cb618-2"><a href="linear-regression-lab.html#cb618-2" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> interact_lm<span class="sc">$</span>residuals</span>
+<span id="cb618-3"><a href="linear-regression-lab.html#cb618-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(insulate)</span>
+<span id="cb618-4"><a href="linear-regression-lab.html#cb618-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(interact_lm<span class="sc">$</span>coefficients)</span>
+<span id="cb618-5"><a href="linear-regression-lab.html#cb618-5" aria-hidden="true" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
+<span id="cb618-6"><a href="linear-regression-lab.html#cb618-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb618-7"><a href="linear-regression-lab.html#cb618-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb618-8"><a href="linear-regression-lab.html#cb618-8" aria-hidden="true" tabindex="-1"></a><span class="co"># x_f with dummy variables:</span></span>
+<span id="cb618-9"><a href="linear-regression-lab.html#cb618-9" aria-hidden="true" tabindex="-1"></a><span class="co"># intercept whenafter   temp  whenafter:temp</span></span>
+<span id="cb618-10"><a href="linear-regression-lab.html#cb618-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1         0 (before)  5.8   0 (0 * 5.8)</span></span>
+<span id="cb618-11"><a href="linear-regression-lab.html#cb618-11" aria-hidden="true" tabindex="-1"></a>x_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">5.8</span>, <span class="dv">0</span>)</span>
+<span id="cb618-12"><a href="linear-regression-lab.html#cb618-12" aria-hidden="true" tabindex="-1"></a>yhat_f <span class="ot">&lt;-</span> x_f <span class="sc">%*%</span> interact_lm<span class="sc">$</span>coefficients</span>
+<span id="cb618-13"><a href="linear-regression-lab.html#cb618-13" aria-hidden="true" tabindex="-1"></a><span class="co"># note: there are several ways of getting yhat_f</span></span>
+<span id="cb618-14"><a href="linear-regression-lab.html#cb618-14" aria-hidden="true" tabindex="-1"></a><span class="co"># another way is to use `predict` with x_f not &quot;dummyfied&quot;</span></span>
+<span id="cb618-15"><a href="linear-regression-lab.html#cb618-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb618-16"><a href="linear-regression-lab.html#cb618-16" aria-hidden="true" tabindex="-1"></a><span class="co"># get dummy x matrix</span></span>
+<span id="cb618-17"><a href="linear-regression-lab.html#cb618-17" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">with</span>(insulate, <span class="fu">model.matrix</span>(<span class="sc">~</span> when <span class="sc">*</span> temp))</span>
+<span id="cb618-18"><a href="linear-regression-lab.html#cb618-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb618-19"><a href="linear-regression-lab.html#cb618-19" aria-hidden="true" tabindex="-1"></a><span class="co"># compute above formula</span></span>
+<span id="cb618-20"><a href="linear-regression-lab.html#cb618-20" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span> <span class="co"># level</span></span>
+<span id="cb618-21"><a href="linear-regression-lab.html#cb618-21" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> (alpha <span class="sc">/</span> <span class="dv">2</span>), <span class="at">df =</span> n <span class="sc">-</span> p) <span class="sc">*</span> <span class="fu">sqrt</span>(rms <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">t</span>(x_f) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x) <span class="sc">%*%</span> x_f))</span>
+<span id="cb618-22"><a href="linear-regression-lab.html#cb618-22" aria-hidden="true" tabindex="-1"></a>lwr <span class="ot">&lt;-</span> yhat_f <span class="sc">-</span> delta</span>
+<span id="cb618-23"><a href="linear-regression-lab.html#cb618-23" aria-hidden="true" tabindex="-1"></a>upr <span class="ot">&lt;-</span> yhat_f <span class="sc">+</span> delta</span>
+<span id="cb618-24"><a href="linear-regression-lab.html#cb618-24" aria-hidden="true" tabindex="-1"></a>pred_interval <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fit =</span> yhat_f, <span class="at">lwr =</span> lwr, <span class="at">upr =</span> upr)</span>
+<span id="cb618-25"><a href="linear-regression-lab.html#cb618-25" aria-hidden="true" tabindex="-1"></a>pred_interval</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 4.573043 3.912228 5.233857</code></pre>
+<ul>
+<li>Check your computations using <code>predict.lm(..., interval = "prediction")</code></li>
+</ul>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="linear-regression-lab.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check that computations are correct</span></span>
+<span id="cb620-2"><a href="linear-regression-lab.html#cb620-2" aria-hidden="true" tabindex="-1"></a>x_f0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">when =</span> <span class="st">&quot;before&quot;</span>, <span class="at">temp =</span> <span class="fl">5.8</span>) <span class="co"># plain newdata row</span></span>
+<span id="cb620-3"><a href="linear-regression-lab.html#cb620-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 4.573043 3.912228 5.233857</code></pre>
+<ul>
+<li>Is the interval center the same as for the confidence intervals?</li>
+</ul>
+<p>Yes, it’s still <span class="math inline">\(\hat Y\)</span>.</p>
+<ul>
+<li>Is it wider or more narrow than the CI? Can you tell why (intuitively)?</li>
+</ul>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="linear-regression-lab.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 4.573043 4.444317 4.701768</code></pre>
+<p>It is wider because we are trying to predict where a new observation will
+be and that new observation has an additional standard deviation of the error
+term. Confidence intervals are based on only the fitted values and do not
+involve making a prediction. It represents the uncertainty in the “fitted”
+value. Prediction intervals must account for both the uncertainty in
+estimating the population mean, plus the random variation of the individual
+values. So a prediction interval is always wider than a confidence
+interval.</p>
+</div>
+<div id="plotting-intervals" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Plotting intervals<a href="linear-regression-lab.html#plotting-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Plotting of the intervals was not required, but it might be useful to visualize them.
+For this purpose, we will just use the records of the <code>after</code> class.</p>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="linear-regression-lab.html#cb624-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build x grid</span></span>
+<span id="cb624-2"><a href="linear-regression-lab.html#cb624-2" aria-hidden="true" tabindex="-1"></a>after_insulate <span class="ot">&lt;-</span></span>
+<span id="cb624-3"><a href="linear-regression-lab.html#cb624-3" aria-hidden="true" tabindex="-1"></a>  insulate <span class="sc">%&gt;%</span></span>
+<span id="cb624-4"><a href="linear-regression-lab.html#cb624-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(when <span class="sc">==</span> <span class="st">&quot;after&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb624-5"><a href="linear-regression-lab.html#cb624-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>when)</span>
+<span id="cb624-6"><a href="linear-regression-lab.html#cb624-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-7"><a href="linear-regression-lab.html#cb624-7" aria-hidden="true" tabindex="-1"></a><span class="co"># fit a simple model</span></span>
+<span id="cb624-8"><a href="linear-regression-lab.html#cb624-8" aria-hidden="true" tabindex="-1"></a>after_simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> after_insulate)</span>
+<span id="cb624-9"><a href="linear-regression-lab.html#cb624-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-10"><a href="linear-regression-lab.html#cb624-10" aria-hidden="true" tabindex="-1"></a><span class="co"># build a vector of new data spanning the whole temp support</span></span>
+<span id="cb624-11"><a href="linear-regression-lab.html#cb624-11" aria-hidden="true" tabindex="-1"></a>new_x <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">temp =</span> <span class="fu">seq</span>(<span class="fu">min</span>(after_insulate<span class="sc">$</span>temp), <span class="fu">max</span>(after_insulate<span class="sc">$</span>temp), <span class="at">by =</span> <span class="fl">0.05</span>))</span>
+<span id="cb624-12"><a href="linear-regression-lab.html#cb624-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-13"><a href="linear-regression-lab.html#cb624-13" aria-hidden="true" tabindex="-1"></a><span class="co"># find confidence and prediction intervals for all of the range elements</span></span>
+<span id="cb624-14"><a href="linear-regression-lab.html#cb624-14" aria-hidden="true" tabindex="-1"></a><span class="co"># and change the column names to make them distinguishable</span></span>
+<span id="cb624-15"><a href="linear-regression-lab.html#cb624-15" aria-hidden="true" tabindex="-1"></a>new_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb624-16"><a href="linear-regression-lab.html#cb624-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb624-17"><a href="linear-regression-lab.html#cb624-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;pred&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)) <span class="co">#</span></span>
+<span id="cb624-18"><a href="linear-regression-lab.html#cb624-18" aria-hidden="true" tabindex="-1"></a>new_conf <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb624-19"><a href="linear-regression-lab.html#cb624-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb624-20"><a href="linear-regression-lab.html#cb624-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;conf&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb624-21"><a href="linear-regression-lab.html#cb624-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-22"><a href="linear-regression-lab.html#cb624-22" aria-hidden="true" tabindex="-1"></a><span class="co"># join the two interval details</span></span>
+<span id="cb624-23"><a href="linear-regression-lab.html#cb624-23" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(new_x, new_pred, new_conf)</span>
+<span id="cb624-24"><a href="linear-regression-lab.html#cb624-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb624-25"><a href="linear-regression-lab.html#cb624-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb624-26"><a href="linear-regression-lab.html#cb624-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(temp, cons), <span class="at">data =</span> after_insulate) <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb624-27"><a href="linear-regression-lab.html#cb624-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(temp, fit_conf), <span class="at">data =</span> new_data) <span class="sc">+</span> <span class="co"># regression line</span></span>
+<span id="cb624-28"><a href="linear-regression-lab.html#cb624-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_pred, <span class="at">ymax =</span> upr_pred, <span class="at">fill =</span> <span class="st">&quot;prediction&quot;</span>),</span>
+<span id="cb624-29"><a href="linear-regression-lab.html#cb624-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb624-30"><a href="linear-regression-lab.html#cb624-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># pred intervals</span></span>
+<span id="cb624-31"><a href="linear-regression-lab.html#cb624-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_conf, <span class="at">ymax =</span> upr_conf, <span class="at">fill =</span> <span class="st">&quot;confidence&quot;</span>),</span>
+<span id="cb624-32"><a href="linear-regression-lab.html#cb624-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb624-33"><a href="linear-regression-lab.html#cb624-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># conf intervals</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
+<blockquote>
+<p>Notice how the intervals get wider when departing from the mean temperature <span class="math inline">\(\bar x\)</span>.</p>
+</blockquote>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lab-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="jags-lab---gaussian-mixture-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/labs/L02_insulate.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

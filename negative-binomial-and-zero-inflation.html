@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Negative Binomial and Zero-Inflation | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Negative Binomial and Zero-Inflation | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Negative Binomial and Zero-Inflation | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
+
+
+<meta name="date" content="2023-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="generalized-linear-models-poisson.html"/>
+<link rel="next" href="three-jags-examples.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistical Models in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#random-and-non-random-normal-samples"><i class="fa fa-check"></i><b>3.1</b> Random and non-random normal samples</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="normal-sampling.html"><a href="normal-sampling.html#autocorrelated-sample"><i class="fa fa-check"></i><b>3.1.1</b> Autocorrelated sample</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#exchangeable-normal-random-variables"><i class="fa fa-check"></i><b>3.2</b> Exchangeable normal random variables</a></li>
+<li class="chapter" data-level="3.3" data-path="normal-sampling.html"><a href="normal-sampling.html#multivariate-normal-random-samples"><i class="fa fa-check"></i><b>3.3</b> Multivariate Normal random samples</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#solutions"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
+<li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#plot"><i class="fa fa-check"></i><b>4.4.1</b> Plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#summary"><i class="fa fa-check"></i><b>4.4.2</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html"><i class="fa fa-check"></i><b>5</b> Tools for linear regression analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#plot-1"><i class="fa fa-check"></i><b>5.1</b> Plot</a></li>
+<li class="chapter" data-level="5.2" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#multiple-predictors"><i class="fa fa-check"></i><b>5.2</b> Multiple predictors</a></li>
+<li class="chapter" data-level="5.3" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#confidence-regions"><i class="fa fa-check"></i><b>5.3</b> Confidence regions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html"><i class="fa fa-check"></i><b>6</b> Interactions and qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#transformations"><i class="fa fa-check"></i><b>6.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#a-simple-example"><i class="fa fa-check"></i><b>6.1.1</b> A simple example</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#on-advertising"><i class="fa fa-check"></i><b>6.1.2</b> On <em>advertising</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#students-dataset"><i class="fa fa-check"></i><b>7.1</b> Students dataset</a></li>
+<li class="chapter" data-level="7.2" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#eda"><i class="fa fa-check"></i><b>7.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#plots"><i class="fa fa-check"></i><b>7.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#test"><i class="fa fa-check"></i><b>7.3</b> Test</a></li>
+<li class="chapter" data-level="7.4" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#generalized-linear-model"><i class="fa fa-check"></i><b>7.4</b> Generalized Linear Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#predictions"><i class="fa fa-check"></i><b>7.4.1</b> Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#graphic-interpretation"><i class="fa fa-check"></i><b>7.5</b> Graphic interpretation</a></li>
+<li class="chapter" data-level="7.6" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#other-tests"><i class="fa fa-check"></i><b>7.6</b> Other tests</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html"><i class="fa fa-check"></i><b>8</b> Generalized Linear Models (Poisson)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#warpbreaks-dataset"><i class="fa fa-check"></i><b>8.1</b> Warpbreaks dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#eda-1"><i class="fa fa-check"></i><b>8.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#plots-1"><i class="fa fa-check"></i><b>8.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Poisson Family GLM</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#response"><i class="fa fa-check"></i><b>8.3.1</b> Response</a></li>
+<li class="chapter" data-level="8.3.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#contrasts"><i class="fa fa-check"></i><b>8.3.2</b> Contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#tests"><i class="fa fa-check"></i><b>8.4</b> Tests</a></li>
+<li class="chapter" data-level="8.5" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#influence-measures"><i class="fa fa-check"></i><b>8.5</b> Influence measures</a></li>
+<li class="chapter" data-level="8.6" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#interaction"><i class="fa fa-check"></i><b>8.6</b> Interaction</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#testing-interaction"><i class="fa fa-check"></i><b>8.6.1</b> Testing interaction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html"><i class="fa fa-check"></i><b>9</b> Negative Binomial and Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#dataset"><i class="fa fa-check"></i><b>9.1</b> Dataset</a></li>
+<li class="chapter" data-level="9.2" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#eda-2"><i class="fa fa-check"></i><b>9.2</b> EDA</a></li>
+<li class="chapter" data-level="9.3" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#negative-binomial-regression"><i class="fa fa-check"></i><b>9.3</b> Negative binomial regression</a></li>
+<li class="chapter" data-level="9.4" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#zero-inflation"><i class="fa fa-check"></i><b>9.4</b> Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#hurdle-v.-zi"><i class="fa fa-check"></i><b>9.4.1</b> Hurdle v. ZI</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="three-jags-examples.html"><a href="three-jags-examples.html"><i class="fa fa-check"></i><b>10</b> Three JAGS examples</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="three-jags-examples.html"><a href="three-jags-examples.html#rats---simple-linear-regression"><i class="fa fa-check"></i><b>10.1</b> Rats - Simple linear regression</a></li>
+<li class="chapter" data-level="10.2" data-path="three-jags-examples.html"><a href="three-jags-examples.html#zip-model"><i class="fa fa-check"></i><b>10.2</b> ZIP model</a></li>
+<li class="chapter" data-level="10.3" data-path="three-jags-examples.html"><a href="three-jags-examples.html#gaussian-mixture-model-gmm"><i class="fa fa-check"></i><b>10.3</b> Gaussian Mixture Model (GMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>11</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>11.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="11.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>11.2</b> Import data</a></li>
+<li class="chapter" data-level="11.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>11.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.5" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#plotting-intervals"><i class="fa fa-check"></i><b>12.5</b> Plotting intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="jags-lab---gaussian-mixture-model.html"><a href="jags-lab---gaussian-mixture-model.html"><i class="fa fa-check"></i><b>13</b> JAGS lab - Gaussian Mixture Model</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="negative-binomial-and-zero-inflation" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Negative Binomial and Zero-Inflation<a href="negative-binomial-and-zero-inflation.html#negative-binomial-and-zero-inflation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="dataset" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Dataset<a href="negative-binomial-and-zero-inflation.html#dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It is a sample of 4,406 individuals, aged 66 and over, who were covered by Medicare
+in 1988. One of the variables the data provide is number of physician office visits.
+The dataset is provided by the AER package <span class="citation">(<a href="#ref-aer" role="doc-biblioref"><strong>aer?</strong></a>)</span>.</p>
+<p>Our goal is to model the number of visits given the other attributes (chronic conditions,
+status, gender etc.). For sake of simplicity, we only select a subset of attributes which
+are considered to be relevant.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">visits</td>
+<td align="left">Number of physician office visits (integer outcome)</td>
+</tr>
+<tr class="even">
+<td align="left">nvisits</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">ovisits</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">novisits</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">emergency</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">hospital</td>
+<td align="left">Number of hospital stays (integer)</td>
+</tr>
+<tr class="odd">
+<td align="left">health</td>
+<td align="left">Self-perceived health status (poor, average, excellent)</td>
+</tr>
+<tr class="even">
+<td align="left">chronic</td>
+<td align="left">Number of chronic condition (integer)</td>
+</tr>
+<tr class="odd">
+<td align="left">adl</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">region</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">age</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">afam</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">gender</td>
+<td align="left">Gender (female, male)</td>
+</tr>
+<tr class="even">
+<td align="left">married</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">school</td>
+<td align="left">Number of years of education (integer)</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">employed</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">insurance</td>
+<td align="left">Private insurance indicator (no, yes)</td>
+</tr>
+<tr class="odd">
+<td align="left">medicaid</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="negative-binomial-and-zero-inflation.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data from package</span></span>
+<span id="cb464-2"><a href="negative-binomial-and-zero-inflation.html#cb464-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.package(&quot;AER&quot;)</span></span>
+<span id="cb464-3"><a href="negative-binomial-and-zero-inflation.html#cb464-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(AER)</span></code></pre></div>
+<pre><code>## Loading required package: car</code></pre>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     some</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## Loading required package: lmtest</code></pre>
+<pre><code>## Loading required package: zoo</code></pre>
+<pre><code>## 
+## Attaching package: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<pre><code>## Loading required package: sandwich</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="negative-binomial-and-zero-inflation.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;NMES1988&quot;</span>)</span>
+<span id="cb476-2"><a href="negative-binomial-and-zero-inflation.html#cb476-2" aria-hidden="true" tabindex="-1"></a>nmes <span class="ot">&lt;-</span> NMES1988[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">13</span>, <span class="dv">15</span>, <span class="dv">18</span>)] <span class="co"># select variables of interest</span></span>
+<span id="cb476-3"><a href="negative-binomial-and-zero-inflation.html#cb476-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nmes)</span></code></pre></div>
+<pre><code>##      visits          hospital           health        chronic     
+##  Min.   : 0.000   Min.   :0.000   poor     : 554   Min.   :0.000  
+##  1st Qu.: 1.000   1st Qu.:0.000   average  :3509   1st Qu.:1.000  
+##  Median : 4.000   Median :0.000   excellent: 343   Median :1.000  
+##  Mean   : 5.774   Mean   :0.296                    Mean   :1.542  
+##  3rd Qu.: 8.000   3rd Qu.:0.000                    3rd Qu.:2.000  
+##  Max.   :89.000   Max.   :8.000                    Max.   :8.000  
+##     gender         school      insurance 
+##  female:2628   Min.   : 0.00   no : 985  
+##  male  :1778   1st Qu.: 8.00   yes:3421  
+##                Median :11.00             
+##                Mean   :10.29             
+##                3rd Qu.:12.00             
+##                Max.   :18.00</code></pre>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="negative-binomial-and-zero-inflation.html#cb478-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nmes)</span></code></pre></div>
+<pre><code>##   visits hospital  health chronic gender school insurance
+## 1      5        1 average       2   male      6       yes
+## 2      1        0 average       2 female     10       yes
+## 3     13        3    poor       4 female     10        no
+## 4     16        1    poor       2   male      3       yes
+## 5      3        0 average       2 female      6       yes
+## 6     17        0    poor       5 female      7        no</code></pre>
+</div>
+<div id="eda-2" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> EDA<a href="negative-binomial-and-zero-inflation.html#eda-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As always, let’s start with some descriptive plots.</p>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="negative-binomial-and-zero-inflation.html#cb480-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb480-2"><a href="negative-binomial-and-zero-inflation.html#cb480-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb480-3"><a href="negative-binomial-and-zero-inflation.html#cb480-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb480-4"><a href="negative-binomial-and-zero-inflation.html#cb480-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb480-5"><a href="negative-binomial-and-zero-inflation.html#cb480-5" aria-hidden="true" tabindex="-1"></a><span class="co"># analyse response</span></span>
+<span id="cb480-6"><a href="negative-binomial-and-zero-inflation.html#cb480-6" aria-hidden="true" tabindex="-1"></a>visits_scatter <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb480-7"><a href="negative-binomial-and-zero-inflation.html#cb480-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(visits) <span class="sc">%&gt;%</span></span>
+<span id="cb480-8"><a href="negative-binomial-and-zero-inflation.html#cb480-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb480-9"><a href="negative-binomial-and-zero-inflation.html#cb480-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(nmes), visits), <span class="at">alpha =</span> .<span class="dv">3</span>)</span>
+<span id="cb480-10"><a href="negative-binomial-and-zero-inflation.html#cb480-10" aria-hidden="true" tabindex="-1"></a>visits_bar <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb480-11"><a href="negative-binomial-and-zero-inflation.html#cb480-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb480-12"><a href="negative-binomial-and-zero-inflation.html#cb480-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(visits))</span>
+<span id="cb480-13"><a href="negative-binomial-and-zero-inflation.html#cb480-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(visits_scatter, visits_bar, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
+<p>The response presents high variability, we can reduce this by taking the log.</p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="negative-binomial-and-zero-inflation.html#cb481-1" aria-hidden="true" tabindex="-1"></a>logvisits_scatter <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb481-2"><a href="negative-binomial-and-zero-inflation.html#cb481-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">visits =</span> <span class="fu">log</span>(visits <span class="sc">+</span> .<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb481-3"><a href="negative-binomial-and-zero-inflation.html#cb481-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(visits) <span class="sc">%&gt;%</span></span>
+<span id="cb481-4"><a href="negative-binomial-and-zero-inflation.html#cb481-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb481-5"><a href="negative-binomial-and-zero-inflation.html#cb481-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(nmes), visits), <span class="at">alpha =</span> .<span class="dv">3</span>)</span>
+<span id="cb481-6"><a href="negative-binomial-and-zero-inflation.html#cb481-6" aria-hidden="true" tabindex="-1"></a>logvisits_bar <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb481-7"><a href="negative-binomial-and-zero-inflation.html#cb481-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">visits =</span> <span class="fu">log</span>(visits <span class="sc">+</span> .<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb481-8"><a href="negative-binomial-and-zero-inflation.html#cb481-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb481-9"><a href="negative-binomial-and-zero-inflation.html#cb481-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(visits), <span class="at">binwidth =</span> .<span class="dv">1</span>)</span>
+<span id="cb481-10"><a href="negative-binomial-and-zero-inflation.html#cb481-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb481-11"><a href="negative-binomial-and-zero-inflation.html#cb481-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(logvisits_scatter, logvisits_bar, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
+<p>Now we analyse the relationship with the number of chronic diseases.</p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="negative-binomial-and-zero-inflation.html#cb482-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saturate</span></span>
+<span id="cb482-2"><a href="negative-binomial-and-zero-inflation.html#cb482-2" aria-hidden="true" tabindex="-1"></a>sat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sat_point) {</span>
+<span id="cb482-3"><a href="negative-binomial-and-zero-inflation.html#cb482-3" aria-hidden="true" tabindex="-1"></a>  x[x <span class="sc">&gt;</span> sat_point] <span class="ot">&lt;-</span> sat_point <span class="co"># saturate values above 3</span></span>
+<span id="cb482-4"><a href="negative-binomial-and-zero-inflation.html#cb482-4" aria-hidden="true" tabindex="-1"></a>  lev <span class="ot">&lt;-</span> <span class="fu">as.character</span>(<span class="dv">0</span><span class="sc">:</span>sat_point) <span class="co"># define levels</span></span>
+<span id="cb482-5"><a href="negative-binomial-and-zero-inflation.html#cb482-5" aria-hidden="true" tabindex="-1"></a>  lev[<span class="fu">length</span>(lev)] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(lev[<span class="fu">length</span>(lev)], <span class="st">&quot;+&quot;</span>)</span>
+<span id="cb482-6"><a href="negative-binomial-and-zero-inflation.html#cb482-6" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(x) <span class="co"># switch from numeric to factor</span></span>
+<span id="cb482-7"><a href="negative-binomial-and-zero-inflation.html#cb482-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">levels</span>(x) <span class="ot">&lt;-</span> lev</span>
+<span id="cb482-8"><a href="negative-binomial-and-zero-inflation.html#cb482-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb482-9"><a href="negative-binomial-and-zero-inflation.html#cb482-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb482-10"><a href="negative-binomial-and-zero-inflation.html#cb482-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb482-11"><a href="negative-binomial-and-zero-inflation.html#cb482-11" aria-hidden="true" tabindex="-1"></a><span class="co"># analyse predictor &quot;chronic&quot;</span></span>
+<span id="cb482-12"><a href="negative-binomial-and-zero-inflation.html#cb482-12" aria-hidden="true" tabindex="-1"></a>unbalanced_plt <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb482-13"><a href="negative-binomial-and-zero-inflation.html#cb482-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb482-14"><a href="negative-binomial-and-zero-inflation.html#cb482-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(chronic))</span>
+<span id="cb482-15"><a href="negative-binomial-and-zero-inflation.html#cb482-15" aria-hidden="true" tabindex="-1"></a>unbalanced_plt</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-222-1.png" width="672" />
+This variable seems to have too low support on values from 4 above. This will lead
+to low accuracy in the visit estimation when we observe a number of chronic diseases higher than 4.
+We may fix this issue by assuming that a patient having 4 or more diseases will get visited as
+frequently as a patient with 3 chronic diseases. This means that we set a saturation point at 3
+and we transform the data accordingly.</p>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="negative-binomial-and-zero-inflation.html#cb483-1" aria-hidden="true" tabindex="-1"></a>balanced_plt <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb483-2"><a href="negative-binomial-and-zero-inflation.html#cb483-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chronic_sat =</span> <span class="fu">sat</span>(chronic, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb483-3"><a href="negative-binomial-and-zero-inflation.html#cb483-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb483-4"><a href="negative-binomial-and-zero-inflation.html#cb483-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(chronic_sat))</span>
+<span id="cb483-5"><a href="negative-binomial-and-zero-inflation.html#cb483-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb483-6"><a href="negative-binomial-and-zero-inflation.html#cb483-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(unbalanced_plt, balanced_plt)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-223-1.png" width="672" /></p>
+<p>To summarize, here the two data transformations discussed so far (which we can compare to the
+original dataset). With a log-transform we fix the highly skewed distribution on the response
+variable, while with a saturation point on the <code>chronic</code> predictor, we create balanced classes.</p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="negative-binomial-and-zero-inflation.html#cb484-1" aria-hidden="true" tabindex="-1"></a><span class="co"># let&#39;s add two columns</span></span>
+<span id="cb484-2"><a href="negative-binomial-and-zero-inflation.html#cb484-2" aria-hidden="true" tabindex="-1"></a>nmes <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb484-3"><a href="negative-binomial-and-zero-inflation.html#cb484-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb484-4"><a href="negative-binomial-and-zero-inflation.html#cb484-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">chronic_sat =</span> <span class="fu">sat</span>(chronic, <span class="dv">3</span>),</span>
+<span id="cb484-5"><a href="negative-binomial-and-zero-inflation.html#cb484-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">log_visits =</span> <span class="fu">log</span>(visits <span class="sc">+</span> .<span class="dv">5</span>)</span>
+<span id="cb484-6"><a href="negative-binomial-and-zero-inflation.html#cb484-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb484-7"><a href="negative-binomial-and-zero-inflation.html#cb484-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb484-8"><a href="negative-binomial-and-zero-inflation.html#cb484-8" aria-hidden="true" tabindex="-1"></a><span class="co"># bivariate analysis</span></span>
+<span id="cb484-9"><a href="negative-binomial-and-zero-inflation.html#cb484-9" aria-hidden="true" tabindex="-1"></a>biv <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb484-10"><a href="negative-binomial-and-zero-inflation.html#cb484-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb484-11"><a href="negative-binomial-and-zero-inflation.html#cb484-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="fu">as.factor</span>(chronic), visits))</span>
+<span id="cb484-12"><a href="negative-binomial-and-zero-inflation.html#cb484-12" aria-hidden="true" tabindex="-1"></a>tr_biv <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb484-13"><a href="negative-binomial-and-zero-inflation.html#cb484-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb484-14"><a href="negative-binomial-and-zero-inflation.html#cb484-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(chronic_sat, log_visits))</span>
+<span id="cb484-15"><a href="negative-binomial-and-zero-inflation.html#cb484-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb484-16"><a href="negative-binomial-and-zero-inflation.html#cb484-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(biv, tr_biv, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-224-1.png" width="672" />
+There are many less outliers and less variability among classes,
+which suggests that we can better capture its distribution</p>
+<p>Here some other bi-variate plots which can be useful for further inspection
+of the available data.</p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="negative-binomial-and-zero-inflation.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb485-2"><a href="negative-binomial-and-zero-inflation.html#cb485-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-3"><a href="negative-binomial-and-zero-inflation.html#cb485-3" aria-hidden="true" tabindex="-1"></a>plts <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb485-4"><a href="negative-binomial-and-zero-inflation.html#cb485-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-5"><a href="negative-binomial-and-zero-inflation.html#cb485-5" aria-hidden="true" tabindex="-1"></a>plts<span class="sc">$</span>health <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb485-6"><a href="negative-binomial-and-zero-inflation.html#cb485-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(health, log_visits)) <span class="sc">+</span></span>
+<span id="cb485-7"><a href="negative-binomial-and-zero-inflation.html#cb485-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb485-8"><a href="negative-binomial-and-zero-inflation.html#cb485-8" aria-hidden="true" tabindex="-1"></a>plts<span class="sc">$</span>chronic <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb485-9"><a href="negative-binomial-and-zero-inflation.html#cb485-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(chronic_sat, log_visits)) <span class="sc">+</span></span>
+<span id="cb485-10"><a href="negative-binomial-and-zero-inflation.html#cb485-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb485-11"><a href="negative-binomial-and-zero-inflation.html#cb485-11" aria-hidden="true" tabindex="-1"></a>plts<span class="sc">$</span>insurance <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb485-12"><a href="negative-binomial-and-zero-inflation.html#cb485-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(insurance, log_visits)) <span class="sc">+</span></span>
+<span id="cb485-13"><a href="negative-binomial-and-zero-inflation.html#cb485-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb485-14"><a href="negative-binomial-and-zero-inflation.html#cb485-14" aria-hidden="true" tabindex="-1"></a>plts<span class="sc">$</span>hospital <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb485-15"><a href="negative-binomial-and-zero-inflation.html#cb485-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hospital_sat =</span> <span class="fu">sat</span>(hospital, <span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb485-16"><a href="negative-binomial-and-zero-inflation.html#cb485-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(hospital_sat, log_visits)) <span class="sc">+</span></span>
+<span id="cb485-17"><a href="negative-binomial-and-zero-inflation.html#cb485-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb485-18"><a href="negative-binomial-and-zero-inflation.html#cb485-18" aria-hidden="true" tabindex="-1"></a>plts<span class="sc">$</span>gender <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb485-19"><a href="negative-binomial-and-zero-inflation.html#cb485-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(gender, log_visits)) <span class="sc">+</span></span>
+<span id="cb485-20"><a href="negative-binomial-and-zero-inflation.html#cb485-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb485-21"><a href="negative-binomial-and-zero-inflation.html#cb485-21" aria-hidden="true" tabindex="-1"></a>plts<span class="sc">$</span>school <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
+<span id="cb485-22"><a href="negative-binomial-and-zero-inflation.html#cb485-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">school =</span> <span class="fu">sat</span>(school, <span class="dv">6</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb485-23"><a href="negative-binomial-and-zero-inflation.html#cb485-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(school, log_visits)) <span class="sc">+</span></span>
+<span id="cb485-24"><a href="negative-binomial-and-zero-inflation.html#cb485-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb485-25"><a href="negative-binomial-and-zero-inflation.html#cb485-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-26"><a href="negative-binomial-and-zero-inflation.html#cb485-26" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(ggarrange, plts)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
+</div>
+<div id="negative-binomial-regression" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Negative binomial regression<a href="negative-binomial-and-zero-inflation.html#negative-binomial-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The overdispersion of the data can be captured by a Negative Binomial
+model, which differs from the Poisson model in that the variance can
+be different than the mean. Therefore it can account for underdispersed and
+overdispersed count variates.</p>
+<p>First we try with a simple Poisson regression</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="negative-binomial-and-zero-inflation.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define a formula (select the relevant/interesting predictors)</span></span>
+<span id="cb486-2"><a href="negative-binomial-and-zero-inflation.html#cb486-2" aria-hidden="true" tabindex="-1"></a>fml <span class="ot">&lt;-</span> visits <span class="sc">~</span> hospital <span class="sc">+</span> health <span class="sc">+</span> chronic_sat <span class="sc">+</span> gender <span class="sc">+</span> school <span class="sc">+</span> insurance</span>
+<span id="cb486-3"><a href="negative-binomial-and-zero-inflation.html#cb486-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb486-4"><a href="negative-binomial-and-zero-inflation.html#cb486-4" aria-hidden="true" tabindex="-1"></a>pois_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb486-5"><a href="negative-binomial-and-zero-inflation.html#cb486-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> fml, <span class="at">family =</span> <span class="fu">poisson</span>(<span class="at">link =</span> <span class="st">&quot;log&quot;</span>), <span class="co"># family object &quot;poisson&quot;</span></span>
+<span id="cb486-6"><a href="negative-binomial-and-zero-inflation.html#cb486-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> nmes</span>
+<span id="cb486-7"><a href="negative-binomial-and-zero-inflation.html#cb486-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb486-8"><a href="negative-binomial-and-zero-inflation.html#cb486-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pois_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = fml, family = poisson(link = &quot;log&quot;), data = nmes)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -7.1745  -1.9734  -0.6836   0.7239  16.0625  
+## 
+## Coefficients:
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      0.848055   0.027418  30.930  &lt; 2e-16 ***
+## hospital         0.171588   0.005950  28.841  &lt; 2e-16 ***
+## healthpoor       0.277053   0.017401  15.922  &lt; 2e-16 ***
+## healthexcellent -0.312714   0.030443 -10.272  &lt; 2e-16 ***
+## chronic_sat1     0.361870   0.020591  17.574  &lt; 2e-16 ***
+## chronic_sat2     0.580241   0.021405  27.108  &lt; 2e-16 ***
+## chronic_sat3+    0.694679   0.021736  31.960  &lt; 2e-16 ***
+## gendermale      -0.104541   0.012963  -8.065 7.33e-16 ***
+## school           0.025902   0.001842  14.062  &lt; 2e-16 ***
+## insuranceyes     0.191394   0.016902  11.323  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 26943  on 4405  degrees of freedom
+## Residual deviance: 22928  on 4396  degrees of freedom
+## AIC: 35723
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<blockquote>
+<p>Note: if we print out the coefficient, and we change the scale to match the
+counts, we see that, for instance, excellent health brings a decrease in the visits,
+while a number of chronic disease of three or higher, dramatically increases
+the visits count.</p>
+</blockquote>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="negative-binomial-and-zero-inflation.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(pois_model)</span></code></pre></div>
+<pre><code>##     (Intercept)        hospital      healthpoor healthexcellent    chronic_sat1 
+##      0.84805502      0.17158798      0.27705323     -0.31271426      0.36186975 
+##    chronic_sat2   chronic_sat3+      gendermale          school    insuranceyes 
+##      0.58024070      0.69467856     -0.10454072      0.02590154      0.19139428</code></pre>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="negative-binomial-and-zero-inflation.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(pois_model))</span></code></pre></div>
+<pre><code>##     (Intercept)        hospital      healthpoor healthexcellent    chronic_sat1 
+##       2.3351007       1.1871886       1.3192366       0.7314589       1.4360119 
+##    chronic_sat2   chronic_sat3+      gendermale          school    insuranceyes 
+##       1.7864684       2.0030651       0.9007381       1.0262399       1.2109368</code></pre>
+<p>Then we compare the results with a regression fit on a GLM with Negative Binomial family.</p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="negative-binomial-and-zero-inflation.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the equivalent NB model</span></span>
+<span id="cb492-2"><a href="negative-binomial-and-zero-inflation.html#cb492-2" aria-hidden="true" tabindex="-1"></a><span class="co"># check</span></span>
+<span id="cb492-3"><a href="negative-binomial-and-zero-inflation.html#cb492-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="negative-binomial-and-zero-inflation.html#cb495-1" aria-hidden="true" tabindex="-1"></a>nb_model <span class="ot">&lt;-</span> <span class="fu">glm.nb</span>(<span class="at">formula =</span> fml, <span class="at">data =</span> nmes)</span>
+<span id="cb495-2"><a href="negative-binomial-and-zero-inflation.html#cb495-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nb_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm.nb(formula = fml, data = nmes, init.theta = 1.218804554, 
+##     link = log)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.8852  -0.9712  -0.2946   0.2953   5.6023  
+## 
+## Coefficients:
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      0.792055   0.059558  13.299  &lt; 2e-16 ***
+## hospital         0.220185   0.020042  10.986  &lt; 2e-16 ***
+## healthpoor       0.318920   0.047833   6.667 2.60e-11 ***
+## healthexcellent -0.317113   0.061183  -5.183 2.18e-07 ***
+## chronic_sat1     0.372721   0.042733   8.722  &lt; 2e-16 ***
+## chronic_sat2     0.575107   0.047135  12.201  &lt; 2e-16 ***
+## chronic_sat3+    0.721231   0.049283  14.635  &lt; 2e-16 ***
+## gendermale      -0.118742   0.031166  -3.810 0.000139 ***
+## school           0.027295   0.004381   6.230 4.67e-10 ***
+## insuranceyes     0.207695   0.039357   5.277 1.31e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for Negative Binomial(1.2188) family taken to be 1)
+## 
+##     Null deviance: 5782.5  on 4405  degrees of freedom
+## Residual deviance: 5044.7  on 4396  degrees of freedom
+## AIC: 24330
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  1.2188 
+##           Std. Err.:  0.0340 
+## 
+##  2 x log-likelihood:  -24308.2680</code></pre>
+<p>Among the fit information we can see that the <code>glm.nb</code> function estimates
+the dispersion parameter of the Negative Binomial. Keep in mind that there are
+several parametrization of this distribution, one of which consists of, indeed,
+mean <span class="math inline">\(\mu\)</span> and dispersion <span class="math inline">\(r\)</span> i.e. <span class="math inline">\(NB(\mu, r)\)</span> such that</p>
+<p><span class="math display">\[
+\sigma^2 = \mu + \frac{\mu^2}{r}\,,\qquad p = \frac{m}{\sigma^2}
+\]</span></p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="negative-binomial-and-zero-inflation.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficients again</span></span>
+<span id="cb497-2"><a href="negative-binomial-and-zero-inflation.html#cb497-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(nb_model))</span></code></pre></div>
+<pre><code>##     (Intercept)        hospital      healthpoor healthexcellent    chronic_sat1 
+##       2.2079292       1.2463073       1.3756414       0.7282484       1.4516787 
+##    chronic_sat2   chronic_sat3+      gendermale          school    insuranceyes 
+##       1.7773208       2.0569629       0.8880371       1.0276705       1.2308380</code></pre>
+<p>Let’s compare the coefficients and the confidence intervals:</p>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="negative-binomial-and-zero-inflation.html#cb499-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">exp</span>(<span class="fu">coef</span>(pois_model)), <span class="fu">exp</span>(<span class="fu">coef</span>(nb_model)))</span></code></pre></div>
+<pre><code>##      (Intercept) hospital healthpoor healthexcellent chronic_sat1 chronic_sat2
+## [1,]    2.335101 1.187189   1.319237       0.7314589     1.436012     1.786468
+## [2,]    2.207929 1.246307   1.375641       0.7282484     1.451679     1.777321
+##      chronic_sat3+ gendermale   school insuranceyes
+## [1,]      2.003065  0.9007381 1.026240     1.210937
+## [2,]      2.056963  0.8880371 1.027671     1.230838</code></pre>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="negative-binomial-and-zero-inflation.html#cb501-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="fu">confint.default</span>(pois_model), <span class="fu">confint.default</span>(nb_model))</span></code></pre></div>
+<pre><code>##                      2.5 %      97.5 %       2.5 %      97.5 %
+## (Intercept)      0.7943160  0.90179405  0.67532364  0.90878650
+## hospital         0.1599271  0.18324884  0.18090387  0.25946612
+## healthpoor       0.2429475  0.31115895  0.22516928  0.41267092
+## healthexcellent -0.3723819 -0.25304665 -0.43703008 -0.19719596
+## chronic_sat1     0.3215120  0.40222748  0.28896513  0.45647604
+## chronic_sat2     0.5382882  0.62219320  0.48272398  0.66749012
+## chronic_sat3+    0.6520769  0.73728020  0.62463832  0.81782282
+## gendermale      -0.1299469 -0.07913454 -0.17982625 -0.05765723
+## school           0.0222914  0.02951169  0.01870754  0.03588172
+## insuranceyes     0.1582661  0.22452241  0.13055767  0.28483287</code></pre>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="negative-binomial-and-zero-inflation.html#cb503-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(</span>
+<span id="cb503-2"><a href="negative-binomial-and-zero-inflation.html#cb503-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint.default</span>(pois_model)[, <span class="dv">2</span>] <span class="sc">-</span> <span class="fu">confint.default</span>(pois_model)[, <span class="dv">1</span>],</span>
+<span id="cb503-3"><a href="negative-binomial-and-zero-inflation.html#cb503-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint.default</span>(nb_model)[, <span class="dv">2</span>] <span class="sc">-</span> <span class="fu">confint.default</span>(nb_model)[, <span class="dv">1</span>]</span>
+<span id="cb503-4"><a href="negative-binomial-and-zero-inflation.html#cb503-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##                        [,1]       [,2]
+## (Intercept)     0.107478074 0.23346286
+## hospital        0.023321722 0.07856225
+## healthpoor      0.068211444 0.18750164
+## healthexcellent 0.119335218 0.23983412
+## chronic_sat1    0.080715454 0.16751091
+## chronic_sat2    0.083904993 0.18476614
+## chronic_sat3+   0.085203273 0.19318450
+## gendermale      0.050812349 0.12216902
+## school          0.007220284 0.01717418
+## insuranceyes    0.066256263 0.15427520</code></pre>
+<p>The confidence intervals are wider, which is an effect of the Negative Binomial
+letting more uncertainty in the model.</p>
+</div>
+<div id="zero-inflation" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Zero-Inflation<a href="negative-binomial-and-zero-inflation.html#zero-inflation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With a regression fit, we only obtain the means of the Poisson, or Negative Binomial,
+distributions for each observations. These are the <em>fitted values</em>. However,
+many observations have response variable counting 0 visits.
+How many zeros does our model predicts?</p>
+<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="negative-binomial-and-zero-inflation.html#cb505-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">predict</span>(pois_model, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>) <span class="co"># get the poisson mean</span></span>
+<span id="cb505-2"><a href="negative-binomial-and-zero-inflation.html#cb505-2" aria-hidden="true" tabindex="-1"></a>expected_zero_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">dpois</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">lambda =</span> mu)) <span class="co"># sum_i (1(yi == 0) * p(yi == 0))</span></span>
+<span id="cb505-3"><a href="negative-binomial-and-zero-inflation.html#cb505-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(expected_zero_count)</span></code></pre></div>
+<pre><code>## [1] 60</code></pre>
+<p>How many are actually 0? Many more…</p>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="negative-binomial-and-zero-inflation.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="co"># actual 0 visits</span></span>
+<span id="cb507-2"><a href="negative-binomial-and-zero-inflation.html#cb507-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(nmes<span class="sc">$</span>visits <span class="sc">==</span> <span class="dv">0</span>)</span></code></pre></div>
+<pre><code>## [1] 683</code></pre>
+<p>For this reason we introduce a composite model called Zero-Inflated Poisson:
+it’s a mixture between a Poisson and a discrete distribution over zero.</p>
+<p><span class="math display">\[
+P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!}
+\]</span></p>
+<p>Let’s have a look at the generative model and the distribution of ZIP variates.
+It can be seen as a two-steps process:</p>
+<ol style="list-style-type: decimal">
+<li>Sample a Bernoulli variable which states whether the observation is
+zero or not-zero</li>
+<li>If it is not zero, then sample a Poisson variable with a given mean</li>
+</ol>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="negative-binomial-and-zero-inflation.html#cb509-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb509-2"><a href="negative-binomial-and-zero-inflation.html#cb509-2" aria-hidden="true" tabindex="-1"></a>pp <span class="ot">&lt;-</span> .<span class="dv">3</span> <span class="co"># probability of zero event</span></span>
+<span id="cb509-3"><a href="negative-binomial-and-zero-inflation.html#cb509-3" aria-hidden="true" tabindex="-1"></a>ll <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb509-4"><a href="negative-binomial-and-zero-inflation.html#cb509-4" aria-hidden="true" tabindex="-1"></a>zi_samples <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="dv">1</span> <span class="sc">-</span> pp)</span>
+<span id="cb509-5"><a href="negative-binomial-and-zero-inflation.html#cb509-5" aria-hidden="true" tabindex="-1"></a>zi_samples[zi_samples <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="fu">sum</span>(zi_samples), <span class="at">lambda =</span> ll) <span class="co"># sample poisson</span></span>
+<span id="cb509-6"><a href="negative-binomial-and-zero-inflation.html#cb509-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">y =</span> zi_samples) <span class="sc">%&gt;%</span></span>
+<span id="cb509-7"><a href="negative-binomial-and-zero-inflation.html#cb509-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb509-8"><a href="negative-binomial-and-zero-inflation.html#cb509-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y))</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-233-1.png" width="672" /></p>
+<p>With our data, we do not observe something really like a zero inflation
+model, but still, with a ZI model, we can have more insight on the
+presence of many zeros.</p>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="negative-binomial-and-zero-inflation.html#cb511-1" aria-hidden="true" tabindex="-1"></a>nmes <span class="sc">%&gt;%</span></span>
+<span id="cb511-2"><a href="negative-binomial-and-zero-inflation.html#cb511-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb511-3"><a href="negative-binomial-and-zero-inflation.html#cb511-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(visits)) <span class="sc">+</span></span>
+<span id="cb511-4"><a href="negative-binomial-and-zero-inflation.html#cb511-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">30</span>)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 47 rows containing non-finite values (`stat_bin()`).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="negative-binomial-and-zero-inflation.html#cb515-1" aria-hidden="true" tabindex="-1"></a>nmes <span class="sc">%&gt;%</span></span>
+<span id="cb515-2"><a href="negative-binomial-and-zero-inflation.html#cb515-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gtz =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(visits <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;&gt;0&quot;</span>, <span class="st">&quot;0&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb515-3"><a href="negative-binomial-and-zero-inflation.html#cb515-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb515-4"><a href="negative-binomial-and-zero-inflation.html#cb515-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(gtz))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
+<p>Let’s try to fit a zero inflation model.</p>
+<p>Notice how the <code>zeroinfl</code> function infers two models:
+the count (pois) and the zero model (logistic regression).</p>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="negative-binomial-and-zero-inflation.html#cb516-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pscl)</span></code></pre></div>
+<pre><code>## Classes and Methods for R developed in the
+## Political Science Computational Laboratory
+## Department of Political Science
+## Stanford University
+## Simon Jackman
+## hurdle and zeroinfl functions by Achim Zeileis</code></pre>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="negative-binomial-and-zero-inflation.html#cb518-1" aria-hidden="true" tabindex="-1"></a>zip_model <span class="ot">&lt;-</span> <span class="fu">zeroinfl</span>(<span class="at">formula =</span> fml, <span class="at">data =</span> nmes)</span>
+<span id="cb518-2"><a href="negative-binomial-and-zero-inflation.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(zip_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## zeroinfl(formula = fml, data = nmes)
+## 
+## Pearson residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5758 -1.1488 -0.4766  0.5484 24.6115 
+## 
+## Count model coefficients (poisson with log link):
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      1.307611   0.028121  46.499  &lt; 2e-16 ***
+## hospital         0.162911   0.006033  27.004  &lt; 2e-16 ***
+## healthpoor       0.278539   0.017354  16.051  &lt; 2e-16 ***
+## healthexcellent -0.283548   0.031288  -9.063  &lt; 2e-16 ***
+## chronic_sat1     0.212773   0.020937  10.163  &lt; 2e-16 ***
+## chronic_sat2     0.361709   0.021714  16.658  &lt; 2e-16 ***
+## chronic_sat3+    0.440948   0.021973  20.067  &lt; 2e-16 ***
+## gendermale      -0.057361   0.013071  -4.388 1.14e-05 ***
+## school           0.019133   0.001873  10.215  &lt; 2e-16 ***
+## insuranceyes     0.077189   0.017174   4.494 6.98e-06 ***
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      0.04724    0.15010   0.315  0.75294    
+## hospital        -0.30074    0.09149  -3.287  0.00101 ** 
+## healthpoor       0.01370    0.16175   0.085  0.93249    
+## healthexcellent  0.18472    0.15263   1.210  0.22619    
+## chronic_sat1    -0.74134    0.10483  -7.072 1.53e-12 ***
+## chronic_sat2    -1.31875    0.13834  -9.533  &lt; 2e-16 ***
+## chronic_sat3+   -1.86784    0.17077 -10.938  &lt; 2e-16 ***
+## gendermale       0.40582    0.08994   4.512 6.41e-06 ***
+## school          -0.05698    0.01232  -4.624 3.77e-06 ***
+## insuranceyes    -0.75192    0.10316  -7.289 3.13e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Number of iterations in BFGS optimization: 24 
+## Log-likelihood: -1.611e+04 on 20 Df</code></pre>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="negative-binomial-and-zero-inflation.html#cb520-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sum</span>(<span class="fu">predict</span>(zip_model, <span class="at">type =</span> <span class="st">&quot;zero&quot;</span>))) <span class="co"># better captures the zero</span></span></code></pre></div>
+<pre><code>## [1] 669</code></pre>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="negative-binomial-and-zero-inflation.html#cb522-1" aria-hidden="true" tabindex="-1"></a><span class="co"># can account also for overdispersion</span></span>
+<span id="cb522-2"><a href="negative-binomial-and-zero-inflation.html#cb522-2" aria-hidden="true" tabindex="-1"></a>zinb_model <span class="ot">&lt;-</span> <span class="fu">zeroinfl</span>(<span class="at">formula =</span> fml, <span class="at">dist =</span> <span class="st">&quot;negbin&quot;</span>, <span class="at">data =</span> nmes)</span>
+<span id="cb522-3"><a href="negative-binomial-and-zero-inflation.html#cb522-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(zinb_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## zeroinfl(formula = fml, data = nmes, dist = &quot;negbin&quot;)
+## 
+## Pearson residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.1938 -0.7112 -0.2775  0.3293 17.1983 
+## 
+## Count model coefficients (negbin with log link):
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      1.096148   0.063810  17.178  &lt; 2e-16 ***
+## hospital         0.202672   0.020602   9.837  &lt; 2e-16 ***
+## healthpoor       0.303137   0.046057   6.582 4.65e-11 ***
+## healthexcellent -0.304766   0.063341  -4.811 1.50e-06 ***
+## chronic_sat1     0.260035   0.045197   5.753 8.75e-09 ***
+## chronic_sat2     0.419527   0.048339   8.679  &lt; 2e-16 ***
+## chronic_sat3+    0.542360   0.049509  10.955  &lt; 2e-16 ***
+## gendermale      -0.072538   0.031212  -2.324   0.0201 *  
+## school           0.022117   0.004415   5.010 5.44e-07 ***
+## insuranceyes     0.106745   0.042311   2.523   0.0116 *  
+## Log(theta)       0.401063   0.036208  11.077  &lt; 2e-16 ***
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     -0.21625    0.29103  -0.743 0.457443    
+## hospital        -0.82498    0.52315  -1.577 0.114809    
+## healthpoor       0.14124    0.41428   0.341 0.733150    
+## healthexcellent  0.05506    0.33697   0.163 0.870217    
+## chronic_sat1    -1.06686    0.22995  -4.640 3.49e-06 ***
+## chronic_sat2    -2.22239    0.45966  -4.835 1.33e-06 ***
+## chronic_sat3+   -3.42830    0.96761  -3.543 0.000396 ***
+## gendermale       0.70379    0.20796   3.384 0.000714 ***
+## school          -0.07603    0.02789  -2.726 0.006415 ** 
+## insuranceyes    -1.25027    0.23645  -5.288 1.24e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Theta = 1.4934 
+## Number of iterations in BFGS optimization: 62 
+## Log-likelihood: -1.209e+04 on 21 Df</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="negative-binomial-and-zero-inflation.html#cb524-1" aria-hidden="true" tabindex="-1"></a>exp_coeff <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(zip_model))</span>
+<span id="cb524-2"><a href="negative-binomial-and-zero-inflation.html#cb524-2" aria-hidden="true" tabindex="-1"></a>exp_coeff <span class="ot">&lt;-</span> <span class="fu">matrix</span>(exp_coeff, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb524-3"><a href="negative-binomial-and-zero-inflation.html#cb524-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(exp_coeff) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;count&quot;</span>, <span class="st">&quot;zero&quot;</span>)</span>
+<span id="cb524-4"><a href="negative-binomial-and-zero-inflation.html#cb524-4" aria-hidden="true" tabindex="-1"></a>exp_coeff</span></code></pre></div>
+<pre><code>##           count      zero
+##  [1,] 3.6973298 1.0483786
+##  [2,] 1.1769320 0.7402720
+##  [3,] 1.3211987 1.0137967
+##  [4,] 0.7531066 1.2028767
+##  [5,] 1.2371035 0.4764772
+##  [6,] 1.4357804 0.2674685
+##  [7,] 1.5541806 0.1544568
+##  [8,] 0.9442535 1.5005316
+##  [9,] 1.0193167 0.9446120
+## [10,] 1.0802458 0.4714592</code></pre>
+<p>We can also set different models for the two parts</p>
+<p>E.g. from the previous summary it seems that health does not affect the visits count.
+Maybe we can remove it:</p>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="negative-binomial-and-zero-inflation.html#cb526-1" aria-hidden="true" tabindex="-1"></a>zinb_2model <span class="ot">&lt;-</span> <span class="fu">zeroinfl</span>(</span>
+<span id="cb526-2"><a href="negative-binomial-and-zero-inflation.html#cb526-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> visits <span class="sc">~</span></span>
+<span id="cb526-3"><a href="negative-binomial-and-zero-inflation.html#cb526-3" aria-hidden="true" tabindex="-1"></a>    hospital <span class="sc">+</span> health <span class="sc">+</span> chronic_sat <span class="sc">+</span> gender <span class="sc">+</span> school <span class="sc">+</span> insurance <span class="sc">|</span> <span class="co"># count</span></span>
+<span id="cb526-4"><a href="negative-binomial-and-zero-inflation.html#cb526-4" aria-hidden="true" tabindex="-1"></a>      hospital <span class="sc">+</span> chronic_sat <span class="sc">+</span> gender <span class="sc">+</span> school <span class="sc">+</span> insurance, <span class="co"># zero</span></span>
+<span id="cb526-5"><a href="negative-binomial-and-zero-inflation.html#cb526-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">dist =</span> <span class="st">&quot;negbin&quot;</span>,</span>
+<span id="cb526-6"><a href="negative-binomial-and-zero-inflation.html#cb526-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> nmes</span>
+<span id="cb526-7"><a href="negative-binomial-and-zero-inflation.html#cb526-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb526-8"><a href="negative-binomial-and-zero-inflation.html#cb526-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(zinb_2model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## zeroinfl(formula = visits ~ hospital + health + chronic_sat + gender + 
+##     school + insurance | hospital + chronic_sat + gender + school + insurance, 
+##     data = nmes, dist = &quot;negbin&quot;)
+## 
+## Pearson residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.1930 -0.7129 -0.2774  0.3325 17.2309 
+## 
+## Count model coefficients (negbin with log link):
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      1.095984   0.063712  17.202  &lt; 2e-16 ***
+## hospital         0.203028   0.020519   9.894  &lt; 2e-16 ***
+## healthpoor       0.299893   0.045025   6.661 2.73e-11 ***
+## healthexcellent -0.307844   0.060352  -5.101 3.38e-07 ***
+## chronic_sat1     0.261125   0.045084   5.792 6.96e-09 ***
+## chronic_sat2     0.420111   0.048342   8.690  &lt; 2e-16 ***
+## chronic_sat3+    0.542820   0.049521  10.961  &lt; 2e-16 ***
+## gendermale      -0.073016   0.031222  -2.339   0.0194 *  
+## school           0.022174   0.004399   5.041 4.63e-07 ***
+## insuranceyes     0.105963   0.042155   2.514   0.0119 *  
+## Log(theta)       0.399789   0.036029  11.096  &lt; 2e-16 ***
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   -0.20013    0.28702  -0.697 0.485640    
+## hospital      -0.81413    0.49138  -1.657 0.097553 .  
+## chronic_sat1  -1.05192    0.22350  -4.706 2.52e-06 ***
+## chronic_sat2  -2.21583    0.46246  -4.791 1.66e-06 ***
+## chronic_sat3+ -3.48976    1.06936  -3.263 0.001101 ** 
+## gendermale     0.69870    0.20782   3.362 0.000774 ***
+## school        -0.07573    0.02732  -2.772 0.005571 ** 
+## insuranceyes  -1.26789    0.23135  -5.480 4.24e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Theta = 1.4915 
+## Number of iterations in BFGS optimization: 62 
+## Log-likelihood: -1.209e+04 on 19 Df</code></pre>
+<p>And since the regression model is composed of two models, also the
+prediction can be split into the two parts as such:</p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="negative-binomial-and-zero-inflation.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two models predictions and combined</span></span>
+<span id="cb528-2"><a href="negative-binomial-and-zero-inflation.html#cb528-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(zip_model, <span class="at">type =</span> <span class="st">&quot;zero&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##          1          2          3          4          5 
+## 0.09447021 0.06957465 0.03630159 0.11149207 0.08585593</code></pre>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="negative-binomial-and-zero-inflation.html#cb530-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(zip_model, <span class="at">type =</span> <span class="st">&quot;count&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##         1         2         3         4         5 
+##  7.148150  6.943690 14.986610  8.917319  6.432114</code></pre>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="negative-binomial-and-zero-inflation.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(zip_model, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##         1         2         3         4         5 
+##  6.472863  6.460585 14.442573  7.923109  5.879879</code></pre>
+<p>And finally we can test the models one against the other, comparing the likelihood or
+using the AIC score.</p>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="negative-binomial-and-zero-inflation.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb534-2"><a href="negative-binomial-and-zero-inflation.html#cb534-2" aria-hidden="true" tabindex="-1"></a><span class="co"># likelihood test</span></span>
+<span id="cb534-3"><a href="negative-binomial-and-zero-inflation.html#cb534-3" aria-hidden="true" tabindex="-1"></a>lmtest<span class="sc">::</span><span class="fu">lrtest</span>(zip_model, zinb_2model)</span></code></pre></div>
+<pre><code>## Likelihood ratio test
+## 
+## Model 1: visits ~ hospital + health + chronic_sat + gender + school + 
+##     insurance
+## Model 2: visits ~ hospital + health + chronic_sat + gender + school + 
+##     insurance | hospital + chronic_sat + gender + school + insurance
+##   #Df LogLik Df Chisq Pr(&gt;Chisq)    
+## 1  20 -16107                        
+## 2  19 -12085 -1  8044  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="negative-binomial-and-zero-inflation.html#cb536-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value tells whether the logLikelihood difference is significant</span></span>
+<span id="cb536-2"><a href="negative-binomial-and-zero-inflation.html#cb536-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb536-3"><a href="negative-binomial-and-zero-inflation.html#cb536-3" aria-hidden="true" tabindex="-1"></a><span class="co"># AIC for model selection based on complexity/performance tradeoff</span></span>
+<span id="cb536-4"><a href="negative-binomial-and-zero-inflation.html#cb536-4" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(pois_model, nb_model, zip_model, zinb_2model)</span></code></pre></div>
+<pre><code>##             df      AIC
+## pois_model  10 35723.15
+## nb_model    11 24330.27
+## zip_model   20 32254.65
+## zinb_2model 19 24208.69</code></pre>
+<div id="hurdle-v.-zi" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Hurdle v. ZI<a href="negative-binomial-and-zero-inflation.html#hurdle-v.-zi" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In general, zeros can come both from the zero model and the count model. Sometimes we might
+want to model a zero as a separate event. The Hurdle model in fact, alternatively to the ZI model,
+makes a clear distinction between counts that are zero and counts that are 1 or more. Here
+is the Hurdle-Poisson model for instance:</p>
+<p><span class="math display">\[
+P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!} \bm{1}(y &gt; 0)
+\]</span>
+This is particularly useful when the data consist of large counts on average, but for
+some reasons (e.g. reading errors) many values are 0 instead. It probably doesn’t make
+sense, in those cases, to account for the probability of that zero being drawn from the same
+Poisson of that of all the other larger counts.</p>
+<p>In R, this can be done by using the <code>hurdle</code> function from the same library.</p>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="negative-binomial-and-zero-inflation.html#cb538-1" aria-hidden="true" tabindex="-1"></a>hurdle_model <span class="ot">&lt;-</span> <span class="fu">hurdle</span>(<span class="at">formula =</span> fml, <span class="at">data =</span> nmes)</span>
+<span id="cb538-2"><a href="negative-binomial-and-zero-inflation.html#cb538-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hurdle_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## hurdle(formula = fml, data = nmes)
+## 
+## Pearson residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5965 -1.1507 -0.4768  0.5482 24.5851 
+## 
+## Count model coefficients (truncated poisson with log link):
+##                  Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)      1.308658   0.028104  46.565  &lt; 2e-16 ***
+## hospital         0.162841   0.006034  26.988  &lt; 2e-16 ***
+## healthpoor       0.278497   0.017355  16.047  &lt; 2e-16 ***
+## healthexcellent -0.282804   0.031274  -9.043  &lt; 2e-16 ***
+## chronic_sat1     0.212190   0.020935  10.136  &lt; 2e-16 ***
+## chronic_sat2     0.361344   0.021708  16.646  &lt; 2e-16 ***
+## chronic_sat3+    0.440479   0.021973  20.046  &lt; 2e-16 ***
+## gendermale      -0.057295   0.013071  -4.383 1.17e-05 ***
+## school           0.019050   0.001871  10.180  &lt; 2e-16 ***
+## insuranceyes     0.077519   0.017166   4.516 6.31e-06 ***
+## Zero hurdle model coefficients (binomial with logit link):
+##                   Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     -0.0981863  0.1468254  -0.669 0.503669    
+## hospital         0.3107238  0.0913541   3.401 0.000671 ***
+## healthpoor      -0.0001956  0.1611027  -0.001 0.999031    
+## healthexcellent -0.2419271  0.1442703  -1.677 0.093562 .  
+## chronic_sat1     0.7585597  0.1024341   7.405 1.31e-13 ***
+## chronic_sat2     1.3396653  0.1359419   9.855  &lt; 2e-16 ***
+## chronic_sat3+    1.8896854  0.1686629  11.204  &lt; 2e-16 ***
+## gendermale      -0.4052651  0.0881205  -4.599 4.25e-06 ***
+## school           0.0589871  0.0120460   4.897 9.74e-07 ***
+## insuranceyes     0.7449223  0.1012575   7.357 1.88e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Number of iterations in BFGS optimization: 16 
+## Log-likelihood: -1.611e+04 on 20 Df</code></pre>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="negative-binomial-and-zero-inflation.html#cb540-1" aria-hidden="true" tabindex="-1"></a>z_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(hurdle_model, <span class="at">type =</span> <span class="st">&quot;zero&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb540-2"><a href="negative-binomial-and-zero-inflation.html#cb540-2" aria-hidden="true" tabindex="-1"></a>c_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(hurdle_model, <span class="at">type =</span> <span class="st">&quot;count&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
+<span id="cb540-3"><a href="negative-binomial-and-zero-inflation.html#cb540-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(hurdle_model, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>##         1         2         3         4         5 
+##  6.472374  6.460350 14.453157  7.923691  5.879604</code></pre>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="negative-binomial-and-zero-inflation.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here the composite prediction is merely the product of the two</span></span>
+<span id="cb542-2"><a href="negative-binomial-and-zero-inflation.html#cb542-2" aria-hidden="true" tabindex="-1"></a><span class="co"># models predictions</span></span>
+<span id="cb542-3"><a href="negative-binomial-and-zero-inflation.html#cb542-3" aria-hidden="true" tabindex="-1"></a>z_pred <span class="sc">*</span> c_pred</span></code></pre></div>
+<pre><code>##         1         2         3         4         5 
+##  6.472374  6.460350 14.453157  7.923691  5.879604</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="generalized-linear-models-poisson.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="three-jags-examples.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/09_negbin.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Interactions and qualitative predictors | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Interactions and qualitative predictors | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Interactions and qualitative predictors | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
+
+
+<meta name="date" content="2023-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tools-for-linear-regression-analysis.html"/>
+<link rel="next" href="generalized-linear-models-binomial.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistical Models in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#random-and-non-random-normal-samples"><i class="fa fa-check"></i><b>3.1</b> Random and non-random normal samples</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="normal-sampling.html"><a href="normal-sampling.html#autocorrelated-sample"><i class="fa fa-check"></i><b>3.1.1</b> Autocorrelated sample</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#exchangeable-normal-random-variables"><i class="fa fa-check"></i><b>3.2</b> Exchangeable normal random variables</a></li>
+<li class="chapter" data-level="3.3" data-path="normal-sampling.html"><a href="normal-sampling.html#multivariate-normal-random-samples"><i class="fa fa-check"></i><b>3.3</b> Multivariate Normal random samples</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#solutions"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
+<li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#plot"><i class="fa fa-check"></i><b>4.4.1</b> Plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#summary"><i class="fa fa-check"></i><b>4.4.2</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html"><i class="fa fa-check"></i><b>5</b> Tools for linear regression analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#plot-1"><i class="fa fa-check"></i><b>5.1</b> Plot</a></li>
+<li class="chapter" data-level="5.2" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#multiple-predictors"><i class="fa fa-check"></i><b>5.2</b> Multiple predictors</a></li>
+<li class="chapter" data-level="5.3" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#confidence-regions"><i class="fa fa-check"></i><b>5.3</b> Confidence regions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html"><i class="fa fa-check"></i><b>6</b> Interactions and qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#transformations"><i class="fa fa-check"></i><b>6.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#a-simple-example"><i class="fa fa-check"></i><b>6.1.1</b> A simple example</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#on-advertising"><i class="fa fa-check"></i><b>6.1.2</b> On <em>advertising</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#students-dataset"><i class="fa fa-check"></i><b>7.1</b> Students dataset</a></li>
+<li class="chapter" data-level="7.2" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#eda"><i class="fa fa-check"></i><b>7.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#plots"><i class="fa fa-check"></i><b>7.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#test"><i class="fa fa-check"></i><b>7.3</b> Test</a></li>
+<li class="chapter" data-level="7.4" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#generalized-linear-model"><i class="fa fa-check"></i><b>7.4</b> Generalized Linear Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#predictions"><i class="fa fa-check"></i><b>7.4.1</b> Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#graphic-interpretation"><i class="fa fa-check"></i><b>7.5</b> Graphic interpretation</a></li>
+<li class="chapter" data-level="7.6" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#other-tests"><i class="fa fa-check"></i><b>7.6</b> Other tests</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html"><i class="fa fa-check"></i><b>8</b> Generalized Linear Models (Poisson)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#warpbreaks-dataset"><i class="fa fa-check"></i><b>8.1</b> Warpbreaks dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#eda-1"><i class="fa fa-check"></i><b>8.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#plots-1"><i class="fa fa-check"></i><b>8.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Poisson Family GLM</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#response"><i class="fa fa-check"></i><b>8.3.1</b> Response</a></li>
+<li class="chapter" data-level="8.3.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#contrasts"><i class="fa fa-check"></i><b>8.3.2</b> Contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#tests"><i class="fa fa-check"></i><b>8.4</b> Tests</a></li>
+<li class="chapter" data-level="8.5" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#influence-measures"><i class="fa fa-check"></i><b>8.5</b> Influence measures</a></li>
+<li class="chapter" data-level="8.6" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#interaction"><i class="fa fa-check"></i><b>8.6</b> Interaction</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#testing-interaction"><i class="fa fa-check"></i><b>8.6.1</b> Testing interaction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html"><i class="fa fa-check"></i><b>9</b> Negative Binomial and Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#dataset"><i class="fa fa-check"></i><b>9.1</b> Dataset</a></li>
+<li class="chapter" data-level="9.2" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#eda-2"><i class="fa fa-check"></i><b>9.2</b> EDA</a></li>
+<li class="chapter" data-level="9.3" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#negative-binomial-regression"><i class="fa fa-check"></i><b>9.3</b> Negative binomial regression</a></li>
+<li class="chapter" data-level="9.4" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#zero-inflation"><i class="fa fa-check"></i><b>9.4</b> Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#hurdle-v.-zi"><i class="fa fa-check"></i><b>9.4.1</b> Hurdle v. ZI</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="three-jags-examples.html"><a href="three-jags-examples.html"><i class="fa fa-check"></i><b>10</b> Three JAGS examples</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="three-jags-examples.html"><a href="three-jags-examples.html#rats---simple-linear-regression"><i class="fa fa-check"></i><b>10.1</b> Rats - Simple linear regression</a></li>
+<li class="chapter" data-level="10.2" data-path="three-jags-examples.html"><a href="three-jags-examples.html#zip-model"><i class="fa fa-check"></i><b>10.2</b> ZIP model</a></li>
+<li class="chapter" data-level="10.3" data-path="three-jags-examples.html"><a href="three-jags-examples.html#gaussian-mixture-model-gmm"><i class="fa fa-check"></i><b>10.3</b> Gaussian Mixture Model (GMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>11</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>11.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="11.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>11.2</b> Import data</a></li>
+<li class="chapter" data-level="11.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>11.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.5" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#plotting-intervals"><i class="fa fa-check"></i><b>12.5</b> Plotting intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="jags-lab---gaussian-mixture-model.html"><a href="jags-lab---gaussian-mixture-model.html"><i class="fa fa-check"></i><b>13</b> JAGS lab - Gaussian Mixture Model</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interactions-and-qualitative-predictors" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Interactions and qualitative predictors<a href="interactions-and-qualitative-predictors.html#interactions-and-qualitative-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="transformations" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Transformations<a href="interactions-and-qualitative-predictors.html#transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Formulae in R linear models are much more powerful than
+what seen so far. In some cases we might be interested in
+transforming a variable before fitting the linear model.</p>
+<div id="a-simple-example" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> A simple example<a href="interactions-and-qualitative-predictors.html#a-simple-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For instance, let’s take this synthetic dataset:</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="interactions-and-qualitative-predictors.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb307-2"><a href="interactions-and-qualitative-predictors.html#cb307-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb307-3"><a href="interactions-and-qualitative-predictors.html#cb307-3" aria-hidden="true" tabindex="-1"></a>synth <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb307-4"><a href="interactions-and-qualitative-predictors.html#cb307-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">30</span>, <span class="at">length.out =</span> n),</span>
+<span id="cb307-5"><a href="interactions-and-qualitative-predictors.html#cb307-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">0.2</span>)</span>
+<span id="cb307-6"><a href="interactions-and-qualitative-predictors.html#cb307-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>which looks like this:</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="interactions-and-qualitative-predictors.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb308-2"><a href="interactions-and-qualitative-predictors.html#cb308-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(synth) <span class="sc">+</span></span>
+<span id="cb308-3"><a href="interactions-and-qualitative-predictors.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<p>Of course, we can try to fit a linear model without any
+extra effort</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="interactions-and-qualitative-predictors.html#cb309-1" aria-hidden="true" tabindex="-1"></a>naive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> synth)</span>
+<span id="cb309-2"><a href="interactions-and-qualitative-predictors.html#cb309-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(naive_lm, <span class="at">mapping =</span> <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb309-3"><a href="interactions-and-qualitative-predictors.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb309-4"><a href="interactions-and-qualitative-predictors.html#cb309-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
+<p>but if we plot the residuals, we can detect some issues for low
+values of <span class="math inline">\(y\)</span> (definitely not uncorrelated).</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="interactions-and-qualitative-predictors.html#cb311-1" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
+<span id="cb311-2"><a href="interactions-and-qualitative-predictors.html#cb311-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> naive_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
+<span id="cb311-3"><a href="interactions-and-qualitative-predictors.html#cb311-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb311-4"><a href="interactions-and-qualitative-predictors.html#cb311-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p>By understanding how <span class="math inline">\(x\)</span> is distributed, we can fix this issue
+and fit the model on a transformation of itself, clearly <span class="math inline">\(\log(x)\)</span>.
+We do this simply by adding the desired transformation in the
+formula, meaning that we don’t have to tranform the dataset beforehand.</p>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="interactions-and-qualitative-predictors.html#cb312-1" aria-hidden="true" tabindex="-1"></a>log_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">data =</span> synth)</span>
+<span id="cb312-2"><a href="interactions-and-qualitative-predictors.html#cb312-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(log_lm,</span>
+<span id="cb312-3"><a href="interactions-and-qualitative-predictors.html#cb312-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="st">`</span><span class="at">log(x)</span><span class="st">`</span>, y)</span>
+<span id="cb312-4"><a href="interactions-and-qualitative-predictors.html#cb312-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="co"># notice the backticks!</span></span>
+<span id="cb312-5"><a href="interactions-and-qualitative-predictors.html#cb312-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb312-6"><a href="interactions-and-qualitative-predictors.html#cb312-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<p>and the residuals plot.</p>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="interactions-and-qualitative-predictors.html#cb314-1" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
+<span id="cb314-2"><a href="interactions-and-qualitative-predictors.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> log_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
+<span id="cb314-3"><a href="interactions-and-qualitative-predictors.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb314-4"><a href="interactions-and-qualitative-predictors.html#cb314-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+</div>
+<div id="on-advertising" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> On <em>advertising</em><a href="interactions-and-qualitative-predictors.html#on-advertising" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Back to our real dataset.</p>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="interactions-and-qualitative-predictors.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb315-2"><a href="interactions-and-qualitative-predictors.html#cb315-2" aria-hidden="true" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 200 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (4): TV, Radio, Newspaper, Sales
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>Let’s try applying a transformation to the most promising
+predictor, in particular let’s us <span class="math inline">\(\sqrt{TV}\)</span>. The choice
+of the square root transformation comes from a first look
+at the scatter plot shown previously (TV against Sales),
+where we can detect a slightly curved trend which resembles
+a curve <span class="math inline">\(y = \sqrt{x}\)</span>.</p>
+<p>Let’s plot the data after the transformation and observe
+that it’s trend better fit a straight line.</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="interactions-and-qualitative-predictors.html#cb317-1" aria-hidden="true" tabindex="-1"></a>advertising <span class="sc">%&gt;%</span></span>
+<span id="cb317-2"><a href="interactions-and-qualitative-predictors.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Sales, TV) <span class="sc">%&gt;%</span></span>
+<span id="cb317-3"><a href="interactions-and-qualitative-predictors.html#cb317-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sqrtTV =</span> <span class="fu">sqrt</span>(TV)) <span class="sc">%&gt;%</span></span>
+<span id="cb317-4"><a href="interactions-and-qualitative-predictors.html#cb317-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sqrtTV, Sales)) <span class="sc">+</span></span>
+<span id="cb317-5"><a href="interactions-and-qualitative-predictors.html#cb317-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb317-6"><a href="interactions-and-qualitative-predictors.html#cb317-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
+<p>We can fit a linear model. It’s <code>summary</code> table
+will show a better <span class="math inline">\(R^2\)</span> score.</p>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="interactions-and-qualitative-predictors.html#cb319-1" aria-hidden="true" tabindex="-1"></a>trans_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV), <span class="at">data =</span> advertising)</span></code></pre></div>
+<blockquote>
+<p><em>Exercise</em>: plot the regression line and compare it with
+the simple model fitted on the raw data</p>
+</blockquote>
+<p>The following two commands might help in inspecting
+a linear model with transformed data.</p>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="interactions-and-qualitative-predictors.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(trans_lm)) <span class="co"># prints the design matrix</span></span></code></pre></div>
+<pre><code>##   (Intercept)  sqrt(TV)
+## 1           1 15.169047
+## 2           1  6.670832
+## 3           1  4.147288
+## 4           1 12.308534
+## 5           1 13.446189
+## 6           1  2.949576</code></pre>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="interactions-and-qualitative-predictors.html#cb322-1" aria-hidden="true" tabindex="-1"></a>trans_lm<span class="sc">$</span>terms <span class="co"># inspect the linear model specifics</span></span></code></pre></div>
+<pre><code>## Sales ~ sqrt(TV)
+## attr(,&quot;variables&quot;)
+## list(Sales, sqrt(TV))
+## attr(,&quot;factors&quot;)
+##          sqrt(TV)
+## Sales           0
+## sqrt(TV)        1
+## attr(,&quot;term.labels&quot;)
+## [1] &quot;sqrt(TV)&quot;
+## attr(,&quot;order&quot;)
+## [1] 1
+## attr(,&quot;intercept&quot;)
+## [1] 1
+## attr(,&quot;response&quot;)
+## [1] 1
+## attr(,&quot;.Environment&quot;)
+## &lt;environment: R_GlobalEnv&gt;
+## attr(,&quot;predvars&quot;)
+## list(Sales, sqrt(TV))
+## attr(,&quot;dataClasses&quot;)
+##     Sales  sqrt(TV) 
+## &quot;numeric&quot; &quot;numeric&quot;</code></pre>
+</div>
+</div>
+<div id="model-selection" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Model selection<a href="interactions-and-qualitative-predictors.html#model-selection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="r-squared" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> R-squared<a href="interactions-and-qualitative-predictors.html#r-squared" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One of the indicators computed with <code>summary</code> on a fitted linear model
+is the <span class="math inline">\(R^2\)</span> index (R-squared, or coefficient of determination). It is defined as</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{\sum_i (y_i - \hat y_i)^2}{\sum_i (y_i - \bar y)^2}
+\]</span></p>
+<p>and shows the impact of the residuals proportionately to the variance
+of the response variable. It can be used to compare different models
+although it should not be considered as an absolute score of the model.
+The closer it is to 1, the better is the model fit.</p>
+<p>This output, for instance, shows how the transformation used above
+seems to improve the accuracy of the regression task.</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="interactions-and-qualitative-predictors.html#cb324-1" aria-hidden="true" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV, <span class="at">data =</span> advertising)</span>
+<span id="cb324-2"><a href="interactions-and-qualitative-predictors.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)<span class="sc">$</span>r.squared</span></code></pre></div>
+<pre><code>## [1] 0.8121757</code></pre>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="interactions-and-qualitative-predictors.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(trans_lm)<span class="sc">$</span>r.squared</span></code></pre></div>
+<pre><code>## [1] 0.8216696</code></pre>
+</div>
+<div id="anova" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> ANOVA<a href="interactions-and-qualitative-predictors.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Another way of comparing two models, in particular one model with
+a smaller nested model, is the ANOVA test, which is an instance
+of the F-test.
+A low p-value for the F statistic means that we can reject the hypothesis that
+the smaller model explains the data well enough.</p>
+<p>Here we compare the model with a single predictor (squared root of TV), which
+is the <em>smaller</em> model, with a model with also the Radio data as
+additional predictor.</p>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="interactions-and-qualitative-predictors.html#cb328-1" aria-hidden="true" tabindex="-1"></a>double_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV) <span class="sc">+</span> Radio, <span class="at">data =</span> advertising)</span>
+<span id="cb328-2"><a href="interactions-and-qualitative-predictors.html#cb328-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(trans_lm, double_lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: Sales ~ sqrt(TV)
+## Model 2: Sales ~ sqrt(TV) + Radio
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    198 990.80                                  
+## 2    197 410.88  1    579.92 278.04 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="qualitative-predictors" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Qualitative predictors<a href="interactions-and-qualitative-predictors.html#qualitative-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Qualitative predictors are represented in R through <em>factors</em>.
+Although it’s not always necessary, it is always best to
+explicitly tell R to interpret qualitative predictors data as factors.
+This can be done with <code>read_csv</code>, first by reading the data as it is
+and then calling the <code>spec()</code> function over the new tibble.</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="interactions-and-qualitative-predictors.html#cb330-1" aria-hidden="true" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 10 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (5): golfer, A, B, C, D
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="interactions-and-qualitative-predictors.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span>(wide_golf) <span class="co"># prints information about the detected data types</span></span></code></pre></div>
+<pre><code>## cols(
+##   golfer = col_double(),
+##   A = col_double(),
+##   B = col_double(),
+##   C = col_double(),
+##   D = col_double()
+## )</code></pre>
+<p>In this case, the output is saying that the first column has
+been detected as <code>numeric</code>, which is false, because the golfer
+number is just an identification number.
+Therefore we correct this by copying the output, manually editing
+the first column type from <code>col_double()</code> to <code>col_factor()</code> and
+setting the <code>read_csv</code> parameter <code>col_types</code> to that.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="interactions-and-qualitative-predictors.html#cb334-1" aria-hidden="true" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>,</span>
+<span id="cb334-2"><a href="interactions-and-qualitative-predictors.html#cb334-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb334-3"><a href="interactions-and-qualitative-predictors.html#cb334-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">golfer =</span> readr<span class="sc">::</span><span class="fu">col_factor</span>(),</span>
+<span id="cb334-4"><a href="interactions-and-qualitative-predictors.html#cb334-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">A =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb334-5"><a href="interactions-and-qualitative-predictors.html#cb334-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">B =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb334-6"><a href="interactions-and-qualitative-predictors.html#cb334-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">C =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb334-7"><a href="interactions-and-qualitative-predictors.html#cb334-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">D =</span> <span class="fu">col_double</span>()</span>
+<span id="cb334-8"><a href="interactions-and-qualitative-predictors.html#cb334-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb334-9"><a href="interactions-and-qualitative-predictors.html#cb334-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb334-10"><a href="interactions-and-qualitative-predictors.html#cb334-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-11"><a href="interactions-and-qualitative-predictors.html#cb334-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb334-12"><a href="interactions-and-qualitative-predictors.html#cb334-12" aria-hidden="true" tabindex="-1"></a><span class="co"># need to switch from wide to long format</span></span>
+<span id="cb334-13"><a href="interactions-and-qualitative-predictors.html#cb334-13" aria-hidden="true" tabindex="-1"></a>golf <span class="ot">&lt;-</span> wide_golf <span class="sc">%&gt;%</span></span>
+<span id="cb334-14"><a href="interactions-and-qualitative-predictors.html#cb334-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(brand, distance, <span class="sc">-</span>golfer)</span>
+<span id="cb334-15"><a href="interactions-and-qualitative-predictors.html#cb334-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-16"><a href="interactions-and-qualitative-predictors.html#cb334-16" aria-hidden="true" tabindex="-1"></a><span class="do">## if using data.frame, you can use `melt()` from</span></span>
+<span id="cb334-17"><a href="interactions-and-qualitative-predictors.html#cb334-17" aria-hidden="true" tabindex="-1"></a><span class="do">## reshape2</span></span>
+<span id="cb334-18"><a href="interactions-and-qualitative-predictors.html#cb334-18" aria-hidden="true" tabindex="-1"></a><span class="co"># golf &lt;- melt(wide_golf, id.vars = 1,</span></span>
+<span id="cb334-19"><a href="interactions-and-qualitative-predictors.html#cb334-19" aria-hidden="true" tabindex="-1"></a><span class="co">#             variable.name = &quot;brand&quot;,</span></span>
+<span id="cb334-20"><a href="interactions-and-qualitative-predictors.html#cb334-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             value.name = &quot;distance&quot;)</span></span></code></pre></div>
+<p>Now, for example, we fit a linear model using all the
+available columns</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="interactions-and-qualitative-predictors.html#cb335-1" aria-hidden="true" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> ., <span class="at">data =</span> golf)</span></code></pre></div>
+<p>and we can compare it to a smaller model with ANOVA test.</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="interactions-and-qualitative-predictors.html#cb336-1" aria-hidden="true" tabindex="-1"></a>small_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer, <span class="at">data =</span> golf)</span>
+<span id="cb336-2"><a href="interactions-and-qualitative-predictors.html#cb336-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(small_lm, complete_lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: distance ~ golfer
+## Model 2: distance ~ golfer + brand
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     30 6026.0                                  
+## 2     27 2358.8  3    3667.2 13.992 1.076e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Another variance test can be performed with <code>aov</code>.
+Check the function documentation for more details.</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="interactions-and-qualitative-predictors.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(distance <span class="sc">~</span> golfer <span class="sc">+</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+<pre><code>## Call:
+##    aov(formula = distance ~ golfer + brand, data = golf)
+## 
+## Terms:
+##                   golfer    brand Residuals
+## Sum of Squares  9745.734 3667.226  2358.764
+## Deg. of Freedom        9        3        27
+## 
+## Residual standard error: 9.346744
+## Estimated effects may be unbalanced</code></pre>
+</div>
+<div id="predict" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Predict<a href="interactions-and-qualitative-predictors.html#predict" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Especially when dealing with qualitative data, predictions for
+new unseen data can be easily computed with the <code>predict</code> function,
+which simply applies the regression coefficients to the provided data
+(arbitrarily generated below inside a tibble).</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="interactions-and-qualitative-predictors.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(complete_lm, <span class="fu">tibble</span>(<span class="at">golfer =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>), <span class="at">brand =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>)),</span>
+<span id="cb340-2"><a href="interactions-and-qualitative-predictors.html#cb340-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span></span>
+<span id="cb340-3"><a href="interactions-and-qualitative-predictors.html#cb340-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##       fit      lwr      upr
+## 1 204.105 193.1719 215.0381
+## 2 210.235 199.3019 221.1681
+## 3 249.810 238.8769 260.7431</code></pre>
+</div>
+<div id="interactions" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Interactions<a href="interactions-and-qualitative-predictors.html#interactions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Interactions are added in the <code>lm</code> formula. More specifically:</p>
+<ul>
+<li><code>a:b</code> (colon op) includes the cross-variable between two predictors</li>
+<li><code>a*b</code> (asterisk op) includes the two predictors individually and the
+cross-variable (i.e. writing <code>y ~ a + b + a:b</code> is equivalent to
+writing <code>y ~ a*b</code>)</li>
+</ul>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="interactions-and-qualitative-predictors.html#cb342-1" aria-hidden="true" tabindex="-1"></a>inter_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer <span class="sc">*</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tools-for-linear-regression-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="generalized-linear-models-binomial.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/06_interaction.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

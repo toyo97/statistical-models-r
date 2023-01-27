@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 13 JAGS lab - Gaussian Mixture Model | Statistical Models in R</title>
+  <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 13 JAGS lab - Gaussian Mixture Model | Statistical Models in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  <meta name="github-repo" content="toyo97/statistical-models-r" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 13 JAGS lab - Gaussian Mixture Model | Statistical Models in R" />
+  
+  <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
+  
+
+<meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
+
+
+<meta name="date" content="2023-01-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="linear-regression-lab.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Statistical Models in R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction.html"><a href="introduction.html#r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> R and RStudio</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="introduction.html"><a href="introduction.html#installation"><i class="fa fa-check"></i><b>1.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="introduction.html"><a href="introduction.html#r-syntax"><i class="fa fa-check"></i><b>1.2</b> R syntax</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="introduction.html"><a href="introduction.html#basic-operations"><i class="fa fa-check"></i><b>1.2.1</b> Basic operations</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="introduction.html"><a href="introduction.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="introduction.html"><a href="introduction.html#definition"><i class="fa fa-check"></i><b>1.3.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="introduction.html"><a href="introduction.html#data-types"><i class="fa fa-check"></i><b>1.4</b> Data types</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="introduction.html"><a href="introduction.html#base-types"><i class="fa fa-check"></i><b>1.4.1</b> Base types</a></li>
+<li class="chapter" data-level="1.4.2" data-path="introduction.html"><a href="introduction.html#vectors-and-matrices"><i class="fa fa-check"></i><b>1.4.2</b> Vectors and matrices</a></li>
+<li class="chapter" data-level="1.4.3" data-path="introduction.html"><a href="introduction.html#lists-and-dataframes"><i class="fa fa-check"></i><b>1.4.3</b> Lists and dataframes</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="introduction.html"><a href="introduction.html#data-manipulation"><i class="fa fa-check"></i><b>1.5</b> Data manipulation</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction.html"><a href="introduction.html#plotting"><i class="fa fa-check"></i><b>1.6</b> Plotting</a></li>
+<li class="chapter" data-level="1.7" data-path="introduction.html"><a href="introduction.html#examples-plot-and-data-manipulation"><i class="fa fa-check"></i><b>1.7</b> Examples: plot and data manipulation</a></li>
+<li class="chapter" data-level="1.8" data-path="introduction.html"><a href="introduction.html#probability"><i class="fa fa-check"></i><b>1.8</b> Probability</a></li>
+<li class="chapter" data-level="1.9" data-path="introduction.html"><a href="introduction.html#extras"><i class="fa fa-check"></i><b>1.9</b> Extras</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="introduction.html"><a href="introduction.html#file-system-and-helper"><i class="fa fa-check"></i><b>1.9.1</b> File system and helper</a></li>
+<li class="chapter" data-level="1.9.2" data-path="introduction.html"><a href="introduction.html#packages"><i class="fa fa-check"></i><b>1.9.2</b> Packages</a></li>
+<li class="chapter" data-level="1.9.3" data-path="introduction.html"><a href="introduction.html#arrow-sign"><i class="fa fa-check"></i><b>1.9.3</b> Arrow sign</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="introduction.html"><a href="introduction.html#exercises"><i class="fa fa-check"></i><b>1.10</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html"><i class="fa fa-check"></i><b>2</b> Some elementary statistics problems</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#hypothesis-testing"><i class="fa fa-check"></i><b>2.1</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example"><i class="fa fa-check"></i><b>2.1.1</b> Example</a></li>
+<li class="chapter" data-level="2.1.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#false-alarm"><i class="fa fa-check"></i><b>2.1.2</b> False alarm</a></li>
+<li class="chapter" data-level="2.1.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-binomial-approximation"><i class="fa fa-check"></i><b>2.1.3</b> The Binomial approximation</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#confidence-intervals"><i class="fa fa-check"></i><b>2.2</b> Confidence intervals</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-1"><i class="fa fa-check"></i><b>2.2.1</b> Example</a></li>
+<li class="chapter" data-level="2.2.2" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#the-four-cases"><i class="fa fa-check"></i><b>2.2.2</b> The four cases</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#p-value"><i class="fa fa-check"></i><b>2.3</b> P-value</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="some-elementary-statistics-problems.html"><a href="some-elementary-statistics-problems.html#example-2"><i class="fa fa-check"></i><b>2.3.1</b> Example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="normal-sampling.html"><a href="normal-sampling.html"><i class="fa fa-check"></i><b>3</b> Normal sampling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#random-and-non-random-normal-samples"><i class="fa fa-check"></i><b>3.1</b> Random and non-random normal samples</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="normal-sampling.html"><a href="normal-sampling.html#autocorrelated-sample"><i class="fa fa-check"></i><b>3.1.1</b> Autocorrelated sample</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#exchangeable-normal-random-variables"><i class="fa fa-check"></i><b>3.2</b> Exchangeable normal random variables</a></li>
+<li class="chapter" data-level="3.3" data-path="normal-sampling.html"><a href="normal-sampling.html#multivariate-normal-random-samples"><i class="fa fa-check"></i><b>3.3</b> Multivariate Normal random samples</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="normal-sampling.html"><a href="normal-sampling.html#exercises-1"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="normal-sampling.html"><a href="normal-sampling.html#solutions"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
+<li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#plot"><i class="fa fa-check"></i><b>4.4.1</b> Plot</a></li>
+<li class="chapter" data-level="4.4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#summary"><i class="fa fa-check"></i><b>4.4.2</b> Summary</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html"><i class="fa fa-check"></i><b>5</b> Tools for linear regression analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#plot-1"><i class="fa fa-check"></i><b>5.1</b> Plot</a></li>
+<li class="chapter" data-level="5.2" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#multiple-predictors"><i class="fa fa-check"></i><b>5.2</b> Multiple predictors</a></li>
+<li class="chapter" data-level="5.3" data-path="tools-for-linear-regression-analysis.html"><a href="tools-for-linear-regression-analysis.html#confidence-regions"><i class="fa fa-check"></i><b>5.3</b> Confidence regions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html"><i class="fa fa-check"></i><b>6</b> Interactions and qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#transformations"><i class="fa fa-check"></i><b>6.1</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#a-simple-example"><i class="fa fa-check"></i><b>6.1.1</b> A simple example</a></li>
+<li class="chapter" data-level="6.1.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#on-advertising"><i class="fa fa-check"></i><b>6.1.2</b> On <em>advertising</em></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-selection"><i class="fa fa-check"></i><b>6.2</b> Model selection</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
+<li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#students-dataset"><i class="fa fa-check"></i><b>7.1</b> Students dataset</a></li>
+<li class="chapter" data-level="7.2" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#eda"><i class="fa fa-check"></i><b>7.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#plots"><i class="fa fa-check"></i><b>7.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#test"><i class="fa fa-check"></i><b>7.3</b> Test</a></li>
+<li class="chapter" data-level="7.4" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#generalized-linear-model"><i class="fa fa-check"></i><b>7.4</b> Generalized Linear Model</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#predictions"><i class="fa fa-check"></i><b>7.4.1</b> Predictions</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#graphic-interpretation"><i class="fa fa-check"></i><b>7.5</b> Graphic interpretation</a></li>
+<li class="chapter" data-level="7.6" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html#other-tests"><i class="fa fa-check"></i><b>7.6</b> Other tests</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html"><i class="fa fa-check"></i><b>8</b> Generalized Linear Models (Poisson)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#warpbreaks-dataset"><i class="fa fa-check"></i><b>8.1</b> Warpbreaks dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#eda-1"><i class="fa fa-check"></i><b>8.2</b> EDA</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#plots-1"><i class="fa fa-check"></i><b>8.2.1</b> Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#poisson-family-glm"><i class="fa fa-check"></i><b>8.3</b> Poisson Family GLM</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#response"><i class="fa fa-check"></i><b>8.3.1</b> Response</a></li>
+<li class="chapter" data-level="8.3.2" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#contrasts"><i class="fa fa-check"></i><b>8.3.2</b> Contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#tests"><i class="fa fa-check"></i><b>8.4</b> Tests</a></li>
+<li class="chapter" data-level="8.5" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#influence-measures"><i class="fa fa-check"></i><b>8.5</b> Influence measures</a></li>
+<li class="chapter" data-level="8.6" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#interaction"><i class="fa fa-check"></i><b>8.6</b> Interaction</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="generalized-linear-models-poisson.html"><a href="generalized-linear-models-poisson.html#testing-interaction"><i class="fa fa-check"></i><b>8.6.1</b> Testing interaction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html"><i class="fa fa-check"></i><b>9</b> Negative Binomial and Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#dataset"><i class="fa fa-check"></i><b>9.1</b> Dataset</a></li>
+<li class="chapter" data-level="9.2" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#eda-2"><i class="fa fa-check"></i><b>9.2</b> EDA</a></li>
+<li class="chapter" data-level="9.3" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#negative-binomial-regression"><i class="fa fa-check"></i><b>9.3</b> Negative binomial regression</a></li>
+<li class="chapter" data-level="9.4" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#zero-inflation"><i class="fa fa-check"></i><b>9.4</b> Zero-Inflation</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="negative-binomial-and-zero-inflation.html"><a href="negative-binomial-and-zero-inflation.html#hurdle-v.-zi"><i class="fa fa-check"></i><b>9.4.1</b> Hurdle v. ZI</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="three-jags-examples.html"><a href="three-jags-examples.html"><i class="fa fa-check"></i><b>10</b> Three JAGS examples</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="three-jags-examples.html"><a href="three-jags-examples.html#rats---simple-linear-regression"><i class="fa fa-check"></i><b>10.1</b> Rats - Simple linear regression</a></li>
+<li class="chapter" data-level="10.2" data-path="three-jags-examples.html"><a href="three-jags-examples.html#zip-model"><i class="fa fa-check"></i><b>10.2</b> ZIP model</a></li>
+<li class="chapter" data-level="10.3" data-path="three-jags-examples.html"><a href="three-jags-examples.html#gaussian-mixture-model-gmm"><i class="fa fa-check"></i><b>10.3</b> Gaussian Mixture Model (GMM)</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="lab-1.html"><a href="lab-1.html"><i class="fa fa-check"></i><b>11</b> Lab 1</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lab-1.html"><a href="lab-1.html#iris-dataset"><i class="fa fa-check"></i><b>11.1</b> Iris Dataset</a></li>
+<li class="chapter" data-level="11.2" data-path="lab-1.html"><a href="lab-1.html#import-data"><i class="fa fa-check"></i><b>11.2</b> Import data</a></li>
+<li class="chapter" data-level="11.3" data-path="lab-1.html"><a href="lab-1.html#exploratory-data-analysis-eda"><i class="fa fa-check"></i><b>11.3</b> Exploratory Data Analysis (EDA)</a></li>
+<li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
+<li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.5" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#plotting-intervals"><i class="fa fa-check"></i><b>12.5</b> Plotting intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="jags-lab---gaussian-mixture-model.html"><a href="jags-lab---gaussian-mixture-model.html"><i class="fa fa-check"></i><b>13</b> JAGS lab - Gaussian Mixture Model</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="jags-lab---gaussian-mixture-model" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">Chapter 13</span> JAGS lab - Gaussian Mixture Model<a href="jags-lab---gaussian-mixture-model.html#jags-lab---gaussian-mixture-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>A 5-stars hotel stocks up a whole bunch of bread loafs from a
+local bakery on a daily bases. Every stock of loafs counts
+50 pieces, each of which varies slightly, but not trascurably,
+in size (volume in cm<sup>3</sup>) and weight (grams).
+This happens because the bakery
+doesn’t have a precise recipe and therefore every baker
+produces different kinds of bread.</p>
+<p>You get the chance of measuring weight and size of each
+loaf the hotel buys for an entire month and from those data
+you want to estimate the number of bakers that worked at the
+bakery in that month.</p>
+<p>Read the data provided in the <code>bread.csv</code> file, get some insights
+on the nature of the data (summaries, plots, etc.) and write
+down a JAGS model which captures it. You should define a
+Gaussian Mixture Model, just like the one from previous lecture,
+but with the number of components <span class="math inline">\(K\)</span> (number of bakers) as parameter.</p>
+<blockquote>
+<p>Hint: Maybe plot the data and get a feeling of a range of components
+you would like to try out. You can compare them in several ways, for
+instance preferring the one that gives the largest log-likelihood,
+printing the <a href="https://en.wikipedia.org/wiki/Deviance_information_criterion">DIC</a>
+(similar to AIC, add the flag <code>DIC = TRUE</code> in the <code>jags()</code> function call)
+or just by checking how many clusters give accurate estimates.</p>
+</blockquote>
+<p>Some notes that may be useful for writing the model:</p>
+<ul>
+<li><p>note that <code>ddirich(alpha)</code> is the JAGS call for a Dirichlet distribution
+with concentration <code>alpha</code>.</p></li>
+<li><p>avoid the <em>label switching</em> problem by sorting the current clusters probabilities
+properly. The call <code>order(v)</code> is an alternative to <code>sort(v)</code>, such that
+<code>v[order(v)] == sort(v)</code> (gives a permutation of the indices that orders
+the elements of a vector in ascending order).</p></li>
+<li><p>to inspect the likelihood, you can define a new model node
+e.g. <code>complete_loglik</code> as such:</p>
+<pre><code>model {
+
+  #
+  # ... here&#39;s the main model
+  #
+
+  # likelihood
+  for (i in 1:N) {
+    loglikx[i] &lt;- logdensity.norm(x[i], mux_clust[clust[i]], taux)
+    logliky[i] &lt;- logdensity.norm(y[i], muy_clust[clust[i]], tauy)
+  }
+  complete_loglik &lt;- sum(loglikx) + sum(logliky)
+}</code></pre></li>
+</ul>
+<p>The simulation shouldn’t take more than one/two minute. If it runs for too long it’s
+either unnecessary or wrong. Decrease the number of iterations/chains.</p>
+<p>Good luck!</p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="jags-lab---gaussian-mixture-model.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb626-2"><a href="jags-lab---gaussian-mixture-model.html#cb626-2" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb626-3"><a href="jags-lab---gaussian-mixture-model.html#cb626-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb626-4"><a href="jags-lab---gaussian-mixture-model.html#cb626-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb626-5"><a href="jags-lab---gaussian-mixture-model.html#cb626-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb626-6"><a href="jags-lab---gaussian-mixture-model.html#cb626-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb626-7"><a href="jags-lab---gaussian-mixture-model.html#cb626-7" aria-hidden="true" tabindex="-1"></a>bread <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/bread.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 600 Columns: 2
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (2): weight, size
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="jags-lab---gaussian-mixture-model.html#cb628-1" aria-hidden="true" tabindex="-1"></a>bread <span class="sc">%&gt;%</span></span>
+<span id="cb628-2"><a href="jags-lab---gaussian-mixture-model.html#cb628-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(weight, size)) <span class="sc">+</span></span>
+<span id="cb628-3"><a href="jags-lab---gaussian-mixture-model.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="jags-lab---gaussian-mixture-model.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb629-2"><a href="jags-lab---gaussian-mixture-model.html#cb629-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-3"><a href="jags-lab---gaussian-mixture-model.html#cb629-3" aria-hidden="true" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb629-4"><a href="jags-lab---gaussian-mixture-model.html#cb629-4" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb629-5"><a href="jags-lab---gaussian-mixture-model.html#cb629-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Likelihood:</span></span>
+<span id="cb629-6"><a href="jags-lab---gaussian-mixture-model.html#cb629-6" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
+<span id="cb629-7"><a href="jags-lab---gaussian-mixture-model.html#cb629-7" aria-hidden="true" tabindex="-1"></a><span class="st">    x[i] ~ dnorm(mux[i], taux)</span></span>
+<span id="cb629-8"><a href="jags-lab---gaussian-mixture-model.html#cb629-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(muy[i], tauy)</span></span>
+<span id="cb629-9"><a href="jags-lab---gaussian-mixture-model.html#cb629-9" aria-hidden="true" tabindex="-1"></a><span class="st">    mux[i] &lt;- mux_clust[clust[i]]</span></span>
+<span id="cb629-10"><a href="jags-lab---gaussian-mixture-model.html#cb629-10" aria-hidden="true" tabindex="-1"></a><span class="st">    muy[i] &lt;- muy_clust[clust[i]]</span></span>
+<span id="cb629-11"><a href="jags-lab---gaussian-mixture-model.html#cb629-11" aria-hidden="true" tabindex="-1"></a><span class="st">    clust[i] ~ dcat(lambda[1:K]) # categorical</span></span>
+<span id="cb629-12"><a href="jags-lab---gaussian-mixture-model.html#cb629-12" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb629-13"><a href="jags-lab---gaussian-mixture-model.html#cb629-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-14"><a href="jags-lab---gaussian-mixture-model.html#cb629-14" aria-hidden="true" tabindex="-1"></a><span class="st">  # priors</span></span>
+<span id="cb629-15"><a href="jags-lab---gaussian-mixture-model.html#cb629-15" aria-hidden="true" tabindex="-1"></a><span class="st">  taux ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb629-16"><a href="jags-lab---gaussian-mixture-model.html#cb629-16" aria-hidden="true" tabindex="-1"></a><span class="st">  tauy ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb629-17"><a href="jags-lab---gaussian-mixture-model.html#cb629-17" aria-hidden="true" tabindex="-1"></a><span class="st">  sigmax &lt;- 1 / sqrt(taux)</span></span>
+<span id="cb629-18"><a href="jags-lab---gaussian-mixture-model.html#cb629-18" aria-hidden="true" tabindex="-1"></a><span class="st">  sigmay &lt;- 1 / sqrt(tauy)</span></span>
+<span id="cb629-19"><a href="jags-lab---gaussian-mixture-model.html#cb629-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-20"><a href="jags-lab---gaussian-mixture-model.html#cb629-20" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
+<span id="cb629-21"><a href="jags-lab---gaussian-mixture-model.html#cb629-21" aria-hidden="true" tabindex="-1"></a><span class="st">    mux_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
+<span id="cb629-22"><a href="jags-lab---gaussian-mixture-model.html#cb629-22" aria-hidden="true" tabindex="-1"></a><span class="st">    muy_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
+<span id="cb629-23"><a href="jags-lab---gaussian-mixture-model.html#cb629-23" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb629-24"><a href="jags-lab---gaussian-mixture-model.html#cb629-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-25"><a href="jags-lab---gaussian-mixture-model.html#cb629-25" aria-hidden="true" tabindex="-1"></a><span class="st">  perm &lt;- order(mux_clust_raw) # same ordering for both!</span></span>
+<span id="cb629-26"><a href="jags-lab---gaussian-mixture-model.html#cb629-26" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
+<span id="cb629-27"><a href="jags-lab---gaussian-mixture-model.html#cb629-27" aria-hidden="true" tabindex="-1"></a><span class="st">    mux_clust[k] &lt;- mux_clust_raw[perm[k]]</span></span>
+<span id="cb629-28"><a href="jags-lab---gaussian-mixture-model.html#cb629-28" aria-hidden="true" tabindex="-1"></a><span class="st">    muy_clust[k] &lt;- muy_clust_raw[perm[k]]</span></span>
+<span id="cb629-29"><a href="jags-lab---gaussian-mixture-model.html#cb629-29" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb629-30"><a href="jags-lab---gaussian-mixture-model.html#cb629-30" aria-hidden="true" tabindex="-1"></a><span class="st">  lambda[1:K] ~ ddirch(ones)</span></span>
+<span id="cb629-31"><a href="jags-lab---gaussian-mixture-model.html#cb629-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-32"><a href="jags-lab---gaussian-mixture-model.html#cb629-32" aria-hidden="true" tabindex="-1"></a><span class="st">  # likelihood</span></span>
+<span id="cb629-33"><a href="jags-lab---gaussian-mixture-model.html#cb629-33" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
+<span id="cb629-34"><a href="jags-lab---gaussian-mixture-model.html#cb629-34" aria-hidden="true" tabindex="-1"></a><span class="st">    loglikx[i] &lt;- logdensity.norm(x[i], mux_clust[clust[i]], taux)</span></span>
+<span id="cb629-35"><a href="jags-lab---gaussian-mixture-model.html#cb629-35" aria-hidden="true" tabindex="-1"></a><span class="st">    logliky[i] &lt;- logdensity.norm(y[i], muy_clust[clust[i]], tauy)</span></span>
+<span id="cb629-36"><a href="jags-lab---gaussian-mixture-model.html#cb629-36" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb629-37"><a href="jags-lab---gaussian-mixture-model.html#cb629-37" aria-hidden="true" tabindex="-1"></a><span class="st">  complete_loglik &lt;- sum(loglikx) + sum(logliky)</span></span>
+<span id="cb629-38"><a href="jags-lab---gaussian-mixture-model.html#cb629-38" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb629-39"><a href="jags-lab---gaussian-mixture-model.html#cb629-39" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb629-40"><a href="jags-lab---gaussian-mixture-model.html#cb629-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-41"><a href="jags-lab---gaussian-mixture-model.html#cb629-41" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># change this and see what&#39;s best</span></span>
+<span id="cb629-42"><a href="jags-lab---gaussian-mixture-model.html#cb629-42" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb629-43"><a href="jags-lab---gaussian-mixture-model.html#cb629-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> bread<span class="sc">$</span>weight, <span class="at">y =</span> bread<span class="sc">$</span>size, <span class="at">ones =</span> <span class="fu">rep</span>(<span class="dv">1</span>, K),</span>
+<span id="cb629-44"><a href="jags-lab---gaussian-mixture-model.html#cb629-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K, <span class="at">N =</span> <span class="fu">nrow</span>(bread)</span>
+<span id="cb629-45"><a href="jags-lab---gaussian-mixture-model.html#cb629-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb629-46"><a href="jags-lab---gaussian-mixture-model.html#cb629-46" aria-hidden="true" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb629-47"><a href="jags-lab---gaussian-mixture-model.html#cb629-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mux_clust&quot;</span>, <span class="st">&quot;muy_clust&quot;</span>, <span class="st">&quot;sigmax&quot;</span>, <span class="st">&quot;sigmay&quot;</span></span>
+<span id="cb629-48"><a href="jags-lab---gaussian-mixture-model.html#cb629-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ,&quot;clust&quot;</span></span>
+<span id="cb629-49"><a href="jags-lab---gaussian-mixture-model.html#cb629-49" aria-hidden="true" tabindex="-1"></a>  , <span class="st">&quot;lambda&quot;</span>, <span class="st">&quot;complete_loglik&quot;</span></span>
+<span id="cb629-50"><a href="jags-lab---gaussian-mixture-model.html#cb629-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb629-51"><a href="jags-lab---gaussian-mixture-model.html#cb629-51" aria-hidden="true" tabindex="-1"></a>model_inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb629-52"><a href="jags-lab---gaussian-mixture-model.html#cb629-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb629-53"><a href="jags-lab---gaussian-mixture-model.html#cb629-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">mux_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>), <span class="at">muy_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>),</span>
+<span id="cb629-54"><a href="jags-lab---gaussian-mixture-model.html#cb629-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">tauy =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>),</span>
+<span id="cb629-55"><a href="jags-lab---gaussian-mixture-model.html#cb629-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">clust =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">size =</span> <span class="fu">nrow</span>(bread), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> K, K))</span>
+<span id="cb629-56"><a href="jags-lab---gaussian-mixture-model.html#cb629-56" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb629-57"><a href="jags-lab---gaussian-mixture-model.html#cb629-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb629-58"><a href="jags-lab---gaussian-mixture-model.html#cb629-58" aria-hidden="true" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
+<span id="cb629-59"><a href="jags-lab---gaussian-mixture-model.html#cb629-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb629-60"><a href="jags-lab---gaussian-mixture-model.html#cb629-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
+<span id="cb629-61"><a href="jags-lab---gaussian-mixture-model.html#cb629-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">inits =</span> model_inits,</span>
+<span id="cb629-62"><a href="jags-lab---gaussian-mixture-model.html#cb629-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb629-63"><a href="jags-lab---gaussian-mixture-model.html#cb629-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
+<span id="cb629-64"><a href="jags-lab---gaussian-mixture-model.html#cb629-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb629-65"><a href="jags-lab---gaussian-mixture-model.html#cb629-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb629-66"><a href="jags-lab---gaussian-mixture-model.html#cb629-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.thin =</span> <span class="dv">5</span>,</span>
+<span id="cb629-67"><a href="jags-lab---gaussian-mixture-model.html#cb629-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">DIC =</span> <span class="cn">TRUE</span></span>
+<span id="cb629-68"><a href="jags-lab---gaussian-mixture-model.html#cb629-68" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Compiling model graph
+##    Resolving undeclared variables
+##    Allocating nodes
+## Graph information:
+##    Observed stochastic nodes: 1200
+##    Unobserved stochastic nodes: 611
+##    Total graph size: 4248
+## 
+## Initializing model</code></pre>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="jags-lab---gaussian-mixture-model.html#cb631-1" aria-hidden="true" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
+<pre><code>## Inference for Bugs model at &quot;4&quot;, fit using jags,
+##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 5
+##  n.sims = 1600 iterations saved
+##                    mean    sd    2.5%     25%     50%     75%   97.5% Rhat
+## complete_loglik -6940.6  49.1 -7013.7 -6987.2 -6941.2 -6892.4 -6877.1  9.1
+## deviance        13881.1  98.2 13754.3 13784.8 13882.4 13974.5 14027.3  9.1
+## lambda[1]           0.1   0.0     0.1     0.1     0.1     0.2     0.2  3.8
+## lambda[2]           0.3   0.1     0.2     0.2     0.3     0.3     0.4  5.4
+## lambda[3]           0.3   0.1     0.2     0.2     0.3     0.3     0.4  6.5
+## lambda[4]           0.3   0.0     0.2     0.3     0.3     0.3     0.4  4.4
+## mux_clust[1]      702.5  19.8   656.9   691.5   705.4   716.1   734.4  1.8
+## mux_clust[2]      823.1  25.6   787.4   798.1   824.7   847.5   859.2  9.1
+## mux_clust[3]      891.0  42.2   839.2   848.8   893.5   932.8   940.7 17.8
+## mux_clust[4]      941.6   9.1   926.6   934.3   940.4   948.3   960.0  3.1
+## muy_clust[1]      400.1  14.2   370.3   390.1   401.3   410.4   424.3  2.1
+## muy_clust[2]      638.8 151.5   475.4   487.5   628.9   789.9   801.0 48.6
+## muy_clust[3]      946.8 153.7   780.9   793.5   942.1  1100.3  1109.0 53.7
+## muy_clust[4]      800.1 301.9   487.5   498.3   752.2  1101.7  1110.7 97.7
+## sigmax             85.8   7.1    75.2    79.1    85.6    92.2    97.4  5.7
+## sigmay             72.5   2.5    67.9    70.8    72.4    74.1    77.7  1.0
+##                 n.eff
+## complete_loglik     2
+## deviance            2
+## lambda[1]           2
+## lambda[2]           2
+## lambda[3]           2
+## lambda[4]           2
+## mux_clust[1]        4
+## mux_clust[2]        2
+## mux_clust[3]        2
+## mux_clust[4]        3
+## muy_clust[1]        4
+## muy_clust[2]        2
+## muy_clust[3]        2
+## muy_clust[4]        2
+## sigmax              2
+## sigmay            120
+## 
+## For each parameter, n.eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor (at convergence, Rhat=1).
+## 
+## DIC info (using the rule, pD = var(deviance)/2)
+## pD = 330.3 and DIC = 14211.4
+## DIC is an estimate of expected predictive error (lower deviance is better).</code></pre>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="jags-lab---gaussian-mixture-model.html#cb633-1" aria-hidden="true" tabindex="-1"></a>gmm_mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(model_run)</span>
+<span id="cb633-2"><a href="jags-lab---gaussian-mixture-model.html#cb633-2" aria-hidden="true" tabindex="-1"></a><span class="co"># save to pdf</span></span>
+<span id="cb633-3"><a href="jags-lab---gaussian-mixture-model.html#cb633-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pdf(file = &quot;./lab3/mcmc_out.pdf&quot;)</span></span>
+<span id="cb633-4"><a href="jags-lab---gaussian-mixture-model.html#cb633-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(gmm_mcmc)</span></span>
+<span id="cb633-5"><a href="jags-lab---gaussian-mixture-model.html#cb633-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="jags-lab---gaussian-mixture-model.html#cb634-1" aria-hidden="true" tabindex="-1"></a>mux <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>mux_clust</span>
+<span id="cb634-2"><a href="jags-lab---gaussian-mixture-model.html#cb634-2" aria-hidden="true" tabindex="-1"></a>muy <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>muy_clust</span>
+<span id="cb634-3"><a href="jags-lab---gaussian-mixture-model.html#cb634-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb634-4"><a href="jags-lab---gaussian-mixture-model.html#cb634-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb634-5"><a href="jags-lab---gaussian-mixture-model.html#cb634-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bread<span class="sc">$</span>weight, bread<span class="sc">$</span>size)) <span class="sc">+</span></span>
+<span id="cb634-6"><a href="jags-lab---gaussian-mixture-model.html#cb634-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(mux, muy), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-281-1.png" width="672" /></p>
+
+<pre><code>## tweaking contrast</code></pre>
+<pre><code>## tweaking pscl</code></pre>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-regression-lab.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/labs/L03_bread.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
