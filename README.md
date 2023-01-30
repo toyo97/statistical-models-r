@@ -6,4 +6,4 @@
 Simple! Just look over the right panel of this GitHub page
 and look for the link below the *About* paragraph.
 
-Even simpler: click [here](toyo97.github.io/statistical-models-r).
+Even simpler: click [here](https://toyo97.github.io/statistical-models-r).

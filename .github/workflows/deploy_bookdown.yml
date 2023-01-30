@@ -13,10 +13,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Install rg
+      - name: Install rg and jags
         run: |
           brew update 
           brew install ripgrep
+          brew install jags
       - name: Install port
         run: |
           wget https://github.com/macports/macports-base/releases/download/v2.7.1/MacPorts-2.7.1-11-BigSur.pkg
