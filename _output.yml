@@ -1,17 +1,28 @@
 bookdown::gitbook:
-  css: style.css
+  includes:
+    in_header: css/header.html
+  css: css/style.css
   config:
     toc:
       before: |
         <li><a href="./">Statistical Models in R</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/toyo97/statistical-models-r-dup/edit/master/%s
-    download: ["pdf", "epub"]
+    edit: https://github.com/toyo97/statistical-models-r/edit/master/%s
+    sharing:
+      twitter: yes
+      github: yes
+      google: no
+      weibo: no
+      instapaper: no
+      vk: no
+    download: [["smr_book.pdf", "pdf"], ["smr_book.epub", "epub"]]
 bookdown::pdf_book:
   includes:
-    in_header: preamble.tex
+    in_header: latex/preamble.tex
   latex_engine: lualatex
   citation_package: natbib
   keep_tex: yes
+  toc_depth: 3
+  toch_unnumbered: no
 bookdown::epub_book: default

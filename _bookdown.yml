@@ -1,5 +1,5 @@
 delete_merged_file: true
-before_chapter_script: "./cleanup.r"
+before_chapter_script: "./scripts/cleanup.r"
 language:
   ui:
     chapter_name: "Chapter "
