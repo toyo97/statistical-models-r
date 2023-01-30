@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-27" />
+<meta name="date" content="2023-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -328,8 +328,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tools-for-linear-regression-analysis" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Tools for linear regression analysis<a href="tools-for-linear-regression-analysis.html#tools-for-linear-regression-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We will still use the advertising dataset. Let’s load it.</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="tools-for-linear-regression-analysis.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb283-2"><a href="tools-for-linear-regression-analysis.html#cb283-2" aria-hidden="true" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="tools-for-linear-regression-analysis.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb286-2"><a href="tools-for-linear-regression-analysis.html#cb286-2" aria-hidden="true" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 200 Columns: 4
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -341,17 +341,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.1</span> Plot<a href="tools-for-linear-regression-analysis.html#plot-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The plot function <code>plot()</code> provides special plots for a linear
 model object. See details <code>?plot.lm</code>.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="tools-for-linear-regression-analysis.html#cb285-1" aria-hidden="true" tabindex="-1"></a>radio_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> Radio, <span class="at">data =</span> advertising)</span>
-<span id="cb285-2"><a href="tools-for-linear-regression-analysis.html#cb285-2" aria-hidden="true" tabindex="-1"></a><span class="co"># residuals vs fitted</span></span>
-<span id="cb285-3"><a href="tools-for-linear-regression-analysis.html#cb285-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="tools-for-linear-regression-analysis.html#cb288-1" aria-hidden="true" tabindex="-1"></a>radio_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> Radio, <span class="at">data =</span> advertising)</span>
+<span id="cb288-2"><a href="tools-for-linear-regression-analysis.html#cb288-2" aria-hidden="true" tabindex="-1"></a><span class="co"># residuals vs fitted</span></span>
+<span id="cb288-3"><a href="tools-for-linear-regression-analysis.html#cb288-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
 <p>This shows how the residuals <span class="math inline">\(e\)</span> are distributed against the
 fitted values (or predictions) <span class="math inline">\(\hat{y}\)</span>. Ideally, there should
 be no correlation, i.e. randomly spread around 0. If that is not
 the case and the plot shows a trend, the assumption of a linear
 regression model might not be appropriate.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="tools-for-linear-regression-analysis.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normal q-q plot</span></span>
-<span id="cb286-2"><a href="tools-for-linear-regression-analysis.html#cb286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="tools-for-linear-regression-analysis.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="co"># normal q-q plot</span></span>
+<span id="cb289-2"><a href="tools-for-linear-regression-analysis.html#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
 <p>The Q-Q plot compares two distributions (or one theoretical distribution
 with an empirical one). Given some data, the question it helps
@@ -365,22 +365,22 @@ plotted against the theoretical quantiles of the standard Normal distributions.
 Example: the theoretical quantile of the <span class="math inline">\(k^{\text{th}}\)</span> residual (in ascending
 order) is <span class="math inline">\(q_{\alpha}\)</span> where <span class="math inline">\(\alpha = P(Z &lt;= q_{\alpha}) = k / n\)</span></p>
 <p>Exercise: draw a Q-Q plot “by hand”:</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="tools-for-linear-regression-analysis.html#cb287-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(advertising)</span>
-<span id="cb287-2"><a href="tools-for-linear-regression-analysis.html#cb287-2" aria-hidden="true" tabindex="-1"></a>std_res <span class="ot">&lt;-</span> <span class="fu">with</span>(radio_lm, {</span>
-<span id="cb287-3"><a href="tools-for-linear-regression-analysis.html#cb287-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>((residuals <span class="sc">-</span> <span class="fu">mean</span>(residuals)) <span class="sc">/</span> <span class="fu">sd</span>(residuals),</span>
-<span id="cb287-4"><a href="tools-for-linear-regression-analysis.html#cb287-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">decreasing =</span> <span class="cn">FALSE</span></span>
-<span id="cb287-5"><a href="tools-for-linear-regression-analysis.html#cb287-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb287-6"><a href="tools-for-linear-regression-analysis.html#cb287-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb287-7"><a href="tools-for-linear-regression-analysis.html#cb287-7" aria-hidden="true" tabindex="-1"></a>th_q <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">/</span> n)</span>
-<span id="cb287-8"><a href="tools-for-linear-regression-analysis.html#cb287-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(th_q, std_res)</span></code></pre></div>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="tools-for-linear-regression-analysis.html#cb290-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(advertising)</span>
+<span id="cb290-2"><a href="tools-for-linear-regression-analysis.html#cb290-2" aria-hidden="true" tabindex="-1"></a>std_res <span class="ot">&lt;-</span> <span class="fu">with</span>(radio_lm, {</span>
+<span id="cb290-3"><a href="tools-for-linear-regression-analysis.html#cb290-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>((residuals <span class="sc">-</span> <span class="fu">mean</span>(residuals)) <span class="sc">/</span> <span class="fu">sd</span>(residuals),</span>
+<span id="cb290-4"><a href="tools-for-linear-regression-analysis.html#cb290-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">decreasing =</span> <span class="cn">FALSE</span></span>
+<span id="cb290-5"><a href="tools-for-linear-regression-analysis.html#cb290-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb290-6"><a href="tools-for-linear-regression-analysis.html#cb290-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb290-7"><a href="tools-for-linear-regression-analysis.html#cb290-7" aria-hidden="true" tabindex="-1"></a>th_q <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">/</span> n)</span>
+<span id="cb290-8"><a href="tools-for-linear-regression-analysis.html#cb290-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(th_q, std_res)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="tools-for-linear-regression-analysis.html#cb288-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scale-location</span></span>
-<span id="cb288-2"><a href="tools-for-linear-regression-analysis.html#cb288-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="tools-for-linear-regression-analysis.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scale-location</span></span>
+<span id="cb291-2"><a href="tools-for-linear-regression-analysis.html#cb291-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
 <p>This plot only reduces the skewness of the standardized
 residuals by taking its square root.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="tools-for-linear-regression-analysis.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="co"># residuals vs leverage</span></span>
-<span id="cb289-2"><a href="tools-for-linear-regression-analysis.html#cb289-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="tools-for-linear-regression-analysis.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="co"># residuals vs leverage</span></span>
+<span id="cb292-2"><a href="tools-for-linear-regression-analysis.html#cb292-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(radio_lm, <span class="at">which =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-129-1.png" width="672" />
 In order to understand this plot we have to introduced the
 so-called <em>hat matrix</em></p>
@@ -411,22 +411,22 @@ is implicitly added by <code>lm</code>)</li>
 </ul>
 <p>More on formulae later (see Interactions in the next lesson).</p>
 <p><em>Examples</em>:</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="tools-for-linear-regression-analysis.html#cb290-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> y <span class="sc">~</span> x <span class="sc">+</span> b</span>
-<span id="cb290-2"><a href="tools-for-linear-regression-analysis.html#cb290-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(f)</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="tools-for-linear-regression-analysis.html#cb293-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> y <span class="sc">~</span> x <span class="sc">+</span> b</span>
+<span id="cb293-2"><a href="tools-for-linear-regression-analysis.html#cb293-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(f)</span></code></pre></div>
 <pre><code>## [1] &quot;formula&quot;</code></pre>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="tools-for-linear-regression-analysis.html#cb292-1" aria-hidden="true" tabindex="-1"></a>f[[<span class="dv">1</span>]] <span class="co"># formula symbol</span></span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="tools-for-linear-regression-analysis.html#cb295-1" aria-hidden="true" tabindex="-1"></a>f[[<span class="dv">1</span>]] <span class="co"># formula symbol</span></span></code></pre></div>
 <pre><code>## `~`</code></pre>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="tools-for-linear-regression-analysis.html#cb294-1" aria-hidden="true" tabindex="-1"></a>f[[<span class="dv">2</span>]] <span class="co"># dep vars</span></span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="tools-for-linear-regression-analysis.html#cb297-1" aria-hidden="true" tabindex="-1"></a>f[[<span class="dv">2</span>]] <span class="co"># dep vars</span></span></code></pre></div>
 <pre><code>## y</code></pre>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="tools-for-linear-regression-analysis.html#cb296-1" aria-hidden="true" tabindex="-1"></a>f[[<span class="dv">3</span>]] <span class="co"># indep vars</span></span></code></pre></div>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="tools-for-linear-regression-analysis.html#cb299-1" aria-hidden="true" tabindex="-1"></a>f[[<span class="dv">3</span>]] <span class="co"># indep vars</span></span></code></pre></div>
 <pre><code>## x + b</code></pre>
 <p>Generally, a linear model formula is composed by multiple
 predictors.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="tools-for-linear-regression-analysis.html#cb298-1" aria-hidden="true" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV <span class="sc">+</span> Radio <span class="sc">+</span> Newspaper, <span class="at">data =</span> advertising)</span>
-<span id="cb298-2"><a href="tools-for-linear-regression-analysis.html#cb298-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb298-3"><a href="tools-for-linear-regression-analysis.html#cb298-3" aria-hidden="true" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> ., <span class="at">data =</span> advertising)</span></code></pre></div>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="tools-for-linear-regression-analysis.html#cb301-1" aria-hidden="true" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV <span class="sc">+</span> Radio <span class="sc">+</span> Newspaper, <span class="at">data =</span> advertising)</span>
+<span id="cb301-2"><a href="tools-for-linear-regression-analysis.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb301-3"><a href="tools-for-linear-regression-analysis.html#cb301-3" aria-hidden="true" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> ., <span class="at">data =</span> advertising)</span></code></pre></div>
 <p>The dot stands for all the possible predictors in the dataset.</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="tools-for-linear-regression-analysis.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(complete_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="tools-for-linear-regression-analysis.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(complete_lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Sales ~ ., data = advertising)
@@ -471,30 +471,30 @@ F_{\alpha}(p, n-p) p \text{MSR}
 \]</span></p>
 <p>As already seen before, some plotting functions also draw a confidence region
 for the regression line.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="tools-for-linear-regression-analysis.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb301-2"><a href="tools-for-linear-regression-analysis.html#cb301-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(radio_lm, <span class="at">mapping =</span> <span class="fu">aes</span>(Radio, Sales)) <span class="sc">+</span></span>
-<span id="cb301-3"><a href="tools-for-linear-regression-analysis.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb301-4"><a href="tools-for-linear-regression-analysis.html#cb301-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="tools-for-linear-regression-analysis.html#cb304-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb304-2"><a href="tools-for-linear-regression-analysis.html#cb304-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(radio_lm, <span class="at">mapping =</span> <span class="fu">aes</span>(Radio, Sales)) <span class="sc">+</span></span>
+<span id="cb304-3"><a href="tools-for-linear-regression-analysis.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb304-4"><a href="tools-for-linear-regression-analysis.html#cb304-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-133-1.png" width="672" /></p>
 <p>This confidence region is drawn according to that formula.</p>
 <p>To get the confidence intervals values, just use <code>confint()</code></p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="tools-for-linear-regression-analysis.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(radio_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="tools-for-linear-regression-analysis.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(radio_lm)</span></code></pre></div>
 <pre><code>##                   2.5 %     97.5 %
 ## (Intercept) 10.94703557 13.5244084
 ## Radio        0.07770266  0.1711606</code></pre>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="tools-for-linear-regression-analysis.html#cb305-1" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> <span class="fu">confint</span>(radio_lm)[, <span class="dv">1</span>]</span>
-<span id="cb305-2"><a href="tools-for-linear-regression-analysis.html#cb305-2" aria-hidden="true" tabindex="-1"></a>ub <span class="ot">&lt;-</span> <span class="fu">confint</span>(radio_lm)[, <span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="tools-for-linear-regression-analysis.html#cb308-1" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">&lt;-</span> <span class="fu">confint</span>(radio_lm)[, <span class="dv">1</span>]</span>
+<span id="cb308-2"><a href="tools-for-linear-regression-analysis.html#cb308-2" aria-hidden="true" tabindex="-1"></a>ub <span class="ot">&lt;-</span> <span class="fu">confint</span>(radio_lm)[, <span class="dv">2</span>]</span></code></pre></div>
 <p>To plot it, e.g. using <code>ggplot</code>:</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="tools-for-linear-regression-analysis.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prevision region</span></span>
-<span id="cb306-2"><a href="tools-for-linear-regression-analysis.html#cb306-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(radio_lm) <span class="sc">+</span></span>
-<span id="cb306-3"><a href="tools-for-linear-regression-analysis.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(Radio, Sales)) <span class="sc">+</span></span>
-<span id="cb306-4"><a href="tools-for-linear-regression-analysis.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
-<span id="cb306-5"><a href="tools-for-linear-regression-analysis.html#cb306-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> radio_lm<span class="sc">$</span>coefficients[[<span class="dv">1</span>]],</span>
-<span id="cb306-6"><a href="tools-for-linear-regression-analysis.html#cb306-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> radio_lm<span class="sc">$</span>coefficients[[<span class="dv">2</span>]], <span class="at">color =</span> <span class="dv">1</span></span>
-<span id="cb306-7"><a href="tools-for-linear-regression-analysis.html#cb306-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb306-8"><a href="tools-for-linear-regression-analysis.html#cb306-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> lb[<span class="dv">1</span>], <span class="at">slope =</span> lb[<span class="dv">2</span>], <span class="at">color =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb306-9"><a href="tools-for-linear-regression-analysis.html#cb306-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> ub[<span class="dv">1</span>], <span class="at">slope =</span> ub[<span class="dv">2</span>], <span class="at">color =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="tools-for-linear-regression-analysis.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prevision region</span></span>
+<span id="cb309-2"><a href="tools-for-linear-regression-analysis.html#cb309-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(radio_lm) <span class="sc">+</span></span>
+<span id="cb309-3"><a href="tools-for-linear-regression-analysis.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(Radio, Sales)) <span class="sc">+</span></span>
+<span id="cb309-4"><a href="tools-for-linear-regression-analysis.html#cb309-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(</span>
+<span id="cb309-5"><a href="tools-for-linear-regression-analysis.html#cb309-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> radio_lm<span class="sc">$</span>coefficients[[<span class="dv">1</span>]],</span>
+<span id="cb309-6"><a href="tools-for-linear-regression-analysis.html#cb309-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> radio_lm<span class="sc">$</span>coefficients[[<span class="dv">2</span>]], <span class="at">color =</span> <span class="dv">1</span></span>
+<span id="cb309-7"><a href="tools-for-linear-regression-analysis.html#cb309-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb309-8"><a href="tools-for-linear-regression-analysis.html#cb309-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> lb[<span class="dv">1</span>], <span class="at">slope =</span> lb[<span class="dv">2</span>], <span class="at">color =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb309-9"><a href="tools-for-linear-regression-analysis.html#cb309-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> ub[<span class="dv">1</span>], <span class="at">slope =</span> ub[<span class="dv">2</span>], <span class="at">color =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="672" /></p>
 <p>The region between the lines is different (larger) from the one generated by
 <code>geom_smooth</code>. Without entering too much in detail, this happens because the

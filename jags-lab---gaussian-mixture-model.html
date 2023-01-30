@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-27" />
+<meta name="date" content="2023-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -378,13 +378,13 @@ e.g. <code>complete_loglik</code> as such:</p>
 <p>The simulation shouldn’t take more than one/two minute. If it runs for too long it’s
 either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 <p>Good luck!</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="jags-lab---gaussian-mixture-model.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb626-2"><a href="jags-lab---gaussian-mixture-model.html#cb626-2" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
-<span id="cb626-3"><a href="jags-lab---gaussian-mixture-model.html#cb626-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb626-4"><a href="jags-lab---gaussian-mixture-model.html#cb626-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb626-5"><a href="jags-lab---gaussian-mixture-model.html#cb626-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb626-6"><a href="jags-lab---gaussian-mixture-model.html#cb626-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb626-7"><a href="jags-lab---gaussian-mixture-model.html#cb626-7" aria-hidden="true" tabindex="-1"></a>bread <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/bread.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="jags-lab---gaussian-mixture-model.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb629-2"><a href="jags-lab---gaussian-mixture-model.html#cb629-2" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb629-3"><a href="jags-lab---gaussian-mixture-model.html#cb629-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb629-4"><a href="jags-lab---gaussian-mixture-model.html#cb629-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb629-5"><a href="jags-lab---gaussian-mixture-model.html#cb629-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb629-6"><a href="jags-lab---gaussian-mixture-model.html#cb629-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-7"><a href="jags-lab---gaussian-mixture-model.html#cb629-7" aria-hidden="true" tabindex="-1"></a>bread <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/bread.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 600 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -392,78 +392,78 @@ either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="jags-lab---gaussian-mixture-model.html#cb628-1" aria-hidden="true" tabindex="-1"></a>bread <span class="sc">%&gt;%</span></span>
-<span id="cb628-2"><a href="jags-lab---gaussian-mixture-model.html#cb628-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(weight, size)) <span class="sc">+</span></span>
-<span id="cb628-3"><a href="jags-lab---gaussian-mixture-model.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="jags-lab---gaussian-mixture-model.html#cb631-1" aria-hidden="true" tabindex="-1"></a>bread <span class="sc">%&gt;%</span></span>
+<span id="cb631-2"><a href="jags-lab---gaussian-mixture-model.html#cb631-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(weight, size)) <span class="sc">+</span></span>
+<span id="cb631-3"><a href="jags-lab---gaussian-mixture-model.html#cb631-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="jags-lab---gaussian-mixture-model.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb629-2"><a href="jags-lab---gaussian-mixture-model.html#cb629-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb629-3"><a href="jags-lab---gaussian-mixture-model.html#cb629-3" aria-hidden="true" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb629-4"><a href="jags-lab---gaussian-mixture-model.html#cb629-4" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb629-5"><a href="jags-lab---gaussian-mixture-model.html#cb629-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Likelihood:</span></span>
-<span id="cb629-6"><a href="jags-lab---gaussian-mixture-model.html#cb629-6" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
-<span id="cb629-7"><a href="jags-lab---gaussian-mixture-model.html#cb629-7" aria-hidden="true" tabindex="-1"></a><span class="st">    x[i] ~ dnorm(mux[i], taux)</span></span>
-<span id="cb629-8"><a href="jags-lab---gaussian-mixture-model.html#cb629-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(muy[i], tauy)</span></span>
-<span id="cb629-9"><a href="jags-lab---gaussian-mixture-model.html#cb629-9" aria-hidden="true" tabindex="-1"></a><span class="st">    mux[i] &lt;- mux_clust[clust[i]]</span></span>
-<span id="cb629-10"><a href="jags-lab---gaussian-mixture-model.html#cb629-10" aria-hidden="true" tabindex="-1"></a><span class="st">    muy[i] &lt;- muy_clust[clust[i]]</span></span>
-<span id="cb629-11"><a href="jags-lab---gaussian-mixture-model.html#cb629-11" aria-hidden="true" tabindex="-1"></a><span class="st">    clust[i] ~ dcat(lambda[1:K]) # categorical</span></span>
-<span id="cb629-12"><a href="jags-lab---gaussian-mixture-model.html#cb629-12" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb629-13"><a href="jags-lab---gaussian-mixture-model.html#cb629-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb629-14"><a href="jags-lab---gaussian-mixture-model.html#cb629-14" aria-hidden="true" tabindex="-1"></a><span class="st">  # priors</span></span>
-<span id="cb629-15"><a href="jags-lab---gaussian-mixture-model.html#cb629-15" aria-hidden="true" tabindex="-1"></a><span class="st">  taux ~ dgamma(0.01, 0.01)</span></span>
-<span id="cb629-16"><a href="jags-lab---gaussian-mixture-model.html#cb629-16" aria-hidden="true" tabindex="-1"></a><span class="st">  tauy ~ dgamma(0.01, 0.01)</span></span>
-<span id="cb629-17"><a href="jags-lab---gaussian-mixture-model.html#cb629-17" aria-hidden="true" tabindex="-1"></a><span class="st">  sigmax &lt;- 1 / sqrt(taux)</span></span>
-<span id="cb629-18"><a href="jags-lab---gaussian-mixture-model.html#cb629-18" aria-hidden="true" tabindex="-1"></a><span class="st">  sigmay &lt;- 1 / sqrt(tauy)</span></span>
-<span id="cb629-19"><a href="jags-lab---gaussian-mixture-model.html#cb629-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb629-20"><a href="jags-lab---gaussian-mixture-model.html#cb629-20" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
-<span id="cb629-21"><a href="jags-lab---gaussian-mixture-model.html#cb629-21" aria-hidden="true" tabindex="-1"></a><span class="st">    mux_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
-<span id="cb629-22"><a href="jags-lab---gaussian-mixture-model.html#cb629-22" aria-hidden="true" tabindex="-1"></a><span class="st">    muy_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
-<span id="cb629-23"><a href="jags-lab---gaussian-mixture-model.html#cb629-23" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb629-24"><a href="jags-lab---gaussian-mixture-model.html#cb629-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb629-25"><a href="jags-lab---gaussian-mixture-model.html#cb629-25" aria-hidden="true" tabindex="-1"></a><span class="st">  perm &lt;- order(mux_clust_raw) # same ordering for both!</span></span>
-<span id="cb629-26"><a href="jags-lab---gaussian-mixture-model.html#cb629-26" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
-<span id="cb629-27"><a href="jags-lab---gaussian-mixture-model.html#cb629-27" aria-hidden="true" tabindex="-1"></a><span class="st">    mux_clust[k] &lt;- mux_clust_raw[perm[k]]</span></span>
-<span id="cb629-28"><a href="jags-lab---gaussian-mixture-model.html#cb629-28" aria-hidden="true" tabindex="-1"></a><span class="st">    muy_clust[k] &lt;- muy_clust_raw[perm[k]]</span></span>
-<span id="cb629-29"><a href="jags-lab---gaussian-mixture-model.html#cb629-29" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb629-30"><a href="jags-lab---gaussian-mixture-model.html#cb629-30" aria-hidden="true" tabindex="-1"></a><span class="st">  lambda[1:K] ~ ddirch(ones)</span></span>
-<span id="cb629-31"><a href="jags-lab---gaussian-mixture-model.html#cb629-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb629-32"><a href="jags-lab---gaussian-mixture-model.html#cb629-32" aria-hidden="true" tabindex="-1"></a><span class="st">  # likelihood</span></span>
-<span id="cb629-33"><a href="jags-lab---gaussian-mixture-model.html#cb629-33" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
-<span id="cb629-34"><a href="jags-lab---gaussian-mixture-model.html#cb629-34" aria-hidden="true" tabindex="-1"></a><span class="st">    loglikx[i] &lt;- logdensity.norm(x[i], mux_clust[clust[i]], taux)</span></span>
-<span id="cb629-35"><a href="jags-lab---gaussian-mixture-model.html#cb629-35" aria-hidden="true" tabindex="-1"></a><span class="st">    logliky[i] &lt;- logdensity.norm(y[i], muy_clust[clust[i]], tauy)</span></span>
-<span id="cb629-36"><a href="jags-lab---gaussian-mixture-model.html#cb629-36" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb629-37"><a href="jags-lab---gaussian-mixture-model.html#cb629-37" aria-hidden="true" tabindex="-1"></a><span class="st">  complete_loglik &lt;- sum(loglikx) + sum(logliky)</span></span>
-<span id="cb629-38"><a href="jags-lab---gaussian-mixture-model.html#cb629-38" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb629-39"><a href="jags-lab---gaussian-mixture-model.html#cb629-39" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb629-40"><a href="jags-lab---gaussian-mixture-model.html#cb629-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb629-41"><a href="jags-lab---gaussian-mixture-model.html#cb629-41" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># change this and see what&#39;s best</span></span>
-<span id="cb629-42"><a href="jags-lab---gaussian-mixture-model.html#cb629-42" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb629-43"><a href="jags-lab---gaussian-mixture-model.html#cb629-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> bread<span class="sc">$</span>weight, <span class="at">y =</span> bread<span class="sc">$</span>size, <span class="at">ones =</span> <span class="fu">rep</span>(<span class="dv">1</span>, K),</span>
-<span id="cb629-44"><a href="jags-lab---gaussian-mixture-model.html#cb629-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K, <span class="at">N =</span> <span class="fu">nrow</span>(bread)</span>
-<span id="cb629-45"><a href="jags-lab---gaussian-mixture-model.html#cb629-45" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb629-46"><a href="jags-lab---gaussian-mixture-model.html#cb629-46" aria-hidden="true" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb629-47"><a href="jags-lab---gaussian-mixture-model.html#cb629-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mux_clust&quot;</span>, <span class="st">&quot;muy_clust&quot;</span>, <span class="st">&quot;sigmax&quot;</span>, <span class="st">&quot;sigmay&quot;</span></span>
-<span id="cb629-48"><a href="jags-lab---gaussian-mixture-model.html#cb629-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ,&quot;clust&quot;</span></span>
-<span id="cb629-49"><a href="jags-lab---gaussian-mixture-model.html#cb629-49" aria-hidden="true" tabindex="-1"></a>  , <span class="st">&quot;lambda&quot;</span>, <span class="st">&quot;complete_loglik&quot;</span></span>
-<span id="cb629-50"><a href="jags-lab---gaussian-mixture-model.html#cb629-50" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb629-51"><a href="jags-lab---gaussian-mixture-model.html#cb629-51" aria-hidden="true" tabindex="-1"></a>model_inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb629-52"><a href="jags-lab---gaussian-mixture-model.html#cb629-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb629-53"><a href="jags-lab---gaussian-mixture-model.html#cb629-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">mux_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>), <span class="at">muy_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>),</span>
-<span id="cb629-54"><a href="jags-lab---gaussian-mixture-model.html#cb629-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">tauy =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>),</span>
-<span id="cb629-55"><a href="jags-lab---gaussian-mixture-model.html#cb629-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">clust =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">size =</span> <span class="fu">nrow</span>(bread), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> K, K))</span>
-<span id="cb629-56"><a href="jags-lab---gaussian-mixture-model.html#cb629-56" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb629-57"><a href="jags-lab---gaussian-mixture-model.html#cb629-57" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb629-58"><a href="jags-lab---gaussian-mixture-model.html#cb629-58" aria-hidden="true" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
-<span id="cb629-59"><a href="jags-lab---gaussian-mixture-model.html#cb629-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb629-60"><a href="jags-lab---gaussian-mixture-model.html#cb629-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
-<span id="cb629-61"><a href="jags-lab---gaussian-mixture-model.html#cb629-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">inits =</span> model_inits,</span>
-<span id="cb629-62"><a href="jags-lab---gaussian-mixture-model.html#cb629-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
-<span id="cb629-63"><a href="jags-lab---gaussian-mixture-model.html#cb629-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
-<span id="cb629-64"><a href="jags-lab---gaussian-mixture-model.html#cb629-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
-<span id="cb629-65"><a href="jags-lab---gaussian-mixture-model.html#cb629-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
-<span id="cb629-66"><a href="jags-lab---gaussian-mixture-model.html#cb629-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.thin =</span> <span class="dv">5</span>,</span>
-<span id="cb629-67"><a href="jags-lab---gaussian-mixture-model.html#cb629-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">DIC =</span> <span class="cn">TRUE</span></span>
-<span id="cb629-68"><a href="jags-lab---gaussian-mixture-model.html#cb629-68" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="jags-lab---gaussian-mixture-model.html#cb632-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb632-2"><a href="jags-lab---gaussian-mixture-model.html#cb632-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-3"><a href="jags-lab---gaussian-mixture-model.html#cb632-3" aria-hidden="true" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb632-4"><a href="jags-lab---gaussian-mixture-model.html#cb632-4" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb632-5"><a href="jags-lab---gaussian-mixture-model.html#cb632-5" aria-hidden="true" tabindex="-1"></a><span class="st">  # Likelihood:</span></span>
+<span id="cb632-6"><a href="jags-lab---gaussian-mixture-model.html#cb632-6" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
+<span id="cb632-7"><a href="jags-lab---gaussian-mixture-model.html#cb632-7" aria-hidden="true" tabindex="-1"></a><span class="st">    x[i] ~ dnorm(mux[i], taux)</span></span>
+<span id="cb632-8"><a href="jags-lab---gaussian-mixture-model.html#cb632-8" aria-hidden="true" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(muy[i], tauy)</span></span>
+<span id="cb632-9"><a href="jags-lab---gaussian-mixture-model.html#cb632-9" aria-hidden="true" tabindex="-1"></a><span class="st">    mux[i] &lt;- mux_clust[clust[i]]</span></span>
+<span id="cb632-10"><a href="jags-lab---gaussian-mixture-model.html#cb632-10" aria-hidden="true" tabindex="-1"></a><span class="st">    muy[i] &lt;- muy_clust[clust[i]]</span></span>
+<span id="cb632-11"><a href="jags-lab---gaussian-mixture-model.html#cb632-11" aria-hidden="true" tabindex="-1"></a><span class="st">    clust[i] ~ dcat(lambda[1:K]) # categorical</span></span>
+<span id="cb632-12"><a href="jags-lab---gaussian-mixture-model.html#cb632-12" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb632-13"><a href="jags-lab---gaussian-mixture-model.html#cb632-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-14"><a href="jags-lab---gaussian-mixture-model.html#cb632-14" aria-hidden="true" tabindex="-1"></a><span class="st">  # priors</span></span>
+<span id="cb632-15"><a href="jags-lab---gaussian-mixture-model.html#cb632-15" aria-hidden="true" tabindex="-1"></a><span class="st">  taux ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb632-16"><a href="jags-lab---gaussian-mixture-model.html#cb632-16" aria-hidden="true" tabindex="-1"></a><span class="st">  tauy ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb632-17"><a href="jags-lab---gaussian-mixture-model.html#cb632-17" aria-hidden="true" tabindex="-1"></a><span class="st">  sigmax &lt;- 1 / sqrt(taux)</span></span>
+<span id="cb632-18"><a href="jags-lab---gaussian-mixture-model.html#cb632-18" aria-hidden="true" tabindex="-1"></a><span class="st">  sigmay &lt;- 1 / sqrt(tauy)</span></span>
+<span id="cb632-19"><a href="jags-lab---gaussian-mixture-model.html#cb632-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-20"><a href="jags-lab---gaussian-mixture-model.html#cb632-20" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
+<span id="cb632-21"><a href="jags-lab---gaussian-mixture-model.html#cb632-21" aria-hidden="true" tabindex="-1"></a><span class="st">    mux_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
+<span id="cb632-22"><a href="jags-lab---gaussian-mixture-model.html#cb632-22" aria-hidden="true" tabindex="-1"></a><span class="st">    muy_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
+<span id="cb632-23"><a href="jags-lab---gaussian-mixture-model.html#cb632-23" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb632-24"><a href="jags-lab---gaussian-mixture-model.html#cb632-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-25"><a href="jags-lab---gaussian-mixture-model.html#cb632-25" aria-hidden="true" tabindex="-1"></a><span class="st">  perm &lt;- order(mux_clust_raw) # same ordering for both!</span></span>
+<span id="cb632-26"><a href="jags-lab---gaussian-mixture-model.html#cb632-26" aria-hidden="true" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
+<span id="cb632-27"><a href="jags-lab---gaussian-mixture-model.html#cb632-27" aria-hidden="true" tabindex="-1"></a><span class="st">    mux_clust[k] &lt;- mux_clust_raw[perm[k]]</span></span>
+<span id="cb632-28"><a href="jags-lab---gaussian-mixture-model.html#cb632-28" aria-hidden="true" tabindex="-1"></a><span class="st">    muy_clust[k] &lt;- muy_clust_raw[perm[k]]</span></span>
+<span id="cb632-29"><a href="jags-lab---gaussian-mixture-model.html#cb632-29" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb632-30"><a href="jags-lab---gaussian-mixture-model.html#cb632-30" aria-hidden="true" tabindex="-1"></a><span class="st">  lambda[1:K] ~ ddirch(ones)</span></span>
+<span id="cb632-31"><a href="jags-lab---gaussian-mixture-model.html#cb632-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-32"><a href="jags-lab---gaussian-mixture-model.html#cb632-32" aria-hidden="true" tabindex="-1"></a><span class="st">  # likelihood</span></span>
+<span id="cb632-33"><a href="jags-lab---gaussian-mixture-model.html#cb632-33" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
+<span id="cb632-34"><a href="jags-lab---gaussian-mixture-model.html#cb632-34" aria-hidden="true" tabindex="-1"></a><span class="st">    loglikx[i] &lt;- logdensity.norm(x[i], mux_clust[clust[i]], taux)</span></span>
+<span id="cb632-35"><a href="jags-lab---gaussian-mixture-model.html#cb632-35" aria-hidden="true" tabindex="-1"></a><span class="st">    logliky[i] &lt;- logdensity.norm(y[i], muy_clust[clust[i]], tauy)</span></span>
+<span id="cb632-36"><a href="jags-lab---gaussian-mixture-model.html#cb632-36" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb632-37"><a href="jags-lab---gaussian-mixture-model.html#cb632-37" aria-hidden="true" tabindex="-1"></a><span class="st">  complete_loglik &lt;- sum(loglikx) + sum(logliky)</span></span>
+<span id="cb632-38"><a href="jags-lab---gaussian-mixture-model.html#cb632-38" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb632-39"><a href="jags-lab---gaussian-mixture-model.html#cb632-39" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb632-40"><a href="jags-lab---gaussian-mixture-model.html#cb632-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-41"><a href="jags-lab---gaussian-mixture-model.html#cb632-41" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># change this and see what&#39;s best</span></span>
+<span id="cb632-42"><a href="jags-lab---gaussian-mixture-model.html#cb632-42" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb632-43"><a href="jags-lab---gaussian-mixture-model.html#cb632-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> bread<span class="sc">$</span>weight, <span class="at">y =</span> bread<span class="sc">$</span>size, <span class="at">ones =</span> <span class="fu">rep</span>(<span class="dv">1</span>, K),</span>
+<span id="cb632-44"><a href="jags-lab---gaussian-mixture-model.html#cb632-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> K, <span class="at">N =</span> <span class="fu">nrow</span>(bread)</span>
+<span id="cb632-45"><a href="jags-lab---gaussian-mixture-model.html#cb632-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb632-46"><a href="jags-lab---gaussian-mixture-model.html#cb632-46" aria-hidden="true" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb632-47"><a href="jags-lab---gaussian-mixture-model.html#cb632-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mux_clust&quot;</span>, <span class="st">&quot;muy_clust&quot;</span>, <span class="st">&quot;sigmax&quot;</span>, <span class="st">&quot;sigmay&quot;</span></span>
+<span id="cb632-48"><a href="jags-lab---gaussian-mixture-model.html#cb632-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ,&quot;clust&quot;</span></span>
+<span id="cb632-49"><a href="jags-lab---gaussian-mixture-model.html#cb632-49" aria-hidden="true" tabindex="-1"></a>  , <span class="st">&quot;lambda&quot;</span>, <span class="st">&quot;complete_loglik&quot;</span></span>
+<span id="cb632-50"><a href="jags-lab---gaussian-mixture-model.html#cb632-50" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb632-51"><a href="jags-lab---gaussian-mixture-model.html#cb632-51" aria-hidden="true" tabindex="-1"></a>model_inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb632-52"><a href="jags-lab---gaussian-mixture-model.html#cb632-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb632-53"><a href="jags-lab---gaussian-mixture-model.html#cb632-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">mux_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>), <span class="at">muy_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>),</span>
+<span id="cb632-54"><a href="jags-lab---gaussian-mixture-model.html#cb632-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">taux =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">tauy =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>),</span>
+<span id="cb632-55"><a href="jags-lab---gaussian-mixture-model.html#cb632-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">clust =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">size =</span> <span class="fu">nrow</span>(bread), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> K, K))</span>
+<span id="cb632-56"><a href="jags-lab---gaussian-mixture-model.html#cb632-56" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb632-57"><a href="jags-lab---gaussian-mixture-model.html#cb632-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb632-58"><a href="jags-lab---gaussian-mixture-model.html#cb632-58" aria-hidden="true" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
+<span id="cb632-59"><a href="jags-lab---gaussian-mixture-model.html#cb632-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb632-60"><a href="jags-lab---gaussian-mixture-model.html#cb632-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
+<span id="cb632-61"><a href="jags-lab---gaussian-mixture-model.html#cb632-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">inits =</span> model_inits,</span>
+<span id="cb632-62"><a href="jags-lab---gaussian-mixture-model.html#cb632-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb632-63"><a href="jags-lab---gaussian-mixture-model.html#cb632-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
+<span id="cb632-64"><a href="jags-lab---gaussian-mixture-model.html#cb632-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb632-65"><a href="jags-lab---gaussian-mixture-model.html#cb632-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb632-66"><a href="jags-lab---gaussian-mixture-model.html#cb632-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">n.thin =</span> <span class="dv">5</span>,</span>
+<span id="cb632-67"><a href="jags-lab---gaussian-mixture-model.html#cb632-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">DIC =</span> <span class="cn">TRUE</span></span>
+<span id="cb632-68"><a href="jags-lab---gaussian-mixture-model.html#cb632-68" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
@@ -473,7 +473,7 @@ either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 ##    Total graph size: 4248
 ## 
 ## Initializing model</code></pre>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="jags-lab---gaussian-mixture-model.html#cb631-1" aria-hidden="true" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="jags-lab---gaussian-mixture-model.html#cb634-1" aria-hidden="true" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
 <pre><code>## Inference for Bugs model at &quot;4&quot;, fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 5
 ##  n.sims = 1600 iterations saved
@@ -518,17 +518,17 @@ either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 ## DIC info (using the rule, pD = var(deviance)/2)
 ## pD = 330.3 and DIC = 14211.4
 ## DIC is an estimate of expected predictive error (lower deviance is better).</code></pre>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="jags-lab---gaussian-mixture-model.html#cb633-1" aria-hidden="true" tabindex="-1"></a>gmm_mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(model_run)</span>
-<span id="cb633-2"><a href="jags-lab---gaussian-mixture-model.html#cb633-2" aria-hidden="true" tabindex="-1"></a><span class="co"># save to pdf</span></span>
-<span id="cb633-3"><a href="jags-lab---gaussian-mixture-model.html#cb633-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pdf(file = &quot;./lab3/mcmc_out.pdf&quot;)</span></span>
-<span id="cb633-4"><a href="jags-lab---gaussian-mixture-model.html#cb633-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(gmm_mcmc)</span></span>
-<span id="cb633-5"><a href="jags-lab---gaussian-mixture-model.html#cb633-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span></code></pre></div>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="jags-lab---gaussian-mixture-model.html#cb634-1" aria-hidden="true" tabindex="-1"></a>mux <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>mux_clust</span>
-<span id="cb634-2"><a href="jags-lab---gaussian-mixture-model.html#cb634-2" aria-hidden="true" tabindex="-1"></a>muy <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>muy_clust</span>
-<span id="cb634-3"><a href="jags-lab---gaussian-mixture-model.html#cb634-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb634-4"><a href="jags-lab---gaussian-mixture-model.html#cb634-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb634-5"><a href="jags-lab---gaussian-mixture-model.html#cb634-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bread<span class="sc">$</span>weight, bread<span class="sc">$</span>size)) <span class="sc">+</span></span>
-<span id="cb634-6"><a href="jags-lab---gaussian-mixture-model.html#cb634-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(mux, muy), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="jags-lab---gaussian-mixture-model.html#cb636-1" aria-hidden="true" tabindex="-1"></a>gmm_mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(model_run)</span>
+<span id="cb636-2"><a href="jags-lab---gaussian-mixture-model.html#cb636-2" aria-hidden="true" tabindex="-1"></a><span class="co"># save to pdf</span></span>
+<span id="cb636-3"><a href="jags-lab---gaussian-mixture-model.html#cb636-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pdf(file = &quot;./lab3/mcmc_out.pdf&quot;)</span></span>
+<span id="cb636-4"><a href="jags-lab---gaussian-mixture-model.html#cb636-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(gmm_mcmc)</span></span>
+<span id="cb636-5"><a href="jags-lab---gaussian-mixture-model.html#cb636-5" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="jags-lab---gaussian-mixture-model.html#cb637-1" aria-hidden="true" tabindex="-1"></a>mux <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>mux_clust</span>
+<span id="cb637-2"><a href="jags-lab---gaussian-mixture-model.html#cb637-2" aria-hidden="true" tabindex="-1"></a>muy <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>muy_clust</span>
+<span id="cb637-3"><a href="jags-lab---gaussian-mixture-model.html#cb637-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb637-4"><a href="jags-lab---gaussian-mixture-model.html#cb637-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb637-5"><a href="jags-lab---gaussian-mixture-model.html#cb637-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bread<span class="sc">$</span>weight, bread<span class="sc">$</span>size)) <span class="sc">+</span></span>
+<span id="cb637-6"><a href="jags-lab---gaussian-mixture-model.html#cb637-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(mux, muy), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-281-1.png" width="672" /></p>
 
 <pre><code>## tweaking contrast</code></pre>
