@@ -9,6 +9,7 @@ libs/
 # ignore all html files except:
 !**/mathjax_header.html
 !**/header.html
+!**/404.html
 # R and Rstudio specific files
 .Rproj.user
 .Rhistory
