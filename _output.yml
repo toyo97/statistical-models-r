@@ -16,11 +16,11 @@ bookdown::gitbook:
       weibo: no
       instapaper: no
       vk: no
-    download: [["smr_book.pdf", "pdf"], ["smr_book.epub", "epub"]]
+    download: ["pdf"]
 bookdown::pdf_book:
   includes:
     in_header: latex/preamble.tex
-  latex_engine: lualatex
+  latex_engine: xelatex
   citation_package: natbib
   keep_tex: yes
   toc_depth: 3

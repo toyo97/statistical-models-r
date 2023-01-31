@@ -1,4 +1,5 @@
 delete_merged_file: true
+book_filename: "smr_book"
 before_chapter_script: "./scripts/cleanup.r"
 language:
   ui:
