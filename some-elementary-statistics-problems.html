@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -456,7 +479,7 @@ but in order to get a more complete overview, we could plot those values togethe
 <span id="cb176-11"><a href="some-elementary-statistics-problems.html#cb176-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">pretty_breaks</span>(<span class="dv">10</span>)) <span class="co"># print integers on the x axis</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="672" />
+<p><img src="smr_book_files/figure-html/unnamed-chunk-61-1.png" width="672" />
 The plot suggests that a good compromise could also be
 <span class="math inline">\(x_0 = 7\)</span>, but there is no rule in choosing such threshold, and in fact,
 we might be more interested in a safer threshold in terms of lower
@@ -634,7 +657,7 @@ normal.</p>
 <span id="cb181-7"><a href="some-elementary-statistics-problems.html#cb181-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, p_nt, <span class="at">color =</span> <span class="st">&quot;norm&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb181-8"><a href="some-elementary-statistics-problems.html#cb181-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;T-student with df = 3 and Std Normal comparison&quot;</span>,</span>
 <span id="cb181-9"><a href="some-elementary-statistics-problems.html#cb181-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;x&quot;</span>, <span class="at">y =</span> <span class="st">&quot;p(x)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
 <p>Following the same approach of the previous cases, the confidence interval
 is found using the quantiles of the specific T-student distributions.</p>
 <p>Before we computed the CI “manually”, but luckily there exists a function which already implements this formula
@@ -739,7 +762,7 @@ observed.</p>
 <span id="cb195-5"><a href="some-elementary-statistics-problems.html#cb195-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, px)) <span class="sc">+</span></span>
 <span id="cb195-6"><a href="some-elementary-statistics-problems.html#cb195-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(x <span class="sc">&gt;=</span> <span class="dv">20</span>),</span>
 <span id="cb195-7"><a href="some-elementary-statistics-problems.html#cb195-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> px), <span class="at">color =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>If the alternative hypothesis is just <span class="math inline">\(H_1: p \neq 18/37\)</span> then the
 contradiction can happen both on the left and on the right side of the curve,
@@ -778,7 +801,7 @@ We compute this quantity first using <code>pbinom</code> as before</p>
 <span id="cb202-7"><a href="some-elementary-statistics-problems.html#cb202-7" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> px), <span class="at">color =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb202-8"><a href="some-elementary-statistics-problems.html#cb202-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data =</span> . <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(x <span class="sc">&lt;</span> <span class="dv">10</span>),</span>
 <span id="cb202-9"><a href="some-elementary-statistics-problems.html#cb202-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> x, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">yend =</span> px), <span class="at">color =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>When <span class="math inline">\(n\)</span> increases, and we can consider it large enough, we can
 use the normal approximation of the binomial (for the CLT), i.e.</li>
@@ -848,7 +871,7 @@ on the case) <code>.5</code> to the <span class="math inline">\(x\)</span> value
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -856,7 +879,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -864,7 +888,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/02_elementary_stat.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/02_elementary_stat.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -875,7 +899,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

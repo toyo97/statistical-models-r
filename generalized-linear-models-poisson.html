@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -399,7 +422,7 @@ but with ordered levels, i.e. <em>low</em>, <em>medium</em>, <em>high</em>).</p
 <span id="cb414-5"><a href="generalized-linear-models-poisson.html#cb414-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">name =</span> <span class="st">&quot;tension&quot;</span>, <span class="at">low =</span> <span class="st">&quot;#FFFAD7&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#E97777&quot;</span>) <span class="sc">+</span></span>
 <span id="cb414-6"><a href="generalized-linear-models-poisson.html#cb414-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>wool) <span class="sc">+</span></span>
 <span id="cb414-7"><a href="generalized-linear-models-poisson.html#cb414-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
 </div>
 </div>
 <div id="poisson-family-glm" class="section level2 hasAnchor" number="8.3">
@@ -659,7 +682,7 @@ No (of course, it’s not a perfect model).</p>
 <span id="cb445-5"><a href="generalized-linear-models-poisson.html#cb445-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb445-6"><a href="generalized-linear-models-poisson.html#cb445-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb445-7"><a href="generalized-linear-models-poisson.html#cb445-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> d1), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-210-1.png" width="672" />
+<p><img src="smr_book_files/figure-html/unnamed-chunk-210-1.png" width="672" />
 The plot tells us how far is the fitted model from being equal
 to the saturated one. It would be more useful though to
 observe the distance between the fitted and the null models.</p>
@@ -725,7 +748,7 @@ Note that the results depend from the parametrization of the model,
 <span id="cb453-10"><a href="generalized-linear-models-poisson.html#cb453-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb453-11"><a href="generalized-linear-models-poisson.html#cb453-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(s, measure)) <span class="sc">+</span></span>
 <span id="cb453-12"><a href="generalized-linear-models-poisson.html#cb453-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>infl_name)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 </div>
 <div id="interaction" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> Interaction<a href="generalized-linear-models-poisson.html#interaction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -836,7 +859,7 @@ null model.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -844,7 +867,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -852,7 +876,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/08_pois_glm.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/08_pois_glm.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -863,7 +887,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

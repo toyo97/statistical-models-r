@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -328,6 +351,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="references" class="section level1 unnumbered hasAnchor">
 <h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Gelfand, Alan E., Susan E. Hills, Amy Racine-Poon, and Adrian F. M. Smith. 1990. <span>“Illustration of <span>Bayesian</span> <span>Inference</span> in <span>Normal</span> <span>Data</span> <span>Models</span> <span> Using</span> <span>Gibbs</span> <span>Sampling</span>.”</span> <em>Journal of the American Statistical Association</em> 85 (412): 972–85. <a href="https://doi.org/10.1080/01621459.1990.10474968">https://doi.org/10.1080/01621459.1990.10474968</a>.
+</div>
+<div class="csl-entry">
+Kleiber, Christian, and Achim Zeileis. 2008. <em>Applied Econometrics with <span>R</span></em>. New York: Springer-Verlag. <a href="https://CRAN.R-project.org/package=AER">https://CRAN.R-project.org/package=AER</a>.
+</div>
+<div class="csl-entry">
+Lunn, David, Christopher Jackson, Nicky Best, Andrew Thomas, and D. J. Spiegelhalter. 2013. <em>The <span>BUGS</span> Book: A Practical Introduction to <span>Bayesian</span> Analysis</em>. Boca Raton: CRC Press, Taylor &amp; Francis Group.
+</div>
+</div>
 </div>
 
 
@@ -359,7 +393,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -367,7 +401,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -375,7 +410,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/tail.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/tail.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -386,7 +421,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

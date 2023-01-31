@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -398,8 +421,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument, </span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1] -11.5097350  -0.6930341 -10.3016448 -10.7546070 -16.5096326   2.1894122
-##  [7] -15.7377872  -1.1586295   1.7036256  -3.7962252</code></pre>
+<pre><code>##  [1]  -2.3326694  -6.7531621   1.6054266  -0.5785314 -16.4763962   5.2470272
+##  [7]  -3.8817551   1.3845934  -5.0569558 -10.3116175</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -753,25 +776,25 @@ most of the dataset will be stored in dataframes.</p>
 <pre><code>##    x  y char
 ## 1  1  1    a
 ## 2  1  2    a
-## 3  1  3    a
-## 4  1  4    a
+## 3  1  3    b
+## 4  1  4    b
 ## 5  1  5    a
 ## 6  1  6    b
-## 7  1  7    b
+## 7  1  7    a
 ## 8  1  8    a
-## 9  1  9    a
-## 10 1 10    a</code></pre>
+## 9  1  9    b
+## 10 1 10    b</code></pre>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
 ## 2 1 2    a
-## 3 1 3    a
-## 4 1 4    a</code></pre>
+## 3 1 3    b
+## 4 1 4    b</code></pre>
 <p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
 the effective features of Base R <code>data.frame</code> and none of the
 deprecated functionalities. It’s simply a newer version of dataframes (therefore
@@ -870,7 +893,7 @@ edit the current canvas. For instance, to plot some points and a line:</p>
 <span id="cb131-5"><a href="introduction.html#cb131-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb131-6"><a href="introduction.html#cb131-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
 <span id="cb131-7"><a href="introduction.html#cb131-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>However, the <code>ggplot</code> library is now the new standard plotting library.
 In ggplot, a plot is decomposed in three main components: data, coordinate
 system and visual marks, called <em>geoms</em>.
@@ -884,7 +907,7 @@ arguments.</p>
 <span id="cb132-4"><a href="introduction.html#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gg_df) <span class="sc">+</span></span>
 <span id="cb132-5"><a href="introduction.html#cb132-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb132-6"><a href="introduction.html#cb132-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">3</span>), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <p>This is just a brief example. More will be seen in the next lessons.
 Check out this
 <a href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf">cheatsheet</a>
@@ -918,7 +941,7 @@ plotted against time (year by year).</p>
 <span id="cb135-5"><a href="introduction.html#cb135-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># now feed the filtered data to ggplot (using the pipe op)</span></span>
 <span id="cb135-6"><a href="introduction.html#cb135-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb135-7"><a href="introduction.html#cb135-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(year, gdpPercap, <span class="at">color =</span> country))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p>If we want to add some information about the same measure over the whole
 continent, showing for instance the boundaries of GDP among all countries
 in the same continent of the four selected countries, this
@@ -953,7 +976,7 @@ is more or less what we can do</p>
 ##   always returns an ungrouped data frame and adjust accordingly.</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;continent&#39;, &#39;year&#39;. You can override using
 ## the `.groups` argument.</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" />
+<p><img src="smr_book_files/figure-html/unnamed-chunk-45-1.png" width="672" />
 But, since it looks a bit confusing, we might want four separate plots.</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="introduction.html#cb142-1" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span> </span>
 <span id="cb142-2"><a href="introduction.html#cb142-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(country <span class="sc">%in%</span> wanted_countries) <span class="sc">%&gt;%</span></span>
@@ -986,7 +1009,7 @@ But, since it looks a bit confusing, we might want four separate plots.</p>
 ##   always returns an ungrouped data frame and adjust accordingly.</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;continent&#39;, &#39;year&#39;. You can override using
 ## the `.groups` argument.</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
 <div id="probability" class="section level2 hasAnchor" number="1.8">
 <h2><span class="header-section-number">1.8</span> Probability<a href="introduction.html#probability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1001,14 +1024,14 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introduction.html#cb145-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb145-2"><a href="introduction.html#cb145-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb145-3"><a href="introduction.html#cb145-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1]  0.16245981 -0.20445165 -0.24949977 -0.09174655  1.91453514 -0.10666675
-##  [7]  0.48266180 -0.73425444  2.52788137  1.27685247</code></pre>
+<pre><code>##  [1] -1.10244548 -0.28215292  1.33487469 -0.64051546  0.32425697  0.94091712
+##  [7] -0.42282188 -0.39698771 -0.27685821  0.05486346</code></pre>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introduction.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># compute the density function (over another Normal)</span></span></code></pre></div>
-<pre><code>##  [1] 0.073739585 0.035128515 0.031775391 0.044751051 0.397487952 0.043371145
-##  [7] 0.126173651 0.009494788 0.347056425 0.307152870</code></pre>
+<pre><code>##  [1] 0.003242137 0.029509309 0.319776050 0.012214891 0.097979609 0.227690779
+##  [7] 0.021195392 0.022556916 0.029867624 0.060161864</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="introduction.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># cumulative distribution function</span></span></code></pre></div>
-<pre><code>##  [1] 0.5645281 0.4190003 0.4014871 0.4634497 0.9722241 0.4575267 0.6853321
-##  [8] 0.2313968 0.9942623 0.8991728</code></pre>
+<pre><code>##  [1] 0.1351340 0.3889131 0.9090413 0.2609188 0.6271283 0.8266263 0.3362126
+##  [8] 0.3456883 0.3909445 0.5218764</code></pre>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="introduction.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># get the quantiles of a normal</span></span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
 </div>
@@ -1075,9 +1098,9 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default</code></pre>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="introduction.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb164-2"><a href="introduction.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>) </span></code></pre></div>
-<pre><code>##           a        b
-## 1 -2.546994 6.487179
-## 2 -1.227031 1.505605</code></pre>
+<pre><code>##             a           b
+## 1 -0.76692920 0.588180403
+## 2  0.05280596 0.002788469</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes
@@ -1152,7 +1175,7 @@ if you don’t know the trick yet.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -1160,7 +1183,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1168,7 +1192,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/01_intro.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/01_intro.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1179,7 +1203,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

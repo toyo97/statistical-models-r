@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -345,7 +368,7 @@ transforming a variable before fitting the linear model.</p>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="interactions-and-qualitative-predictors.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb311-2"><a href="interactions-and-qualitative-predictors.html#cb311-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(synth) <span class="sc">+</span></span>
 <span id="cb311-3"><a href="interactions-and-qualitative-predictors.html#cb311-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
 <p>Of course, we can try to fit a linear model without any
 extra effort</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="interactions-and-qualitative-predictors.html#cb312-1" aria-hidden="true" tabindex="-1"></a>naive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> synth)</span>
@@ -353,14 +376,14 @@ extra effort</p>
 <span id="cb312-3"><a href="interactions-and-qualitative-predictors.html#cb312-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb312-4"><a href="interactions-and-qualitative-predictors.html#cb312-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
 <p>but if we plot the residuals, we can detect some issues for low
 values of <span class="math inline">\(y\)</span> (definitely not uncorrelated).</p>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="interactions-and-qualitative-predictors.html#cb314-1" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
 <span id="cb314-2"><a href="interactions-and-qualitative-predictors.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> naive_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
 <span id="cb314-3"><a href="interactions-and-qualitative-predictors.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb314-4"><a href="interactions-and-qualitative-predictors.html#cb314-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
 <p>By understanding how <span class="math inline">\(x\)</span> is distributed, we can fix this issue
 and fit the model on a transformation of itself, clearly <span class="math inline">\(\log(x)\)</span>.
 We do this simply by adding the desired transformation in the
@@ -372,13 +395,13 @@ formula, meaning that we don’t have to tranform the dataset beforehand.</p>
 <span id="cb315-5"><a href="interactions-and-qualitative-predictors.html#cb315-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb315-6"><a href="interactions-and-qualitative-predictors.html#cb315-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 <p>and the residuals plot.</p>
 <div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="interactions-and-qualitative-predictors.html#cb317-1" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
 <span id="cb317-2"><a href="interactions-and-qualitative-predictors.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> log_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
 <span id="cb317-3"><a href="interactions-and-qualitative-predictors.html#cb317-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb317-4"><a href="interactions-and-qualitative-predictors.html#cb317-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
 </div>
 <div id="on-advertising" class="section level3 hasAnchor" number="6.1.2">
 <h3><span class="header-section-number">6.1.2</span> On <em>advertising</em><a href="interactions-and-qualitative-predictors.html#on-advertising" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -407,7 +430,7 @@ that it’s trend better fit a straight line.</p>
 <span id="cb320-5"><a href="interactions-and-qualitative-predictors.html#cb320-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb320-6"><a href="interactions-and-qualitative-predictors.html#cb320-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
 <p>We can fit a linear model. It’s <code>summary</code> table
 will show a better <span class="math inline">\(R^2\)</span> score.</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="interactions-and-qualitative-predictors.html#cb322-1" aria-hidden="true" tabindex="-1"></a>trans_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV), <span class="at">data =</span> advertising)</span></code></pre></div>
@@ -620,7 +643,7 @@ writing <code>y ~ a*b</code>)</li>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -628,7 +651,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -636,7 +660,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/06_interaction.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/06_interaction.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -647,7 +671,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

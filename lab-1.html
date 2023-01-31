@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -430,7 +453,7 @@ color encoding on the four measures.</p>
 <span id="cb587-6"><a href="lab-1.html#cb587-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(measure, <span class="at">color =</span> class)) <span class="sc">+</span></span>
 <span id="cb587-7"><a href="lab-1.html#cb587-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(variable), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 <pre><code>## Using class as id variables</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-256-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-256-1.png" width="672" /></p>
 <p>We can also visualize the four measures on a set of plots that shows
 the correlation between variables, two-by-two. This is easily
 done with a pair plot.</p>
@@ -445,7 +468,7 @@ read the help document of the <code>ggpairs()</code> function. You can also use 
 <span id="cb589-2"><a href="lab-1.html#cb589-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb589-3"><a href="lab-1.html#cb589-3" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
 <span id="cb589-4"><a href="lab-1.html#cb589-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> class), <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-257-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-257-1.png" width="672" /></p>
 </div>
 <div id="confidence-intervals-1" class="section level2 hasAnchor" number="11.4">
 <h2><span class="header-section-number">11.4</span> Confidence intervals<a href="lab-1.html#confidence-intervals-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -611,7 +634,7 @@ without computing it?</li>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -619,7 +642,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -627,7 +651,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/labs/L01_iris.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/labs/L01_iris.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -638,7 +662,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

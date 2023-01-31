@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -416,7 +439,7 @@ when gathering information about a dataset.</p>
 <p>In exploration, ggplot might be a bit overkill. Faster
 plots can be drawn with <code>plot()</code> and <code>pairs()</code></p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="the-linear-model.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(advertising)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>A pair-plot gives a bigger picture of the
 cross correlations between variables.
 The base R <code>pairs()</code> function can be tweaked (check <code>?pairs</code>)
@@ -446,7 +469,7 @@ in order to draw other kind of information of interest.</p>
 <span id="cb254-23"><a href="the-linear-model.html#cb254-23" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(advertising,</span>
 <span id="cb254-24"><a href="the-linear-model.html#cb254-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper.panel =</span> panel_cor, <span class="at">diag.panel =</span> panel_hist</span>
 <span id="cb254-25"><a href="the-linear-model.html#cb254-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>With much less effort, we can obtain a prettier
 version of the pair-plot.</p>
 <div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="the-linear-model.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code></pre></div>
@@ -454,11 +477,11 @@ version of the pair-plot.</p>
 ##   method from   
 ##   +.gg   ggplot2</code></pre>
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="the-linear-model.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(advertising, <span class="at">progress =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>Again, with base R let’s plot the predictors against the response.
 We know how to do that with a single predictor.</p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="the-linear-model.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(advertising<span class="sc">$</span>TV, advertising<span class="sc">$</span>Sales)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 <p>In case we want to add all plots to a single figure,
 we can do it as follow (base R)</p>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="the-linear-model.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot parameters</span></span>
@@ -468,7 +491,7 @@ we can do it as follow (base R)</p>
 <span id="cb259-5"><a href="the-linear-model.html#cb259-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(Radio, Sales)</span>
 <span id="cb259-6"><a href="the-linear-model.html#cb259-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(Newspaper, Sales)</span>
 <span id="cb259-7"><a href="the-linear-model.html#cb259-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>adding a smoothed line would look like this</p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="the-linear-model.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot parameters</span></span>
 <span id="cb260-2"><a href="the-linear-model.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
@@ -477,14 +500,14 @@ we can do it as follow (base R)</p>
 <span id="cb260-5"><a href="the-linear-model.html#cb260-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(Radio, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
 <span id="cb260-6"><a href="the-linear-model.html#cb260-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(Newspaper, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">span =</span> .<span class="dv">3</span>) <span class="co"># tweak with span</span></span>
 <span id="cb260-7"><a href="the-linear-model.html#cb260-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
 <p>The same pictures can also be plotted with <code>ggplot</code>,
 if preferred (in two ways).</p>
 <div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="the-linear-model.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb261-2"><a href="the-linear-model.html#cb261-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb261-3"><a href="the-linear-model.html#cb261-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(advertising) <span class="sc">+</span></span>
 <span id="cb261-4"><a href="the-linear-model.html#cb261-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(TV, Sales))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 <p>First method: draw three separate plots and arrange
 them together with <code>ggarrange()</code></p>
 <div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="the-linear-model.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
@@ -504,7 +527,7 @@ them together with <code>ggarrange()</code></p>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <p>Second method: rearrange the dataset first,
 and feed everything to ggplot.</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="the-linear-model.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
@@ -531,7 +554,7 @@ and feed everything to ggplot.</p>
 <span id="cb266-3"><a href="the-linear-model.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
 <span id="cb266-4"><a href="the-linear-model.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>channel, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p>If you’re not sure why we need to use the <code>melt()</code> function,
 check the first lab (Iris dataset), or simply read the <code>?melt</code>
 helper.</p>
@@ -556,13 +579,13 @@ first in base R</p>
 <span id="cb269-6"><a href="the-linear-model.html#cb269-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;red&quot;</span></span>
 <span id="cb269-7"><a href="the-linear-model.html#cb269-7" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb269-8"><a href="the-linear-model.html#cb269-8" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
 <p>and in ggplot</p>
 <div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="the-linear-model.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simple_reg, <span class="at">mapping =</span> <span class="fu">aes</span>(TV, Sales)) <span class="sc">+</span></span>
 <span id="cb270-2"><a href="the-linear-model.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb270-3"><a href="the-linear-model.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <p>Actually, <code>lm()</code> does a lot more than just compute
 the OLS coefficients.</p>
 <div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="the-linear-model.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_reg)</span></code></pre></div>
@@ -739,7 +762,7 @@ simple regression model where we use <code>Radio</code> as predictor.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -747,7 +770,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -755,7 +779,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/04_linear_regression.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/04_linear_regression.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -766,7 +790,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

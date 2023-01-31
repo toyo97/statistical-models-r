@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -329,13 +352,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 10</span> Three JAGS examples<a href="three-jags-examples.html#three-jags-examples" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="rats---simple-linear-regression" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Rats - Simple linear regression<a href="three-jags-examples.html#rats---simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We use the data from <span class="citation">(<a href="#ref-rats" role="doc-biblioref"><strong>rats?</strong></a>)</span> and select the 9th
+<p>We use the data from <span class="citation">(<a href="#ref-rats" role="doc-biblioref">Gelfand et al. 1990</a>)</span> and select the 9th
 observation which features the weight at 5 different
 time points of a single rat.</p>
 <p>We estimate the intercept and the coefficient
 in a Bayesian framework using JAGS,
 then validate our result with the traditional <code>lm</code>.
-This example is taken from <span class="citation">(<a href="#ref-bugs" role="doc-biblioref"><strong>bugs?</strong></a>)</span></p>
+This example is taken from <span class="citation">(<a href="#ref-bugs" role="doc-biblioref">Lunn et al. 2013</a>)</span></p>
 <div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="three-jags-examples.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
 <span id="cb547-2"><a href="three-jags-examples.html#cb547-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
 <span id="cb547-3"><a href="three-jags-examples.html#cb547-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;R2MLwiN&quot;)</span></span>
@@ -440,7 +463,7 @@ pre-defined parameters (<span class="math inline">\(p, \lambda\)</span>).</p>
 <span id="cb562-10"><a href="three-jags-examples.html#cb562-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb562-11"><a href="three-jags-examples.html#cb562-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y))</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-246-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-246-1.png" width="672" /></p>
 <div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="three-jags-examples.html#cb564-1" aria-hidden="true" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
 <span id="cb564-2"><a href="three-jags-examples.html#cb564-2" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
 <span id="cb564-3"><a href="three-jags-examples.html#cb564-3" aria-hidden="true" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
@@ -524,7 +547,7 @@ defining the true parameters.</p>
 <span id="cb568-18"><a href="three-jags-examples.html#cb568-18" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">y =</span> mixt_sample) <span class="sc">%&gt;%</span></span>
 <span id="cb568-19"><a href="three-jags-examples.html#cb568-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb568-20"><a href="three-jags-examples.html#cb568-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y), <span class="at">binwidth =</span> <span class="fl">0.4</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
 <div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="three-jags-examples.html#cb569-1" aria-hidden="true" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
 <span id="cb569-2"><a href="three-jags-examples.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="st">model {</span></span>
 <span id="cb569-3"><a href="three-jags-examples.html#cb569-3" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
@@ -607,8 +630,17 @@ components correctly represent the two clusters.</p>
 <div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="three-jags-examples.html#cb575-1" aria-hidden="true" tabindex="-1"></a>samps <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jags_model, model_params, <span class="at">n.iter =</span> <span class="dv">5000</span>)</span>
 <span id="cb575-2"><a href="three-jags-examples.html#cb575-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="co"># correct plot size</span></span>
 <span id="cb575-3"><a href="three-jags-examples.html#cb575-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(samps)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-250-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-250-1.png" width="672" /></p>
 
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-rats" class="csl-entry">
+Gelfand, Alan E., Susan E. Hills, Amy Racine-Poon, and Adrian F. M. Smith. 1990. <span>“Illustration of <span>Bayesian</span> <span>Inference</span> in <span>Normal</span> <span>Data</span> <span>Models</span> <span> Using</span> <span>Gibbs</span> <span>Sampling</span>.”</span> <em>Journal of the American Statistical Association</em> 85 (412): 972–85. <a href="https://doi.org/10.1080/01621459.1990.10474968">https://doi.org/10.1080/01621459.1990.10474968</a>.
+</div>
+<div id="ref-bugs" class="csl-entry">
+Lunn, David, Christopher Jackson, Nicky Best, Andrew Thomas, and D. J. Spiegelhalter. 2013. <em>The <span>BUGS</span> Book: A Practical Introduction to <span>Bayesian</span> Analysis</em>. Boca Raton: CRC Press, Taylor &amp; Francis Group.
 </div>
 </div>
             </section>
@@ -632,7 +664,7 @@ components correctly represent the two clusters.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -640,7 +672,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -648,7 +681,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/10_jags.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/10_jags.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -659,7 +692,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

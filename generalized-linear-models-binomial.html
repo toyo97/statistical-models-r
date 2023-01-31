@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -419,7 +442,7 @@ It shows first, second (median) and third quartiles, plus
 some outliers if present.</p>
 <div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="generalized-linear-models-binomial.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot in R</span></span>
 <span id="cb359-2"><a href="generalized-linear-models-binomial.html#cb359-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(students<span class="sc">$</span>write <span class="sc">~</span> students<span class="sc">$</span>prog)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
 <div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="generalized-linear-models-binomial.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># precise boundaries (numbers) are found with the `quantile()` function</span></span>
 <span id="cb360-2"><a href="generalized-linear-models-binomial.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(students, {</span>
 <span id="cb360-3"><a href="generalized-linear-models-binomial.html#cb360-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(write[prog <span class="sc">==</span> <span class="st">&quot;vocation&quot;</span>], <span class="at">prob =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> .<span class="dv">25</span>))</span>
@@ -432,7 +455,7 @@ some outliers if present.</p>
 <span id="cb362-3"><a href="generalized-linear-models-binomial.html#cb362-3" aria-hidden="true" tabindex="-1"></a>students <span class="sc">%&gt;%</span></span>
 <span id="cb362-4"><a href="generalized-linear-models-binomial.html#cb362-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(prog, write)) <span class="sc">+</span></span>
 <span id="cb362-5"><a href="generalized-linear-models-binomial.html#cb362-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
 <div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="generalized-linear-models-binomial.html#cb363-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_violin() # try also the &quot;violin plot&quot;</span></span></code></pre></div>
 <p>We can also put all subjects together, but we need to
 switch to long format with <code>melt</code>.</p>
@@ -444,7 +467,7 @@ switch to long format with <code>melt</code>.</p>
 <span id="cb364-6"><a href="generalized-linear-models-binomial.html#cb364-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">value.name =</span> <span class="st">&quot;grade&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb364-7"><a href="generalized-linear-models-binomial.html#cb364-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb364-8"><a href="generalized-linear-models-binomial.html#cb364-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(prog, grade, <span class="at">fill =</span> subject))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
 <div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="generalized-linear-models-binomial.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or in different plots with</span></span>
 <span id="cb365-2"><a href="generalized-linear-models-binomial.html#cb365-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    ...</span></span>
 <span id="cb365-3"><a href="generalized-linear-models-binomial.html#cb365-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    geom_boxplot(aes(prog, grade)) +</span></span>
@@ -513,7 +536,7 @@ They are computed the same way.</p>
 <span id="cb368-2"><a href="generalized-linear-models-binomial.html#cb368-2" aria-hidden="true" tabindex="-1"></a>students <span class="sc">%&gt;%</span></span>
 <span id="cb368-3"><a href="generalized-linear-models-binomial.html#cb368-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(math, science, write, read) <span class="sc">%&gt;%</span></span>
 <span id="cb368-4"><a href="generalized-linear-models-binomial.html#cb368-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>(<span class="at">progress =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
 <p>In order to be able to use the Binomial generalized linear model
 and set the program as response variable, we have to make a new
 dataset in which we define a binary class instead of a three levels
@@ -785,16 +808,16 @@ The plots interpretation is left as exercise.</p>
 <span id="cb394-6"><a href="generalized-linear-models-binomial.html#cb394-6" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
 <span id="cb394-7"><a href="generalized-linear-models-binomial.html#cb394-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb394-8"><a href="generalized-linear-models-binomial.html#cb394-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(write, prediction, <span class="at">color =</span> predProg))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
 <div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="generalized-linear-models-binomial.html#cb395-1" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
 <span id="cb395-2"><a href="generalized-linear-models-binomial.html#cb395-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb395-3"><a href="generalized-linear-models-binomial.html#cb395-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(math, prediction, <span class="at">color =</span> predProg))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="generalized-linear-models-binomial.html#cb396-1" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
 <span id="cb396-2"><a href="generalized-linear-models-binomial.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb396-3"><a href="generalized-linear-models-binomial.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(ses, prediction, <span class="at">color =</span> ses)) <span class="sc">+</span></span>
 <span id="cb396-4"><a href="generalized-linear-models-binomial.html#cb396-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> predProg)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 </div>
 <div id="other-tests" class="section level2 hasAnchor" number="7.6">
 <h2><span class="header-section-number">7.6</span> Other tests<a href="generalized-linear-models-binomial.html#other-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -917,7 +940,7 @@ Feel free to further experiment the dataset.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -925,7 +948,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -933,7 +957,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/07_glm.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/07_glm.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -944,7 +968,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

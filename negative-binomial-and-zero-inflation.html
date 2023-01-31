@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -331,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">9.1</span> Dataset<a href="negative-binomial-and-zero-inflation.html#dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is a sample of 4,406 individuals, aged 66 and over, who were covered by Medicare
 in 1988. One of the variables the data provide is number of physician office visits.
-The dataset is provided by the AER package <span class="citation">(<a href="#ref-aer" role="doc-biblioref"><strong>aer?</strong></a>)</span>.</p>
+The dataset is provided by the AER package <span class="citation">(<a href="#ref-aer" role="doc-biblioref">Kleiber and Zeileis 2008</a>)</span>.</p>
 <p>Our goal is to model the number of visits given the other attributes (chronic conditions,
 status, gender etc.). For sake of simplicity, we only select a subset of attributes which
 are considered to be relevant.</p>
@@ -489,7 +512,7 @@ are considered to be relevant.</p>
 <span id="cb483-11"><a href="negative-binomial-and-zero-inflation.html#cb483-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb483-12"><a href="negative-binomial-and-zero-inflation.html#cb483-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(visits))</span>
 <span id="cb483-13"><a href="negative-binomial-and-zero-inflation.html#cb483-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(visits_scatter, visits_bar, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
 <p>The response presents high variability, we can reduce this by taking the log.</p>
 <div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="negative-binomial-and-zero-inflation.html#cb484-1" aria-hidden="true" tabindex="-1"></a>logvisits_scatter <span class="ot">&lt;-</span> nmes <span class="sc">%&gt;%</span></span>
 <span id="cb484-2"><a href="negative-binomial-and-zero-inflation.html#cb484-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">visits =</span> <span class="fu">log</span>(visits <span class="sc">+</span> .<span class="dv">5</span>)) <span class="sc">%&gt;%</span></span>
@@ -502,7 +525,7 @@ are considered to be relevant.</p>
 <span id="cb484-9"><a href="negative-binomial-and-zero-inflation.html#cb484-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(visits), <span class="at">binwidth =</span> .<span class="dv">1</span>)</span>
 <span id="cb484-10"><a href="negative-binomial-and-zero-inflation.html#cb484-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb484-11"><a href="negative-binomial-and-zero-inflation.html#cb484-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(logvisits_scatter, logvisits_bar, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
 <p>Now we analyse the relationship with the number of chronic diseases.</p>
 <div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="negative-binomial-and-zero-inflation.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="co"># saturate</span></span>
 <span id="cb485-2"><a href="negative-binomial-and-zero-inflation.html#cb485-2" aria-hidden="true" tabindex="-1"></a>sat <span class="ot">&lt;-</span> <span class="cf">function</span>(x, sat_point) {</span>
@@ -519,7 +542,7 @@ are considered to be relevant.</p>
 <span id="cb485-13"><a href="negative-binomial-and-zero-inflation.html#cb485-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb485-14"><a href="negative-binomial-and-zero-inflation.html#cb485-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(chronic))</span>
 <span id="cb485-15"><a href="negative-binomial-and-zero-inflation.html#cb485-15" aria-hidden="true" tabindex="-1"></a>unbalanced_plt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-222-1.png" width="672" />
+<p><img src="smr_book_files/figure-html/unnamed-chunk-222-1.png" width="672" />
 This variable seems to have too low support on values from 4 above. This will lead
 to low accuracy in the visit estimation when we observe a number of chronic diseases higher than 4.
 We may fix this issue by assuming that a patient having 4 or more diseases will get visited as
@@ -531,7 +554,7 @@ and we transform the data accordingly.</p>
 <span id="cb486-4"><a href="negative-binomial-and-zero-inflation.html#cb486-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(chronic_sat))</span>
 <span id="cb486-5"><a href="negative-binomial-and-zero-inflation.html#cb486-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb486-6"><a href="negative-binomial-and-zero-inflation.html#cb486-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(unbalanced_plt, balanced_plt)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-223-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-223-1.png" width="672" /></p>
 <p>To summarize, here the two data transformations discussed so far (which we can compare to the
 original dataset). With a log-transform we fix the highly skewed distribution on the response
 variable, while with a saturation point on the <code>chronic</code> predictor, we create balanced classes.</p>
@@ -551,7 +574,7 @@ variable, while with a saturation point on the <code>chronic</code> predictor, w
 <span id="cb487-14"><a href="negative-binomial-and-zero-inflation.html#cb487-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(chronic_sat, log_visits))</span>
 <span id="cb487-15"><a href="negative-binomial-and-zero-inflation.html#cb487-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb487-16"><a href="negative-binomial-and-zero-inflation.html#cb487-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(biv, tr_biv, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-224-1.png" width="672" />
+<p><img src="smr_book_files/figure-html/unnamed-chunk-224-1.png" width="672" />
 There are many less outliers and less variability among classes,
 which suggests that we can better capture its distribution</p>
 <p>Here some other bi-variate plots which can be useful for further inspection
@@ -582,7 +605,7 @@ of the available data.</p>
 <span id="cb488-24"><a href="negative-binomial-and-zero-inflation.html#cb488-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
 <span id="cb488-25"><a href="negative-binomial-and-zero-inflation.html#cb488-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb488-26"><a href="negative-binomial-and-zero-inflation.html#cb488-26" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(ggarrange, plts)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
 </div>
 <div id="negative-binomial-regression" class="section level2 hasAnchor" number="9.3">
 <h2><span class="header-section-number">9.3</span> Negative binomial regression<a href="negative-binomial-and-zero-inflation.html#negative-binomial-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -779,7 +802,7 @@ zero or not-zero</li>
 <span id="cb512-7"><a href="negative-binomial-and-zero-inflation.html#cb512-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb512-8"><a href="negative-binomial-and-zero-inflation.html#cb512-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y))</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-233-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-233-1.png" width="672" /></p>
 <p>With our data, we do not observe something really like a zero inflation
 model, but still, with a ZI model, we can have more insight on the
 presence of many zeros.</p>
@@ -790,12 +813,12 @@ presence of many zeros.</p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 47 rows containing non-finite values (`stat_bin()`).</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
 <div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="negative-binomial-and-zero-inflation.html#cb518-1" aria-hidden="true" tabindex="-1"></a>nmes <span class="sc">%&gt;%</span></span>
 <span id="cb518-2"><a href="negative-binomial-and-zero-inflation.html#cb518-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gtz =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(visits <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="st">&quot;&gt;0&quot;</span>, <span class="st">&quot;0&quot;</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb518-3"><a href="negative-binomial-and-zero-inflation.html#cb518-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb518-4"><a href="negative-binomial-and-zero-inflation.html#cb518-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(gtz))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
 <p>Let’s try to fit a zero inflation model.</p>
 <p>Notice how the <code>zeroinfl</code> function infers two models:
 the count (pois) and the zero model (logistic regression).</p>
@@ -1061,6 +1084,12 @@ Poisson of that of all the other larger counts.</p>
 </div>
 </div>
 </div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-aer" class="csl-entry">
+Kleiber, Christian, and Achim Zeileis. 2008. <em>Applied Econometrics with <span>R</span></em>. New York: Springer-Verlag. <a href="https://CRAN.R-project.org/package=AER">https://CRAN.R-project.org/package=AER</a>.
+</div>
+</div>
             </section>
 
           </div>
@@ -1082,7 +1111,7 @@ Poisson of that of all the other larger counts.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -1090,7 +1119,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1098,7 +1128,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/09_negbin.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/09_negbin.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -1109,7 +1139,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null

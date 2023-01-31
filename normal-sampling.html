@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-01-30" />
+<meta name="date" content="2023-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,6 +53,7 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link rel="shortcut icon" href="./favicon.png" />
 
 
 <style type="text/css">
@@ -120,8 +121,30 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -369,7 +392,7 @@ sample with <span class="math inline">\(n = 50\)</span> i.i.d. Normal random var
 <span id="cb210-14"><a href="normal-sampling.html#cb210-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;i&quot;</span>) <span class="sc">+</span></span>
 <span id="cb210-15"><a href="normal-sampling.html#cb210-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_i&quot;</span>)</span>
 <span id="cb210-16"><a href="normal-sampling.html#cb210-16" aria-hidden="true" tabindex="-1"></a>iidplt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
 <p>If the random variables are independent but distributed with different mean,
 we can identify two notable cases: <strong>mean shift</strong> and <strong>mean drift</strong>.</p>
 <p>In the first case, we write</p>
@@ -413,7 +436,7 @@ we can identify two notable cases: <strong>mean shift</strong> and <strong>mean 
 <span id="cb211-22"><a href="normal-sampling.html#cb211-22" aria-hidden="true" tabindex="-1"></a><span class="co"># save the plot in a variable for later use</span></span>
 <span id="cb211-23"><a href="normal-sampling.html#cb211-23" aria-hidden="true" tabindex="-1"></a>msplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(ms_sample, <span class="st">&quot;Mean-shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
 <span id="cb211-24"><a href="normal-sampling.html#cb211-24" aria-hidden="true" tabindex="-1"></a>msplt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
 <p>For the mean drift, the mean changes variable by variable</p>
 <p><strong>Mean drift</strong>:
 <span class="math display">\[
@@ -437,7 +460,7 @@ mean going from <span class="math inline">\(0\)</span> to <span class="math inli
 <span id="cb212-3"><a href="normal-sampling.html#cb212-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb212-4"><a href="normal-sampling.html#cb212-4" aria-hidden="true" tabindex="-1"></a>mdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(md_sample, <span class="st">&quot;Mean drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
 <span id="cb212-5"><a href="normal-sampling.html#cb212-5" aria-hidden="true" tabindex="-1"></a>mdplt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 <p>The same concept is applied also to random variables
 drawn by a normal with changing variance.</p>
 <p><strong>Variance shift</strong>:
@@ -464,7 +487,7 @@ drawn by a normal with changing variance.</p>
 <span id="cb213-5"><a href="normal-sampling.html#cb213-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb213-6"><a href="normal-sampling.html#cb213-6" aria-hidden="true" tabindex="-1"></a>vsplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vs_sample, <span class="st">&quot;Variance shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
 <span id="cb213-7"><a href="normal-sampling.html#cb213-7" aria-hidden="true" tabindex="-1"></a>vsplt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p><strong>Variance drift</strong></p>
 <p><span class="math display">\[
 \mathbf{X} \sim \mathcal{N}\left(
@@ -485,7 +508,7 @@ drawn by a normal with changing variance.</p>
 <span id="cb214-2"><a href="normal-sampling.html#cb214-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb214-3"><a href="normal-sampling.html#cb214-3" aria-hidden="true" tabindex="-1"></a>vdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vd_sample, <span class="st">&quot;Variance drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
 <span id="cb214-4"><a href="normal-sampling.html#cb214-4" aria-hidden="true" tabindex="-1"></a>vdplt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <div id="autocorrelated-sample" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Autocorrelated sample<a href="normal-sampling.html#autocorrelated-sample" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let <span class="math inline">\(\mathbf{Y} = Y_1, ..., Y_{n+1}\)</span> an i.i.d. standard
@@ -532,7 +555,7 @@ a Normal non-random sample with such distribution</p>
 ## [43] -0.67926274  1.72098578 -0.33164903  0.88189010 -2.83982793  1.76979995
 ## [49]  1.26604281</code></pre>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="normal-sampling.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sample</span>(auto_sample)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 <p>From this plot it is almost impossible to spot the correlation between variables.
 It’s more visible with a plot having <span class="math inline">\(X_i\)</span> on one axis and <span class="math inline">\(X_{i+1}\)</span> on the other.</p>
 <div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="normal-sampling.html#cb219-1" aria-hidden="true" tabindex="-1"></a>autoplt <span class="ot">&lt;-</span> auto_sample <span class="sc">%&gt;%</span></span>
@@ -548,7 +571,7 @@ It’s more visible with a plot having <span class="math inline">\(X_i\)</span> 
 <span id="cb219-11"><a href="normal-sampling.html#cb219-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;x_i&quot;</span>) <span class="sc">+</span></span>
 <span id="cb219-12"><a href="normal-sampling.html#cb219-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_{i+1}&quot;</span>)</span>
 <span id="cb219-13"><a href="normal-sampling.html#cb219-13" aria-hidden="true" tabindex="-1"></a>autoplt</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <p>Maybe it’s even more clear if the number of observations increases. Try with larger n.</p>
 <p><strong>Questions</strong>:</p>
 <ul>
@@ -563,7 +586,7 @@ single picture.</p>
 <span id="cb220-3"><a href="normal-sampling.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(iidplt, msplt, mdplt, vsplt, vdplt, autoplt,</span>
 <span id="cb220-4"><a href="normal-sampling.html#cb220-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span></span>
 <span id="cb220-5"><a href="normal-sampling.html#cb220-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
 </div>
 </div>
 <div id="exchangeable-normal-random-variables" class="section level2 hasAnchor" number="3.2">
@@ -649,7 +672,7 @@ use that value to simulate the <span class="math inline">\(\mathbf X\)</span> No
 <span id="cb224-5"><a href="normal-sampling.html#cb224-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span>
 <span id="cb224-6"><a href="normal-sampling.html#cb224-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb224-7"><a href="normal-sampling.html#cb224-7" aria-hidden="true" tabindex="-1"></a>bvt_scatter</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="normal-sampling.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the true distribution</span></span>
 <span id="cb225-2"><a href="normal-sampling.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a grid (many points with fixed space between them)</span></span>
 <span id="cb225-3"><a href="normal-sampling.html#cb225-3" aria-hidden="true" tabindex="-1"></a>bvt_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
@@ -665,7 +688,7 @@ use that value to simulate the <span class="math inline">\(\mathbf X\)</span> No
 <span id="cb225-13"><a href="normal-sampling.html#cb225-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb225-14"><a href="normal-sampling.html#cb225-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(x, s, <span class="at">z =</span> prob)) <span class="sc">+</span> <span class="co"># or geom_contour_filled</span></span>
 <span id="cb225-15"><a href="normal-sampling.html#cb225-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <div id="exercises-1" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Exercises<a href="normal-sampling.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Take two bivariate random variables (the same as before, <span class="math inline">\(X, S\)</span>).
@@ -736,7 +759,7 @@ of the probability measure.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
 "linkedin": false,
@@ -744,7 +767,8 @@ gitbook.start({
 "instapaper": false,
 "vk": false,
 "whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -752,7 +776,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r-dup/edit/master/lessons/03_normal_sampling.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/lessons/03_normal_sampling.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -763,7 +787,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_main.pdf", "_main.epub"],
+"download": ["smr_book.pdf"],
 "search": {
 "engine": "fuse",
 "options": null
