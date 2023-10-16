@@ -113,14 +113,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Statistical Models in R},
-  pdfauthor={Vittorio Zampinetti; Mauro Gasparini},
+  pdftitle={Elementary statistics},
+  pdfauthor={Vittorio Zampinetti},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Statistical Models in R}
-\author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2023-10-11}
+\title{Elementary statistics}
+\author{Vittorio Zampinetti}
+\date{2023-10-16}
 
 \begin{document}
 \maketitle
@@ -203,7 +203,7 @@ Some examples:
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{t}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
-         \AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)) }\CommentTok{\# matrix operations (transpose) }
+         \AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)) }\CommentTok{\# matrix operations (transpose)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -238,7 +238,7 @@ Conditional statements and loops have straightforward syntax (similar to C/C++
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\ControlFlowTok{if}\NormalTok{ (b }\SpecialCharTok{==} \DecValTok{4} \SpecialCharTok{\&}\NormalTok{ a }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{ }\CommentTok{\# if{-}else statement}
+\ControlFlowTok{if}\NormalTok{ (b }\SpecialCharTok{==} \DecValTok{4} \SpecialCharTok{\&\&}\NormalTok{ a }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{ }\CommentTok{\# if{-}else statement}
 \NormalTok{  out }\OtherTok{\textless{}{-}} \StringTok{""}
   \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{b) \{ }\CommentTok{\# for loop}
 \NormalTok{    out }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(out, }\FunctionTok{class}\NormalTok{(b)) }\CommentTok{\# concatenate two or more strings}
@@ -266,15 +266,15 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# get Normal samples with 0 (default) mean and 10 standard deviation}
-\NormalTok{array }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{sd =} \DecValTok{10}\NormalTok{) }\CommentTok{\# sd is an argument, }
+\NormalTok{array }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, }\AttributeTok{sd =} \DecValTok{10}\NormalTok{) }\CommentTok{\# sd is an argument,}
                             \CommentTok{\# the mean is left to the default 0}
 \NormalTok{array}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   1.3469481 -21.5133632  15.0340302   4.8968923   3.2338406  -3.4397957
-##  [7]  -7.9086597  -0.3978677   3.4146653   7.2657260
+##  [1]   3.241319   1.980668 -17.358670 -11.176221   5.327840  -0.589462
+##  [7]  -1.304288  -8.876984  -3.050540  12.388115
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -389,7 +389,8 @@ is not an integer
 
 \NormalTok{non\_casted\_num }\OtherTok{\textless{}{-}}\NormalTok{ int\_num }\SpecialCharTok{{-}}\NormalTok{ 2L }\CommentTok{\# result is exactly 48, still int}
 \NormalTok{casted\_num }\OtherTok{\textless{}{-}}\NormalTok{ int\_num }\SpecialCharTok{/}\NormalTok{ 7L }\CommentTok{\# implicit cast to numeric type to store decimals}
-\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\FunctionTok{class}\NormalTok{(int\_num), }\FunctionTok{class}\NormalTok{(non\_casted\_num), }\FunctionTok{class}\NormalTok{(casted\_num), }\AttributeTok{sep =} \StringTok{", "}\NormalTok{))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\FunctionTok{class}\NormalTok{(int\_num), }\FunctionTok{class}\NormalTok{(non\_casted\_num),}
+            \FunctionTok{class}\NormalTok{(casted\_num), }\AttributeTok{sep =} \StringTok{", "}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -512,8 +513,8 @@ Every operation involving missing values, will output \texttt{NA}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}
-  \StringTok{"1/0 = "}\NormalTok{, }\DecValTok{1}\SpecialCharTok{/}\DecValTok{0}\NormalTok{,}
-  \StringTok{", 0/0 = "}\NormalTok{, }\DecValTok{0}\SpecialCharTok{/}\DecValTok{0}
+  \StringTok{"1/0 = "}\NormalTok{, }\DecValTok{1} \SpecialCharTok{/} \DecValTok{0}\NormalTok{,}
+  \StringTok{", 0/0 = "}\NormalTok{, }\DecValTok{0} \SpecialCharTok{/} \DecValTok{0}
 \NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
@@ -543,12 +544,12 @@ as conversion makes sense. Some examples:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{v }\OtherTok{\textless{}{-}}\NormalTok{ T}
+\NormalTok{v }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
 \NormalTok{w }\OtherTok{\textless{}{-}} \StringTok{"0"}
 \NormalTok{x }\OtherTok{\textless{}{-}} \FloatTok{3.2}
 \NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ 2L}
 \NormalTok{z }\OtherTok{\textless{}{-}} \StringTok{"F"}
-\FunctionTok{cat}\NormalTok{(}\FunctionTok{paste}\NormalTok{( }
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}
   \FunctionTok{paste}\NormalTok{(x, }\FunctionTok{as.integer}\NormalTok{(x), }\AttributeTok{sep =} \StringTok{" =\textgreater{} "}\NormalTok{), }\CommentTok{\# from numeric to integer}
   \FunctionTok{paste}\NormalTok{(y, }\FunctionTok{as.numeric}\NormalTok{(y), }\AttributeTok{sep =} \StringTok{" =\textgreater{} "}\NormalTok{), }\CommentTok{\# from integer to numeric}
   \FunctionTok{paste}\NormalTok{(y, }\FunctionTok{as.character}\NormalTok{(y), }\AttributeTok{sep =} \StringTok{" =\textgreater{} "}\NormalTok{),  }\CommentTok{\# from integer to character}
@@ -694,7 +695,7 @@ slicing
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{vec1[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)] }\CommentTok{\# only first and third element}
+\NormalTok{vec1[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{)] }\CommentTok{\# only first and third element}
 \end{Highlighting}
 \end{Shaded}
 
@@ -833,7 +834,7 @@ Matrices are built with \texttt{matrix()}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# or, equivalently }
+\CommentTok{\# or, equivalently}
 \FunctionTok{dim}\NormalTok{(mat2)[}\DecValTok{1}\NormalTok{] }\CommentTok{\# nrow}
 \end{Highlighting}
 \end{Shaded}
@@ -900,7 +901,7 @@ Some examples:
 \begin{Highlighting}[]
 \NormalTok{diagonal\_mat }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\AttributeTok{nrow =} \DecValTok{4}\NormalTok{) }\CommentTok{\# 4x4 identity matrix}
  \CommentTok{\# element by element}
-\NormalTok{diagonal\_mat }\SpecialCharTok{*} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2} \CommentTok{\# note: 1:2 is repeated to match the matrix dimensions }
+\NormalTok{diagonal\_mat }\SpecialCharTok{*} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2} \CommentTok{\# note: 1:2 is repeated to match the matrix dimensions}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1068,15 +1069,15 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##    x  y char
 ## 1  1  1    a
-## 2  1  2    b
-## 3  1  3    b
+## 2  1  2    a
+## 3  1  3    a
 ## 4  1  4    b
 ## 5  1  5    a
-## 6  1  6    a
+## 6  1  6    b
 ## 7  1  7    b
 ## 8  1  8    a
 ## 9  1  9    b
-## 10 1 10    b
+## 10 1 10    a
 \end{verbatim}
 
 \begin{Shaded}
@@ -1106,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "b" "b" "b" "a" "a" "b" "a" "b" "b"
+##  [1] "a" "a" "a" "b" "a" "b" "b" "a" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1117,8 +1118,8 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    b
-## 3 1 3    b
+## 2 1 2    a
+## 3 1 3    a
 ## 4 1 4    b
 \end{verbatim}
 
@@ -1130,7 +1131,7 @@ recommended over the old one).
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(}\StringTok{"tibble"}\NormalTok{)}
-\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{, }\AttributeTok{y =} \DecValTok{1}\NormalTok{, }\AttributeTok{z =}\NormalTok{ x }\SpecialCharTok{/}\NormalTok{ y) }\CommentTok{\# tibble dataframe }
+\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{, }\AttributeTok{y =} \DecValTok{1}\NormalTok{, }\AttributeTok{z =}\NormalTok{ x }\SpecialCharTok{/}\NormalTok{ y) }\CommentTok{\# tibble dataframe}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1261,11 +1262,11 @@ edit the current canvas. For instance, to plot some points and a line:
 \begin{Highlighting}[]
 \CommentTok{\# generate synthetic data}
 \NormalTok{n\_points }\OtherTok{\textless{}{-}} \DecValTok{20}
-\NormalTok{x }\OtherTok{=} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_points}
-\NormalTok{y }\OtherTok{=} \DecValTok{3} \SpecialCharTok{*}\NormalTok{ x }\SpecialCharTok{+} \DecValTok{2} \SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(n\_points) }
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_points}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{3} \SpecialCharTok{*}\NormalTok{ x }\SpecialCharTok{+} \DecValTok{2} \SpecialCharTok{*} \FunctionTok{rnorm}\NormalTok{(n\_points)}
 
 \FunctionTok{plot}\NormalTok{(x, y)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1353,20 +1354,24 @@ is more or less what we can do
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# give all the data to ggplot, we\textquotesingle{}ll filter later}
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{plt }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(country }\SpecialCharTok{\%in\%}\NormalTok{ wanted\_countries),}
-              \FunctionTok{aes}\NormalTok{(year, gdpPercap, }\AttributeTok{color =}\NormalTok{ country)) }\SpecialCharTok{+} 
+              \FunctionTok{aes}\NormalTok{(year, gdpPercap, }\AttributeTok{color =}\NormalTok{ country)) }\SpecialCharTok{+}
     \CommentTok{\# now group by continent and get the upper/lower bounds}
     \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(gdpPercap)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# min(NA) = NA, make sure NAs are excluded}
-\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent, year) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# gather all entries for each continent separately}
-\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}\AttributeTok{minGdp =} \FunctionTok{min}\NormalTok{(gdpPercap), }\AttributeTok{maxGdp =} \FunctionTok{max}\NormalTok{(gdpPercap), }\FunctionTok{across}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# compute aggregated quantity (min/max)}
+      \CommentTok{\# min(NA) = NA, make sure NAs are excluded}
+\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(gdpPercap)) }\SpecialCharTok{\%\textgreater{}\%}
+      \CommentTok{\# gather all entries for each continent separately}
+\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent, year) }\SpecialCharTok{\%\textgreater{}\%}
+      \CommentTok{\# compute aggregated quantity (min/max)}
+\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}\AttributeTok{minGdp =} \FunctionTok{min}\NormalTok{(gdpPercap),}
+                       \AttributeTok{maxGdp =} \FunctionTok{max}\NormalTok{(gdpPercap), }\FunctionTok{across}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(country }\SpecialCharTok{\%in\%}\NormalTok{ wanted\_countries),}
               \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ minGdp, }\AttributeTok{ymax =}\NormalTok{ maxGdp,}
                   \AttributeTok{x =}\NormalTok{ year, }\AttributeTok{color =}\NormalTok{ country, }\AttributeTok{fill =}\NormalTok{ country),}
-              \AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{) }\OtherTok{{-}\textgreater{}}\NormalTok{ plt}
+              \AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1412,22 +1417,27 @@ But, since it looks a bit confusing, we might want four separate plots.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{wanted\_continents }\OtherTok{\textless{}{-}}\NormalTok{ gapminder }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(country }\SpecialCharTok{\%in\%}\NormalTok{ wanted\_countries) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{pull}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# extract one column from a dataframe (different from select)}
-  \FunctionTok{unique}\NormalTok{() }\OtherTok{{-}\textgreater{}}\NormalTok{ wanted\_continents}
+  \CommentTok{\# extract one column from a dataframe (different from select)}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{pull}\NormalTok{(continent) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unique}\NormalTok{()}
 
 \NormalTok{gapminder }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{\%in\%}\NormalTok{ wanted\_continents) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(country }\SpecialCharTok{\%in\%}\NormalTok{ wanted\_countries),}
-              \FunctionTok{aes}\NormalTok{(year, gdpPercap, }\AttributeTok{color =}\NormalTok{ country)) }\SpecialCharTok{+} 
+              \FunctionTok{aes}\NormalTok{(year, gdpPercap, }\AttributeTok{color =}\NormalTok{ country)) }\SpecialCharTok{+}
     \CommentTok{\# now group by continent and get the upper/lower bounds}
     \FunctionTok{geom\_ribbon}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(gdpPercap)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# min(NA) = NA, make sure NAs are excluded}
-\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent, year) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# gather all entries for each continent separately}
-\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}\AttributeTok{minGdp =} \FunctionTok{min}\NormalTok{(gdpPercap), }\AttributeTok{maxGdp =} \FunctionTok{max}\NormalTok{(gdpPercap), }\FunctionTok{across}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# compute aggregated quantity (min/max)}
+      \CommentTok{\# min(NA) = NA, make sure NAs are excluded}
+\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(gdpPercap)) }\SpecialCharTok{\%\textgreater{}\%}
+      \CommentTok{\# gather all entries for each continent separately}
+\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(continent, year) }\SpecialCharTok{\%\textgreater{}\%}
+      \CommentTok{\# compute aggregated quantity (min/max)}
+\NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{summarize}\NormalTok{(}\AttributeTok{minGdp =} \FunctionTok{min}\NormalTok{(gdpPercap),}
+                       \AttributeTok{maxGdp =} \FunctionTok{max}\NormalTok{(gdpPercap), }\FunctionTok{across}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{      dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(country }\SpecialCharTok{\%in\%}\NormalTok{ wanted\_countries),}
               \FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ minGdp, }\AttributeTok{ymax =}\NormalTok{ maxGdp,}
                   \AttributeTok{x =}\NormalTok{ year, }\AttributeTok{color =}\NormalTok{ country, }\AttributeTok{fill =}\NormalTok{ country),}
@@ -1483,35 +1493,38 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.101764248 -0.886703187 -0.009387034  0.008212186  0.296630847
-##  [6]  0.276596762 -0.396876022 -1.921190983 -1.462207392  0.701383967
+##  [1]  0.1149320  0.7637125  0.7156665  0.2737547  0.0252859  0.7790551
+##  [7] -0.1867948  0.4907590  0.0912475  2.2064746
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{dnorm}\NormalTok{(normal\_samples, }\AttributeTok{mean =} \DecValTok{2}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{) }\CommentTok{\# compute the density function (over another Normal)}
+\CommentTok{\# compute the density function (over another Normal)}
+\FunctionTok{dnorm}\NormalTok{(normal\_samples, }\AttributeTok{mean =} \DecValTok{2}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.2665076670 0.0061860026 0.0529844577 0.0548832059 0.0935114145
-##  [6] 0.0903559966 0.0225629553 0.0001828567 0.0009953874 0.1716770242
+##  [1] 0.06749652 0.18578932 0.17487309 0.08991415 0.05677345 0.18932469
+##  [7] 0.03651711 0.12772923 0.06453119 0.39052847
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{pnorm}\NormalTok{(normal\_samples, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{) }\CommentTok{\# cumulative distribution function}
+\CommentTok{\# cumulative distribution function}
+\FunctionTok{pnorm}\NormalTok{(normal\_samples, }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.86471791 0.18761936 0.49625517 0.50327615 0.61662582 0.60895512
-##  [7] 0.34572944 0.02735382 0.07184219 0.75846829
+##  [1] 0.5457505 0.7774807 0.7629014 0.6078634 0.5100865 0.7820264 0.4259107
+##  [8] 0.6882016 0.5363520 0.9863246
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{qnorm}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\FloatTok{0.95}\NormalTok{), }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{) }\CommentTok{\# get the quantiles of a normal}
+\CommentTok{\# get the quantiles of a normal}
+\FunctionTok{qnorm}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\FloatTok{0.95}\NormalTok{), }\AttributeTok{mean =} \DecValTok{0}\NormalTok{, }\AttributeTok{sd =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1630,7 +1643,7 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# gives error: argument \textquotesingle{}b\textquotesingle{} is not part of \textquotesingle{}within\textquotesingle{}}
-\FunctionTok{within}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{a=} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{2}\NormalTok{)), }\AttributeTok{b =}\NormalTok{ a}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }
+\FunctionTok{within}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{a =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{2}\NormalTok{)), }\AttributeTok{b =}\NormalTok{ a}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1641,14 +1654,14 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# \textquotesingle{}b\textless{}{-}a\^{}2\textquotesingle{} is the value passed to the expr argument of within()}
-\FunctionTok{within}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{a =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{2}\NormalTok{)), b }\OtherTok{\textless{}{-}}\NormalTok{ a}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }
+\FunctionTok{within}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{a =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{2}\NormalTok{)), b }\OtherTok{\textless{}{-}}\NormalTok{ a}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##           a          b
-## 1 0.2493170 0.06215899
-## 2 0.6427107 0.41307709
+##            a         b
+## 1  0.4365141 0.1905446
+## 2 -1.9160983 3.6714327
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -1661,12 +1674,12 @@ result to variables.
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(dplyr)}
 
-\NormalTok{starwars }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ starwars }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}\AttributeTok{bmi =}\NormalTok{ mass }\SpecialCharTok{/}\NormalTok{ ((height }\SpecialCharTok{/} \DecValTok{100}\NormalTok{) }\SpecialCharTok{\^{}} \DecValTok{2}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(bmi)) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%}
 \NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{summarise}\NormalTok{(}\AttributeTok{bmi =} \FunctionTok{mean}\NormalTok{(bmi)) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(bmi)) }\OtherTok{{-}\textgreater{}}\NormalTok{ x}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(bmi))}
 
 \NormalTok{x}
 \end{Highlighting}
@@ -1799,7 +1812,9 @@ identified as worrying, i.e.~\(p = p_1\).
 \[
 P(X < x_0 | p = p_1) = \beta \approx \sum_{k = 0}^{x_0 - 1}{\binom{n}{k}}p^{k}(1-p)^{n-k}\,.
 \]
-Let's now compute these quantities using R, for several values of \(x_0\).
+To answer the question, let's now compute these quantities using the R functions
+\texttt{phyper} and \texttt{pbinom}. We can do this for several values of \(x_0\) i.e.
+\(\forall x_0 \in \{1, \dots, 10\}\) so to understand how \(\alpha\) and \(\beta\) change.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1816,16 +1831,21 @@ Let's now compute these quantities using R, for several values of \(x_0\).
 \CommentTok{\# define the parameters of the test}
 \NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{5000}
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{250}
-\NormalTok{p0 }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{015} 
+\NormalTok{p0 }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{015}
 \NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{04}
-\NormalTok{K0 }\OtherTok{\textless{}{-}} \FunctionTok{floor}\NormalTok{(N }\SpecialCharTok{*}\NormalTok{ p0) }\CommentTok{\# get the lower integer part in case the product is not natural}
+
+\CommentTok{\# get the lower integer part in case the product is not natural}
+\NormalTok{K0 }\OtherTok{\textless{}{-}} \FunctionTok{floor}\NormalTok{(N }\SpecialCharTok{*}\NormalTok{ p0)}
 \NormalTok{K1 }\OtherTok{\textless{}{-}} \FunctionTok{floor}\NormalTok{(N }\SpecialCharTok{*}\NormalTok{ p1)}
 
 \CommentTok{\# false positive (check phyper params with ?phyper)}
-\CommentTok{\# we subtract 1 to x0 because we are looking for P(X \textgreater{}= x0) = 1 {-} P(X \textless{} x0{-}1), not P(X \textgreater{} x0)}
-\NormalTok{fp\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x0 =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}
-                \AttributeTok{hyp =} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{phyper}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, K0, N }\SpecialCharTok{{-}}\NormalTok{ K0, n),}
-                \AttributeTok{bin =} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pbinom}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, n, p0))}
+\CommentTok{\# we subtract 1 to x0 because we are looking for P(X \textgreater{}= x0) = 1 {-} P(X \textless{} x0{-}1),}
+\CommentTok{\# not P(X \textgreater{} x0)}
+\NormalTok{fp\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{x0 =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}
+  \AttributeTok{hyp =} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{phyper}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, K0, N }\SpecialCharTok{{-}}\NormalTok{ K0, n),}
+  \AttributeTok{bin =} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pbinom}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, n, p0)}
+\NormalTok{)}
 \CommentTok{\# let\textquotesingle{}s view the result}
 \NormalTok{fp\_df}
 \end{Highlighting}
@@ -1850,10 +1870,13 @@ Let's now compute these quantities using R, for several values of \(x_0\).
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# false negative}
-\CommentTok{\# again, we subtract 1: P(X \textless{} x0) = P(X \textless{}= x0{-}1) and pbinom(x, n, p) := P(X \textless{}= x; n, p)}
-\NormalTok{fn\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x0 =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}
-                \AttributeTok{hyp =} \FunctionTok{phyper}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, K1, N }\SpecialCharTok{{-}}\NormalTok{ K1, n),}
-                \AttributeTok{bin =} \FunctionTok{pbinom}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, n, p1))}
+\CommentTok{\# again, we subtract 1: P(X \textless{} x0) = P(X \textless{}= x0{-}1) and}
+\CommentTok{\# pbinom(x, n, p) := P(X \textless{}= x; n, p)}
+\NormalTok{fn\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{x0 =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}
+  \AttributeTok{hyp =} \FunctionTok{phyper}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, K1, N }\SpecialCharTok{{-}}\NormalTok{ K1, n),}
+  \AttributeTok{bin =} \FunctionTok{pbinom}\NormalTok{(x0 }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, n, p1)}
+\NormalTok{)}
 \NormalTok{fn\_df}
 \end{Highlighting}
 \end{Shaded}
@@ -1874,11 +1897,12 @@ Let's now compute these quantities using R, for several values of \(x_0\).
 ## 10    10 0.452     0.455
 \end{verbatim}
 
-We observe that with \(x_0 = 8\) we have
+We observe that with \(x_0 = 7\) we have
 \[
-\alpha = 0.033,  \beta = 0.208
+\alpha = 0.0795,  \beta = 0.119
 \]
-but in order to get a more complete overview, we could plot those values together
+which jointly optimize the two probabilities.
+In order to get a more complete overview, we could plot those values together
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1890,15 +1914,17 @@ but in order to get a more complete overview, we could plot those values togethe
 \begin{Highlighting}[]
 \CommentTok{\# join the two dataframes}
 \NormalTok{tot\_df }\OtherTok{\textless{}{-}} \FunctionTok{left\_join}\NormalTok{(fp\_df, fn\_df,}
-                    \AttributeTok{by =} \StringTok{"x0"}\NormalTok{, }\AttributeTok{suffix =} \FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{))}
+  \AttributeTok{by =} \StringTok{"x0"}\NormalTok{, }\AttributeTok{suffix =} \FunctionTok{c}\NormalTok{(}\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{)}
+\NormalTok{)}
 \NormalTok{tot\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, hypalpha, }\AttributeTok{fill =} \StringTok{"alpha"}\NormalTok{), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{, }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, hypbeta, }\AttributeTok{fill =} \StringTok{"beta"}\NormalTok{), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{, }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{geom\_smooth}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, binalpha, }\AttributeTok{color =} \StringTok{"alpha"}\NormalTok{), }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{geom\_smooth}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, binbeta, }\AttributeTok{color =} \StringTok{"beta"}\NormalTok{), }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"thresh"}\NormalTok{, }\AttributeTok{y =} \StringTok{"prob"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"hyper"}\NormalTok{, }\AttributeTok{color =} \StringTok{"binom"}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{pretty\_breaks}\NormalTok{(}\DecValTok{10}\NormalTok{)) }\CommentTok{\# print integers on the x axis}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, hypalpha, }\AttributeTok{fill =} \StringTok{"alpha"}\NormalTok{), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{, }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, hypbeta, }\AttributeTok{fill =} \StringTok{"beta"}\NormalTok{), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{, }\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, binalpha, }\AttributeTok{color =} \StringTok{"alpha"}\NormalTok{), }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x0, binbeta, }\AttributeTok{color =} \StringTok{"beta"}\NormalTok{), }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"thresh"}\NormalTok{, }\AttributeTok{y =} \StringTok{"prob"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"hyper"}\NormalTok{, }\AttributeTok{color =} \StringTok{"binom"}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# print integers on the x axis}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{pretty\_breaks}\NormalTok{(}\DecValTok{10}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1908,8 +1934,8 @@ but in order to get a more complete overview, we could plot those values togethe
 \end{verbatim}
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-61-1.pdf}
-The plot suggests that a good compromise could also be
-\(x_0 = 7\), but there is no rule in choosing such threshold, and in fact,
+The plot indeed suggests that \(x_0 = 7\) is a good compromise,
+but there is no rule in choosing such threshold, and in fact,
 we might be more interested in a safer threshold in terms of lower
 false alarm probability, or lower false non-alarm probability.
 
@@ -1971,7 +1997,7 @@ Y_1, ..., Y_n \stackrel{\text{i.i.d.}}{\sim} \mathcal N (\mu_y, \sigma_y^2)
 The goal is to get a confidence interval for the variable \(\mu_x - \mu_y\),
 therefore an interval in which we can expect the two means difference to be
 with confidence \(1 - \alpha\).
-Assuming equal variance in the two samples and both \(n, m\) sufficiently
+Assuming that both \(n, m\) are sufficiently
 large, the CI is computed as
 
 \[
@@ -2010,7 +2036,7 @@ At this point we can define the confidence level and compute the CI.
   \CommentTok{\# note that mean() is the sample mean}
 \NormalTok{  dev }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(x) }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(y)}
   \CommentTok{\# var() is the sample variance, not the actual variance}
-\NormalTok{  delta }\OtherTok{\textless{}{-}} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha}\SpecialCharTok{/}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(x) }\SpecialCharTok{/}\NormalTok{ m }\SpecialCharTok{+} \FunctionTok{var}\NormalTok{(y) }\SpecialCharTok{/}\NormalTok{ n)}
+\NormalTok{  delta }\OtherTok{\textless{}{-}} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{var}\NormalTok{(x) }\SpecialCharTok{/}\NormalTok{ m }\SpecialCharTok{+} \FunctionTok{var}\NormalTok{(y) }\SpecialCharTok{/}\NormalTok{ n)}
   \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(dev }\SpecialCharTok{{-}}\NormalTok{ delta, dev }\SpecialCharTok{+}\NormalTok{ delta))}
 \NormalTok{\}}
 
@@ -2026,6 +2052,12 @@ We notice that the interval contains the value 0, and this
 is due to the fact that both samples have same mean, therefore the
 sample means will also be, with enough samples, very similar, thus with
 zero (or close to zero) difference.
+
+To wrap this up, under large sample assumptions and unknown variance,
+we computed the confidence interval of a two-samples difference.
+More in general, when we compare two samples \(\mathbf{x}, \mathbf{y}\)
+there are multiple CIs that we might have to compute. We go through
+them below.
 
 \hypertarget{the-four-cases}{%
 \subsection{The four cases}\label{the-four-cases}}
@@ -2127,15 +2159,17 @@ normal.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x\_dt }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}} \DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.01}\NormalTok{)}
-\NormalTok{norm\_t\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_dt, }\AttributeTok{p\_dt =} \FunctionTok{dt}\NormalTok{(x, }\AttributeTok{df =} \DecValTok{3}\NormalTok{), }\AttributeTok{p\_nt =} \FunctionTok{dnorm}\NormalTok{(x))  }
+\NormalTok{x\_dt }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.01}\NormalTok{)}
+\NormalTok{norm\_t\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_dt, }\AttributeTok{p\_dt =} \FunctionTok{dt}\NormalTok{(x, }\AttributeTok{df =} \DecValTok{3}\NormalTok{), }\AttributeTok{p\_nt =} \FunctionTok{dnorm}\NormalTok{(x))}
 
 \NormalTok{norm\_t\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, p\_dt, }\AttributeTok{color =} \StringTok{"t{-}stud"}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, p\_nt, }\AttributeTok{color =} \StringTok{"norm"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"T{-}student with df = 3 and Std Normal comparison"}\NormalTok{,}
-       \AttributeTok{x =} \StringTok{"x"}\NormalTok{, }\AttributeTok{y =} \StringTok{"p(x)"}\NormalTok{)}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"T{-}student with df = 3 and Std Normal comparison"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"x"}\NormalTok{, }\AttributeTok{y =} \StringTok{"p(x)"}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2224,8 +2258,11 @@ In other words, it's a measure of the null hypothesis support in a 0 to 1 range.
 
 In a fair French roulette, the red probability is 18/37.
 
+\textbf{Questions:}
+
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
+\tightlist
 \item
   we observe 20 reds out of 30. Compute the p-value of the null hypothesis
   of the roulette being fair, with respect to the alternative hypothesis
@@ -2236,6 +2273,13 @@ In a fair French roulette, the red probability is 18/37.
   being fair,
 \item
   repeat a. and b. with 200 reds out of 380 as outcome.
+\end{enumerate}
+
+\textbf{Answers:}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
 \item
   Given \(X = \#\text{reds}\), we can compute the following probability
   under the null hypothesis,
@@ -2254,8 +2298,8 @@ In R, we can compute it ``by hand'':
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{p0 }\OtherTok{=} \DecValTok{18}\SpecialCharTok{/}\DecValTok{37}
-\NormalTok{n }\OtherTok{=} \DecValTok{30}
+\NormalTok{p0 }\OtherTok{\textless{}{-}} \DecValTok{18} \SpecialCharTok{/} \DecValTok{37}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{30}
 \CommentTok{\# P(X \textgreater{} 19) \textbackslash{}equiv P(X \textgreater{}= 20)}
 \FunctionTok{pbinom}\NormalTok{(}\DecValTok{19}\NormalTok{, n, p0, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\CommentTok{\# notice the lower.tail flag}
 \end{Highlighting}
@@ -2311,9 +2355,11 @@ or use the Binomial test function
 \NormalTok{sketch\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{n, }\AttributeTok{px =} \FunctionTok{dbinom}\NormalTok{(x, n, p0))}
 \NormalTok{sketch\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, px)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_segment}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textgreater{}=} \DecValTok{20}\NormalTok{),}
-                 \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{xend =}\NormalTok{ x, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =}\NormalTok{ px), }\AttributeTok{color =} \DecValTok{2}\NormalTok{)}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, px)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}
+    \AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textgreater{}=} \DecValTok{20}\NormalTok{),}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{xend =}\NormalTok{ x, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =}\NormalTok{ px), }\AttributeTok{color =} \DecValTok{2}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2326,18 +2372,34 @@ or use the Binomial test function
 \item
   If the alternative hypothesis is just \(H_1: p \neq 18/37\) then the
   contradiction can happen both on the left and on the right side of the curve,
-  i.e.~the roulette favors the red or the roulette favors the black.
+  i.e.~the roulette favors the red or the roulette favors the black \emph{in the
+  same or more extreme way}.
   Therefore we have to sum the two probabilities:
 \end{enumerate}
 
 \[
 P(X \geq 20 | H_0) + P(X < 10 | H_0)\,.
 \]
+
+\begin{quote}
+Note: where does the 10 come from? Well, if we observe 20 reds out
+of 30, at first we might think that the roulette prefers red instead
+of black. One might argue that it does not prefer red, but rather
+it is just not fair (no matter if it favors red or black). We then
+have to consider \emph{all} cases that happen with a lower or equal
+probability than the sample's. If the distribution is symmetric
+(and in this case it almost is), we just consider \(X < 30 - 20\).
+Check the probability \(P(X = 20)\) and find which values on the
+left tail gives at most the same probability.
+Those are the
+values that must be considered in the two-sided test.
+\end{quote}
+
 We compute this quantity first using \texttt{pbinom} as before
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{pbinom}\NormalTok{(}\DecValTok{19}\NormalTok{, n, p0, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{pbinom}\NormalTok{(}\DecValTok{9}\NormalTok{, n, p0) }
+\FunctionTok{pbinom}\NormalTok{(}\DecValTok{19}\NormalTok{, n, p0, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{pbinom}\NormalTok{(}\DecValTok{9}\NormalTok{, n, p0)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2385,11 +2447,15 @@ and then using the test function
 \NormalTok{sketch\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\SpecialCharTok{:}\NormalTok{n, }\AttributeTok{px =} \FunctionTok{dbinom}\NormalTok{(x, n, p0))}
 \NormalTok{sketch\_df }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, px)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_segment}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textgreater{}=} \DecValTok{20}\NormalTok{),}
-                 \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{xend =}\NormalTok{ x, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =}\NormalTok{ px), }\AttributeTok{color =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{geom\_segment}\NormalTok{(}\AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{),}
-                 \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{xend =}\NormalTok{ x, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =}\NormalTok{ px), }\AttributeTok{color =} \DecValTok{3}\NormalTok{)}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(x, px)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}
+    \AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textgreater{}=} \DecValTok{20}\NormalTok{),}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{xend =}\NormalTok{ x, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =}\NormalTok{ px), }\AttributeTok{color =} \DecValTok{2}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}
+    \AttributeTok{data =}\NormalTok{ . }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(x }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{),}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{xend =}\NormalTok{ x, }\AttributeTok{y =} \DecValTok{0}\NormalTok{, }\AttributeTok{yend =}\NormalTok{ px), }\AttributeTok{color =} \DecValTok{3}
+\NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2422,7 +2488,7 @@ In R:
 \begin{Highlighting}[]
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{300}
 \NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{200}
-\NormalTok{z }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{{-}}\NormalTok{ n }\SpecialCharTok{*}\NormalTok{ p0)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p0 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p0))}
+\NormalTok{z }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{{-}}\NormalTok{ n }\SpecialCharTok{*}\NormalTok{ p0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p0 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p0))}
 \FunctionTok{pnorm}\NormalTok{(z, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2466,7 +2532,7 @@ on the case) \texttt{.5} to the \(x\) value.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{z\_corr }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{{-}}\NormalTok{ .}\DecValTok{5} \SpecialCharTok{{-}}\NormalTok{ n }\SpecialCharTok{*}\NormalTok{ p0)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p0 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p0))}
+\NormalTok{z\_corr }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{{-}}\NormalTok{ .}\DecValTok{5} \SpecialCharTok{{-}}\NormalTok{ n }\SpecialCharTok{*}\NormalTok{ p0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p0 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p0))}
 \FunctionTok{pnorm}\NormalTok{(z\_corr, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
