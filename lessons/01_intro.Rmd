@@ -1,3 +1,11 @@
+---
+title: Introduction to R programming
+latest-revision: October 3rd, 2023
+author: Vittorio Zampinetti
+time: 3h
+output: pdf_document
+---
+
 # Introduction
 
 ## R and RStudio
@@ -34,7 +42,7 @@ Some examples:
 2 + 2 # calculator-style
 c(1, 2, 3) * 4 # vector operations
 t(matrix(c(c(1, 2, 3, 4)),
-         nrow = 2, ncol = 2)) # matrix operations (transpose) 
+         nrow = 2, ncol = 2)) # matrix operations (transpose)
 ```
 As any other programming language, it allows for variables declaration.
 Variables hold a value which can be assigned, modified, and used for
@@ -51,7 +59,7 @@ is recommended.
 Conditional statements and loops have straightforward syntax (similar to C/C++
 , but more compact).
 ```{r}
-if (b == 4 & a > 0) { # if-else statement
+if (b == 4 && a > 0) { # if-else statement
   out <- ""
   for (i in 1:b) { # for loop
     out <- paste(out, class(b)) # concatenate two or more strings
@@ -71,7 +79,7 @@ function argument passing (as introduced in [Functions](#functions)).
 Functions are called with the `()` operator and present named arguments.
 ```{r}
 # get Normal samples with 0 (default) mean and 10 standard deviation
-array <- rnorm(10, sd = 10) # sd is an argument, 
+array <- rnorm(10, sd = 10) # sd is an argument,
                             # the mean is left to the default 0
 array
 ```
@@ -158,7 +166,8 @@ int_num <- 50L # 50 stored as integer
 
 non_casted_num <- int_num - 2L # result is exactly 48, still int
 casted_num <- int_num / 7L # implicit cast to numeric type to store decimals
-print(paste(class(int_num), class(non_casted_num), class(casted_num), sep = ", "))
+print(paste(class(int_num), class(non_casted_num),
+            class(casted_num), sep = ", "))
 ```
 
 #### Logical
@@ -214,8 +223,8 @@ missing_val == NA # cannot use ==
 ```
 ```{r}
 print(paste(
-  "1/0 = ", 1/0,
-  ", 0/0 = ", 0/0
+  "1/0 = ", 1 / 0,
+  ", 0/0 = ", 0 / 0
 ))
 ```
 These special values are not necessarily unwanted, but they require
@@ -230,12 +239,12 @@ Variables types can be converted with `as.<typename>()`-like functions, as long
 as conversion makes sense. Some examples:
 
 ```{r}
-v <- T
+v <- TRUE
 w <- "0"
 x <- 3.2
 y <- 2L
 z <- "F"
-cat(paste( 
+cat(paste(
   paste(x, as.integer(x), sep = " => "), # from numeric to integer
   paste(y, as.numeric(y), sep = " => "), # from integer to numeric
   paste(y, as.character(y), sep = " => "),  # from integer to character
@@ -297,7 +306,7 @@ slicing
 
 ```{r}
 vec1[1:3] # first 3 elements
-vec1[c(1,3)] # only first and third element
+vec1[c(1, 3)] # only first and third element
 vec1[-c(1:3)] # all but elements 1 to 3
 vec1[seq(1, length(vec1), 2)] # odd position elements
 ```
@@ -340,7 +349,7 @@ mat2 # filled row-wise
 dim(mat2) # get dimensions
 c(nrow(mat2), ncol(mat2)) # get number of rows and cols separately
 
-# or, equivalently 
+# or, equivalently
 dim(mat2)[1] # nrow
 ```
 All indexing operations available on vectors, are also available on 
@@ -361,7 +370,7 @@ Some examples:
 ```{r}
 diagonal_mat <- diag(nrow = 4) # 4x4 identity matrix
  # element by element
-diagonal_mat * 1:2 # note: 1:2 is repeated to match the matrix dimensions 
+diagonal_mat * 1:2 # note: 1:2 is repeated to match the matrix dimensions
 diagonal_mat %*% seq(2, 8, 2) # matrix multiplication (4,4) x (4, 1) -> (4, 1)
 
 v1 <- 1:4
@@ -420,7 +429,7 @@ recommended over the old one).
 
 ```{r}
 library("tibble")
-tibble(x = 1:15, y = 1, z = x / y) # tibble dataframe 
+tibble(x = 1:15, y = 1, z = x / y) # tibble dataframe
 ```
 
 For more information on tibble and its advantages with respect to traditional
@@ -465,11 +474,11 @@ edit the current canvas. For instance, to plot some points and a line:
 ```{r}
 # generate synthetic data
 n_points <- 20
-x = 1:n_points
-y = 3 * x + 2 * rnorm(n_points) 
+x <- 1:n_points
+y <- 3 * x + 2 * rnorm(n_points)
 
 plot(x, y)
-abline(a = 0, b = 3, col = 'red')
+abline(a = 0, b = 3, col = "red")
 ```
 
 However, the `ggplot` library is now the new standard plotting library.
@@ -531,41 +540,50 @@ is more or less what we can do
 
 ```{r}
 # give all the data to ggplot, we'll filter later
-gapminder %>%
+plt <- gapminder %>%
   ggplot() +
-    geom_line(data = . %>% 
+    geom_line(data = . %>%
       dplyr::filter(country %in% wanted_countries),
-              aes(year, gdpPercap, color = country)) + 
+              aes(year, gdpPercap, color = country)) +
     # now group by continent and get the upper/lower bounds
     geom_ribbon(data = . %>%
-      dplyr::filter(!is.na(gdpPercap)) %>% # min(NA) = NA, make sure NAs are excluded
-      dplyr::group_by(continent, year) %>% # gather all entries for each continent separately
-      dplyr::summarize(minGdp = min(gdpPercap), maxGdp = max(gdpPercap), across()) %>% # compute aggregated quantity (min/max)
+      # min(NA) = NA, make sure NAs are excluded
+      dplyr::filter(!is.na(gdpPercap)) %>%
+      # gather all entries for each continent separately
+      dplyr::group_by(continent, year) %>%
+      # compute aggregated quantity (min/max)
+      dplyr::summarize(minGdp = min(gdpPercap),
+                       maxGdp = max(gdpPercap), across()) %>%
       dplyr::filter(country %in% wanted_countries),
               aes(ymin = minGdp, ymax = maxGdp,
                   x = year, color = country, fill = country),
-              alpha = 0.1, linetype = "dashed", size = 0.2) -> plt
+              alpha = 0.1, linetype = "dashed", size = 0.2)
 plt
 ```
 But, since it looks a bit confusing, we might want four separate plots.
 
 ```{r}
-gapminder %>% 
+wanted_continents <- gapminder %>%
   dplyr::filter(country %in% wanted_countries) %>%
-  dplyr::pull(continent) %>% # extract one column from a dataframe (different from select)
-  unique() -> wanted_continents
+  # extract one column from a dataframe (different from select)
+  dplyr::pull(continent) %>%
+  unique()
 
 gapminder %>%
   dplyr::filter(continent %in% wanted_continents) %>%
   ggplot() +
-    geom_line(data = . %>% 
+    geom_line(data = . %>%
       dplyr::filter(country %in% wanted_countries),
-              aes(year, gdpPercap, color = country)) + 
+              aes(year, gdpPercap, color = country)) +
     # now group by continent and get the upper/lower bounds
     geom_ribbon(data = . %>%
-      dplyr::filter(!is.na(gdpPercap)) %>% # min(NA) = NA, make sure NAs are excluded
-      dplyr::group_by(continent, year) %>% # gather all entries for each continent separately
-      dplyr::summarize(minGdp = min(gdpPercap), maxGdp = max(gdpPercap), across()) %>% # compute aggregated quantity (min/max)
+      # min(NA) = NA, make sure NAs are excluded
+      dplyr::filter(!is.na(gdpPercap)) %>%
+      # gather all entries for each continent separately
+      dplyr::group_by(continent, year) %>%
+      # compute aggregated quantity (min/max)
+      dplyr::summarize(minGdp = min(gdpPercap),
+                       maxGdp = max(gdpPercap), across()) %>%
       dplyr::filter(country %in% wanted_countries),
               aes(ymin = minGdp, ymax = maxGdp,
                   x = year, color = country, fill = country),
@@ -591,10 +609,13 @@ n <- 10
 normal_samples <- rnorm(n = n, mean = 0, sd = 1) # sample 10 Gaussian samples
 normal_samples
 
-dnorm(normal_samples, mean = 2, sd = 1) # compute the density function (over another Normal)
-pnorm(normal_samples, mean = 0, sd = 1) # cumulative distribution function
+# compute the density function (over another Normal)
+dnorm(normal_samples, mean = 2, sd = 1)
+# cumulative distribution function
+pnorm(normal_samples, mean = 0, sd = 1)
 
-qnorm(c(0.05, 0.95), mean = 0, sd = 1) # get the quantiles of a normal
+# get the quantiles of a normal
+qnorm(c(0.05, 0.95), mean = 0, sd = 1)
 ```
 
 ## Extras
@@ -666,9 +687,9 @@ Here an example where using `=` rather than `<-` makes a difference:
 
 ```{r, error=TRUE}
 # gives error: argument 'b' is not part of 'within'
-within(data.frame(a= rnorm(2)), b = a^2) 
+within(data.frame(a = rnorm(2)), b = a^2)
 # 'b<-a^2' is the value passed to the expr argument of within()
-within(data.frame(a = rnorm(2)), b <- a^2) 
+within(data.frame(a = rnorm(2)), b <- a^2)
 ```
 Although this event might never occur in one's programming experience, it's
 safer (and more elegant) to use `<-` when assigning variable.
@@ -679,12 +700,12 @@ result to variables.
 ```{r,message=FALSE}
 library(dplyr)
 
-starwars %>%
+x <- starwars %>%
   dplyr::mutate(bmi = mass / ((height / 100) ^ 2)) %>%
   dplyr::filter(!is.na(bmi)) %>%
   dplyr::group_by(species) %>%
   dplyr::summarise(bmi = mean(bmi)) %>%
-  dplyr::arrange(desc(bmi)) -> x
+  dplyr::arrange(desc(bmi))
 
 x
 ```

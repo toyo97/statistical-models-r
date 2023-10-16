@@ -1,3 +1,11 @@
+---
+title: Elementary statistics
+latest-revision: October 16th, 2023
+author: Vittorio Zampinetti
+time: 1.5h
+output: pdf_document
+---
+
 # Some elementary statistics problems
 
 In the following paragraphs, we will see some applications of the R
@@ -68,7 +76,9 @@ identified as worrying, i.e. $p = p_1$.
 $$
 P(X < x_0 | p = p_1) = \beta \approx \sum_{k = 0}^{x_0 - 1}{\binom{n}{k}}p^{k}(1-p)^{n-k}\,.
 $$
-Let's now compute these quantities using R, for several values of $x_0$.
+To answer the question, let's now compute these quantities using the R functions
+`phyper` and `pbinom`. We can do this for several values of $x_0$ i.e.
+$\forall x_0 \in \{1, \dots, 10\}$ so to understand how $\alpha$ and $\beta$ change.
 
 ```{r, message=FALSE}
 # import the main libraries
@@ -81,32 +91,41 @@ set.seed(42)
 # define the parameters of the test
 N <- 5000
 n <- 250
-p0 <- .015 
+p0 <- .015
 p1 <- .04
-K0 <- floor(N * p0) # get the lower integer part in case the product is not natural
+
+# get the lower integer part in case the product is not natural
+K0 <- floor(N * p0)
 K1 <- floor(N * p1)
 
 # false positive (check phyper params with ?phyper)
-# we subtract 1 to x0 because we are looking for P(X >= x0) = 1 - P(X < x0-1), not P(X > x0)
-fp_df <- tibble(x0 = 1:10,
-                hyp = 1 - phyper(x0 - 1, K0, N - K0, n),
-                bin = 1 - pbinom(x0 - 1, n, p0))
+# we subtract 1 to x0 because we are looking for P(X >= x0) = 1 - P(X < x0-1),
+# not P(X > x0)
+fp_df <- tibble(
+  x0 = 1:10,
+  hyp = 1 - phyper(x0 - 1, K0, N - K0, n),
+  bin = 1 - pbinom(x0 - 1, n, p0)
+)
 # let's view the result
 fp_df
 
 # false negative
-# again, we subtract 1: P(X < x0) = P(X <= x0-1) and pbinom(x, n, p) := P(X <= x; n, p)
-fn_df <- tibble(x0 = 1:10,
-                hyp = phyper(x0 - 1, K1, N - K1, n),
-                bin = pbinom(x0 - 1, n, p1))
+# again, we subtract 1: P(X < x0) = P(X <= x0-1) and
+# pbinom(x, n, p) := P(X <= x; n, p)
+fn_df <- tibble(
+  x0 = 1:10,
+  hyp = phyper(x0 - 1, K1, N - K1, n),
+  bin = pbinom(x0 - 1, n, p1)
+)
 fn_df
 ```
 
-We observe that with $x_0 = 8$ we have
+We observe that with $x_0 = 7$ we have
 $$
-\alpha = 0.033,  \beta = 0.208
+\alpha = 0.0795,  \beta = 0.119
 $$
-but in order to get a more complete overview, we could plot those values together
+which jointly optimize the two probabilities.
+In order to get a more complete overview, we could plot those values together
 
 ```{r, message=FALSE}
 library(scales) # to define custom scale on axes
@@ -114,18 +133,20 @@ library(scales) # to define custom scale on axes
 ```{r}
 # join the two dataframes
 tot_df <- left_join(fp_df, fn_df,
-                    by = "x0", suffix = c("alpha", "beta"))
+  by = "x0", suffix = c("alpha", "beta")
+)
 tot_df %>%
   ggplot() +
-    geom_bar(aes(x0, hypalpha, fill = "alpha"), alpha = .3, stat = "identity") +
-    geom_bar(aes(x0, hypbeta, fill = "beta"), alpha = .3, stat = "identity") +
-    geom_smooth(aes(x0, binalpha, color = "alpha"), se = FALSE) +
-    geom_smooth(aes(x0, binbeta, color = "beta"), se = FALSE) +
-    labs(x = "thresh", y = "prob", fill = "hyper", color = "binom") +
-    scale_x_continuous(breaks = pretty_breaks(10)) # print integers on the x axis
+  geom_bar(aes(x0, hypalpha, fill = "alpha"), alpha = .3, stat = "identity") +
+  geom_bar(aes(x0, hypbeta, fill = "beta"), alpha = .3, stat = "identity") +
+  geom_smooth(aes(x0, binalpha, color = "alpha"), se = FALSE) +
+  geom_smooth(aes(x0, binbeta, color = "beta"), se = FALSE) +
+  labs(x = "thresh", y = "prob", fill = "hyper", color = "binom") +
+  # print integers on the x axis
+  scale_x_continuous(breaks = pretty_breaks(10))
 ```
-The plot suggests that a good compromise could also be 
-$x_0 = 7$, but there is no rule in choosing such threshold, and in fact,
+The plot indeed suggests that $x_0 = 7$ is a good compromise,
+but there is no rule in choosing such threshold, and in fact,
 we might be more interested in a safer threshold in terms of lower 
 false alarm probability, or lower false non-alarm probability.
 
@@ -177,7 +198,7 @@ $$
 The goal is to get a confidence interval for the variable $\mu_x - \mu_y$,
 therefore an interval in which we can expect the two means difference to be
 with confidence $1 - \alpha$.
-Assuming equal variance in the two samples and both $n, m$ sufficiently
+Assuming that both $n, m$ are sufficiently
 large, the CI is computed as
 
 $$
@@ -213,7 +234,7 @@ confidence_interval <- function(x, y, alpha) {
   # note that mean() is the sample mean
   dev <- mean(x) - mean(y)
   # var() is the sample variance, not the actual variance
-  delta <- qnorm(1 - alpha/2) * sqrt(var(x) / m + var(y) / n)
+  delta <- qnorm(1 - alpha / 2) * sqrt(var(x) / m + var(y) / n)
   return(c(dev - delta, dev + delta))
 }
 
@@ -224,6 +245,12 @@ We notice that the interval contains the value 0, and this
 is due to the fact that both samples have same mean, therefore the
 sample means will also be, with enough samples, very similar, thus with
 zero (or close to zero) difference.
+
+To wrap this up, under large sample assumptions and unknown variance,
+we computed the confidence interval of a two-samples difference.
+More in general, when we compare two samples $\mathbf{x}, \mathbf{y}$
+there are multiple CIs that we might have to compute. We go through
+them below.
 
 ### The four cases
 
@@ -313,15 +340,17 @@ the quantiles over small values such as $\alpha$ will be higher wrt the std
 normal.
 
 ```{r}
-x_dt <- seq(- 5, 5, by = 0.01)
-norm_t_df <- tibble(x = x_dt, p_dt = dt(x, df = 3), p_nt = dnorm(x))  
+x_dt <- seq(-5, 5, by = 0.01)
+norm_t_df <- tibble(x = x_dt, p_dt = dt(x, df = 3), p_nt = dnorm(x))
 
 norm_t_df %>%
   ggplot() +
   geom_line(aes(x, p_dt, color = "t-stud")) +
   geom_line(aes(x, p_nt, color = "norm")) +
-  labs(title = "T-student with df = 3 and Std Normal comparison",
-       x = "x", y = "p(x)")
+  labs(
+    title = "T-student with df = 3 and Std Normal comparison",
+    x = "x", y = "p(x)"
+  )
 ```
 
 Following the same approach of the previous cases, the confidence interval
@@ -362,6 +391,8 @@ In other words, it's a measure of the null hypothesis support in a 0 to 1 range.
 
 In a fair French roulette, the red probability is 18/37.
 
+**Questions:**
+
 a. we observe 20 reds out of 30. Compute the p-value of the null hypothesis
   of the roulette being fair, with respect to the alternative hypothesis
   of the roulette being skewed towards the red,
@@ -369,6 +400,9 @@ b. in the same situation, compute the p-value of the null hypothesis
 of the roulette being fair wrt the alternative hypothesis of it not
 being fair,
 c. repeat a. and b. with 200 reds out of 380 as outcome.
+
+
+**Answers:**
 
 a. Given $X = \#\text{reds}$, we can compute the following probability
 under the null hypothesis,
@@ -385,8 +419,8 @@ observed.
 In R, we can compute it "by hand":
 
 ```{r}
-p0 = 18/37
-n = 30
+p0 <- 18 / 37
+n <- 30
 # P(X > 19) \equiv P(X >= 20)
 pbinom(19, n, p0, lower.tail = FALSE) # notice the lower.tail flag
 ```
@@ -409,24 +443,39 @@ bin_test$p.value
 sketch_df <- tibble(x = 0:n, px = dbinom(x, n, p0))
 sketch_df %>%
   ggplot() +
-    geom_point(aes(x, px)) +
-    geom_segment(data = . %>% dplyr::filter(x >= 20),
-                 aes(x = x, xend = x, y = 0, yend = px), color = 2)
-
+  geom_point(aes(x, px)) +
+  geom_segment(
+    data = . %>% dplyr::filter(x >= 20),
+    aes(x = x, xend = x, y = 0, yend = px), color = 2
+  )
 ```
 
 b. If the alternative hypothesis is just $H_1: p \neq 18/37$ then the
 contradiction can happen both on the left and on the right side of the curve,
-i.e. the roulette favors the red or the roulette favors the black.
+i.e. the roulette favors the red or the roulette favors the black *in the
+same or more extreme way*.
 Therefore we have to sum the two probabilities:
 
 $$
 P(X \geq 20 | H_0) + P(X < 10 | H_0)\,.
 $$
+
+> Note: where does the 10 come from? Well, if we observe 20 reds out
+> of 30, at first we might think that the roulette prefers red instead
+> of black. One might argue that it does not prefer red, but rather
+> it is just not fair (no matter if it favors red or black). We then
+> have to consider *all* cases that happen with a lower or equal
+> probability than the sample's. If the distribution is symmetric
+> (and in this case it almost is), we just consider $X < 30 - 20$.
+> Check the probability $P(X = 20)$ and find which values on the
+> left tail gives at most the same probability. 
+> Those are the
+> values that must be considered in the two-sided test.
+
 We compute this quantity first using `pbinom` as before
 
 ```{r}
-pbinom(19, n, p0, lower.tail = FALSE) + pbinom(9, n, p0) 
+pbinom(19, n, p0, lower.tail = FALSE) + pbinom(9, n, p0)
 ```
 and then using the test function
 
@@ -442,12 +491,15 @@ bin_test_2$p.value
 sketch_df <- tibble(x = 0:n, px = dbinom(x, n, p0))
 sketch_df %>%
   ggplot() +
-    geom_point(aes(x, px)) +
-    geom_segment(data = . %>% dplyr::filter(x >= 20),
-                 aes(x = x, xend = x, y = 0, yend = px), color = 2) +
-    geom_segment(data = . %>% dplyr::filter(x < 10),
-                 aes(x = x, xend = x, y = 0, yend = px), color = 3)
-
+  geom_point(aes(x, px)) +
+  geom_segment(
+    data = . %>% dplyr::filter(x >= 20),
+    aes(x = x, xend = x, y = 0, yend = px), color = 2
+  ) +
+  geom_segment(
+    data = . %>% dplyr::filter(x < 10),
+    aes(x = x, xend = x, y = 0, yend = px), color = 3
+  )
 ```
 
 c. When $n$ increases, and we can consider it large enough, we can 
@@ -470,7 +522,7 @@ In R:
 ```{r}
 n <- 300
 x <- 200
-z <- (x - n * p0)/sqrt(n * p0 * (1-p0))
+z <- (x - n * p0) / sqrt(n * p0 * (1 - p0))
 pnorm(z, lower.tail = FALSE)
 ```
 or, using the R proportion test `prop.test`
@@ -487,7 +539,7 @@ a Gaussian. To correct for this, it's enough to subtract (or add, depending
 on the case) `.5` to the $x$ value.
 
 ```{r}
-z_corr <- (x - .5 - n * p0)/sqrt(n * p0 * (1-p0))
+z_corr <- (x - .5 - n * p0) / sqrt(n * p0 * (1 - p0))
 pnorm(z_corr, lower.tail = FALSE)
 ```
 
