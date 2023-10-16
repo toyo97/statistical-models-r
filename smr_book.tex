@@ -120,7 +120,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2023-01-31}
+\date{2023-10-11}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -19.384550  14.223756   6.339979   9.206468  11.051562 -14.098868
-##  [7]  -3.066810 -18.704064  -3.392418 -17.343983
+##  [1]   1.3469481 -21.5133632  15.0340302   4.8968923   3.2338406  -3.4397957
+##  [7]  -7.9086597  -0.3978677   3.4146653   7.2657260
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1069,14 +1069,14 @@ most of the dataset will be stored in dataframes.
 ##    x  y char
 ## 1  1  1    a
 ## 2  1  2    b
-## 3  1  3    a
+## 3  1  3    b
 ## 4  1  4    b
 ## 5  1  5    a
-## 6  1  6    b
+## 6  1  6    a
 ## 7  1  7    b
 ## 8  1  8    a
 ## 9  1  9    b
-## 10 1 10    a
+## 10 1 10    b
 \end{verbatim}
 
 \begin{Shaded}
@@ -1106,7 +1106,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "b" "a" "b" "a" "b" "b" "a" "b" "a"
+##  [1] "a" "b" "b" "b" "a" "a" "b" "a" "b" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,7 +1118,7 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    b
-## 3 1 3    a
+## 3 1 3    b
 ## 4 1 4    b
 \end{verbatim}
 
@@ -1214,7 +1214,7 @@ For instance, let's consider the \texttt{mtcars} dataset.
 ##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2 Merc 240D  
 ##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2 Merc 230   
 ## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4 Merc 280   
-## # ... with 22 more rows
+## # i 22 more rows
 \end{verbatim}
 
 Let's say we want to get the cars with more than 100 hp, and we are just
@@ -1244,7 +1244,7 @@ order.
 ##  8 Ford Pantera L    
 ##  9 Hornet 4 Drive    
 ## 10 Hornet Sportabout 
-## # ... with 13 more rows
+## # i 13 more rows
 \end{verbatim}
 
 There are many other dplyr functions for data transformation. This useful
@@ -1373,6 +1373,9 @@ is more or less what we can do
 \begin{verbatim}
 ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 \end{verbatim}
 
 \begin{Shaded}
@@ -1395,6 +1398,8 @@ is more or less what we can do
 ## i Please use `reframe()` instead.
 ## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
 ##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 \end{verbatim}
 
 \begin{verbatim}
@@ -1440,6 +1445,8 @@ But, since it looks a bit confusing, we might want four separate plots.
 ## i Please use `reframe()` instead.
 ## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
 ##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 \end{verbatim}
 
 \begin{verbatim}
@@ -1476,8 +1483,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.1983940 -1.6424299 -0.7426805  0.9498033  0.5456532 -0.2992583
-##  [7] -1.0171505  0.6496558  0.5165015  0.4326674
+##  [1]  1.101764248 -0.886703187 -0.009387034  0.008212186  0.296630847
+##  [6]  0.276596762 -0.396876022 -1.921190983 -1.462207392  0.701383967
 \end{verbatim}
 
 \begin{Shaded}
@@ -1487,8 +1494,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.0787221633 0.0005247513 0.0092782101 0.2298346636 0.1385532149
-##  [6] 0.0283753977 0.0042089712 0.1603088102 0.1327453770 0.1168102676
+##  [1] 0.2665076670 0.0061860026 0.0529844577 0.0548832059 0.0935114145
+##  [6] 0.0903559966 0.0225629553 0.0001828567 0.0009953874 0.1716770242
 \end{verbatim}
 
 \begin{Shaded}
@@ -1498,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.57863161 0.05025048 0.22883758 0.82889390 0.70734783 0.38237150
-##  [7] 0.15454093 0.74204271 0.69724790 0.66737178
+##  [1] 0.86471791 0.18761936 0.49625517 0.50327615 0.61662582 0.60895512
+##  [7] 0.34572944 0.02735382 0.07184219 0.75846829
 \end{verbatim}
 
 \begin{Shaded}
@@ -1604,13 +1611,14 @@ And then you can load the package with \texttt{library}.
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v tidyr   1.3.0     v stringr 1.5.0
-## v readr   2.1.3     v forcats 1.0.0
-## v purrr   1.0.1     
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v forcats   1.0.0     v readr     2.1.4
+## v lubridate 1.9.3     v stringr   1.5.0
+## v purrr     1.0.2     v tidyr     1.3.0
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 \end{verbatim}
 
 \hypertarget{arrow-sign}{%
@@ -1638,9 +1646,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a           b
-## 1 -0.1228049 0.015081047
-## 2  0.0188205 0.000354211
+##           a          b
+## 1 0.2493170 0.06215899
+## 2 0.6427107 0.41307709
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -1678,7 +1686,7 @@ result to variables.
 ##  8 Sullustan       26.6
 ##  9 Zabrak          26.1
 ## 10 Besalisk        26.0
-## # ... with 22 more rows
+## # i 22 more rows
 \end{verbatim}
 
 \hypertarget{exercises}{%
@@ -3097,7 +3105,7 @@ directory).
 ##  8 120.   19.6      11.6  13.2
 ##  9   8.6   2.1       1     4.8
 ## 10 200.    2.6      21.2  15.6
-## # ... with 190 more rows
+## # i 190 more rows
 \end{verbatim}
 
 \hypertarget{basic-eda}{%
@@ -4845,10 +4853,6 @@ factor. Here we arbitrarily choose to create a variable which is
 ## glm(formula = vocation ~ ses + schtyp + read + write + math, 
 ##     family = "binomial", data = students_vg)
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.8826  -1.0822   0.6403   0.9776   1.7012  
-## 
 ## Coefficients:
 ##               Estimate Std. Error z value Pr(>|z|)  
 ## (Intercept)    3.78961    1.62184   2.337   0.0195 *
@@ -4912,10 +4916,6 @@ We can do the same thing with the pair \texttt{academic/general}.
 ## Call:
 ## glm(formula = academic ~ ses + schtyp + read + write + math, 
 ##     family = "binomial", data = students_ag)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.9963  -0.9715   0.5348   0.8348   1.4766  
 ## 
 ## Coefficients:
 ##               Estimate Std. Error z value Pr(>|z|)    
@@ -5045,10 +5045,6 @@ search.
 ## 
 ## Call:
 ## glm(formula = vocation ~ ses + math, family = "binomial", data = students_vg)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.8213  -1.1237   0.7153   1.0925   1.8076  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)  
@@ -5267,10 +5263,6 @@ Feel free to further experiment the dataset.
 ##     data = mutate(students, general = ifelse(prog == "general", 
 ##         1, 0)))
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.0551  -0.7347  -0.6201  -0.4674   1.9822  
-## 
 ## Coefficients:
 ##                Estimate Std. Error z value Pr(>|z|)
 ## (Intercept)    0.888726   1.139382   0.780    0.435
@@ -5306,10 +5298,6 @@ Feel free to further experiment the dataset.
 ## glm(formula = general ~ ses + read + write + math, family = "binomial", 
 ##     data = mutate(students, general = ifelse(prog == "vocation", 
 ##         1, 0)))
-## 
-## Deviance Residuals: 
-##      Min        1Q    Median        3Q       Max  
-## -1.74706  -0.73510  -0.39743   0.04884   2.68010  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
@@ -5521,10 +5509,6 @@ Let's now fit a generalized linear model with log-link function
 ## 
 ## Call:
 ## glm(formula = breaks ~ tension + wool, family = "poisson", data = warpbreaks)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -3.6871  -1.6503  -0.4269   1.1902   4.2616  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(>|z|)    
@@ -5808,7 +5792,7 @@ is Chi-squared distributed, we can perform some tests.
 ##   .. ..- attr(*, "predvars")= language list(breaks, tension, wool)
 ##   .. ..- attr(*, "dataClasses")= Named chr [1:3] "numeric" "factor" "factor"
 ##   .. .. ..- attr(*, "names")= chr [1:3] "breaks" "tension" "wool"
-##  $ family        :List of 12
+##  $ family        :List of 13
 ##   ..$ family    : chr "poisson"
 ##   ..$ link      : chr "log"
 ##   ..$ linkfun   :function (mu)  
@@ -5821,6 +5805,7 @@ is Chi-squared distributed, we can perform some tests.
 ##   ..$ validmu   :function (mu)  
 ##   ..$ valideta  :function (eta)  
 ##   ..$ simulate  :function (object, nsim)  
+##   ..$ dispersion: num 1
 ##   ..- attr(*, "class")= chr "family"
 ##  $ deviance      : num 210
 ##  $ aic           : num 493
@@ -6064,10 +6049,6 @@ Let's add interaction.
 ## Call:
 ## glm(formula = breaks ~ tension + wool + tension:wool, family = "poisson", 
 ##     data = warpbreaks)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -3.3383  -1.4844  -0.1291   1.1725   3.5153  
 ## 
 ## Coefficients:
 ##                Estimate Std. Error z value Pr(>|z|)    
@@ -6479,10 +6460,6 @@ First we try with a simple Poisson regression
 ## Call:
 ## glm(formula = fml, family = poisson(link = "log"), data = nmes)
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -7.1745  -1.9734  -0.6836   0.7239  16.0625  
-## 
 ## Coefficients:
 ##                  Estimate Std. Error z value Pr(>|z|)    
 ## (Intercept)      0.848055   0.027418  30.930  < 2e-16 ***
@@ -6573,10 +6550,6 @@ Then we compare the results with a regression fit on a GLM with Negative Binomia
 ## Call:
 ## glm.nb(formula = fml, data = nmes, init.theta = 1.218804554, 
 ##     link = log)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.8852  -0.9712  -0.2946   0.2953   5.6023  
 ## 
 ## Coefficients:
 ##                  Estimate Std. Error z value Pr(>|z|)    
@@ -7229,7 +7202,7 @@ This example is taken from \citep{bugs}
 \end{verbatim}
 
 \begin{verbatim}
-## Linked to JAGS 4.3.1
+## Linked to JAGS 4.3.2
 \end{verbatim}
 
 \begin{verbatim}
@@ -7596,1296 +7569,6 @@ components correctly represent the two clusters.
 \end{Shaded}
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-250-1.pdf}
-
-\hypertarget{lab-1}{%
-\chapter{Lab 1}\label{lab-1}}
-
-\hypertarget{iris-dataset}{%
-\section{Iris Dataset}\label{iris-dataset}}
-
-Download the dataset at this link (\url{https://archive.ics.uci.edu/ml/datasets/iris})
-(look for the \texttt{iris.data} file) and place the file together with your R script (for simplicity).
-At that web page, you can also get some information regarding the origin and
-nature of the data.
-
-The dataset is available as Comma-Separated Values (CSV) file, which is nothing
-but a plain text file where each row is a row of a table and every column is separated
-by a comma. To make it look more like a CSV file, rename it from \texttt{iris.data} to \texttt{iris.csv}.
-
-\hypertarget{import-data}{%
-\section{Import data}\label{import-data}}
-
-Now we're ready to import the data in R and view it as a table.
-
-\begin{quote}
-Hint: use \texttt{read\_csv()} function from the \texttt{readr} library. Check
-the function arguments. Also, you might need to manually add the column names.
-To check which column names should be added and in which order,
-check under \textbf{``attribute information''} on the dataset reference page linked above.
-\end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# we will use tibble, dplyr, ggplot, readr, ...}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{iris\_df }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/iris.csv"}\NormalTok{,}
-  \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
-    \StringTok{"sepal\_length"}\NormalTok{, }\StringTok{"sepal\_width"}\NormalTok{,}
-    \StringTok{"petal\_length"}\NormalTok{, }\StringTok{"petal\_width"}\NormalTok{, }\StringTok{"class"}
-\NormalTok{  )}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Rows: 150 Columns: 5
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (1): class
-## dbl (4): sepal_length, sepal_width, petal_length, petal_width
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{iris\_df}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 150 x 5
-##    sepal_length sepal_width petal_length petal_width class      
-##           <dbl>       <dbl>        <dbl>       <dbl> <chr>      
-##  1          5.1         3.5          1.4         0.2 Iris-setosa
-##  2          4.9         3            1.4         0.2 Iris-setosa
-##  3          4.7         3.2          1.3         0.2 Iris-setosa
-##  4          4.6         3.1          1.5         0.2 Iris-setosa
-##  5          5           3.6          1.4         0.2 Iris-setosa
-##  6          5.4         3.9          1.7         0.4 Iris-setosa
-##  7          4.6         3.4          1.4         0.3 Iris-setosa
-##  8          5           3.4          1.5         0.2 Iris-setosa
-##  9          4.4         2.9          1.4         0.2 Iris-setosa
-## 10          4.9         3.1          1.5         0.1 Iris-setosa
-## # ... with 140 more rows
-\end{verbatim}
-
-Answer these questions:
-
-\begin{itemize}
-\tightlist
-\item
-  How many observations does the dataset consist of?
-\item
-  Which are the different classes?
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{nrow}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 150
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pull}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{unique}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] "Iris-setosa"     "Iris-versicolor" "Iris-virginica"
-\end{verbatim}
-
-\hypertarget{exploratory-data-analysis-eda}{%
-\section{Exploratory Data Analysis (EDA)}\label{exploratory-data-analysis-eda}}
-
-First compute the mean and standard deviation of each measure for each
-class separately.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarize}\NormalTok{(}
-    \AttributeTok{msl =} \FunctionTok{mean}\NormalTok{(sepal\_length), }\AttributeTok{msw =} \FunctionTok{mean}\NormalTok{(sepal\_width),}
-    \AttributeTok{mpl =} \FunctionTok{mean}\NormalTok{(petal\_length), }\AttributeTok{mpw =} \FunctionTok{mean}\NormalTok{(petal\_width),}
-    \AttributeTok{ssl =} \FunctionTok{sd}\NormalTok{(sepal\_length), }\AttributeTok{ssw =} \FunctionTok{sd}\NormalTok{(sepal\_width),}
-    \AttributeTok{spl =} \FunctionTok{sd}\NormalTok{(petal\_length), }\AttributeTok{spw =} \FunctionTok{sd}\NormalTok{(petal\_width)}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 3 x 9
-##   class             msl   msw   mpl   mpw   ssl   ssw   spl   spw
-##   <chr>           <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-## 1 Iris-setosa      5.01  3.42  1.46 0.244 0.352 0.381 0.174 0.107
-## 2 Iris-versicolor  5.94  2.77  4.26 1.33  0.516 0.314 0.470 0.198
-## 3 Iris-virginica   6.59  2.97  5.55 2.03  0.636 0.322 0.552 0.275
-\end{verbatim}
-
-\begin{itemize}
-\tightlist
-\item
-  What can you infer? Is there any measure which is more indicative of a certain class?
-\end{itemize}
-
-You can also plot the empirical distribution of the four measures
-separately, in order to better visualize how far (or close) they
-are from each other.
-
-\begin{itemize}
-\tightlist
-\item
-  Plot the distributions of the four measures in a 2x2
-  grid, differentiating the types with color encoding (optional).
-\end{itemize}
-
-\begin{quote}
-Hint: You can use \texttt{melt()} from the \texttt{reshape2} library to
-transform the dataset, and then plot the various densities with
-color encoding on the four measures.
-\end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(reshape2)}
-\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(}\AttributeTok{value.name =} \StringTok{"measure"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# collapse all measures in one col}
-  \CommentTok{\# then add a column with the measure name}
-  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(measure, }\AttributeTok{color =}\NormalTok{ class)) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\FunctionTok{vars}\NormalTok{(variable), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Using class as id variables
-\end{verbatim}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-256-1.pdf}
-
-We can also visualize the four measures on a set of plots that shows
-the correlation between variables, two-by-two. This is easily
-done with a pair plot.
-
-\begin{itemize}
-\tightlist
-\item
-  Draw a pair plot (optional).
-\end{itemize}
-
-\begin{quote}
-Hint: install the package with \texttt{install.packages("GGally")} and load it with \texttt{library(GGally)}, then
-read the help document of the \texttt{ggpairs()} function. You can also use R base \texttt{pairs()} function.
-\end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(GGally)}
-
-\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggpairs}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ class), }\AttributeTok{columns =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-257-1.pdf}
-
-\hypertarget{confidence-intervals-1}{%
-\section{Confidence intervals}\label{confidence-intervals-1}}
-
-Let's make our decision more statistically relevant.
-Select only one class, the Setosa type, and one measure, petal length.
-
-Now build a 95\% CI around the mean value of the Setosa petal length.
-Assume \(\sigma\) unknown.
-
-Formally, we want to find \(x_l, x_u\) s.t. the true mean \(\mu\)
-of the Setosa petal length falls in the interval with probability 95\%:
-
-\[
-P(x_l \leq \mu \leq x_u) = 95\%\,.
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  Find such CI, using only R base operators (\texttt{mean}, \texttt{sd}).
-\end{itemize}
-
-To do this, remember that
-
-\begin{itemize}
-\item
-  \(\frac{(\bar{X} - \mu)\sqrt{n}}{s} \sim T(n-1)\) where \(s\) is the sample standard deviation
-\item
-  \texttt{qt()} is the R function for the t-distribution quantile
-\item
-  Validate your result by using \texttt{t.test()} to get the CI.
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{setosa\_petal\_length }\OtherTok{\textless{}{-}}\NormalTok{ iris\_df }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{filter}\NormalTok{(class }\SpecialCharTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{pull}\NormalTok{(petal\_length)}
-
-\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{05}
-
-\NormalTok{nspl }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(setosa\_petal\_length)}
-\NormalTok{crit\_t }\OtherTok{\textless{}{-}} \FunctionTok{qt}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{, nspl }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\CommentTok{\# critical value}
-
-\CommentTok{\# retransform the critical value multiplying the se}
-\CommentTok{\# and subtracting it to the sample mean}
-\NormalTok{xbar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(setosa\_petal\_length)}
-\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(setosa\_petal\_length) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(nspl)}
-\NormalTok{delta }\OtherTok{\textless{}{-}}\NormalTok{ crit\_t }\SpecialCharTok{*}\NormalTok{ se}
-
-\NormalTok{ci }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(xbar }\SpecialCharTok{{-}}\NormalTok{ delta, xbar }\SpecialCharTok{+}\NormalTok{ delta)}
-\NormalTok{ci}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 1.414689 1.513311
-\end{verbatim}
-
-With \texttt{t.test}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{t.test}\NormalTok{(setosa\_petal\_length, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  One Sample t-test
-## 
-## data:  setosa_petal_length
-## t = 59.662, df = 49, p-value < 2.2e-16
-## alternative hypothesis: true mean is not equal to 0
-## 95 percent confidence interval:
-##  1.414689 1.513311
-## sample estimates:
-## mean of x 
-##     1.464
-\end{verbatim}
-
-Compare this confidence interval to the mean and std-dev
-values you got for each class for the petal length measure.
-
-\begin{itemize}
-\tightlist
-\item
-  Do you think the petal length is a good measure to
-  differentiate between Setosa and the other two types? Why?
-\end{itemize}
-
-\hypertarget{p-value-1}{%
-\section{P-value}\label{p-value-1}}
-
-Imagine you get measurements in terms of all 4 indicators of
-5 iris flowers belonging to the same class, but you don't know
-which. These are the observations.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{x\_sample }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{sepal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{4.738759}\NormalTok{, }\FloatTok{5.545983}\NormalTok{, }\FloatTok{5.389729}\NormalTok{, }\FloatTok{4.549803}\NormalTok{, }\FloatTok{5.896723}\NormalTok{),}
-  \AttributeTok{sepal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{3.132478}\NormalTok{, }\FloatTok{3.537232}\NormalTok{, }\FloatTok{3.217107}\NormalTok{, }\FloatTok{3.190097}\NormalTok{, }\FloatTok{3.636949}\NormalTok{),}
-  \AttributeTok{petal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.220472}\NormalTok{, }\FloatTok{1.321923}\NormalTok{, }\FloatTok{1.573662}\NormalTok{, }\FloatTok{1.289875}\NormalTok{, }\FloatTok{1.705737}\NormalTok{),}
-  \AttributeTok{petal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.23}\NormalTok{, }\FloatTok{0.09}\NormalTok{, }\FloatTok{0.33}\NormalTok{, }\FloatTok{0.22}\NormalTok{, }\FloatTok{0.18}\NormalTok{)}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{itemize}
-\tightlist
-\item
-  Just looking at the values of the petal length,
-  can you take advantage of the CI you just computed
-  in order to make a guess about the class of these flowers?
-  (Setosa or not Setosa)
-\end{itemize}
-
-To make this guess more statistically relevant, we have
-to quantify our confidence.
-
-\begin{itemize}
-\item
-  What is the \emph{p-value} of this sample, only looking at the
-  petal length, against the null hypothesis that the
-  samples are coming from the Setosa type? We set the null
-  hypothesis to be \(H_0: \mu = \mu_0 = \bar{x}\)
-
-  Remember that the \emph{p-value} is defined as
-\end{itemize}
-
-\[ P\left(T \geq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)\]
-
-\begin{itemize}
-\tightlist
-\item
-  Based on the value you found, what can you say
-  about the class of this sample?
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# manually}
-\NormalTok{mu0 }\OtherTok{\textless{}{-}}\NormalTok{ xbar}
-\NormalTok{nx }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(x\_sample)}
-\NormalTok{t\_stat }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length) }\SpecialCharTok{{-}}\NormalTok{ mu0) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(nx) }\SpecialCharTok{/}
-  \FunctionTok{sd}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length)}
-\FunctionTok{pt}\NormalTok{(t\_stat, }\AttributeTok{df =}\NormalTok{ nx }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 0.6619335
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# with t{-}test}
-\FunctionTok{t.test}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  One Sample t-test
-## 
-## data:  x_sample$petal_length
-## t = -0.44983, df = 4, p-value = 0.6761
-## alternative hypothesis: true mean is not equal to 1.464
-## 95 percent confidence interval:
-##  1.165161 1.679506
-## sample estimates:
-## mean of x 
-##  1.422334
-\end{verbatim}
-
-Now take this other sample:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{y\_sample }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{sepal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{6.303990}\NormalTok{, }\FloatTok{6.705969}\NormalTok{, }\FloatTok{7.795044}\NormalTok{, }\FloatTok{7.015665}\NormalTok{, }\FloatTok{7.056670}\NormalTok{),}
-  \AttributeTok{sepal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{3.152411}\NormalTok{, }\FloatTok{2.499612}\NormalTok{, }\FloatTok{3.293934}\NormalTok{, }\FloatTok{3.275724}\NormalTok{, }\FloatTok{2.843923}\NormalTok{),}
-  \AttributeTok{petal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{6.356729}\NormalTok{, }\FloatTok{5.975576}\NormalTok{, }\FloatTok{4.998114}\NormalTok{, }\FloatTok{5.423811}\NormalTok{, }\FloatTok{5.382871}\NormalTok{),}
-  \AttributeTok{petal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.589342}\NormalTok{, }\FloatTok{2.305014}\NormalTok{, }\FloatTok{2.260900}\NormalTok{, }\FloatTok{2.185519}\NormalTok{, }\FloatTok{1.589370}\NormalTok{)}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{itemize}
-\tightlist
-\item
-  What is the \emph{p-value}?
-\item
-  Is it higher or lower than 0.025?
-\item
-  Could we guess the answer to this last question
-  without computing it?
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# manually}
-\NormalTok{ny }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(y\_sample)}
-\NormalTok{t\_stat }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length) }\SpecialCharTok{{-}}\NormalTok{ mu0) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(ny) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length)}
-\FunctionTok{pt}\NormalTok{(t\_stat, }\AttributeTok{df =}\NormalTok{ ny }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## [1] 3.231502e-05
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# with t{-}test}
-\FunctionTok{t.test}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-##  One Sample t-test
-## 
-## data:  y_sample$petal_length
-## t = 17.36, df = 4, p-value = 6.463e-05
-## alternative hypothesis: true mean is not equal to 1.464
-## 95 percent confidence interval:
-##  4.961539 6.293302
-## sample estimates:
-## mean of x 
-##   5.62742
-\end{verbatim}
-
-\hypertarget{linear-regression-lab}{%
-\chapter{Linear regression lab}\label{linear-regression-lab}}
-
-This lab focuses on linear models and on the R functions
-dedicated to fitted linear models inspection.
-
-For the following tasks, we will use a real dataset
-featuring two predictors and one response variable (fuel consumption).
-You can read some information inside the \texttt{insulate.names} text file.
-
-\hypertarget{eda-20-min}{%
-\section{EDA (20 min)}\label{eda-20-min}}
-
-Start by loading the \texttt{insulate.csv} data in the R environment,
-making sure that the type of the parsed variables is correctly inferred,
-then explore it using the tools seen in the lectures (e.g.~dimension,
-summary, plots, etc.).
-
-You might answer these questions:
-
-\begin{itemize}
-\tightlist
-\item
-  How many observations does the dataset provide?
-\end{itemize}
-
-Although it's not necessary in this case, we explicitly specify
-that the \texttt{when} variable needs to be parsed as factor.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(dplyr)}
-\FunctionTok{library}\NormalTok{(readr)}
-\CommentTok{\# read the dataset}
-\NormalTok{insulate }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/insulate.csv"}\NormalTok{, }\AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
-  \AttributeTok{when =} \FunctionTok{col\_factor}\NormalTok{(),}
-  \AttributeTok{temp =} \FunctionTok{col\_double}\NormalTok{(),}
-  \AttributeTok{cons =} \FunctionTok{col\_double}\NormalTok{()}
-\NormalTok{))}
-\NormalTok{insulate}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## # A tibble: 56 x 3
-##    when    temp  cons
-##    <fct>  <dbl> <dbl>
-##  1 before  -0.8   7.2
-##  2 before  -0.7   6.9
-##  3 before   0.4   6.4
-##  4 before   2.5   6  
-##  5 before   2.9   5.8
-##  6 before   3.2   5.8
-##  7 before   3.6   5.6
-##  8 before   3.9   4.7
-##  9 before   4.2   5.8
-## 10 before   4.3   5.2
-## # ... with 46 more rows
-\end{verbatim}
-
-The dataset consists of 56 records.
-
-\begin{itemize}
-\tightlist
-\item
-  What are the predictors? Are they qualitative or quantitative?
-\end{itemize}
-
-The predictors are \texttt{when,\ temp}.
-\texttt{when} is a qualitative predictor with two levels (\texttt{before,\ after})
-while \texttt{temp} is a continuous variable in the range \([-0.8, 10.2]\).
-
-\begin{itemize}
-\tightlist
-\item
-  What is the relationship between the response variable and the two
-  predictors taken individually?
-
-  \begin{itemize}
-  \tightlist
-  \item
-    Draw some \emph{useful} plot and interpret what you see.
-  \end{itemize}
-\end{itemize}
-
-One of the most powerful plotting function is the \emph{pairs} plot.
-In \texttt{ggplot} it's straightforward:
-
-\begin{quote}
-Note: beware that when dealing with bigger datasets (more
-predictors), as the number of plots scales with the square
-of the number of columns.
-\end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# plot (pair plot)}
-\FunctionTok{library}\NormalTok{(GGally)}
-\FunctionTok{ggpairs}\NormalTok{(insulate)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-\end{verbatim}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-267-1.pdf}
-
-From these plots we can see that, as we could imagine,
-the consumption goes down with higher temperatures
-and also there is a clear difference in the consumption
-mean before and after insulation.
-
-\hypertarget{fitting-a-linear-model-15-min}{%
-\section{Fitting a linear model (15 min)}\label{fitting-a-linear-model-15-min}}
-
-Now use the \texttt{lm()} function to fit two linear models:
-one which only uses the temperature as predictor, and one
-with both predictors.
-
-\begin{itemize}
-\tightlist
-\item
-  Which one is better? Why?
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{simple\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ insulate)}
-\FunctionTok{summary}\NormalTok{(simple\_lm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = cons ~ temp, data = insulate)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.6324 -0.7119 -0.2047  0.8187  1.5327 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   5.4862     0.2357  23.275  < 2e-16 ***
-## temp         -0.2902     0.0422  -6.876 6.55e-09 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.8606 on 54 degrees of freedom
-## Multiple R-squared:  0.4668, Adjusted R-squared:  0.457 
-## F-statistic: 47.28 on 1 and 54 DF,  p-value: 6.545e-09
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{additive\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ insulate)}
-\FunctionTok{summary}\NormalTok{(additive\_lm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = cons ~ ., data = insulate)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.74236 -0.22291  0.04338  0.24377  0.74314 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  6.55133    0.11809   55.48   <2e-16 ***
-## whenafter   -1.56520    0.09705  -16.13   <2e-16 ***
-## temp        -0.33670    0.01776  -18.95   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.3574 on 53 degrees of freedom
-## Multiple R-squared:  0.9097, Adjusted R-squared:  0.9063 
-## F-statistic: 267.1 on 2 and 53 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-The R-squared index is much higher in the complete model,
-suggesting that the \texttt{when} attribute retains valuable information.
-
-\begin{itemize}
-\tightlist
-\item
-  Plot both regression lines (you can use any plotting
-  tool that you prefer)
-\end{itemize}
-
-The additive model regression line actually consists of two (parallel)
-lines, one for each level of the qualitative predictor \texttt{when}.
-Using color encoding in ggplot, we can differentiate between the two.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ insulate, }\FunctionTok{aes}\NormalTok{(temp, cons, }\AttributeTok{color =}\NormalTok{ when)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{linetype =} \StringTok{"simple"}\NormalTok{, }\AttributeTok{intercept =}\NormalTok{ simple\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{], }\AttributeTok{slope =}\NormalTok{ simple\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{])) }\SpecialCharTok{+}
-  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
-    \AttributeTok{linetype =} \StringTok{"complete"}\NormalTok{, }\AttributeTok{color =} \FunctionTok{c}\NormalTok{(}\StringTok{"after"}\NormalTok{, }\StringTok{"before"}\NormalTok{),}
-    \AttributeTok{intercept =} \FunctionTok{c}\NormalTok{(}
-\NormalTok{      additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{],}
-\NormalTok{      additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}
-\NormalTok{    ),}
-    \AttributeTok{slope =}\NormalTok{ additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}
-\NormalTok{  ))}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-269-1.pdf}
-
-\hypertarget{interaction-10-min}{%
-\subsection{Interaction (10 min)}\label{interaction-10-min}}
-
-In this setting, we are mostly interested in whether we should
-include the interaction between the two predictors or not.
-If the effects of the predictors are additive, we don't need
-interaction.
-
-\begin{itemize}
-\tightlist
-\item
-  Are the two effects additive? To answer this, follow the task in
-  the next bullet point.
-\item
-  Draw a plot showing the consumption trend against the temperature,
-  separately for before and after insulation. You may (or may not)
-  use the following code as template, which is enough to fulfill the
-  task after replacing the ellipsis with the proper function arguments:
-\end{itemize}
-
-\begin{quote}
-Hint: remember that, in order to differentiate between
-classes (i.e.~\emph{before} and \emph{after}) in the same plot,
-you can select the class to be interpreted as color encoding
-for the points/line: \texttt{aes(...,\ color\ =\ when)}.
-\end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{insulate }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# dataset}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, cons, }\AttributeTok{color =}\NormalTok{ when)) }\SpecialCharTok{+} \CommentTok{\# main ggplot call}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \CommentTok{\# scatter plot}
-  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{) }\CommentTok{\# trend line}
-\end{Highlighting}
-\end{Shaded}
-
-The two lines are not parallel, which suggests that an additive model
-is not very accurate and we might try to include interaction.
-
-\begin{itemize}
-\tightlist
-\item
-  Fit a linear model which includes interaction between \texttt{temp} and \texttt{when}.
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{interact\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ when }\SpecialCharTok{*}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ insulate)}
-\FunctionTok{summary}\NormalTok{(interact\_lm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## Call:
-## lm(formula = cons ~ when * temp, data = insulate)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.97802 -0.18011  0.03757  0.20930  0.63803 
-## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)     6.85383    0.13596  50.409  < 2e-16 ***
-## whenafter      -2.12998    0.18009 -11.827 2.32e-16 ***
-## temp           -0.39324    0.02249 -17.487  < 2e-16 ***
-## whenafter:temp  0.11530    0.03211   3.591 0.000731 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.323 on 52 degrees of freedom
-## Multiple R-squared:  0.9277, Adjusted R-squared:  0.9235 
-## F-statistic: 222.3 on 3 and 52 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-\begin{itemize}
-\tightlist
-\item
-  How many additional parameters does the model have to estimate?
-\end{itemize}
-
-Just one additional parameter is required.
-
-\hypertarget{aic-and-model-selection-10-min}{%
-\section{AIC and model selection (10 min)}\label{aic-and-model-selection-10-min}}
-
-Looking at the R-squared index, the model with interaction seems
-to perform a bit better. However, this doesn't mean that the interaction
-model is a better choice.
-
-\begin{itemize}
-\tightlist
-\item
-  After assessing that we can compare the additive with interaction models
-  through the ANOVA test, checking the main prerequisite (nested models),
-  run an ANOVA test comparing the two models, analyze the result,
-  draw a conclusion.
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{anova}\NormalTok{(additive\_lm, interact\_lm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Analysis of Variance Table
-## 
-## Model 1: cons ~ when + temp
-## Model 2: cons ~ when * temp
-##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-## 1     53 6.7704                                  
-## 2     52 5.4252  1    1.3451 12.893 0.0007307 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-Interaction with \texttt{*} also includes the singular
-variables, therefore the additive model is nested into interaction.
-
-Another criterion used for model selection is the \href{https://en.wikipedia.org/wiki/Akaike_information_criterion}{Akaike Information
-Criterion},
-which is defined as
-
-\[
-\text{AIC} = 2k - 2\ln(\hat L)
-\]
-
-where \(\hat L\) is the maximized likelihood of the data
-i.e.~\(p(y | \hat \beta)\). The AIC takes into consideration
-the model complexity (number of predictors considered),
-favoring small models over the bigger ones.
-
-\begin{itemize}
-\tightlist
-\item
-  Find the AIC index using the dedicated function \texttt{AIC()}.
-  Which model is better according to the AIC? Why?
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{AIC}\NormalTok{(additive\_lm, interact\_lm)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##             df      AIC
-## additive_lm  4 48.60465
-## interact_lm  5 38.20098
-\end{verbatim}
-
-A lower index for the interaction model means that the
-additional parameter is worth the higher complexity
-in favor of better fit (likelihood).
-
-\hypertarget{prediction-intervals-35-min}{%
-\section{Prediction intervals (35 min)}\label{prediction-intervals-35-min}}
-
-Imagine we have a new unseen (\emph{future}) row of observed measures \(x_f\),
-with no true response observation (\(Y_f\) is unknown).
-
-We are interested in making inference on the mean \(x_f \beta\).
-As you've seen in the theory lectures, this is a particular case of the
-inference of \(C \beta\). Being just one row, the F-type intervals can be
-translated to T-type intervals:
-
-\[
-F_{\alpha}(1, n-p) = t^2_{\frac{\alpha}{2}}(n-p)
-\]
-
-These are standard confidence intervals, and you can find
-them with \texttt{predict.lm(...,\ interval\ =\ "confidence")}.
-
-\begin{itemize}
-\tightlist
-\item
-  Find a prediction for the following additional rows using the best model you
-  found so far, together with their confidence intervals.
-\end{itemize}
-
-\begin{verbatim}
-when,temp
-before,5.8
-before,-1.0
-after,4.8
-after,9.8
-\end{verbatim}
-
-With new observations, instead of making inference on the coefficients \(\beta\),
-we can make inference on the unseen response variable \(Y_f\). In this
-case we are not doing either estimation or testing, but rather just \emph{prediction}.
-In \emph{machine learning} the focus of inference is prediction: neural networks, for
-instance, have a large set of parameters which are learnt automatically from the data,
-but their values are most of the times non-interpretable, thus not useful per se, while
-the output of interest is \(\hat Y_f\), eventually together with its uncertainty.
-
-Inference on \(Y_f\) can be derived similarly to how you did with confidence intervals.
-Formally (but not too much in detail):
-
-\[
-Y_f \sim \mathcal N(x_f'\beta, \sigma^2)
-\]
-
-independent from \(Y_1, ..., Y_n\). Under the homogeneity assumption of the future
-response with respect to the past,
-
-\[
-x_f'\hat\beta = \hat Y \sim \mathcal N(x_f'\beta, \sigma^2 x_f' (X'X)^{-1}x_f)\,.
-\]
-
-This leads to
-
-\[
-Y_f - \hat Y_f \sim \mathcal N(0, \sigma(1 + x_f'(X'X)^{-1}x_f))\,,
-\]
-
-which gives us the prediction intervals:
-
-\[
-\hat Y_f \pm t_{\frac{\alpha}{2}}(n-p)\sqrt{\text{MSR}(1 + x_f'(X'X)^{-1}x_f)}\,.
-\]
-
-\begin{itemize}
-\tightlist
-\item
-  Using this formula, compute the prediction intervals for \emph{one} of the
-  four new future observations written above (from scratch).
-\end{itemize}
-
-\begin{quote}
-Hint: We've seen how to compute the \(\text{MSR}\) (or \(\text{RMS}\)) in the first
-linear regression R lecture
-\end{quote}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# compute RMS}
-\NormalTok{e }\OtherTok{\textless{}{-}}\NormalTok{ interact\_lm}\SpecialCharTok{$}\NormalTok{residuals}
-\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(insulate)}
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(interact\_lm}\SpecialCharTok{$}\NormalTok{coefficients)}
-\NormalTok{rms }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(e) }\SpecialCharTok{\%*\%}\NormalTok{ e }\SpecialCharTok{/}\NormalTok{ (n }\SpecialCharTok{{-}}\NormalTok{ p)}
-
-\FunctionTok{library}\NormalTok{(tibble)}
-\CommentTok{\# x\_f with dummy variables:}
-\CommentTok{\# intercept whenafter   temp  whenafter:temp}
-\CommentTok{\# 1         0 (before)  5.8   0 (0 * 5.8)}
-\NormalTok{x\_f }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{5.8}\NormalTok{, }\DecValTok{0}\NormalTok{)}
-\NormalTok{yhat\_f }\OtherTok{\textless{}{-}}\NormalTok{ x\_f }\SpecialCharTok{\%*\%}\NormalTok{ interact\_lm}\SpecialCharTok{$}\NormalTok{coefficients}
-\CommentTok{\# note: there are several ways of getting yhat\_f}
-\CommentTok{\# another way is to use \textasciigrave{}predict\textasciigrave{} with x\_f not "dummyfied"}
-
-\CommentTok{\# get dummy x matrix}
-\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(insulate, }\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ when }\SpecialCharTok{*}\NormalTok{ temp))}
-
-\CommentTok{\# compute above formula}
-\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{05} \CommentTok{\# level}
-\NormalTok{delta }\OtherTok{\textless{}{-}} \FunctionTok{qt}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ (alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{), }\AttributeTok{df =}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ p) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(rms }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+} \FunctionTok{t}\NormalTok{(x\_f) }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(x) }\SpecialCharTok{\%*\%}\NormalTok{ x) }\SpecialCharTok{\%*\%}\NormalTok{ x\_f))}
-\NormalTok{lwr }\OtherTok{\textless{}{-}}\NormalTok{ yhat\_f }\SpecialCharTok{{-}}\NormalTok{ delta}
-\NormalTok{upr }\OtherTok{\textless{}{-}}\NormalTok{ yhat\_f }\SpecialCharTok{+}\NormalTok{ delta}
-\NormalTok{pred\_interval }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{fit =}\NormalTok{ yhat\_f, }\AttributeTok{lwr =}\NormalTok{ lwr, }\AttributeTok{upr =}\NormalTok{ upr)}
-\NormalTok{pred\_interval}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##        fit      lwr      upr
-## 1 4.573043 3.912228 5.233857
-\end{verbatim}
-
-\begin{itemize}
-\tightlist
-\item
-  Check your computations using \texttt{predict.lm(...,\ interval\ =\ "prediction")}
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# check that computations are correct}
-\NormalTok{x\_f0 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{when =} \StringTok{"before"}\NormalTok{, }\AttributeTok{temp =} \FloatTok{5.8}\NormalTok{) }\CommentTok{\# plain newdata row}
-\FunctionTok{predict}\NormalTok{(interact\_lm, }\AttributeTok{newdata =}\NormalTok{ x\_f0, }\AttributeTok{interval =} \StringTok{"prediction"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##        fit      lwr      upr
-## 1 4.573043 3.912228 5.233857
-\end{verbatim}
-
-\begin{itemize}
-\tightlist
-\item
-  Is the interval center the same as for the confidence intervals?
-\end{itemize}
-
-Yes, it's still \(\hat Y\).
-
-\begin{itemize}
-\tightlist
-\item
-  Is it wider or more narrow than the CI? Can you tell why (intuitively)?
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{predict}\NormalTok{(interact\_lm, }\AttributeTok{newdata =}\NormalTok{ x\_f0, }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##        fit      lwr      upr
-## 1 4.573043 4.444317 4.701768
-\end{verbatim}
-
-It is wider because we are trying to predict where a new observation will
-be and that new observation has an additional standard deviation of the error
-term. Confidence intervals are based on only the fitted values and do not
-involve making a prediction. It represents the uncertainty in the ``fitted''
-value. Prediction intervals must account for both the uncertainty in
-estimating the population mean, plus the random variation of the individual
-values. So a prediction interval is always wider than a confidence
-interval.
-
-\hypertarget{plotting-intervals}{%
-\section{Plotting intervals}\label{plotting-intervals}}
-
-Plotting of the intervals was not required, but it might be useful to visualize them.
-For this purpose, we will just use the records of the \texttt{after} class.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# build x grid}
-\NormalTok{after\_insulate }\OtherTok{\textless{}{-}}
-\NormalTok{  insulate }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(when }\SpecialCharTok{==} \StringTok{"after"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{when)}
-
-\CommentTok{\# fit a simple model}
-\NormalTok{after\_simple\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ after\_insulate)}
-
-\CommentTok{\# build a vector of new data spanning the whole temp support}
-\NormalTok{new\_x }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{temp =} \FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(after\_insulate}\SpecialCharTok{$}\NormalTok{temp), }\FunctionTok{max}\NormalTok{(after\_insulate}\SpecialCharTok{$}\NormalTok{temp), }\AttributeTok{by =} \FloatTok{0.05}\NormalTok{))}
-
-\CommentTok{\# find confidence and prediction intervals for all of the range elements}
-\CommentTok{\# and change the column names to make them distinguishable}
-\NormalTok{new\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(after\_simple\_lm, }\AttributeTok{newdata =}\NormalTok{ new\_x, }\AttributeTok{interval =} \StringTok{"prediction"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_with}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(.x, }\StringTok{"pred"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{)) }\CommentTok{\#}
-\NormalTok{new\_conf }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(after\_simple\_lm, }\AttributeTok{newdata =}\NormalTok{ new\_x, }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{rename\_with}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(.x, }\StringTok{"conf"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
-
-\CommentTok{\# join the two interval details}
-\NormalTok{new\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_cols}\NormalTok{(new\_x, new\_pred, new\_conf)}
-
-\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, cons), }\AttributeTok{data =}\NormalTok{ after\_insulate) }\SpecialCharTok{+} \CommentTok{\# scatter plot}
-  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, fit\_conf), }\AttributeTok{data =}\NormalTok{ new\_data) }\SpecialCharTok{+} \CommentTok{\# regression line}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, }\AttributeTok{ymin =}\NormalTok{ lwr\_pred, }\AttributeTok{ymax =}\NormalTok{ upr\_pred, }\AttributeTok{fill =} \StringTok{"prediction"}\NormalTok{),}
-    \AttributeTok{data =}\NormalTok{ new\_data, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
-\NormalTok{  ) }\SpecialCharTok{+} \CommentTok{\# pred intervals}
-  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, }\AttributeTok{ymin =}\NormalTok{ lwr\_conf, }\AttributeTok{ymax =}\NormalTok{ upr\_conf, }\AttributeTok{fill =} \StringTok{"confidence"}\NormalTok{),}
-    \AttributeTok{data =}\NormalTok{ new\_data, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
-\NormalTok{  ) }\CommentTok{\# conf intervals}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-277-1.pdf}
-
-\begin{quote}
-Notice how the intervals get wider when departing from the mean temperature \(\bar x\).
-\end{quote}
-
-\hypertarget{jags-lab---gaussian-mixture-model}{%
-\chapter{JAGS lab - Gaussian Mixture Model}\label{jags-lab---gaussian-mixture-model}}
-
-A 5-stars hotel stocks up a whole bunch of bread loafs from a
-local bakery on a daily bases. Every stock of loafs counts
-50 pieces, each of which varies slightly, but not trascurably,
-in size (volume in cm3) and weight (grams).
-This happens because the bakery
-doesn't have a precise recipe and therefore every baker
-produces different kinds of bread.
-
-You get the chance of measuring weight and size of each
-loaf the hotel buys for an entire month and from those data
-you want to estimate the number of bakers that worked at the
-bakery in that month.
-
-Read the data provided in the \texttt{bread.csv} file, get some insights
-on the nature of the data (summaries, plots, etc.) and write
-down a JAGS model which captures it. You should define a
-Gaussian Mixture Model, just like the one from previous lecture,
-but with the number of components \(K\) (number of bakers) as parameter.
-
-\begin{quote}
-Hint: Maybe plot the data and get a feeling of a range of components
-you would like to try out. You can compare them in several ways, for
-instance preferring the one that gives the largest log-likelihood,
-printing the \href{https://en.wikipedia.org/wiki/Deviance_information_criterion}{DIC}
-(similar to AIC, add the flag \texttt{DIC\ =\ TRUE} in the \texttt{jags()} function call)
-or just by checking how many clusters give accurate estimates.
-\end{quote}
-
-Some notes that may be useful for writing the model:
-
-\begin{itemize}
-\item
-  note that \texttt{ddirich(alpha)} is the JAGS call for a Dirichlet distribution
-  with concentration \texttt{alpha}.
-\item
-  avoid the \emph{label switching} problem by sorting the current clusters probabilities
-  properly. The call \texttt{order(v)} is an alternative to \texttt{sort(v)}, such that
-  \texttt{v{[}order(v){]}\ ==\ sort(v)} (gives a permutation of the indices that orders
-  the elements of a vector in ascending order).
-\item
-  to inspect the likelihood, you can define a new model node
-  e.g.~\texttt{complete\_loglik} as such:
-
-\begin{verbatim}
-model {
-
-  #
-  # ... here's the main model
-  #
-
-  # likelihood
-  for (i in 1:N) {
-    loglikx[i] <- logdensity.norm(x[i], mux_clust[clust[i]], taux)
-    logliky[i] <- logdensity.norm(y[i], muy_clust[clust[i]], tauy)
-  }
-  complete_loglik <- sum(loglikx) + sum(logliky)
-}
-\end{verbatim}
-\end{itemize}
-
-The simulation shouldn't take more than one/two minute. If it runs for too long it's
-either unnecessary or wrong. Decrease the number of iterations/chains.
-
-Good luck!
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
-\CommentTok{\# read data}
-\FunctionTok{library}\NormalTok{(readr)}
-\FunctionTok{library}\NormalTok{(tibble)}
-\FunctionTok{library}\NormalTok{(ggplot2)}
-
-\NormalTok{bread }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/bread.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Rows: 600 Columns: 2
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## dbl (2): weight, size
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{bread }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(weight, size)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-279-1.pdf}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(R2jags)}
-
-\NormalTok{model\_code }\OtherTok{\textless{}{-}} \StringTok{"}
-\StringTok{model \{}
-\StringTok{  \# Likelihood:}
-\StringTok{  for(i in 1:N) \{}
-\StringTok{    x[i] \textasciitilde{} dnorm(mux[i], taux)}
-\StringTok{    y[i] \textasciitilde{} dnorm(muy[i], tauy)}
-\StringTok{    mux[i] \textless{}{-} mux\_clust[clust[i]]}
-\StringTok{    muy[i] \textless{}{-} muy\_clust[clust[i]]}
-\StringTok{    clust[i] \textasciitilde{} dcat(lambda[1:K]) \# categorical}
-\StringTok{  \}}
-
-\StringTok{  \# priors}
-\StringTok{  taux \textasciitilde{} dgamma(0.01, 0.01)}
-\StringTok{  tauy \textasciitilde{} dgamma(0.01, 0.01)}
-\StringTok{  sigmax \textless{}{-} 1 / sqrt(taux)}
-\StringTok{  sigmay \textless{}{-} 1 / sqrt(tauy)}
-
-\StringTok{  for (k in 1:K) \{}
-\StringTok{    mux\_clust\_raw[k] \textasciitilde{} dnorm(0, 10\^{}{-}6)}
-\StringTok{    muy\_clust\_raw[k] \textasciitilde{} dnorm(0, 10\^{}{-}6)}
-\StringTok{  \}}
-
-\StringTok{  perm \textless{}{-} order(mux\_clust\_raw) \# same ordering for both!}
-\StringTok{  for (k in 1:K) \{}
-\StringTok{    mux\_clust[k] \textless{}{-} mux\_clust\_raw[perm[k]]}
-\StringTok{    muy\_clust[k] \textless{}{-} muy\_clust\_raw[perm[k]]}
-\StringTok{  \}}
-\StringTok{  lambda[1:K] \textasciitilde{} ddirch(ones)}
-
-\StringTok{  \# likelihood}
-\StringTok{  for (i in 1:N) \{}
-\StringTok{    loglikx[i] \textless{}{-} logdensity.norm(x[i], mux\_clust[clust[i]], taux)}
-\StringTok{    logliky[i] \textless{}{-} logdensity.norm(y[i], muy\_clust[clust[i]], tauy)}
-\StringTok{  \}}
-\StringTok{  complete\_loglik \textless{}{-} sum(loglikx) + sum(logliky)}
-\StringTok{\}}
-\StringTok{"}
-
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{4} \CommentTok{\# change this and see what\textquotesingle{}s best}
-\NormalTok{model\_data }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{x =}\NormalTok{ bread}\SpecialCharTok{$}\NormalTok{weight, }\AttributeTok{y =}\NormalTok{ bread}\SpecialCharTok{$}\NormalTok{size, }\AttributeTok{ones =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, K),}
-  \AttributeTok{K =}\NormalTok{ K, }\AttributeTok{N =} \FunctionTok{nrow}\NormalTok{(bread)}
-\NormalTok{)}
-\NormalTok{model\_params }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-  \StringTok{"mux\_clust"}\NormalTok{, }\StringTok{"muy\_clust"}\NormalTok{, }\StringTok{"sigmax"}\NormalTok{, }\StringTok{"sigmay"}
-  \CommentTok{\# ,"clust"}
-\NormalTok{  , }\StringTok{"lambda"}\NormalTok{, }\StringTok{"complete\_loglik"}
-\NormalTok{)}
-\NormalTok{model\_inits }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
-  \FunctionTok{list}\NormalTok{(}
-    \AttributeTok{mux\_clust\_raw =} \FunctionTok{rnorm}\NormalTok{(K, }\DecValTok{500}\NormalTok{, }\FloatTok{1e4}\NormalTok{), }\AttributeTok{muy\_clust\_raw =} \FunctionTok{rnorm}\NormalTok{(K, }\DecValTok{500}\NormalTok{, }\FloatTok{1e4}\NormalTok{),}
-    \AttributeTok{taux =} \FunctionTok{rgamma}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.1}\NormalTok{), }\AttributeTok{tauy =} \FunctionTok{rgamma}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.1}\NormalTok{),}
-    \AttributeTok{clust =} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{size =} \FunctionTok{nrow}\NormalTok{(bread), }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ K, K))}
-\NormalTok{  )}
-\NormalTok{\}}
-\NormalTok{model\_run }\OtherTok{\textless{}{-}} \FunctionTok{jags}\NormalTok{(}
-  \AttributeTok{data =}\NormalTok{ model\_data,}
-  \AttributeTok{parameters.to.save =}\NormalTok{ model\_params,}
-  \AttributeTok{inits =}\NormalTok{ model\_inits,}
-  \AttributeTok{model.file =} \FunctionTok{textConnection}\NormalTok{(model\_code),}
-  \AttributeTok{n.chains =} \DecValTok{2}\NormalTok{,}
-  \AttributeTok{n.iter =} \DecValTok{5000}\NormalTok{,}
-  \AttributeTok{n.burnin =} \DecValTok{1000}\NormalTok{,}
-  \AttributeTok{n.thin =} \DecValTok{5}\NormalTok{,}
-  \AttributeTok{DIC =} \ConstantTok{TRUE}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Compiling model graph
-##    Resolving undeclared variables
-##    Allocating nodes
-## Graph information:
-##    Observed stochastic nodes: 1200
-##    Unobserved stochastic nodes: 611
-##    Total graph size: 4248
-## 
-## Initializing model
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{model\_run}\SpecialCharTok{$}\NormalTok{BUGSoutput}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Inference for Bugs model at "4", fit using jags,
-##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 5
-##  n.sims = 1600 iterations saved
-##                    mean    sd    2.5%     25%     50%     75%   97.5% Rhat
-## complete_loglik -6940.6  49.1 -7013.7 -6987.2 -6941.2 -6892.4 -6877.1  9.1
-## deviance        13881.1  98.2 13754.3 13784.8 13882.4 13974.5 14027.3  9.1
-## lambda[1]           0.1   0.0     0.1     0.1     0.1     0.2     0.2  3.8
-## lambda[2]           0.3   0.1     0.2     0.2     0.3     0.3     0.4  5.4
-## lambda[3]           0.3   0.1     0.2     0.2     0.3     0.3     0.4  6.5
-## lambda[4]           0.3   0.0     0.2     0.3     0.3     0.3     0.4  4.4
-## mux_clust[1]      702.5  19.8   656.9   691.5   705.4   716.1   734.4  1.8
-## mux_clust[2]      823.1  25.6   787.4   798.1   824.7   847.5   859.2  9.1
-## mux_clust[3]      891.0  42.2   839.2   848.8   893.5   932.8   940.7 17.8
-## mux_clust[4]      941.6   9.1   926.6   934.3   940.4   948.3   960.0  3.1
-## muy_clust[1]      400.1  14.2   370.3   390.1   401.3   410.4   424.3  2.1
-## muy_clust[2]      638.8 151.5   475.4   487.5   628.9   789.9   801.0 48.6
-## muy_clust[3]      946.8 153.7   780.9   793.5   942.1  1100.3  1109.0 53.7
-## muy_clust[4]      800.1 301.9   487.5   498.3   752.2  1101.7  1110.7 97.7
-## sigmax             85.8   7.1    75.2    79.1    85.6    92.2    97.4  5.7
-## sigmay             72.5   2.5    67.9    70.8    72.4    74.1    77.7  1.0
-##                 n.eff
-## complete_loglik     2
-## deviance            2
-## lambda[1]           2
-## lambda[2]           2
-## lambda[3]           2
-## lambda[4]           2
-## mux_clust[1]        4
-## mux_clust[2]        2
-## mux_clust[3]        2
-## mux_clust[4]        3
-## muy_clust[1]        4
-## muy_clust[2]        2
-## muy_clust[3]        2
-## muy_clust[4]        2
-## sigmax              2
-## sigmay            120
-## 
-## For each parameter, n.eff is a crude measure of effective sample size,
-## and Rhat is the potential scale reduction factor (at convergence, Rhat=1).
-## 
-## DIC info (using the rule, pD = var(deviance)/2)
-## pD = 330.3 and DIC = 14211.4
-## DIC is an estimate of expected predictive error (lower deviance is better).
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{gmm\_mcmc }\OtherTok{\textless{}{-}} \FunctionTok{as.mcmc}\NormalTok{(model\_run)}
-\CommentTok{\# save to pdf}
-\CommentTok{\# pdf(file = "./lab3/mcmc\_out.pdf")}
-\CommentTok{\# plot(gmm\_mcmc)}
-\CommentTok{\# dev.off()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{mux }\OtherTok{\textless{}{-}}\NormalTok{ model\_run}\SpecialCharTok{$}\NormalTok{BUGSoutput}\SpecialCharTok{$}\NormalTok{mean}\SpecialCharTok{$}\NormalTok{mux\_clust}
-\NormalTok{muy }\OtherTok{\textless{}{-}}\NormalTok{ model\_run}\SpecialCharTok{$}\NormalTok{BUGSoutput}\SpecialCharTok{$}\NormalTok{mean}\SpecialCharTok{$}\NormalTok{muy\_clust}
-
-\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(bread}\SpecialCharTok{$}\NormalTok{weight, bread}\SpecialCharTok{$}\NormalTok{size)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(mux, muy), }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-281-1.pdf}
 
 \begin{verbatim}
 ## tweaking contrast
