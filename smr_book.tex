@@ -120,7 +120,7 @@
 
 \title{Elementary statistics}
 \author{Vittorio Zampinetti}
-\date{2023-10-16}
+\date{2023-10-23}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   3.241319   1.980668 -17.358670 -11.176221   5.327840  -0.589462
-##  [7]  -1.304288  -8.876984  -3.050540  12.388115
+##  [1] -8.03549022  8.85347288 -1.85316254  0.65802053 10.92388492  5.51995494
+##  [7]  4.93952801 -0.05007395  7.44105190 -0.72079541
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1070,14 +1070,14 @@ most of the dataset will be stored in dataframes.
 ##    x  y char
 ## 1  1  1    a
 ## 2  1  2    a
-## 3  1  3    a
-## 4  1  4    b
-## 5  1  5    a
+## 3  1  3    b
+## 4  1  4    a
+## 5  1  5    b
 ## 6  1  6    b
 ## 7  1  7    b
-## 8  1  8    a
+## 8  1  8    b
 ## 9  1  9    b
-## 10 1 10    a
+## 10 1 10    b
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "a" "b" "a" "b" "b" "a" "b" "a"
+##  [1] "a" "a" "b" "a" "b" "b" "b" "b" "b" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1119,8 +1119,8 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    a
-## 3 1 3    a
-## 4 1 4    b
+## 3 1 3    b
+## 4 1 4    a
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.1149320  0.7637125  0.7156665  0.2737547  0.0252859  0.7790551
-##  [7] -0.1867948  0.4907590  0.0912475  2.2064746
+##  [1]  0.16985499  0.36600929 -0.47135733 -0.52932966  0.04611202 -0.80394010
+##  [7] -1.43639365 -1.75937344  0.66177479 -1.41265587
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.06749652 0.18578932 0.17487309 0.08991415 0.05677345 0.18932469
-##  [7] 0.03651711 0.12772923 0.06453119 0.39052847
+##  [1] 0.0747464231 0.1049888267 0.0188217519 0.0162820371 0.0591441461
+##  [6] 0.0078285452 0.0010880815 0.0003404021 0.1629418497 0.0011802269
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.5457505 0.7774807 0.7629014 0.6078634 0.5100865 0.7820264 0.4259107
-##  [8] 0.6882016 0.5363520 0.9863246
+##  [1] 0.56743791 0.64282093 0.31869279 0.29828839 0.51838952 0.21071578
+##  [7] 0.07544518 0.03925705 0.74594222 0.07887847
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a         b
-## 1  0.4365141 0.1905446
-## 2 -1.9160983 3.6714327
+##            a          b
+## 1 -0.3099528 0.09607073
+## 2  0.6528341 0.42619234
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -2486,7 +2486,7 @@ In R:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{300}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{380}
 \NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{200}
 \NormalTok{z }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{{-}}\NormalTok{ n }\SpecialCharTok{*}\NormalTok{ p0) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(n }\SpecialCharTok{*}\NormalTok{ p0 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p0))}
 \FunctionTok{pnorm}\NormalTok{(z, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
@@ -2494,7 +2494,7 @@ In R:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.133891e-10
+## [1] 0.06016385
 \end{verbatim}
 
 or, using the R proportion test \texttt{prop.test}
@@ -2516,13 +2516,13 @@ or, using the R proportion test \texttt{prop.test}
 ##  1-sample proportions test with continuity correction
 ## 
 ## data:  x out of n, null probability p0
-## X-squared = 38.268, df = 1, p-value = 3.083e-10
+## X-squared = 2.2562, df = 1, p-value = 0.06654
 ## alternative hypothesis: true p is greater than 0.4864865
 ## 95 percent confidence interval:
-##  0.6188788 1.0000000
+##  0.4828353 1.0000000
 ## sample estimates:
 ##         p 
-## 0.6666667
+## 0.5263158
 \end{verbatim}
 
 Notice that the result is not exactly the same. This is due to the fact
@@ -2538,7 +2538,7 @@ on the case) \texttt{.5} to the \(x\) value.
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 3.082581e-10
+## [1] 0.06653798
 \end{verbatim}
 
 \begin{quote}
