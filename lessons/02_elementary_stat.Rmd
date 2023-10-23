@@ -520,7 +520,7 @@ $X$ is $x = 200$ (considered to be large enough for the approximation).
 In R:
 
 ```{r}
-n <- 300
+n <- 380
 x <- 200
 z <- (x - n * p0) / sqrt(n * p0 * (1 - p0))
 pnorm(z, lower.tail = FALSE)
