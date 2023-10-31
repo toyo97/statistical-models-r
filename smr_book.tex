@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -0.2953606   2.6979000  -7.2791467   2.6416686  -1.8167235   9.9505197
-##  [7] -15.8824518   2.8328332  -9.8199533   5.7792654
+##  [1]  -0.9153121   0.1045105  -2.4370568 -17.4420990   3.6412997  13.5556186
+##  [7]  -0.5751370   6.6007475 -13.3885924   1.3945706
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,15 +1068,15 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    b
+## 1  1  1    a
 ## 2  1  2    b
 ## 3  1  3    b
 ## 4  1  4    a
 ## 5  1  5    a
-## 6  1  6    b
-## 7  1  7    b
+## 6  1  6    a
+## 7  1  7    a
 ## 8  1  8    a
-## 9  1  9    a
+## 9  1  9    b
 ## 10 1 10    b
 \end{verbatim}
 
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "b" "b" "b" "a" "a" "b" "b" "a" "a" "b"
+##  [1] "a" "b" "b" "a" "a" "a" "a" "a" "b" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.836442372 -0.125779379  0.235243840  0.099416539  0.003387864
-##  [6] -0.749667975 -0.455933228 -1.337083183  0.023762502  0.662340606
+##  [1]  1.99845274 -0.33039656 -1.61622975 -1.42046320 -0.77627609  1.35686391
+##  [7] -0.04454371  0.11274951  0.09210709 -2.24263583
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.007142866 0.041651932 0.084068723 0.065543104 0.054357725 0.009101869
-##  [7] 0.019550732 0.001523111 0.056602855 0.163065249
+##  [1] 0.3989418029 0.0264020772 0.0005770986 0.0011491614 0.0084567275
+##  [6] 0.3244088924 0.0493401061 0.0672192412 0.0646371331 0.0000492344
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.20145304 0.44995328 0.59299026 0.53959622 0.50135156 0.22672735
-##  [7] 0.32421900 0.09059774 0.50947897 0.74612352
+##  [1] 0.97716620 0.37055017 0.05302232 0.07773644 0.21879299 0.91258777
+##  [7] 0.48223551 0.54488542 0.53669352 0.01246015
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a          b
-## 1 -0.2818124 0.07941821
-## 2  1.0405236 1.08268941
+##            a        b
+## 1 -0.5910931 0.349391
+## 2 -1.3327795 1.776301
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -7769,6 +7769,17 @@ Imagine you get measurements in terms of all 4 indicators of
 5 iris flowers belonging to the same class, but you don't know
 which. These are the observations.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x\_sample }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{sepal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{4.738759}\NormalTok{, }\FloatTok{5.545983}\NormalTok{, }\FloatTok{5.389729}\NormalTok{, }\FloatTok{4.549803}\NormalTok{, }\FloatTok{5.896723}\NormalTok{),}
+  \AttributeTok{sepal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{3.132478}\NormalTok{, }\FloatTok{3.537232}\NormalTok{, }\FloatTok{3.217107}\NormalTok{, }\FloatTok{3.190097}\NormalTok{, }\FloatTok{3.636949}\NormalTok{),}
+  \AttributeTok{petal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.220472}\NormalTok{, }\FloatTok{1.321923}\NormalTok{, }\FloatTok{1.573662}\NormalTok{, }\FloatTok{1.289875}\NormalTok{, }\FloatTok{1.705737}\NormalTok{),}
+  \AttributeTok{petal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.23}\NormalTok{, }\FloatTok{0.09}\NormalTok{, }\FloatTok{0.33}\NormalTok{, }\FloatTok{0.22}\NormalTok{, }\FloatTok{0.18}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{itemize}
 \tightlist
 \item
@@ -7801,6 +7812,17 @@ to quantify our confidence.
 \end{itemize}
 
 Now take this other sample:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_sample }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{sepal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{6.303990}\NormalTok{, }\FloatTok{6.705969}\NormalTok{, }\FloatTok{7.795044}\NormalTok{, }\FloatTok{7.015665}\NormalTok{, }\FloatTok{7.056670}\NormalTok{),}
+  \AttributeTok{sepal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{3.152411}\NormalTok{, }\FloatTok{2.499612}\NormalTok{, }\FloatTok{3.293934}\NormalTok{, }\FloatTok{3.275724}\NormalTok{, }\FloatTok{2.843923}\NormalTok{),}
+  \AttributeTok{petal\_length =} \FunctionTok{c}\NormalTok{(}\FloatTok{6.356729}\NormalTok{, }\FloatTok{5.975576}\NormalTok{, }\FloatTok{4.998114}\NormalTok{, }\FloatTok{5.423811}\NormalTok{, }\FloatTok{5.382871}\NormalTok{),}
+  \AttributeTok{petal\_width =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.589342}\NormalTok{, }\FloatTok{2.305014}\NormalTok{, }\FloatTok{2.260900}\NormalTok{, }\FloatTok{2.185519}\NormalTok{, }\FloatTok{1.589370}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{itemize}
 \tightlist

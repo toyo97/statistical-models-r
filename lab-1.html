@@ -429,6 +429,12 @@ differentiate between Setosa and the other two types? Why?</li>
 <p>Imagine you get measurements in terms of all 4 indicators of
 5 iris flowers belonging to the same class, but you don’t know
 which. These are the observations.</p>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="lab-1.html#cb576-1" aria-hidden="true" tabindex="-1"></a>x_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb576-2"><a href="lab-1.html#cb576-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_length =</span> <span class="fu">c</span>(<span class="fl">4.738759</span>, <span class="fl">5.545983</span>, <span class="fl">5.389729</span>, <span class="fl">4.549803</span>, <span class="fl">5.896723</span>),</span>
+<span id="cb576-3"><a href="lab-1.html#cb576-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_width =</span> <span class="fu">c</span>(<span class="fl">3.132478</span>, <span class="fl">3.537232</span>, <span class="fl">3.217107</span>, <span class="fl">3.190097</span>, <span class="fl">3.636949</span>),</span>
+<span id="cb576-4"><a href="lab-1.html#cb576-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">c</span>(<span class="fl">1.220472</span>, <span class="fl">1.321923</span>, <span class="fl">1.573662</span>, <span class="fl">1.289875</span>, <span class="fl">1.705737</span>),</span>
+<span id="cb576-5"><a href="lab-1.html#cb576-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_width =</span> <span class="fu">c</span>(<span class="fl">0.23</span>, <span class="fl">0.09</span>, <span class="fl">0.33</span>, <span class="fl">0.22</span>, <span class="fl">0.18</span>)</span>
+<span id="cb576-6"><a href="lab-1.html#cb576-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ul>
 <li>Just looking at the values of the petal length,
 can you take advantage of the CI you just computed
@@ -450,6 +456,12 @@ hypothesis to be <span class="math inline">\(H_0: \mu = \mu_0 = \bar{x}\)</span>
 about the class of this sample?</li>
 </ul>
 <p>Now take this other sample:</p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="lab-1.html#cb577-1" aria-hidden="true" tabindex="-1"></a>y_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb577-2"><a href="lab-1.html#cb577-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_length =</span> <span class="fu">c</span>(<span class="fl">6.303990</span>, <span class="fl">6.705969</span>, <span class="fl">7.795044</span>, <span class="fl">7.015665</span>, <span class="fl">7.056670</span>),</span>
+<span id="cb577-3"><a href="lab-1.html#cb577-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_width =</span> <span class="fu">c</span>(<span class="fl">3.152411</span>, <span class="fl">2.499612</span>, <span class="fl">3.293934</span>, <span class="fl">3.275724</span>, <span class="fl">2.843923</span>),</span>
+<span id="cb577-4"><a href="lab-1.html#cb577-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">c</span>(<span class="fl">6.356729</span>, <span class="fl">5.975576</span>, <span class="fl">4.998114</span>, <span class="fl">5.423811</span>, <span class="fl">5.382871</span>),</span>
+<span id="cb577-5"><a href="lab-1.html#cb577-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_width =</span> <span class="fu">c</span>(<span class="fl">1.589342</span>, <span class="fl">2.305014</span>, <span class="fl">2.260900</span>, <span class="fl">2.185519</span>, <span class="fl">1.589370</span>)</span>
+<span id="cb577-6"><a href="lab-1.html#cb577-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ul>
 <li>What is the <em>p-value</em>?</li>
 <li>Is it higher or lower than 0.025?</li>
