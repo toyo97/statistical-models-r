@@ -176,7 +176,7 @@ Imagine you get measurements in terms of all 4 indicators of
 5 iris flowers belonging to the same class, but you don't know
 which. These are the observations.
 
-```{r}
+```{r, echo=TRUE}
 x_sample <- tibble(
   sepal_length = c(4.738759, 5.545983, 5.389729, 4.549803, 5.896723),
   sepal_width = c(3.132478, 3.537232, 3.217107, 3.190097, 3.636949),
@@ -219,7 +219,7 @@ t.test(x_sample$petal_length, mu = mu0)
 
 Now take this other sample:
 
-```{r}
+```{r, echo=TRUE}
 y_sample <- tibble(
   sepal_length = c(6.303990, 6.705969, 7.795044, 7.015665, 7.056670),
   sepal_width = c(3.152411, 2.499612, 3.293934, 3.275724, 2.843923),
