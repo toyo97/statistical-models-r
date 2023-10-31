@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Elementary statistics</title>
+  <title>Chapter 11 Lab 1 | Elementary statistics</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Elementary statistics" />
+  <meta property="og:title" content="Chapter 11 Lab 1 | Elementary statistics" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Elementary statistics" />
+  <meta name="twitter:title" content="Chapter 11 Lab 1 | Elementary statistics" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="three-jags-examples.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -339,26 +339,133 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Elementary statistics</h1>
-<p class="author"><em>Vittorio Zampinetti</em></p>
-<p class="date"><em>2023-10-31</em></p>
+<div id="lab-1" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Lab 1<a href="lab-1.html#lab-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="iris-dataset" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Iris Dataset<a href="lab-1.html#iris-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Download the dataset at this link (<a href="https://archive.ics.uci.edu/ml/datasets/iris">https://archive.ics.uci.edu/ml/datasets/iris</a>)
+(look for the <code>iris.data</code> file) and place the file together with your R script (for simplicity).
+At that web page, you can also get some information regarding the origin and
+nature of the data.</p>
+<p>The dataset is available as Comma-Separated Values (CSV) file, which is nothing
+but a plain text file where each row is a row of a table and every column is separated
+by a comma. To make it look more like a CSV file, rename it from <code>iris.data</code> to <code>iris.csv</code>.</p>
 </div>
-<div id="about" class="section level1 unnumbered hasAnchor">
-<h1>About<a href="index.html#about" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The book is built upon the course in Statistical Models at
-Politecnico di Torino, but it is self-contained and thus is
-accessible by any interested reader. For any feedback, send me
-an email: <a href="mailto:zampinetti@gmail.com">zampinetti@gmail.com</a>. Thank you!</p>
+<div id="import-data" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Import data<a href="lab-1.html#import-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now we’re ready to import the data in R and view it as a table.</p>
+<blockquote>
+<p>Hint: use <code>read_csv()</code> function from the <code>readr</code> library. Check
+the function arguments. Also, you might need to manually add the column names.
+To check which column names should be added and in which order,
+check under <strong>“attribute information”</strong> on the dataset reference page linked above.</p>
+</blockquote>
+<p>Answer these questions:</p>
+<ul>
+<li>How many observations does the dataset consist of?</li>
+<li>Which are the different classes?</li>
+</ul>
+</div>
+<div id="exploratory-data-analysis-eda" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Exploratory Data Analysis (EDA)<a href="lab-1.html#exploratory-data-analysis-eda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First compute the mean and standard deviation of each measure for each
+class separately.</p>
+<ul>
+<li>What can you infer? Is there any measure which is more indicative of a certain class?</li>
+</ul>
+<p>You can also plot the empirical distribution of the four measures
+separately, in order to better visualize how far (or close) they
+are from each other.</p>
+<ul>
+<li>Plot the distributions of the four measures in a 2x2
+grid, differentiating the types with color encoding (optional).</li>
+</ul>
+<blockquote>
+<p>Hint: You can use <code>melt()</code> from the <code>reshape2</code> library to
+transform the dataset, and then plot the various densities with
+color encoding on the four measures.</p>
+</blockquote>
+<p>We can also visualize the four measures on a set of plots that shows
+the correlation between variables, two-by-two. This is easily
+done with a pair plot.</p>
+<ul>
+<li>Draw a pair plot (optional).</li>
+</ul>
+<blockquote>
+<p>Hint: install the package with <code>install.packages("GGally")</code> and load it with <code>library(GGally)</code>, then
+read the help document of the <code>ggpairs()</code> function. You can also use R base <code>pairs()</code> function.</p>
+</blockquote>
+</div>
+<div id="confidence-intervals-1" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Confidence intervals<a href="lab-1.html#confidence-intervals-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s make our decision more statistically relevant.
+Select only one class, the Setosa type, and one measure, petal length.</p>
+<p>Now build a 95% CI around the mean value of the Setosa petal length.
+Assume <span class="math inline">\(\sigma\)</span> unknown.</p>
+<p>Formally, we want to find <span class="math inline">\(x_l, x_u\)</span> s.t. the true mean <span class="math inline">\(\mu\)</span>
+of the Setosa petal length falls in the interval with probability 95%:</p>
+<p><span class="math display">\[
+P(x_l \leq \mu \leq x_u) = 95\%\,.
+\]</span></p>
+<ul>
+<li>Find such CI, using only R base operators (<code>mean</code>, <code>sd</code>).</li>
+</ul>
+<p>To do this, remember that</p>
+<ul>
+<li><p><span class="math inline">\(\frac{(\bar{X} - \mu)\sqrt{n}}{s} \sim T(n-1)\)</span> where <span class="math inline">\(s\)</span> is the sample standard deviation</p></li>
+<li><p><code>qt()</code> is the R function for the t-distribution quantile</p></li>
+<li><p>Validate your result by using <code>t.test()</code> to get the CI.</p></li>
+</ul>
+<p>With <code>t.test</code></p>
+<p>Compare this confidence interval to the mean and std-dev
+values you got for each class for the petal length measure.</p>
+<ul>
+<li>Do you think the petal length is a good measure to
+differentiate between Setosa and the other two types? Why?</li>
+</ul>
+</div>
+<div id="p-value-1" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> P-value<a href="lab-1.html#p-value-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Imagine you get measurements in terms of all 4 indicators of
+5 iris flowers belonging to the same class, but you don’t know
+which. These are the observations.</p>
+<ul>
+<li>Just looking at the values of the petal length,
+can you take advantage of the CI you just computed
+in order to make a guess about the class of these flowers?
+(Setosa or not Setosa)</li>
+</ul>
+<p>To make this guess more statistically relevant, we have
+to quantify our confidence.</p>
+<ul>
+<li><p>What is the <em>p-value</em> of this sample, only looking at the
+petal length, against the null hypothesis that the
+samples are coming from the Setosa type? We set the null
+hypothesis to be <span class="math inline">\(H_0: \mu = \mu_0 = \bar{x}\)</span></p>
+<p>Remember that the <em>p-value</em> is defined as</p></li>
+</ul>
+<p><span class="math display">\[ P\left(T \geq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)\]</span></p>
+<ul>
+<li>Based on the value you found, what can you say
+about the class of this sample?</li>
+</ul>
+<p>Now take this other sample:</p>
+<ul>
+<li>What is the <em>p-value</em>?</li>
+<li>Is it higher or lower than 0.025?</li>
+<li>Could we guess the answer to this last question
+without computing it?</li>
+</ul>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="three-jags-examples.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -390,7 +497,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r/edit/master/index.Rmd",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/labs/L01_iris.Rmd",
 "text": "Edit"
 },
 "history": {

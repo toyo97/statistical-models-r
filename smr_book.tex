@@ -120,7 +120,7 @@
 
 \title{Elementary statistics}
 \author{Vittorio Zampinetti}
-\date{2023-10-23}
+\date{2023-10-31}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -8.03549022  8.85347288 -1.85316254  0.65802053 10.92388492  5.51995494
-##  [7]  4.93952801 -0.05007395  7.44105190 -0.72079541
+##  [1]  -0.2953606   2.6979000  -7.2791467   2.6416686  -1.8167235   9.9505197
+##  [7] -15.8824518   2.8328332  -9.8199533   5.7792654
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,15 +1068,15 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    a
-## 2  1  2    a
+## 1  1  1    b
+## 2  1  2    b
 ## 3  1  3    b
 ## 4  1  4    a
-## 5  1  5    b
+## 5  1  5    a
 ## 6  1  6    b
 ## 7  1  7    b
-## 8  1  8    b
-## 9  1  9    b
+## 8  1  8    a
+## 9  1  9    a
 ## 10 1 10    b
 \end{verbatim}
 
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "b" "a" "b" "b" "b" "b" "b" "b"
+##  [1] "b" "b" "b" "a" "a" "b" "b" "a" "a" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,7 +1118,7 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    a
+## 2 1 2    b
 ## 3 1 3    b
 ## 4 1 4    a
 \end{verbatim}
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.16985499  0.36600929 -0.47135733 -0.52932966  0.04611202 -0.80394010
-##  [7] -1.43639365 -1.75937344  0.66177479 -1.41265587
+##  [1] -0.836442372 -0.125779379  0.235243840  0.099416539  0.003387864
+##  [6] -0.749667975 -0.455933228 -1.337083183  0.023762502  0.662340606
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.0747464231 0.1049888267 0.0188217519 0.0162820371 0.0591441461
-##  [6] 0.0078285452 0.0010880815 0.0003404021 0.1629418497 0.0011802269
+##  [1] 0.007142866 0.041651932 0.084068723 0.065543104 0.054357725 0.009101869
+##  [7] 0.019550732 0.001523111 0.056602855 0.163065249
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.56743791 0.64282093 0.31869279 0.29828839 0.51838952 0.21071578
-##  [7] 0.07544518 0.03925705 0.74594222 0.07887847
+##  [1] 0.20145304 0.44995328 0.59299026 0.53959622 0.50135156 0.22672735
+##  [7] 0.32421900 0.09059774 0.50947897 0.74612352
 \end{verbatim}
 
 \begin{Shaded}
@@ -1660,8 +1660,8 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 
 \begin{verbatim}
 ##            a          b
-## 1 -0.3099528 0.09607073
-## 2  0.6528341 0.42619234
+## 1 -0.2818124 0.07941821
+## 2  1.0405236 1.08268941
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -7636,13 +7636,182 @@ components correctly represent the two clusters.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-250-1.pdf}
 
-\begin{verbatim}
-## tweaking contrast
-\end{verbatim}
+\hypertarget{lab-1}{%
+\chapter{Lab 1}\label{lab-1}}
 
-\begin{verbatim}
-## tweaking pscl
-\end{verbatim}
+\hypertarget{iris-dataset}{%
+\section{Iris Dataset}\label{iris-dataset}}
+
+Download the dataset at this link (\url{https://archive.ics.uci.edu/ml/datasets/iris})
+(look for the \texttt{iris.data} file) and place the file together with your R script (for simplicity).
+At that web page, you can also get some information regarding the origin and
+nature of the data.
+
+The dataset is available as Comma-Separated Values (CSV) file, which is nothing
+but a plain text file where each row is a row of a table and every column is separated
+by a comma. To make it look more like a CSV file, rename it from \texttt{iris.data} to \texttt{iris.csv}.
+
+\hypertarget{import-data}{%
+\section{Import data}\label{import-data}}
+
+Now we're ready to import the data in R and view it as a table.
+
+\begin{quote}
+Hint: use \texttt{read\_csv()} function from the \texttt{readr} library. Check
+the function arguments. Also, you might need to manually add the column names.
+To check which column names should be added and in which order,
+check under \textbf{``attribute information''} on the dataset reference page linked above.
+\end{quote}
+
+Answer these questions:
+
+\begin{itemize}
+\tightlist
+\item
+  How many observations does the dataset consist of?
+\item
+  Which are the different classes?
+\end{itemize}
+
+\hypertarget{exploratory-data-analysis-eda}{%
+\section{Exploratory Data Analysis (EDA)}\label{exploratory-data-analysis-eda}}
+
+First compute the mean and standard deviation of each measure for each
+class separately.
+
+\begin{itemize}
+\tightlist
+\item
+  What can you infer? Is there any measure which is more indicative of a certain class?
+\end{itemize}
+
+You can also plot the empirical distribution of the four measures
+separately, in order to better visualize how far (or close) they
+are from each other.
+
+\begin{itemize}
+\tightlist
+\item
+  Plot the distributions of the four measures in a 2x2
+  grid, differentiating the types with color encoding (optional).
+\end{itemize}
+
+\begin{quote}
+Hint: You can use \texttt{melt()} from the \texttt{reshape2} library to
+transform the dataset, and then plot the various densities with
+color encoding on the four measures.
+\end{quote}
+
+We can also visualize the four measures on a set of plots that shows
+the correlation between variables, two-by-two. This is easily
+done with a pair plot.
+
+\begin{itemize}
+\tightlist
+\item
+  Draw a pair plot (optional).
+\end{itemize}
+
+\begin{quote}
+Hint: install the package with \texttt{install.packages("GGally")} and load it with \texttt{library(GGally)}, then
+read the help document of the \texttt{ggpairs()} function. You can also use R base \texttt{pairs()} function.
+\end{quote}
+
+\hypertarget{confidence-intervals-1}{%
+\section{Confidence intervals}\label{confidence-intervals-1}}
+
+Let's make our decision more statistically relevant.
+Select only one class, the Setosa type, and one measure, petal length.
+
+Now build a 95\% CI around the mean value of the Setosa petal length.
+Assume \(\sigma\) unknown.
+
+Formally, we want to find \(x_l, x_u\) s.t. the true mean \(\mu\)
+of the Setosa petal length falls in the interval with probability 95\%:
+
+\[
+P(x_l \leq \mu \leq x_u) = 95\%\,.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  Find such CI, using only R base operators (\texttt{mean}, \texttt{sd}).
+\end{itemize}
+
+To do this, remember that
+
+\begin{itemize}
+\item
+  \(\frac{(\bar{X} - \mu)\sqrt{n}}{s} \sim T(n-1)\) where \(s\) is the sample standard deviation
+\item
+  \texttt{qt()} is the R function for the t-distribution quantile
+\item
+  Validate your result by using \texttt{t.test()} to get the CI.
+\end{itemize}
+
+With \texttt{t.test}
+
+Compare this confidence interval to the mean and std-dev
+values you got for each class for the petal length measure.
+
+\begin{itemize}
+\tightlist
+\item
+  Do you think the petal length is a good measure to
+  differentiate between Setosa and the other two types? Why?
+\end{itemize}
+
+\hypertarget{p-value-1}{%
+\section{P-value}\label{p-value-1}}
+
+Imagine you get measurements in terms of all 4 indicators of
+5 iris flowers belonging to the same class, but you don't know
+which. These are the observations.
+
+\begin{itemize}
+\tightlist
+\item
+  Just looking at the values of the petal length,
+  can you take advantage of the CI you just computed
+  in order to make a guess about the class of these flowers?
+  (Setosa or not Setosa)
+\end{itemize}
+
+To make this guess more statistically relevant, we have
+to quantify our confidence.
+
+\begin{itemize}
+\item
+  What is the \emph{p-value} of this sample, only looking at the
+  petal length, against the null hypothesis that the
+  samples are coming from the Setosa type? We set the null
+  hypothesis to be \(H_0: \mu = \mu_0 = \bar{x}\)
+
+  Remember that the \emph{p-value} is defined as
+\end{itemize}
+
+\[ P\left(T \geq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)\]
+
+\begin{itemize}
+\tightlist
+\item
+  Based on the value you found, what can you say
+  about the class of this sample?
+\end{itemize}
+
+Now take this other sample:
+
+\begin{itemize}
+\tightlist
+\item
+  What is the \emph{p-value}?
+\item
+  Is it higher or lower than 0.025?
+\item
+  Could we guess the answer to this last question
+  without computing it?
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
