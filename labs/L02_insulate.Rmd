@@ -1,3 +1,13 @@
+```{r, echo=FALSE}
+hide_sol <- TRUE
+if (hide_sol) {
+  knitr::opts_chunk$set(
+    echo = FALSE, warning = FALSE, results = FALSE,
+    message = FALSE, fig.show = "hide"
+  )
+}
+```
+
 # Linear regression lab
 
 This lab focuses on linear models and on the R functions

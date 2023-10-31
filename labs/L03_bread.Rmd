@@ -1,3 +1,13 @@
+```{r, echo=FALSE}
+hide_sol <- TRUE
+if (hide_sol) {
+  knitr::opts_chunk$set(
+    echo = FALSE, warning = FALSE, results = FALSE,
+    message = FALSE, fig.show = "hide"
+  )
+}
+```
+
 # JAGS lab - Gaussian Mixture Model
 
 A 5-stars hotel stocks up a whole bunch of bread loafs from a
