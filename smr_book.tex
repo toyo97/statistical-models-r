@@ -120,7 +120,7 @@
 
 \title{Elementary statistics}
 \author{Vittorio Zampinetti}
-\date{2023-10-31}
+\date{2023-11-03}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -0.9153121   0.1045105  -2.4370568 -17.4420990   3.6412997  13.5556186
-##  [7]  -0.5751370   6.6007475 -13.3885924   1.3945706
+##  [1]   5.902146  -3.061431 -14.395185  11.120912  -4.516574   9.370908
+##  [7]   8.623981   5.775456 -12.995336  15.951142
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,16 +1068,16 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    a
+## 1  1  1    b
 ## 2  1  2    b
 ## 3  1  3    b
-## 4  1  4    a
+## 4  1  4    b
 ## 5  1  5    a
 ## 6  1  6    a
-## 7  1  7    a
-## 8  1  8    a
-## 9  1  9    b
-## 10 1 10    b
+## 7  1  7    b
+## 8  1  8    b
+## 9  1  9    a
+## 10 1 10    a
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "b" "b" "a" "a" "a" "a" "a" "b" "b"
+##  [1] "b" "b" "b" "b" "a" "a" "b" "b" "a" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1120,7 +1120,7 @@ most of the dataset will be stored in dataframes.
 ##   x y char
 ## 2 1 2    b
 ## 3 1 3    b
-## 4 1 4    a
+## 4 1 4    b
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.99845274 -0.33039656 -1.61622975 -1.42046320 -0.77627609  1.35686391
-##  [7] -0.04454371  0.11274951  0.09210709 -2.24263583
+##  [1]  1.17505988 -0.33589197 -0.73612891 -0.54407381  0.62594764  1.03626255
+##  [7]  1.63735243 -0.05055892 -0.17812641  1.06506802
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.3989418029 0.0264020772 0.0005770986 0.0011491614 0.0084567275
-##  [6] 0.3244088924 0.0493401061 0.0672192412 0.0646371331 0.0000492344
+##  [1] 0.283880577 0.026065721 0.009446233 0.015684312 0.155214308 0.250741320
+##  [7] 0.373553082 0.048736138 0.037214536 0.257692713
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.97716620 0.37055017 0.05302232 0.07773644 0.21879299 0.91258777
-##  [7] 0.48223551 0.54488542 0.53669352 0.01246015
+##  [1] 0.8800146 0.3684762 0.2308261 0.2931953 0.7343254 0.8499602 0.9492216
+##  [8] 0.4798385 0.4293119 0.8565774
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a        b
-## 1 -0.5910931 0.349391
-## 2 -1.3327795 1.776301
+##           a         b
+## 1 0.7934738 0.6296007
+## 2 2.4888541 6.1943949
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -7581,7 +7581,7 @@ defining the true parameters.
 \end{Shaded}
 
 \begin{verbatim}
-## Inference for Bugs model at "6", fit using jags,
+## Inference for Bugs model at "4", fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 4
 ##  n.sims = 2000 iterations saved
 ##               mean   sd   2.5%    25%    50%    75%  97.5% Rhat n.eff
@@ -7663,6 +7663,57 @@ To check which column names should be added and in which order,
 check under \textbf{``attribute information''} on the dataset reference page linked above.
 \end{quote}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse) }\CommentTok{\# we will use tibble, dplyr, ggplot, readr, ...}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_df }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/iris.csv"}\NormalTok{,}
+  \AttributeTok{col\_names =} \FunctionTok{c}\NormalTok{(}
+    \StringTok{"sepal\_length"}\NormalTok{, }\StringTok{"sepal\_width"}\NormalTok{,}
+    \StringTok{"petal\_length"}\NormalTok{, }\StringTok{"petal\_width"}\NormalTok{, }\StringTok{"class"}
+\NormalTok{  )}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 150 Columns: 5
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (1): class
+## dbl (4): sepal_length, sepal_width, petal_length, petal_width
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 150 x 5
+##    sepal_length sepal_width petal_length petal_width class      
+##           <dbl>       <dbl>        <dbl>       <dbl> <chr>      
+##  1          5.1         3.5          1.4         0.2 Iris-setosa
+##  2          4.9         3            1.4         0.2 Iris-setosa
+##  3          4.7         3.2          1.3         0.2 Iris-setosa
+##  4          4.6         3.1          1.5         0.2 Iris-setosa
+##  5          5           3.6          1.4         0.2 Iris-setosa
+##  6          5.4         3.9          1.7         0.4 Iris-setosa
+##  7          4.6         3.4          1.4         0.3 Iris-setosa
+##  8          5           3.4          1.5         0.2 Iris-setosa
+##  9          4.4         2.9          1.4         0.2 Iris-setosa
+## 10          4.9         3.1          1.5         0.1 Iris-setosa
+## # i 140 more rows
+\end{verbatim}
+
 Answer these questions:
 
 \begin{itemize}
@@ -7673,11 +7724,56 @@ Answer these questions:
   Which are the different classes?
 \end{itemize}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nrow}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 150
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unique}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Iris-setosa"     "Iris-versicolor" "Iris-virginica"
+\end{verbatim}
+
 \hypertarget{exploratory-data-analysis-eda}{%
 \section{Exploratory Data Analysis (EDA)}\label{exploratory-data-analysis-eda}}
 
 First compute the mean and standard deviation of each measure for each
 class separately.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(class) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{msl =} \FunctionTok{mean}\NormalTok{(sepal\_length), }\AttributeTok{msw =} \FunctionTok{mean}\NormalTok{(sepal\_width),}
+    \AttributeTok{mpl =} \FunctionTok{mean}\NormalTok{(petal\_length), }\AttributeTok{mpw =} \FunctionTok{mean}\NormalTok{(petal\_width),}
+    \AttributeTok{ssl =} \FunctionTok{sd}\NormalTok{(sepal\_length), }\AttributeTok{ssw =} \FunctionTok{sd}\NormalTok{(sepal\_width),}
+    \AttributeTok{spl =} \FunctionTok{sd}\NormalTok{(petal\_length), }\AttributeTok{spw =} \FunctionTok{sd}\NormalTok{(petal\_width)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 9
+##   class             msl   msw   mpl   mpw   ssl   ssw   spl   spw
+##   <chr>           <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+## 1 Iris-setosa      5.01  3.42  1.46 0.244 0.352 0.381 0.174 0.107
+## 2 Iris-versicolor  5.94  2.77  4.26 1.33  0.516 0.314 0.470 0.198
+## 3 Iris-virginica   6.59  2.97  5.55 2.03  0.636 0.322 0.552 0.275
+\end{verbatim}
 
 \begin{itemize}
 \tightlist
@@ -7702,6 +7798,24 @@ transform the dataset, and then plot the various densities with
 color encoding on the four measures.
 \end{quote}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(reshape2)}
+\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(}\AttributeTok{value.name =} \StringTok{"measure"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# collapse all measures in one col}
+  \CommentTok{\# then add a column with the measure name}
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_density}\NormalTok{(}\FunctionTok{aes}\NormalTok{(measure, }\AttributeTok{color =}\NormalTok{ class)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\FunctionTok{vars}\NormalTok{(variable), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{scales =} \StringTok{"free"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Using class as id variables
+\end{verbatim}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-257-1.pdf}
+
 We can also visualize the four measures on a set of plots that shows
 the correlation between variables, two-by-two. This is easily
 done with a pair plot.
@@ -7716,6 +7830,17 @@ done with a pair plot.
 Hint: install the package with \texttt{install.packages("GGally")} and load it with \texttt{library(GGally)}, then
 read the help document of the \texttt{ggpairs()} function. You can also use R base \texttt{pairs()} function.
 \end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GGally)}
+
+\NormalTok{iris\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggpairs}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ class), }\AttributeTok{columns =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-258-1.pdf}
 
 \hypertarget{confidence-intervals-1}{%
 \section{Confidence intervals}\label{confidence-intervals-1}}
@@ -7750,7 +7875,53 @@ To do this, remember that
   Validate your result by using \texttt{t.test()} to get the CI.
 \end{itemize}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{setosa\_petal\_length }\OtherTok{\textless{}{-}}\NormalTok{ iris\_df }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(class }\SpecialCharTok{==} \StringTok{"Iris{-}setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pull}\NormalTok{(petal\_length)}
+
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{05}
+
+\NormalTok{nspl }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(setosa\_petal\_length)}
+\NormalTok{crit\_t }\OtherTok{\textless{}{-}} \FunctionTok{qt}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{, nspl }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\CommentTok{\# critical value}
+
+\CommentTok{\# retransform the critical value multiplying the se}
+\CommentTok{\# and subtracting it to the sample mean}
+\NormalTok{xbar }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(setosa\_petal\_length)}
+\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{sd}\NormalTok{(setosa\_petal\_length) }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(nspl)}
+\NormalTok{delta }\OtherTok{\textless{}{-}}\NormalTok{ crit\_t }\SpecialCharTok{*}\NormalTok{ se}
+
+\NormalTok{ci }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(xbar }\SpecialCharTok{{-}}\NormalTok{ delta, xbar }\SpecialCharTok{+}\NormalTok{ delta)}
+\NormalTok{ci}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.414689 1.513311
+\end{verbatim}
+
 With \texttt{t.test}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(setosa\_petal\_length, }\AttributeTok{conf.level =} \FloatTok{0.95}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  setosa_petal_length
+## t = 59.662, df = 49, p-value < 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  1.414689 1.513311
+## sample estimates:
+## mean of x 
+##     1.464
+\end{verbatim}
 
 Compare this confidence interval to the mean and std-dev
 values you got for each class for the petal length measure.
@@ -7811,6 +7982,42 @@ to quantify our confidence.
   about the class of this sample?
 \end{itemize}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# manually}
+\NormalTok{mu0 }\OtherTok{\textless{}{-}}\NormalTok{ xbar}
+\NormalTok{nx }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(x\_sample)}
+\NormalTok{t\_stat }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length) }\SpecialCharTok{{-}}\NormalTok{ mu0) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(nx) }\SpecialCharTok{/}
+  \FunctionTok{sd}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length)}
+\FunctionTok{pt}\NormalTok{(t\_stat, }\AttributeTok{df =}\NormalTok{ nx }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.6619335
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# with t{-}test}
+\FunctionTok{t.test}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  x_sample$petal_length
+## t = -0.44983, df = 4, p-value = 0.6761
+## alternative hypothesis: true mean is not equal to 1.464
+## 95 percent confidence interval:
+##  1.165161 1.679506
+## sample estimates:
+## mean of x 
+##  1.422334
+\end{verbatim}
+
 Now take this other sample:
 
 \begin{Shaded}
@@ -7834,6 +8041,48 @@ Now take this other sample:
   Could we guess the answer to this last question
   without computing it?
 \end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# manually}
+\NormalTok{ny }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(y\_sample)}
+\NormalTok{t\_stat }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length) }\SpecialCharTok{{-}}\NormalTok{ mu0) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(ny) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length)}
+\FunctionTok{pt}\NormalTok{(t\_stat, }\AttributeTok{df =}\NormalTok{ ny }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.231502e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# with t{-}test}
+\FunctionTok{t.test}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  y_sample$petal_length
+## t = 17.36, df = 4, p-value = 6.463e-05
+## alternative hypothesis: true mean is not equal to 1.464
+## 95 percent confidence interval:
+##  4.961539 6.293302
+## sample estimates:
+## mean of x 
+##   5.62742
+\end{verbatim}
+
+\begin{verbatim}
+## tweaking contrast
+\end{verbatim}
+
+\begin{verbatim}
+## tweaking pscl
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 
