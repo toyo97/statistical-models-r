@@ -200,7 +200,7 @@ to quantify our confidence.
 
   Remember that the *p-value* is defined as
 
-$$ P\left(T \geq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)$$
+$$ P\left(T \leq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)$$
 
 - Based on the value you found, what can you say
   about the class of this sample?
@@ -211,10 +211,10 @@ mu0 <- xbar
 nx <- nrow(x_sample)
 t_stat <- (mean(x_sample$petal_length) - mu0) * sqrt(nx) /
   sd(x_sample$petal_length)
-pt(t_stat, df = nx - 1, lower.tail = FALSE)
+pt(t_stat, df = nx - 1)
 
 # with t-test
-t.test(x_sample$petal_length, mu = mu0)
+t.test(x_sample$petal_length, mu = mu0, alternative = "less")
 ```
 
 Now take this other sample:
@@ -240,9 +240,6 @@ t_stat <- (mean(y_sample$petal_length) - mu0) * sqrt(ny) / sd(y_sample$petal_len
 pt(t_stat, df = ny - 1, lower.tail = FALSE)
 
 # with t-test
-t.test(y_sample$petal_length, mu = mu0)
+t.test(y_sample$petal_length, mu = mu0, alternative = "greater")
 ```
-
-[//]: # Hint: check the confidence interval, which has
-[//]: # 0.025 at the boundaries
 
