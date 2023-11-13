@@ -120,7 +120,7 @@
 
 \title{Elementary statistics}
 \author{Vittorio Zampinetti}
-\date{2023-11-03}
+\date{2023-11-13}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   5.902146  -3.061431 -14.395185  11.120912  -4.516574   9.370908
-##  [7]   8.623981   5.775456 -12.995336  15.951142
+##  [1]  -9.749997  -4.577304  -1.914339 -12.765211  -2.169171  -2.928814
+##  [7]  15.371255   3.016581  -1.002051   7.323467
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1069,15 +1069,15 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##    x  y char
 ## 1  1  1    b
-## 2  1  2    b
-## 3  1  3    b
-## 4  1  4    b
-## 5  1  5    a
+## 2  1  2    a
+## 3  1  3    a
+## 4  1  4    a
+## 5  1  5    b
 ## 6  1  6    a
 ## 7  1  7    b
-## 8  1  8    b
+## 8  1  8    a
 ## 9  1  9    a
-## 10 1 10    a
+## 10 1 10    b
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "b" "b" "b" "b" "a" "a" "b" "b" "a" "a"
+##  [1] "b" "a" "a" "a" "b" "a" "b" "a" "a" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,9 +1118,9 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    b
-## 3 1 3    b
-## 4 1 4    b
+## 2 1 2    a
+## 3 1 3    a
+## 4 1 4    a
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.17505988 -0.33589197 -0.73612891 -0.54407381  0.62594764  1.03626255
-##  [7]  1.63735243 -0.05055892 -0.17812641  1.06506802
+##  [1]  0.5852436 -0.6145234 -0.5496548 -1.0006770  1.5625688  1.0634867
+##  [7]  1.6726271 -0.3705986 -0.9902780  1.6544247
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.283880577 0.026065721 0.009446233 0.015684312 0.155214308 0.250741320
-##  [7] 0.373553082 0.048736138 0.037214536 0.257692713
+##  [1] 0.146650016 0.013078247 0.015462953 0.004422856 0.362543230 0.257311702
+##  [7] 0.378127046 0.024021470 0.004562795 0.375818233
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.8800146 0.3684762 0.2308261 0.2931953 0.7343254 0.8499602 0.9492216
-##  [8] 0.4798385 0.4293119 0.8565774
+##  [1] 0.7208080 0.2694347 0.2912781 0.1584915 0.9409230 0.8562194 0.9527996
+##  [8] 0.3554683 0.1610191 0.9509794
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##           a         b
-## 1 0.7934738 0.6296007
-## 2 2.4888541 6.1943949
+##           a          b
+## 1 0.1812289 0.03284392
+## 2 1.2572951 1.58079099
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -7581,7 +7581,7 @@ defining the true parameters.
 \end{Shaded}
 
 \begin{verbatim}
-## Inference for Bugs model at "4", fit using jags,
+## Inference for Bugs model at "6", fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 4
 ##  n.sims = 2000 iterations saved
 ##               mean   sd   2.5%    25%    50%    75%  97.5% Rhat n.eff
@@ -7973,7 +7973,7 @@ to quantify our confidence.
   Remember that the \emph{p-value} is defined as
 \end{itemize}
 
-\[ P\left(T \geq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)\]
+\[ P\left(T \leq \frac{(\bar{x} - \mu_0)\sqrt{n}}{s} | \mu = \mu_0\right)\]
 
 \begin{itemize}
 \tightlist
@@ -7989,18 +7989,18 @@ to quantify our confidence.
 \NormalTok{nx }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(x\_sample)}
 \NormalTok{t\_stat }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length) }\SpecialCharTok{{-}}\NormalTok{ mu0) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(nx) }\SpecialCharTok{/}
   \FunctionTok{sd}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length)}
-\FunctionTok{pt}\NormalTok{(t\_stat, }\AttributeTok{df =}\NormalTok{ nx }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{pt}\NormalTok{(t\_stat, }\AttributeTok{df =}\NormalTok{ nx }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.6619335
+## [1] 0.3380665
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# with t{-}test}
-\FunctionTok{t.test}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0)}
+\FunctionTok{t.test}\NormalTok{(x\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0, }\AttributeTok{alternative =} \StringTok{"less"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8009,10 +8009,10 @@ to quantify our confidence.
 ##  One Sample t-test
 ## 
 ## data:  x_sample$petal_length
-## t = -0.44983, df = 4, p-value = 0.6761
-## alternative hypothesis: true mean is not equal to 1.464
+## t = -0.44983, df = 4, p-value = 0.3381
+## alternative hypothesis: true mean is less than 1.464
 ## 95 percent confidence interval:
-##  1.165161 1.679506
+##      -Inf 1.619799
 ## sample estimates:
 ## mean of x 
 ##  1.422334
@@ -8058,7 +8058,7 @@ Now take this other sample:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# with t{-}test}
-\FunctionTok{t.test}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0)}
+\FunctionTok{t.test}\NormalTok{(y\_sample}\SpecialCharTok{$}\NormalTok{petal\_length, }\AttributeTok{mu =}\NormalTok{ mu0, }\AttributeTok{alternative =} \StringTok{"greater"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -8067,10 +8067,10 @@ Now take this other sample:
 ##  One Sample t-test
 ## 
 ## data:  y_sample$petal_length
-## t = 17.36, df = 4, p-value = 6.463e-05
-## alternative hypothesis: true mean is not equal to 1.464
+## t = 17.36, df = 4, p-value = 3.232e-05
+## alternative hypothesis: true mean is greater than 1.464
 ## 95 percent confidence interval:
-##  4.961539 6.293302
+##  5.116134      Inf
 ## sample estimates:
 ## mean of x 
 ##   5.62742
