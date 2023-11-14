@@ -1,3 +1,11 @@
+---
+title: Lab 1 - Iris
+latest-revision: October 31st, 2023
+author: Vittorio Zampinetti
+time: 1.5h
+output: pdf_document
+---
+
 ```{r, echo=FALSE}
 hide_sol <- FALSE
 if (hide_sol) {

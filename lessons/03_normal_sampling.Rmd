@@ -1,3 +1,11 @@
+---
+title: Normal sampling
+latest-revision: October 31st, 2023
+author: Vittorio Zampinetti
+time: 1.5h
+output: pdf_document
+---
+
 # Normal sampling
 
 ## Random and non-random normal samples

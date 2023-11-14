@@ -1,3 +1,11 @@
+---
+title: Normal sampling
+latest-revision: November 14th, 2023
+author: Vittorio Zampinetti
+time: 1.5h
+output: pdf_document
+---
+
 # The linear model
 
 For this lecture, we will use the *Advertising* dataset,
@@ -304,7 +312,7 @@ SE_i = S \sqrt{(X'X)^{-1}_{i+1,i+1}}
 $$
 
 where $S$ is the *residuals standard error* (with $S^2$ being the RMS - residual
-mean squares), we get the $i+1^{\text{th}}$ element because of the $1$ column for the intercept._
+mean squares), we get the $i+1^{\text{th}}$ element because of the $1$ column for the intercept.
 
 ```{r}
 n <- nrow(x)
