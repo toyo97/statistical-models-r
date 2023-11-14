@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 The linear model | Elementary statistics</title>
+  <title>Chapter 4 The linear model | Lab 1 - Iris</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 The linear model | Elementary statistics" />
+  <meta property="og:title" content="Chapter 4 The linear model | Lab 1 - Iris" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 The linear model | Elementary statistics" />
+  <meta name="twitter:title" content="Chapter 4 The linear model | Lab 1 - Iris" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Vittorio Zampinetti" />
 
 
-<meta name="date" content="2023-11-13" />
+<meta name="date" content="2023-11-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -331,7 +331,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Elementary statistics</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 1 - Iris</a>
           </h1>
         </div>
 
@@ -667,7 +667,7 @@ For predictor <span class="math inline">\(i\)</span>, it’s computed as</p>
 SE_i = S \sqrt{(X&#39;X)^{-1}_{i+1,i+1}}
 \]</span></p>
 <p>where <span class="math inline">\(S\)</span> is the <em>residuals standard error</em> (with <span class="math inline">\(S^2\)</span> being the RMS - residual
-mean squares), we get the <span class="math inline">\(i+1^{\text{th}}\)</span> element because of the <span class="math inline">\(1\)</span> column for the intercept._</p>
+mean squares), we get the <span class="math inline">\(i+1^{\text{th}}\)</span> element because of the <span class="math inline">\(1\)</span> column for the intercept.</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="the-linear-model.html#cb278-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
 <span id="cb278-2"><a href="the-linear-model.html#cb278-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
 <span id="cb278-3"><a href="the-linear-model.html#cb278-3" aria-hidden="true" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>

@@ -113,14 +113,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Elementary statistics},
+  pdftitle={Lab 1 - Iris},
   pdfauthor={Vittorio Zampinetti},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Elementary statistics}
+\title{Lab 1 - Iris}
 \author{Vittorio Zampinetti}
-\date{2023-11-13}
+\date{2023-11-14}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -9.749997  -4.577304  -1.914339 -12.765211  -2.169171  -2.928814
-##  [7]  15.371255   3.016581  -1.002051   7.323467
+##  [1]   8.072637   8.403177  11.481228   9.510749   5.513060   9.778840
+##  [7]   2.656760  -7.458142   7.259882 -10.719861
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,14 +1068,14 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    b
+## 1  1  1    a
 ## 2  1  2    a
 ## 3  1  3    a
 ## 4  1  4    a
 ## 5  1  5    b
-## 6  1  6    a
+## 6  1  6    b
 ## 7  1  7    b
-## 8  1  8    a
+## 8  1  8    b
 ## 9  1  9    a
 ## 10 1 10    b
 \end{verbatim}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "b" "a" "a" "a" "b" "a" "b" "a" "a" "b"
+##  [1] "a" "a" "a" "a" "b" "b" "b" "b" "a" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.5852436 -0.6145234 -0.5496548 -1.0006770  1.5625688  1.0634867
-##  [7]  1.6726271 -0.3705986 -0.9902780  1.6544247
+##  [1] -0.96530204 -0.12238053 -0.23711682  0.76835549 -0.04078934  0.14020515
+##  [7] -0.75407953  0.03149695 -0.10765472 -0.15269769
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.146650016 0.013078247 0.015462953 0.004422856 0.362543230 0.257311702
-##  [7] 0.378127046 0.024021470 0.004562795 0.375818233
+##  [1] 0.004915083 0.041953724 0.032670447 0.186856818 0.049719947 0.070767391
+##  [7] 0.008992040 0.057472962 0.043280948 0.039321171
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.7208080 0.2694347 0.2912781 0.1584915 0.9409230 0.8562194 0.9527996
-##  [8] 0.3554683 0.1610191 0.9509794
+##  [1] 0.1671968 0.4512988 0.4062831 0.7788620 0.4837319 0.5557510 0.2254007
+##  [8] 0.5125634 0.4571348 0.4393183
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##           a          b
-## 1 0.1812289 0.03284392
-## 2 1.2572951 1.58079099
+##            a          b
+## 1 -0.6860467 0.47066008
+## 2  0.1514042 0.02292322
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -3686,7 +3686,7 @@ SE_i = S \sqrt{(X'X)^{-1}_{i+1,i+1}}
 \]
 
 where \(S\) is the \emph{residuals standard error} (with \(S^2\) being the RMS - residual
-mean squares), we get the \(i+1^{\text{th}}\) element because of the \(1\) column for the intercept.\_
+mean squares), we get the \(i+1^{\text{th}}\) element because of the \(1\) column for the intercept.
 
 \begin{Shaded}
 \begin{Highlighting}[]
