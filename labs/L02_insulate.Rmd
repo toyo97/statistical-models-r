@@ -1,4 +1,13 @@
-```{r, echo=FALSE}
+---
+title: Lab 2 - Insulate
+latest-revision: November 22nd, 2023
+author: Vittorio Zampinetti
+time: 1.5h
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
 hide_sol <- TRUE
 if (hide_sol) {
   knitr::opts_chunk$set(
@@ -6,6 +15,9 @@ if (hide_sol) {
     message = FALSE, fig.show = "hide"
   )
 }
+knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knit_child(text = options$code)
+})
 ```
 
 # Linear regression lab
@@ -16,6 +28,7 @@ dedicated to fitted linear models inspection.
 For the following tasks, we will use a real dataset
 featuring two predictors and one response variable (fuel consumption).
 You can read some information inside the `insulate.names` text file.
+The dataset can be found [here](https://github.com/toyo97/statistical-models-r/tree/master/datasets).
 
 ## EDA (20 min)
 
@@ -28,8 +41,10 @@ You might answer these questions:
 
 - How many observations does the dataset provide?
 
+```{asis, echo=!hide_sol}
 Although it's not necessary in this case, we explicitly specify
 that the `when` variable needs to be parsed as factor.
+```
 
 ```{r, include=FALSE, cache=FALSE}
 col_factor <- readr::col_factor
@@ -47,25 +62,31 @@ insulate <- read_csv("./datasets/insulate.csv", col_types = cols(
 insulate
 ```
 
+```{asis, echo=!hide_sol}
 The dataset consists of `r nrow(insulate)` records.
+```
 
 - What are the predictors? Are they qualitative or quantitative?
 
+```{asis, echo=!hide_sol}
 The predictors are ``r colnames(insulate %>% dplyr::select(-cons))``.
 `when` is a qualitative predictor with two levels (``r levels(insulate$when)``)
 while `temp` is a continuous variable in the range $[`r min(insulate$temp)`, 
 `r max(insulate$temp)`]$.
+```
 
 - What is the relationship between the response variable and the two
   predictors taken individually?
-  - Draw some _useful_ plot and interpret what you see.
+- Draw some _useful_ plot and interpret what you see.
 
+```{asis, echo=!hide_sol}
 One of the most powerful plotting function is the _pairs_ plot.
 In `ggplot` it's straightforward:
 
 > Note: beware that when dealing with bigger datasets (more
 predictors), as the number of plots scales with the square
 of the number of columns.
+```
 
 ```{r}
 # plot (pair plot)
@@ -73,10 +94,12 @@ library(GGally)
 ggpairs(insulate)
 ```
 
+```{asis, echo=!hide_sol}
 From these plots we can see that, as we could imagine,
 the consumption goes down with higher temperatures
 and also there is a clear difference in the consumption
 mean before and after insulation.
+```
 
 ## Fitting a linear model (15 min)
 
@@ -93,15 +116,19 @@ additive_lm <- lm(cons ~ ., data = insulate)
 summary(additive_lm)
 ```
 
+```{asis, echo=!hide_sol}
 The R-squared index is much higher in the complete model,
 suggesting that the `when` attribute retains valuable information.
+```
 
 - Plot both regression lines (you can use any plotting
   tool that you prefer)
 
+```{asis, echo=!hide_sol}
 The additive model regression line actually consists of two (parallel) 
 lines, one for each level of the qualitative predictor `when`.
 Using color encoding in ggplot, we can differentiate between the two.
+```
 
 ```{r}
 ggplot() +
@@ -143,8 +170,10 @@ insulate %>% # dataset
   geom_smooth(method = "lm") # trend line
 ```
 
+```{asis, echo=!hide_sol}
 The two lines are not parallel, which suggests that an additive model
 is not very accurate and we might try to include interaction.
+```
 
 - Fit a linear model which includes interaction between `temp` and `when`.
 
@@ -155,7 +184,9 @@ summary(interact_lm)
 
 - How many additional parameters does the model have to estimate?
 
+```{asis, echo=!hide_sol}
 Just one additional parameter is required.
+```
 
 ## AIC and model selection (10 min)
 
@@ -194,9 +225,11 @@ favoring small models over the bigger ones.
 AIC(additive_lm, interact_lm)
 ```
 
+```{asis, echo=!hide_sol}
 A lower index for the interaction model means that the
 additional parameter is worth the higher complexity
 in favor of better fit (likelihood).
+```
 
 ## Prediction intervals (35 min)
 
@@ -304,14 +337,17 @@ predict(interact_lm, newdata = x_f0, interval = "prediction")
 
 - Is the interval center the same as for the confidence intervals?
 
+```{asis, echo=!hide_sol}
 Yes, it's still $\hat Y$.
+```
 
-- Is it wider or more narrow than the CI? Can you tell why (intuitively)?
+- Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?
 
 ```{r}
 predict(interact_lm, newdata = x_f0, interval = "confidence")
 ```
 
+```{asis, echo=!hide_sol}
 It is wider because we are trying to predict where a new observation will
 be and that new observation has an additional standard deviation of the error
 term. Confidence intervals are based on only the fitted values and do not
@@ -320,11 +356,14 @@ value. Prediction intervals must account for both the uncertainty in
 estimating the population mean, plus the random variation of the individual
 values. So a prediction interval is always wider than a confidence
 interval.
+```
 
+```{asis, echo=!hide_sol}
 ## Plotting intervals
 
 Plotting of the intervals was not required, but it might be useful to visualize them.
 For this purpose, we will just use the records of the `after` class.
+```
 
 ```{r}
 # build x grid
@@ -362,7 +401,9 @@ ggplot() +
   ) # conf intervals
 ```
 
+```{asis, echo=!hide_sol}
 > Notice how the intervals get wider when departing from the mean temperature $\bar x$.
+```
 
 
 
