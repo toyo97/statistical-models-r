@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Lab 2 - Insulate</title>
+  <title>Chapter 12 Linear regression lab | Lab 2 - Insulate</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Lab 2 - Insulate" />
+  <meta property="og:title" content="Chapter 12 Linear regression lab | Lab 2 - Insulate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Lab 2 - Insulate" />
+  <meta name="twitter:title" content="Chapter 12 Linear regression lab | Lab 2 - Insulate" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="lab-1.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -349,19 +349,163 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="linear-regression-lab" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Linear regression lab<a href="linear-regression-lab.html#linear-regression-lab" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This lab focuses on linear models and on the R functions
+dedicated to fitted linear models inspection.</p>
+<p>For the following tasks, we will use a real dataset
+featuring two predictors and one response variable (fuel consumption).
+You can read some information inside the <code>insulate.names</code> text file.
+The dataset can be found <a href="https://github.com/toyo97/statistical-models-r/tree/master/datasets">here</a>.</p>
+<div id="eda-20-min" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> EDA (20 min)<a href="linear-regression-lab.html#eda-20-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Start by loading the <code>insulate.csv</code> data in the R environment,
+making sure that the type of the parsed variables is correctly inferred,
+then explore it using the tools seen in the lectures (e.g. dimension,
+summary, plots, etc.).</p>
+<p>You might answer these questions:</p>
+<ul>
+<li><p>How many observations does the dataset provide?</p></li>
+<li><p>What are the predictors? Are they qualitative or quantitative?</p></li>
+<li><p>What is the relationship between the response variable and the two
+predictors taken individually?</p></li>
+<li><p>Draw some <em>useful</em> plot and interpret what you see.</p></li>
+</ul>
+</div>
+<div id="fitting-a-linear-model-15-min" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Fitting a linear model (15 min)<a href="linear-regression-lab.html#fitting-a-linear-model-15-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now use the <code>lm()</code> function to fit two linear models:
+one which only uses the temperature as predictor, and one
+with both predictors.</p>
+<ul>
+<li><p>Which one is better? Why?</p></li>
+<li><p>Plot both regression lines (you can use any plotting
+tool that you prefer)</p></li>
+</ul>
+<div id="interaction-10-min" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Interaction (10 min)<a href="linear-regression-lab.html#interaction-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this setting, we are mostly interested in whether we should
+include the interaction between the two predictors or not.
+If the effects of the predictors are additive, we don’t need
+interaction.</p>
+<ul>
+<li>Are the two effects additive? To answer this, follow the task in
+the next bullet point.</li>
+<li>Draw a plot showing the consumption trend against the temperature,
+separately for before and after insulation. You may (or may not)
+use the following code as template, which is enough to fulfill the
+task after replacing the ellipsis with the proper function arguments:</li>
+</ul>
+<blockquote>
+<p>Hint: remember that, in order to differentiate between
+classes (i.e. <em>before</em> and <em>after</em>) in the same plot,
+you can select the class to be interpreted as color encoding
+for the points/line: <code>aes(..., color = when)</code>.</p>
+</blockquote>
+<ul>
+<li><p>Fit a linear model which includes interaction between <code>temp</code> and <code>when</code>.</p></li>
+<li><p>How many additional parameters does the model have to estimate?</p></li>
+</ul>
+</div>
+</div>
+<div id="aic-and-model-selection-10-min" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> AIC and model selection (10 min)<a href="linear-regression-lab.html#aic-and-model-selection-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Looking at the R-squared index, the model with interaction seems
+to perform a bit better. However, this doesn’t mean that the interaction
+model is a better choice.</p>
+<ul>
+<li>After assessing that we can compare the additive with interaction models
+through the ANOVA test, checking the main prerequisite (nested models),
+run an ANOVA test comparing the two models, analyze the result,
+draw a conclusion.</li>
+</ul>
+<p>Interaction with <code>*</code> also includes the singular
+variables, therefore the additive model is nested into interaction.</p>
+<p>Another criterion used for model selection is the <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike Information
+Criterion</a>,
+which is defined as</p>
+<p><span class="math display">\[
+\text{AIC} = 2k - 2\ln(\hat L)
+\]</span></p>
+<p>where <span class="math inline">\(\hat L\)</span> is the maximized likelihood of the data
+i.e. <span class="math inline">\(p(y | \hat \beta)\)</span>. The AIC takes into consideration
+the model complexity (number of predictors considered),
+favoring small models over the bigger ones.</p>
+<ul>
+<li>Find the AIC index using the dedicated function <code>AIC()</code>.
+Which model is better according to the AIC? Why?</li>
+</ul>
+</div>
+<div id="prediction-intervals-35-min" class="section level2 hasAnchor" number="12.4">
+<h2><span class="header-section-number">12.4</span> Prediction intervals (35 min)<a href="linear-regression-lab.html#prediction-intervals-35-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Imagine we have a new unseen (<em>future</em>) row of observed measures <span class="math inline">\(x_f\)</span>,
+with no true response observation (<span class="math inline">\(Y_f\)</span> is unknown).</p>
+<p>We are interested in making inference on the mean <span class="math inline">\(x_f \beta\)</span>.
+As you’ve seen in the theory lectures, this is a particular case of the
+inference of <span class="math inline">\(C \beta\)</span>. Being just one row, the F-type intervals can be
+translated to T-type intervals:</p>
+<p><span class="math display">\[
+F_{\alpha}(1, n-p) = t^2_{\frac{\alpha}{2}}(n-p)
+\]</span></p>
+<p>These are standard confidence intervals, and you can find
+them with <code>predict.lm(..., interval = "confidence")</code>.</p>
+<ul>
+<li>Find a prediction for the following additional rows using the best model you
+found so far, together with their confidence intervals.</li>
+</ul>
+<pre><code>when,temp
+before,5.8
+before,-1.0
+after,4.8
+after,9.8</code></pre>
+<p>With new observations, instead of making inference on the coefficients <span class="math inline">\(\beta\)</span>,
+we can make inference on the unseen response variable <span class="math inline">\(Y_f\)</span>. In this
+case we are not doing either estimation or testing, but rather just <em>prediction</em>.
+In <em>machine learning</em> the focus of inference is prediction: neural networks, for
+instance, have a large set of parameters which are learnt automatically from the data,
+but their values are most of the times non-interpretable, thus not useful per se, while
+the output of interest is <span class="math inline">\(\hat Y_f\)</span>, eventually together with its uncertainty.</p>
+<p>Inference on <span class="math inline">\(Y_f\)</span> can be derived similarly to how you did with confidence intervals.
+Formally (but not too much in detail):</p>
+<p><span class="math display">\[
+Y_f \sim \mathcal N(x_f&#39;\beta, \sigma^2)
+\]</span></p>
+<p>independent from <span class="math inline">\(Y_1, ..., Y_n\)</span>. Under the homogeneity assumption of the future
+response with respect to the past,</p>
+<p><span class="math display">\[
+x_f&#39;\hat\beta = \hat Y \sim \mathcal N(x_f&#39;\beta, \sigma^2 x_f&#39; (X&#39;X)^{-1}x_f)\,.
+\]</span></p>
+<p>This leads to</p>
+<p><span class="math display">\[
+Y_f - \hat Y_f \sim \mathcal N(0, \sigma(1 + x_f&#39;(X&#39;X)^{-1}x_f))\,,
+\]</span></p>
+<p>which gives us the prediction intervals:</p>
+<p><span class="math display">\[
+\hat Y_f \pm t_{\frac{\alpha}{2}}(n-p)\sqrt{\text{MSR}(1 + x_f&#39;(X&#39;X)^{-1}x_f)}\,.
+\]</span></p>
+<ul>
+<li>Using this formula, compute the prediction intervals for <em>one</em> of the
+four new future observations written above (from scratch).</li>
+</ul>
+<blockquote>
+<p>Hint: We’ve seen how to compute the <span class="math inline">\(\text{MSR}\)</span> (or <span class="math inline">\(\text{RMS}\)</span>) in the first
+linear regression R lecture</p>
+</blockquote>
+<ul>
+<li><p>Check your computations using <code>predict.lm(..., interval = "prediction")</code></p></li>
+<li><p>Is the interval center the same as for the confidence intervals?</p></li>
+<li><p>Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?</p></li>
+</ul>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="lab-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -393,7 +537,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/toyo97/statistical-models-r/edit/master/%s",
+"link": "https://github.com/toyo97/statistical-models-r/edit/master/labs/L02_insulate.Rmd",
 "text": "Edit"
 },
 "history": {

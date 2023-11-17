@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 11 Lab 1 | Lab 1 - Iris</title>
+  <title>Chapter 11 Lab 1 | Lab 2 - Insulate</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 11 Lab 1 | Lab 1 - Iris" />
+  <meta property="og:title" content="Chapter 11 Lab 1 | Lab 2 - Insulate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 11 Lab 1 | Lab 1 - Iris" />
+  <meta name="twitter:title" content="Chapter 11 Lab 1 | Lab 2 - Insulate" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Vittorio Zampinetti" />
 
 
-<meta name="date" content="2023-11-14" />
+<meta name="date" content="2023-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="three-jags-examples.html"/>
-<link rel="next" href="references.html"/>
+<link rel="next" href="linear-regression-lab.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -318,6 +318,16 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
 <li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
 </ul></li>
+<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -331,7 +341,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 1 - Iris</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 2 - Insulate</a>
           </h1>
         </div>
 
@@ -360,13 +370,13 @@ the function arguments. Also, you might need to manually add the column names.
 To check which column names should be added and in which order,
 check under <strong>“attribute information”</strong> on the dataset reference page linked above.</p>
 </blockquote>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="lab-1.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># we will use tibble, dplyr, ggplot, readr, ...</span></span></code></pre></div>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="lab-1.html#cb577-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/iris.csv&quot;</span>,</span>
-<span id="cb577-2"><a href="lab-1.html#cb577-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
-<span id="cb577-3"><a href="lab-1.html#cb577-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sepal_length&quot;</span>, <span class="st">&quot;sepal_width&quot;</span>,</span>
-<span id="cb577-4"><a href="lab-1.html#cb577-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;petal_length&quot;</span>, <span class="st">&quot;petal_width&quot;</span>, <span class="st">&quot;class&quot;</span></span>
-<span id="cb577-5"><a href="lab-1.html#cb577-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb577-6"><a href="lab-1.html#cb577-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="lab-1.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># we will use tibble, dplyr, ggplot, readr, ...</span></span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="lab-1.html#cb579-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/iris.csv&quot;</span>,</span>
+<span id="cb579-2"><a href="lab-1.html#cb579-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_names =</span> <span class="fu">c</span>(</span>
+<span id="cb579-3"><a href="lab-1.html#cb579-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;sepal_length&quot;</span>, <span class="st">&quot;sepal_width&quot;</span>,</span>
+<span id="cb579-4"><a href="lab-1.html#cb579-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;petal_length&quot;</span>, <span class="st">&quot;petal_width&quot;</span>, <span class="st">&quot;class&quot;</span></span>
+<span id="cb579-5"><a href="lab-1.html#cb579-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb579-6"><a href="lab-1.html#cb579-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Rows: 150 Columns: 5
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -375,7 +385,7 @@ check under <strong>“attribute information”</strong> on the dataset referenc
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="lab-1.html#cb579-1" aria-hidden="true" tabindex="-1"></a>iris_df</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="lab-1.html#cb581-1" aria-hidden="true" tabindex="-1"></a>iris_df</span></code></pre></div>
 <pre><code>## # A tibble: 150 × 5
 ##    sepal_length sepal_width petal_length petal_width class      
 ##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;      
@@ -395,26 +405,26 @@ check under <strong>“attribute information”</strong> on the dataset referenc
 <li>How many observations does the dataset consist of?</li>
 <li>Which are the different classes?</li>
 </ul>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="lab-1.html#cb581-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
-<span id="cb581-2"><a href="lab-1.html#cb581-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
-<pre><code>## [1] 150</code></pre>
 <div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="lab-1.html#cb583-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
-<span id="cb583-2"><a href="lab-1.html#cb583-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb583-3"><a href="lab-1.html#cb583-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span></code></pre></div>
+<span id="cb583-2"><a href="lab-1.html#cb583-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div>
+<pre><code>## [1] 150</code></pre>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="lab-1.html#cb585-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
+<span id="cb585-2"><a href="lab-1.html#cb585-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb585-3"><a href="lab-1.html#cb585-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span></code></pre></div>
 <pre><code>## [1] &quot;Iris-setosa&quot;     &quot;Iris-versicolor&quot; &quot;Iris-virginica&quot;</code></pre>
 </div>
 <div id="exploratory-data-analysis-eda" class="section level2 hasAnchor" number="11.3">
 <h2><span class="header-section-number">11.3</span> Exploratory Data Analysis (EDA)<a href="lab-1.html#exploratory-data-analysis-eda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First compute the mean and standard deviation of each measure for each
 class separately.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="lab-1.html#cb585-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
-<span id="cb585-2"><a href="lab-1.html#cb585-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
-<span id="cb585-3"><a href="lab-1.html#cb585-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb585-4"><a href="lab-1.html#cb585-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">msl =</span> <span class="fu">mean</span>(sepal_length), <span class="at">msw =</span> <span class="fu">mean</span>(sepal_width),</span>
-<span id="cb585-5"><a href="lab-1.html#cb585-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpl =</span> <span class="fu">mean</span>(petal_length), <span class="at">mpw =</span> <span class="fu">mean</span>(petal_width),</span>
-<span id="cb585-6"><a href="lab-1.html#cb585-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ssl =</span> <span class="fu">sd</span>(sepal_length), <span class="at">ssw =</span> <span class="fu">sd</span>(sepal_width),</span>
-<span id="cb585-7"><a href="lab-1.html#cb585-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">spl =</span> <span class="fu">sd</span>(petal_length), <span class="at">spw =</span> <span class="fu">sd</span>(petal_width)</span>
-<span id="cb585-8"><a href="lab-1.html#cb585-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="lab-1.html#cb587-1" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
+<span id="cb587-2"><a href="lab-1.html#cb587-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(class) <span class="sc">%&gt;%</span></span>
+<span id="cb587-3"><a href="lab-1.html#cb587-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb587-4"><a href="lab-1.html#cb587-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">msl =</span> <span class="fu">mean</span>(sepal_length), <span class="at">msw =</span> <span class="fu">mean</span>(sepal_width),</span>
+<span id="cb587-5"><a href="lab-1.html#cb587-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mpl =</span> <span class="fu">mean</span>(petal_length), <span class="at">mpw =</span> <span class="fu">mean</span>(petal_width),</span>
+<span id="cb587-6"><a href="lab-1.html#cb587-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ssl =</span> <span class="fu">sd</span>(sepal_length), <span class="at">ssw =</span> <span class="fu">sd</span>(sepal_width),</span>
+<span id="cb587-7"><a href="lab-1.html#cb587-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">spl =</span> <span class="fu">sd</span>(petal_length), <span class="at">spw =</span> <span class="fu">sd</span>(petal_width)</span>
+<span id="cb587-8"><a href="lab-1.html#cb587-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 9
 ##   class             msl   msw   mpl   mpw   ssl   ssw   spl   spw
 ##   &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -436,13 +446,13 @@ grid, differentiating the types with color encoding (optional).</li>
 transform the dataset, and then plot the various densities with
 color encoding on the four measures.</p>
 </blockquote>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="lab-1.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb587-2"><a href="lab-1.html#cb587-2" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
-<span id="cb587-3"><a href="lab-1.html#cb587-3" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(<span class="at">value.name =</span> <span class="st">&quot;measure&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># collapse all measures in one col</span></span>
-<span id="cb587-4"><a href="lab-1.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># then add a column with the measure name</span></span>
-<span id="cb587-5"><a href="lab-1.html#cb587-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb587-6"><a href="lab-1.html#cb587-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(measure, <span class="at">color =</span> class)) <span class="sc">+</span></span>
-<span id="cb587-7"><a href="lab-1.html#cb587-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(variable), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="lab-1.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb589-2"><a href="lab-1.html#cb589-2" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
+<span id="cb589-3"><a href="lab-1.html#cb589-3" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(<span class="at">value.name =</span> <span class="st">&quot;measure&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># collapse all measures in one col</span></span>
+<span id="cb589-4"><a href="lab-1.html#cb589-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># then add a column with the measure name</span></span>
+<span id="cb589-5"><a href="lab-1.html#cb589-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb589-6"><a href="lab-1.html#cb589-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(measure, <span class="at">color =</span> class)) <span class="sc">+</span></span>
+<span id="cb589-7"><a href="lab-1.html#cb589-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(variable), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 <pre><code>## Using class as id variables</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-257-1.png" width="672" /></p>
 <p>We can also visualize the four measures on a set of plots that shows
@@ -455,10 +465,10 @@ done with a pair plot.</p>
 <p>Hint: install the package with <code>install.packages("GGally")</code> and load it with <code>library(GGally)</code>, then
 read the help document of the <code>ggpairs()</code> function. You can also use R base <code>pairs()</code> function.</p>
 </blockquote>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="lab-1.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb589-2"><a href="lab-1.html#cb589-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb589-3"><a href="lab-1.html#cb589-3" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
-<span id="cb589-4"><a href="lab-1.html#cb589-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> class), <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="lab-1.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb591-2"><a href="lab-1.html#cb591-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb591-3"><a href="lab-1.html#cb591-3" aria-hidden="true" tabindex="-1"></a>iris_df <span class="sc">%&gt;%</span></span>
+<span id="cb591-4"><a href="lab-1.html#cb591-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> class), <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-258-1.png" width="672" /></p>
 </div>
 <div id="confidence-intervals-1" class="section level2 hasAnchor" number="11.4">
@@ -481,26 +491,26 @@ P(x_l \leq \mu \leq x_u) = 95\%\,.
 <li><p><code>qt()</code> is the R function for the t-distribution quantile</p></li>
 <li><p>Validate your result by using <code>t.test()</code> to get the CI.</p></li>
 </ul>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="lab-1.html#cb590-1" aria-hidden="true" tabindex="-1"></a>setosa_petal_length <span class="ot">&lt;-</span> iris_df <span class="sc">%&gt;%</span></span>
-<span id="cb590-2"><a href="lab-1.html#cb590-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb590-3"><a href="lab-1.html#cb590-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(petal_length)</span>
-<span id="cb590-4"><a href="lab-1.html#cb590-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-5"><a href="lab-1.html#cb590-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span></span>
-<span id="cb590-6"><a href="lab-1.html#cb590-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-7"><a href="lab-1.html#cb590-7" aria-hidden="true" tabindex="-1"></a>nspl <span class="ot">&lt;-</span> <span class="fu">length</span>(setosa_petal_length)</span>
-<span id="cb590-8"><a href="lab-1.html#cb590-8" aria-hidden="true" tabindex="-1"></a>crit_t <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, nspl <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># critical value</span></span>
-<span id="cb590-9"><a href="lab-1.html#cb590-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-10"><a href="lab-1.html#cb590-10" aria-hidden="true" tabindex="-1"></a><span class="co"># retransform the critical value multiplying the se</span></span>
-<span id="cb590-11"><a href="lab-1.html#cb590-11" aria-hidden="true" tabindex="-1"></a><span class="co"># and subtracting it to the sample mean</span></span>
-<span id="cb590-12"><a href="lab-1.html#cb590-12" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">&lt;-</span> <span class="fu">mean</span>(setosa_petal_length)</span>
-<span id="cb590-13"><a href="lab-1.html#cb590-13" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sd</span>(setosa_petal_length) <span class="sc">/</span> <span class="fu">sqrt</span>(nspl)</span>
-<span id="cb590-14"><a href="lab-1.html#cb590-14" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> crit_t <span class="sc">*</span> se</span>
-<span id="cb590-15"><a href="lab-1.html#cb590-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-16"><a href="lab-1.html#cb590-16" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">c</span>(xbar <span class="sc">-</span> delta, xbar <span class="sc">+</span> delta)</span>
-<span id="cb590-17"><a href="lab-1.html#cb590-17" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="lab-1.html#cb592-1" aria-hidden="true" tabindex="-1"></a>setosa_petal_length <span class="ot">&lt;-</span> iris_df <span class="sc">%&gt;%</span></span>
+<span id="cb592-2"><a href="lab-1.html#cb592-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(class <span class="sc">==</span> <span class="st">&quot;Iris-setosa&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb592-3"><a href="lab-1.html#cb592-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(petal_length)</span>
+<span id="cb592-4"><a href="lab-1.html#cb592-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-5"><a href="lab-1.html#cb592-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span></span>
+<span id="cb592-6"><a href="lab-1.html#cb592-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-7"><a href="lab-1.html#cb592-7" aria-hidden="true" tabindex="-1"></a>nspl <span class="ot">&lt;-</span> <span class="fu">length</span>(setosa_petal_length)</span>
+<span id="cb592-8"><a href="lab-1.html#cb592-8" aria-hidden="true" tabindex="-1"></a>crit_t <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, nspl <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># critical value</span></span>
+<span id="cb592-9"><a href="lab-1.html#cb592-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-10"><a href="lab-1.html#cb592-10" aria-hidden="true" tabindex="-1"></a><span class="co"># retransform the critical value multiplying the se</span></span>
+<span id="cb592-11"><a href="lab-1.html#cb592-11" aria-hidden="true" tabindex="-1"></a><span class="co"># and subtracting it to the sample mean</span></span>
+<span id="cb592-12"><a href="lab-1.html#cb592-12" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">&lt;-</span> <span class="fu">mean</span>(setosa_petal_length)</span>
+<span id="cb592-13"><a href="lab-1.html#cb592-13" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sd</span>(setosa_petal_length) <span class="sc">/</span> <span class="fu">sqrt</span>(nspl)</span>
+<span id="cb592-14"><a href="lab-1.html#cb592-14" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> crit_t <span class="sc">*</span> se</span>
+<span id="cb592-15"><a href="lab-1.html#cb592-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-16"><a href="lab-1.html#cb592-16" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> <span class="fu">c</span>(xbar <span class="sc">-</span> delta, xbar <span class="sc">+</span> delta)</span>
+<span id="cb592-17"><a href="lab-1.html#cb592-17" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
 <pre><code>## [1] 1.414689 1.513311</code></pre>
 <p>With <code>t.test</code></p>
-<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="lab-1.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(setosa_petal_length, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="lab-1.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(setosa_petal_length, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -524,12 +534,12 @@ differentiate between Setosa and the other two types? Why?</li>
 <p>Imagine you get measurements in terms of all 4 indicators of
 5 iris flowers belonging to the same class, but you don’t know
 which. These are the observations.</p>
-<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="lab-1.html#cb594-1" aria-hidden="true" tabindex="-1"></a>x_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb594-2"><a href="lab-1.html#cb594-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_length =</span> <span class="fu">c</span>(<span class="fl">4.738759</span>, <span class="fl">5.545983</span>, <span class="fl">5.389729</span>, <span class="fl">4.549803</span>, <span class="fl">5.896723</span>),</span>
-<span id="cb594-3"><a href="lab-1.html#cb594-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_width =</span> <span class="fu">c</span>(<span class="fl">3.132478</span>, <span class="fl">3.537232</span>, <span class="fl">3.217107</span>, <span class="fl">3.190097</span>, <span class="fl">3.636949</span>),</span>
-<span id="cb594-4"><a href="lab-1.html#cb594-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">c</span>(<span class="fl">1.220472</span>, <span class="fl">1.321923</span>, <span class="fl">1.573662</span>, <span class="fl">1.289875</span>, <span class="fl">1.705737</span>),</span>
-<span id="cb594-5"><a href="lab-1.html#cb594-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_width =</span> <span class="fu">c</span>(<span class="fl">0.23</span>, <span class="fl">0.09</span>, <span class="fl">0.33</span>, <span class="fl">0.22</span>, <span class="fl">0.18</span>)</span>
-<span id="cb594-6"><a href="lab-1.html#cb594-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="lab-1.html#cb596-1" aria-hidden="true" tabindex="-1"></a>x_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb596-2"><a href="lab-1.html#cb596-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_length =</span> <span class="fu">c</span>(<span class="fl">4.738759</span>, <span class="fl">5.545983</span>, <span class="fl">5.389729</span>, <span class="fl">4.549803</span>, <span class="fl">5.896723</span>),</span>
+<span id="cb596-3"><a href="lab-1.html#cb596-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_width =</span> <span class="fu">c</span>(<span class="fl">3.132478</span>, <span class="fl">3.537232</span>, <span class="fl">3.217107</span>, <span class="fl">3.190097</span>, <span class="fl">3.636949</span>),</span>
+<span id="cb596-4"><a href="lab-1.html#cb596-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">c</span>(<span class="fl">1.220472</span>, <span class="fl">1.321923</span>, <span class="fl">1.573662</span>, <span class="fl">1.289875</span>, <span class="fl">1.705737</span>),</span>
+<span id="cb596-5"><a href="lab-1.html#cb596-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_width =</span> <span class="fu">c</span>(<span class="fl">0.23</span>, <span class="fl">0.09</span>, <span class="fl">0.33</span>, <span class="fl">0.22</span>, <span class="fl">0.18</span>)</span>
+<span id="cb596-6"><a href="lab-1.html#cb596-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ul>
 <li>Just looking at the values of the petal length,
 can you take advantage of the CI you just computed
@@ -550,15 +560,15 @@ hypothesis to be <span class="math inline">\(H_0: \mu = \mu_0 = \bar{x}\)</span>
 <li>Based on the value you found, what can you say
 about the class of this sample?</li>
 </ul>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="lab-1.html#cb595-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually</span></span>
-<span id="cb595-2"><a href="lab-1.html#cb595-2" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> xbar</span>
-<span id="cb595-3"><a href="lab-1.html#cb595-3" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x_sample)</span>
-<span id="cb595-4"><a href="lab-1.html#cb595-4" aria-hidden="true" tabindex="-1"></a>t_stat <span class="ot">&lt;-</span> (<span class="fu">mean</span>(x_sample<span class="sc">$</span>petal_length) <span class="sc">-</span> mu0) <span class="sc">*</span> <span class="fu">sqrt</span>(nx) <span class="sc">/</span></span>
-<span id="cb595-5"><a href="lab-1.html#cb595-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>(x_sample<span class="sc">$</span>petal_length)</span>
-<span id="cb595-6"><a href="lab-1.html#cb595-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t_stat, <span class="at">df =</span> nx <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="lab-1.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually</span></span>
+<span id="cb597-2"><a href="lab-1.html#cb597-2" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> xbar</span>
+<span id="cb597-3"><a href="lab-1.html#cb597-3" aria-hidden="true" tabindex="-1"></a>nx <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x_sample)</span>
+<span id="cb597-4"><a href="lab-1.html#cb597-4" aria-hidden="true" tabindex="-1"></a>t_stat <span class="ot">&lt;-</span> (<span class="fu">mean</span>(x_sample<span class="sc">$</span>petal_length) <span class="sc">-</span> mu0) <span class="sc">*</span> <span class="fu">sqrt</span>(nx) <span class="sc">/</span></span>
+<span id="cb597-5"><a href="lab-1.html#cb597-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sd</span>(x_sample<span class="sc">$</span>petal_length)</span>
+<span id="cb597-6"><a href="lab-1.html#cb597-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t_stat, <span class="at">df =</span> nx <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.3380665</code></pre>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="lab-1.html#cb597-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with t-test</span></span>
-<span id="cb597-2"><a href="lab-1.html#cb597-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x_sample<span class="sc">$</span>petal_length, <span class="at">mu =</span> mu0, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="lab-1.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with t-test</span></span>
+<span id="cb599-2"><a href="lab-1.html#cb599-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x_sample<span class="sc">$</span>petal_length, <span class="at">mu =</span> mu0, <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -571,25 +581,25 @@ about the class of this sample?</li>
 ## mean of x 
 ##  1.422334</code></pre>
 <p>Now take this other sample:</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="lab-1.html#cb599-1" aria-hidden="true" tabindex="-1"></a>y_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb599-2"><a href="lab-1.html#cb599-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_length =</span> <span class="fu">c</span>(<span class="fl">6.303990</span>, <span class="fl">6.705969</span>, <span class="fl">7.795044</span>, <span class="fl">7.015665</span>, <span class="fl">7.056670</span>),</span>
-<span id="cb599-3"><a href="lab-1.html#cb599-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_width =</span> <span class="fu">c</span>(<span class="fl">3.152411</span>, <span class="fl">2.499612</span>, <span class="fl">3.293934</span>, <span class="fl">3.275724</span>, <span class="fl">2.843923</span>),</span>
-<span id="cb599-4"><a href="lab-1.html#cb599-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">c</span>(<span class="fl">6.356729</span>, <span class="fl">5.975576</span>, <span class="fl">4.998114</span>, <span class="fl">5.423811</span>, <span class="fl">5.382871</span>),</span>
-<span id="cb599-5"><a href="lab-1.html#cb599-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_width =</span> <span class="fu">c</span>(<span class="fl">1.589342</span>, <span class="fl">2.305014</span>, <span class="fl">2.260900</span>, <span class="fl">2.185519</span>, <span class="fl">1.589370</span>)</span>
-<span id="cb599-6"><a href="lab-1.html#cb599-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="lab-1.html#cb601-1" aria-hidden="true" tabindex="-1"></a>y_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb601-2"><a href="lab-1.html#cb601-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_length =</span> <span class="fu">c</span>(<span class="fl">6.303990</span>, <span class="fl">6.705969</span>, <span class="fl">7.795044</span>, <span class="fl">7.015665</span>, <span class="fl">7.056670</span>),</span>
+<span id="cb601-3"><a href="lab-1.html#cb601-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sepal_width =</span> <span class="fu">c</span>(<span class="fl">3.152411</span>, <span class="fl">2.499612</span>, <span class="fl">3.293934</span>, <span class="fl">3.275724</span>, <span class="fl">2.843923</span>),</span>
+<span id="cb601-4"><a href="lab-1.html#cb601-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_length =</span> <span class="fu">c</span>(<span class="fl">6.356729</span>, <span class="fl">5.975576</span>, <span class="fl">4.998114</span>, <span class="fl">5.423811</span>, <span class="fl">5.382871</span>),</span>
+<span id="cb601-5"><a href="lab-1.html#cb601-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">petal_width =</span> <span class="fu">c</span>(<span class="fl">1.589342</span>, <span class="fl">2.305014</span>, <span class="fl">2.260900</span>, <span class="fl">2.185519</span>, <span class="fl">1.589370</span>)</span>
+<span id="cb601-6"><a href="lab-1.html#cb601-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <ul>
 <li>What is the <em>p-value</em>?</li>
 <li>Is it higher or lower than 0.025?</li>
 <li>Could we guess the answer to this last question
 without computing it?</li>
 </ul>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="lab-1.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually</span></span>
-<span id="cb600-2"><a href="lab-1.html#cb600-2" aria-hidden="true" tabindex="-1"></a>ny <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y_sample)</span>
-<span id="cb600-3"><a href="lab-1.html#cb600-3" aria-hidden="true" tabindex="-1"></a>t_stat <span class="ot">&lt;-</span> (<span class="fu">mean</span>(y_sample<span class="sc">$</span>petal_length) <span class="sc">-</span> mu0) <span class="sc">*</span> <span class="fu">sqrt</span>(ny) <span class="sc">/</span> <span class="fu">sd</span>(y_sample<span class="sc">$</span>petal_length)</span>
-<span id="cb600-4"><a href="lab-1.html#cb600-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t_stat, <span class="at">df =</span> ny <span class="sc">-</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="lab-1.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually</span></span>
+<span id="cb602-2"><a href="lab-1.html#cb602-2" aria-hidden="true" tabindex="-1"></a>ny <span class="ot">&lt;-</span> <span class="fu">nrow</span>(y_sample)</span>
+<span id="cb602-3"><a href="lab-1.html#cb602-3" aria-hidden="true" tabindex="-1"></a>t_stat <span class="ot">&lt;-</span> (<span class="fu">mean</span>(y_sample<span class="sc">$</span>petal_length) <span class="sc">-</span> mu0) <span class="sc">*</span> <span class="fu">sqrt</span>(ny) <span class="sc">/</span> <span class="fu">sd</span>(y_sample<span class="sc">$</span>petal_length)</span>
+<span id="cb602-4"><a href="lab-1.html#cb602-4" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(t_stat, <span class="at">df =</span> ny <span class="sc">-</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 3.231502e-05</code></pre>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="lab-1.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with t-test</span></span>
-<span id="cb602-2"><a href="lab-1.html#cb602-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(y_sample<span class="sc">$</span>petal_length, <span class="at">mu =</span> mu0, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="lab-1.html#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with t-test</span></span>
+<span id="cb604-2"><a href="lab-1.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(y_sample<span class="sc">$</span>petal_length, <span class="at">mu =</span> mu0, <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -602,8 +612,6 @@ without computing it?</li>
 ## mean of x 
 ##   5.62742</code></pre>
 
-<pre><code>## tweaking contrast</code></pre>
-<pre><code>## tweaking pscl</code></pre>
 </div>
 </div>
             </section>
@@ -612,7 +620,7 @@ without computing it?</li>
         </div>
       </div>
 <a href="three-jags-examples.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="linear-regression-lab.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

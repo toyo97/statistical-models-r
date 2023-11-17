@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Generalized Linear Models (Poisson) | Lab 1 - Iris</title>
+  <title>Chapter 8 Generalized Linear Models (Poisson) | Lab 2 - Insulate</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Generalized Linear Models (Poisson) | Lab 1 - Iris" />
+  <meta property="og:title" content="Chapter 8 Generalized Linear Models (Poisson) | Lab 2 - Insulate" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Generalized Linear Models (Poisson) | Lab 1 - Iris" />
+  <meta name="twitter:title" content="Chapter 8 Generalized Linear Models (Poisson) | Lab 2 - Insulate" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Vittorio Zampinetti" />
 
 
-<meta name="date" content="2023-11-14" />
+<meta name="date" content="2023-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -318,6 +318,16 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
 <li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
 </ul></li>
+<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -331,7 +341,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 1 - Iris</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 2 - Insulate</a>
           </h1>
         </div>
 
@@ -501,14 +511,16 @@ two coefficients.
 I.e. looking at the GLM summary, we observe that the difference
 between <code>M</code> and <code>H</code> is 0.1971681,
 but how do we know if it’s statistically relevant?</p>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="generalized-linear-models-poisson.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(contrast)</span>
-<span id="cb421-2"><a href="generalized-linear-models-poisson.html#cb421-2" aria-hidden="true" tabindex="-1"></a>cont <span class="ot">&lt;-</span> <span class="fu">contrast</span>(breaks_glm,</span>
-<span id="cb421-3"><a href="generalized-linear-models-poisson.html#cb421-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;M&quot;</span>, <span class="at">wool =</span> <span class="st">&quot;A&quot;</span>),</span>
-<span id="cb421-4"><a href="generalized-linear-models-poisson.html#cb421-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;H&quot;</span>, <span class="at">wool =</span> <span class="st">&quot;A&quot;</span>),</span>
-<span id="cb421-5"><a href="generalized-linear-models-poisson.html#cb421-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;individual&quot;</span></span>
-<span id="cb421-6"><a href="generalized-linear-models-poisson.html#cb421-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb421-7"><a href="generalized-linear-models-poisson.html#cb421-7" aria-hidden="true" tabindex="-1"></a><span class="co"># X = TRUE prints the design matrix used</span></span>
-<span id="cb421-8"><a href="generalized-linear-models-poisson.html#cb421-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cont, <span class="at">X =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="generalized-linear-models-poisson.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(contrast)</span></code></pre></div>
+<pre><code>## Warning in .recacheSubclasses(def@className, def, env): undefined subclass
+## &quot;ndiMatrix&quot; of class &quot;replValueSp&quot;; definition not updated</code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="generalized-linear-models-poisson.html#cb423-1" aria-hidden="true" tabindex="-1"></a>cont <span class="ot">&lt;-</span> <span class="fu">contrast</span>(breaks_glm,</span>
+<span id="cb423-2"><a href="generalized-linear-models-poisson.html#cb423-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;M&quot;</span>, <span class="at">wool =</span> <span class="st">&quot;A&quot;</span>),</span>
+<span id="cb423-3"><a href="generalized-linear-models-poisson.html#cb423-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;H&quot;</span>, <span class="at">wool =</span> <span class="st">&quot;A&quot;</span>),</span>
+<span id="cb423-4"><a href="generalized-linear-models-poisson.html#cb423-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;individual&quot;</span></span>
+<span id="cb423-5"><a href="generalized-linear-models-poisson.html#cb423-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb423-6"><a href="generalized-linear-models-poisson.html#cb423-6" aria-hidden="true" tabindex="-1"></a><span class="co"># X = TRUE prints the design matrix used</span></span>
+<span id="cb423-7"><a href="generalized-linear-models-poisson.html#cb423-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cont, <span class="at">X =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## glm model parameter contrast
 ## 
 ##   Contrast       S.E.      Lower     Upper    t df Pr(&gt;|t|)
@@ -526,9 +538,9 @@ contrast coefficients used.</p>
 </blockquote>
 <p>Remember that the data is transformed into a model matrix
 by the <code>glm</code> function and it can be retrieved as follows.</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="generalized-linear-models-poisson.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the dummy variables dataset</span></span>
-<span id="cb423-2"><a href="generalized-linear-models-poisson.html#cb423-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(breaks_glm)</span>
-<span id="cb423-3"><a href="generalized-linear-models-poisson.html#cb423-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="generalized-linear-models-poisson.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the dummy variables dataset</span></span>
+<span id="cb425-2"><a href="generalized-linear-models-poisson.html#cb425-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(breaks_glm)</span>
+<span id="cb425-3"><a href="generalized-linear-models-poisson.html#cb425-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x)</span></code></pre></div>
 <pre><code>##   (Intercept) tensionM tensionH woolB
 ## 1           1        0        0     0
 ## 2           1        0        0     0
@@ -537,40 +549,40 @@ by the <code>glm</code> function and it can be retrieved as follows.</p>
 ## 5           1        0        0     0
 ## 6           1        0        0     0</code></pre>
 <p>Let’s compute the contrast output values manually:</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="generalized-linear-models-poisson.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constants interc, tensM, tensH, woolB</span></span>
-<span id="cb425-2"><a href="generalized-linear-models-poisson.html#cb425-2" aria-hidden="true" tabindex="-1"></a>coeff <span class="ot">&lt;-</span> breaks_glm<span class="sc">$</span>coefficients</span>
-<span id="cb425-3"><a href="generalized-linear-models-poisson.html#cb425-3" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># contrast coefficients</span></span>
-<span id="cb425-4"><a href="generalized-linear-models-poisson.html#cb425-4" aria-hidden="true" tabindex="-1"></a>coeff <span class="sc">%*%</span> v <span class="co"># contrast (difference between coeffs)</span></span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="generalized-linear-models-poisson.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="co"># constants interc, tensM, tensH, woolB</span></span>
+<span id="cb427-2"><a href="generalized-linear-models-poisson.html#cb427-2" aria-hidden="true" tabindex="-1"></a>coeff <span class="ot">&lt;-</span> breaks_glm<span class="sc">$</span>coefficients</span>
+<span id="cb427-3"><a href="generalized-linear-models-poisson.html#cb427-3" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># contrast coefficients</span></span>
+<span id="cb427-4"><a href="generalized-linear-models-poisson.html#cb427-4" aria-hidden="true" tabindex="-1"></a>coeff <span class="sc">%*%</span> v <span class="co"># contrast (difference between coeffs)</span></span></code></pre></div>
 <pre><code>##           [,1]
 ## [1,] 0.1971681</code></pre>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="generalized-linear-models-poisson.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance matrix of the coefficients</span></span>
-<span id="cb427-2"><a href="generalized-linear-models-poisson.html#cb427-2" aria-hidden="true" tabindex="-1"></a>covmatJ <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> <span class="fu">diag</span>(breaks_glm<span class="sc">$</span>weights) <span class="sc">%*%</span> x)</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="generalized-linear-models-poisson.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance matrix of the coefficients</span></span>
+<span id="cb429-2"><a href="generalized-linear-models-poisson.html#cb429-2" aria-hidden="true" tabindex="-1"></a>covmatJ <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> <span class="fu">diag</span>(breaks_glm<span class="sc">$</span>weights) <span class="sc">%*%</span> x)</span></code></pre></div>
 <p>Weights are related to each combination of the (qualitative)
 predictors. E.g. every row with the same predictor values will have
 the same weight.</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="generalized-linear-models-poisson.html#cb428-1" aria-hidden="true" tabindex="-1"></a>dif <span class="ot">&lt;-</span> v <span class="sc">%*%</span> coeff</span>
-<span id="cb428-2"><a href="generalized-linear-models-poisson.html#cb428-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(v <span class="sc">%*%</span> covmatJ <span class="sc">%*%</span> v)</span>
-<span id="cb428-3"><a href="generalized-linear-models-poisson.html#cb428-3" aria-hidden="true" tabindex="-1"></a>se <span class="co"># standard error</span></span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="generalized-linear-models-poisson.html#cb430-1" aria-hidden="true" tabindex="-1"></a>dif <span class="ot">&lt;-</span> v <span class="sc">%*%</span> coeff</span>
+<span id="cb430-2"><a href="generalized-linear-models-poisson.html#cb430-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(v <span class="sc">%*%</span> covmatJ <span class="sc">%*%</span> v)</span>
+<span id="cb430-3"><a href="generalized-linear-models-poisson.html#cb430-3" aria-hidden="true" tabindex="-1"></a>se <span class="co"># standard error</span></span></code></pre></div>
 <pre><code>##            [,1]
 ## [1,] 0.06833267</code></pre>
-<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="generalized-linear-models-poisson.html#cb430-1" aria-hidden="true" tabindex="-1"></a>tvalue <span class="ot">&lt;-</span> dif <span class="sc">/</span> se</span>
-<span id="cb430-2"><a href="generalized-linear-models-poisson.html#cb430-2" aria-hidden="true" tabindex="-1"></a>tvalue <span class="co"># t-statistic</span></span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="generalized-linear-models-poisson.html#cb432-1" aria-hidden="true" tabindex="-1"></a>tvalue <span class="ot">&lt;-</span> dif <span class="sc">/</span> se</span>
+<span id="cb432-2"><a href="generalized-linear-models-poisson.html#cb432-2" aria-hidden="true" tabindex="-1"></a>tvalue <span class="co"># t-statistic</span></span></code></pre></div>
 <pre><code>##          [,1]
 ## [1,] 2.885414</code></pre>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="generalized-linear-models-poisson.html#cb432-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x) <span class="sc">-</span> <span class="fu">ncol</span>(x)</span>
-<span id="cb432-2"><a href="generalized-linear-models-poisson.html#cb432-2" aria-hidden="true" tabindex="-1"></a>df <span class="co"># degrees of freedom of the T-student variable</span></span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="generalized-linear-models-poisson.html#cb434-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x) <span class="sc">-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb434-2"><a href="generalized-linear-models-poisson.html#cb434-2" aria-hidden="true" tabindex="-1"></a>df <span class="co"># degrees of freedom of the T-student variable</span></span></code></pre></div>
 <pre><code>## [1] 50</code></pre>
 <p>The p-value is computed taking the two extremes (bilateral).</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="generalized-linear-models-poisson.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(tvalue, df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">pt</span>(<span class="sc">-</span>tvalue, df, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="generalized-linear-models-poisson.html#cb436-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(tvalue, df, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">pt</span>(<span class="sc">-</span>tvalue, df, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>##             [,1]
 ## [1,] 0.005755553</code></pre>
 <p>We can provide multiple levels at once to contrasts:</p>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="generalized-linear-models-poisson.html#cb436-1" aria-hidden="true" tabindex="-1"></a>cont_multi <span class="ot">&lt;-</span> <span class="fu">contrast</span>(breaks_glm,</span>
-<span id="cb436-2"><a href="generalized-linear-models-poisson.html#cb436-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;H&quot;</span>, <span class="at">wool =</span> <span class="fu">levels</span>(warpbreaks<span class="sc">$</span>wool)),</span>
-<span id="cb436-3"><a href="generalized-linear-models-poisson.html#cb436-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;M&quot;</span>, <span class="at">wool =</span> <span class="fu">levels</span>(warpbreaks<span class="sc">$</span>wool)),</span>
-<span id="cb436-4"><a href="generalized-linear-models-poisson.html#cb436-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;individual&quot;</span></span>
-<span id="cb436-5"><a href="generalized-linear-models-poisson.html#cb436-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb436-6"><a href="generalized-linear-models-poisson.html#cb436-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cont_multi, <span class="at">X =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalized-linear-models-poisson.html#cb438-1" aria-hidden="true" tabindex="-1"></a>cont_multi <span class="ot">&lt;-</span> <span class="fu">contrast</span>(breaks_glm,</span>
+<span id="cb438-2"><a href="generalized-linear-models-poisson.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;H&quot;</span>, <span class="at">wool =</span> <span class="fu">levels</span>(warpbreaks<span class="sc">$</span>wool)),</span>
+<span id="cb438-3"><a href="generalized-linear-models-poisson.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;M&quot;</span>, <span class="at">wool =</span> <span class="fu">levels</span>(warpbreaks<span class="sc">$</span>wool)),</span>
+<span id="cb438-4"><a href="generalized-linear-models-poisson.html#cb438-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;individual&quot;</span></span>
+<span id="cb438-5"><a href="generalized-linear-models-poisson.html#cb438-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb438-6"><a href="generalized-linear-models-poisson.html#cb438-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cont_multi, <span class="at">X =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## glm model parameter contrast
 ## 
 ##    Contrast       S.E.      Lower       Upper     t df Pr(&gt;|t|)
@@ -587,7 +599,7 @@ the same weight.</p>
 <h2><span class="header-section-number">8.4</span> Tests<a href="generalized-linear-models-poisson.html#tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Since we know that the difference of the deviances
 is Chi-squared distributed, we can perform some tests.</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalized-linear-models-poisson.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">summary</span>(breaks_glm)) <span class="co"># to view the attribute names</span></span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="generalized-linear-models-poisson.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(<span class="fu">summary</span>(breaks_glm)) <span class="co"># to view the attribute names</span></span></code></pre></div>
 <pre><code>## List of 17
 ##  $ call          : language glm(formula = breaks ~ tension + wool, family = &quot;poisson&quot;, data = warpbreaks)
 ##  $ terms         :Classes &#39;terms&#39;, &#39;formula&#39;  language breaks ~ tension + wool
@@ -647,29 +659,29 @@ is Chi-squared distributed, we can perform some tests.</p>
 ##   .. ..$ : chr [1:4] &quot;(Intercept)&quot; &quot;tensionM&quot; &quot;tensionH&quot; &quot;woolB&quot;
 ##   .. ..$ : chr [1:4] &quot;(Intercept)&quot; &quot;tensionM&quot; &quot;tensionH&quot; &quot;woolB&quot;
 ##  - attr(*, &quot;class&quot;)= chr &quot;summary.glm&quot;</code></pre>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="generalized-linear-models-poisson.html#cb440-1" aria-hidden="true" tabindex="-1"></a>d0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>null.deviance <span class="co"># Msat - Mnull</span></span>
-<span id="cb440-2"><a href="generalized-linear-models-poisson.html#cb440-2" aria-hidden="true" tabindex="-1"></a>df0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>df.null</span>
-<span id="cb440-3"><a href="generalized-linear-models-poisson.html#cb440-3" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>deviance <span class="co"># Msat - Mfit</span></span>
-<span id="cb440-4"><a href="generalized-linear-models-poisson.html#cb440-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>df.residual</span></code></pre></div>
-<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="generalized-linear-models-poisson.html#cb441-1" aria-hidden="true" tabindex="-1"></a>deltaD <span class="ot">&lt;-</span> d0 <span class="sc">-</span> d1 <span class="co"># chisq statistic of the model (Mfit - Mnull)</span></span>
-<span id="cb441-2"><a href="generalized-linear-models-poisson.html#cb441-2" aria-hidden="true" tabindex="-1"></a>dfD <span class="ot">&lt;-</span> df0 <span class="sc">-</span> df1 <span class="co"># chisq degrees of freedom</span></span>
-<span id="cb441-3"><a href="generalized-linear-models-poisson.html#cb441-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(deltaD, dfD, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="generalized-linear-models-poisson.html#cb442-1" aria-hidden="true" tabindex="-1"></a>d0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>null.deviance <span class="co"># Msat - Mnull</span></span>
+<span id="cb442-2"><a href="generalized-linear-models-poisson.html#cb442-2" aria-hidden="true" tabindex="-1"></a>df0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>df.null</span>
+<span id="cb442-3"><a href="generalized-linear-models-poisson.html#cb442-3" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>deviance <span class="co"># Msat - Mfit</span></span>
+<span id="cb442-4"><a href="generalized-linear-models-poisson.html#cb442-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(breaks_glm)<span class="sc">$</span>df.residual</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalized-linear-models-poisson.html#cb443-1" aria-hidden="true" tabindex="-1"></a>deltaD <span class="ot">&lt;-</span> d0 <span class="sc">-</span> d1 <span class="co"># chisq statistic of the model (Mfit - Mnull)</span></span>
+<span id="cb443-2"><a href="generalized-linear-models-poisson.html#cb443-2" aria-hidden="true" tabindex="-1"></a>dfD <span class="ot">&lt;-</span> df0 <span class="sc">-</span> df1 <span class="co"># chisq degrees of freedom</span></span>
+<span id="cb443-3"><a href="generalized-linear-models-poisson.html#cb443-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(deltaD, dfD, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 9.750414e-19</code></pre>
 <p>Since the p-value is very low, we can reject the hypothesis
 that the fitted model is equal to a null model, thus the
 model is useful.</p>
 <p><em>Is it as good as the saturated one?</em>
 No (of course, it’s not a perfect model).</p>
-<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="generalized-linear-models-poisson.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(d1, df1, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalized-linear-models-poisson.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(d1, df1, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 1.44606e-21</code></pre>
 <p>Graphic representation:</p>
-<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="generalized-linear-models-poisson.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb445-2"><a href="generalized-linear-models-poisson.html#cb445-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">220</span>, <span class="at">length.out =</span> <span class="dv">100</span>),</span>
-<span id="cb445-3"><a href="generalized-linear-models-poisson.html#cb445-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">dchisq</span>(x, df1)</span>
-<span id="cb445-4"><a href="generalized-linear-models-poisson.html#cb445-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb445-5"><a href="generalized-linear-models-poisson.html#cb445-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb445-6"><a href="generalized-linear-models-poisson.html#cb445-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb445-7"><a href="generalized-linear-models-poisson.html#cb445-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> d1), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="generalized-linear-models-poisson.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb447-2"><a href="generalized-linear-models-poisson.html#cb447-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">220</span>, <span class="at">length.out =</span> <span class="dv">100</span>),</span>
+<span id="cb447-3"><a href="generalized-linear-models-poisson.html#cb447-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">dchisq</span>(x, df1)</span>
+<span id="cb447-4"><a href="generalized-linear-models-poisson.html#cb447-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb447-5"><a href="generalized-linear-models-poisson.html#cb447-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb447-6"><a href="generalized-linear-models-poisson.html#cb447-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb447-7"><a href="generalized-linear-models-poisson.html#cb447-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> d1), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-210-1.png" width="672" />
 The plot tells us how far is the fitted model from being equal
 to the saturated one. It would be more useful though to
@@ -689,8 +701,8 @@ every observation. The bigger is the difference in the coefficients,
 the higher is the influence of that datum.
 Note that the results depend from the parametrization of the model,
 (e.g. it changes when the reference level for tension is M or H).</p>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="generalized-linear-models-poisson.html#cb446-1" aria-hidden="true" tabindex="-1"></a>infmeas <span class="ot">&lt;-</span> <span class="fu">influence.measures</span>(breaks_glm)</span>
-<span id="cb446-2"><a href="generalized-linear-models-poisson.html#cb446-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(infmeas)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="generalized-linear-models-poisson.html#cb448-1" aria-hidden="true" tabindex="-1"></a>infmeas <span class="ot">&lt;-</span> <span class="fu">influence.measures</span>(breaks_glm)</span>
+<span id="cb448-2"><a href="generalized-linear-models-poisson.html#cb448-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(infmeas)</span></code></pre></div>
 <pre><code>## List of 3
 ##  $ infmat: num [1:54, 1:8] -0.366 -0.255 0.318 -0.395 0.678 ...
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
@@ -702,8 +714,8 @@ Note that the results depend from the parametrization of the model,
 ##   .. ..$ : chr [1:8] &quot;dfb.1_&quot; &quot;dfb.tnsM&quot; &quot;dfb.tnsH&quot; &quot;dfb.wolB&quot; ...
 ##  $ call  : language glm(formula = breaks ~ tension + wool, family = &quot;poisson&quot;, data = warpbreaks)
 ##  - attr(*, &quot;class&quot;)= chr &quot;infl&quot;</code></pre>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="generalized-linear-models-poisson.html#cb448-1" aria-hidden="true" tabindex="-1"></a>infmeasmat <span class="ot">&lt;-</span> infmeas<span class="sc">$</span>infmat</span>
-<span id="cb448-2"><a href="generalized-linear-models-poisson.html#cb448-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(infmeasmat)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="generalized-linear-models-poisson.html#cb450-1" aria-hidden="true" tabindex="-1"></a>infmeasmat <span class="ot">&lt;-</span> infmeas<span class="sc">$</span>infmat</span>
+<span id="cb450-2"><a href="generalized-linear-models-poisson.html#cb450-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(infmeasmat)</span></code></pre></div>
 <pre><code>##       dfb.1_   dfb.tnsM   dfb.tnsH   dfb.wolB      dffit     cov.r     cook.d
 ## 1 -0.3663095  0.2043507  0.1925495  0.1866539 -0.3663095 1.0486985 0.12222528
 ## 2 -0.2551478  0.1423376  0.1341177  0.1300112 -0.2551478 1.1148176 0.06279697
@@ -719,45 +731,33 @@ Note that the results depend from the parametrization of the model,
 ## 5 0.08274043
 ## 6 0.08274043</code></pre>
 <p>We can plot the observations influences:</p>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="generalized-linear-models-poisson.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(infmeas)</span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="generalized-linear-models-poisson.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(infmeas)</span></code></pre></div>
 <pre><code>## Potentially influential observations of
 ##   glm(formula = breaks ~ tension + wool, family = &quot;poisson&quot;, data = warpbreaks) :
 ## NONE</code></pre>
 <pre><code>## numeric(0)</code></pre>
-<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="generalized-linear-models-poisson.html#cb453-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">s =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(warpbreaks))</span>
-<span id="cb453-2"><a href="generalized-linear-models-poisson.html#cb453-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we plot col 1, 2, 3 of influence measures</span></span>
-<span id="cb453-3"><a href="generalized-linear-models-poisson.html#cb453-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb453-4"><a href="generalized-linear-models-poisson.html#cb453-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(infmeasmat, s, warpbreaks) <span class="sc">%&gt;%</span></span>
-<span id="cb453-5"><a href="generalized-linear-models-poisson.html#cb453-5" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(</span>
-<span id="cb453-6"><a href="generalized-linear-models-poisson.html#cb453-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">measure.vars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb453-7"><a href="generalized-linear-models-poisson.html#cb453-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable.name =</span> <span class="st">&quot;infl_name&quot;</span>,</span>
-<span id="cb453-8"><a href="generalized-linear-models-poisson.html#cb453-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">value.name =</span> <span class="st">&quot;measure&quot;</span></span>
-<span id="cb453-9"><a href="generalized-linear-models-poisson.html#cb453-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb453-10"><a href="generalized-linear-models-poisson.html#cb453-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb453-11"><a href="generalized-linear-models-poisson.html#cb453-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(s, measure)) <span class="sc">+</span></span>
-<span id="cb453-12"><a href="generalized-linear-models-poisson.html#cb453-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>infl_name)</span></code></pre></div>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="generalized-linear-models-poisson.html#cb455-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">s =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(warpbreaks))</span>
+<span id="cb455-2"><a href="generalized-linear-models-poisson.html#cb455-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we plot col 1, 2, 3 of influence measures</span></span>
+<span id="cb455-3"><a href="generalized-linear-models-poisson.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb455-4"><a href="generalized-linear-models-poisson.html#cb455-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(infmeasmat, s, warpbreaks) <span class="sc">%&gt;%</span></span>
+<span id="cb455-5"><a href="generalized-linear-models-poisson.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(</span>
+<span id="cb455-6"><a href="generalized-linear-models-poisson.html#cb455-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">measure.vars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb455-7"><a href="generalized-linear-models-poisson.html#cb455-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable.name =</span> <span class="st">&quot;infl_name&quot;</span>,</span>
+<span id="cb455-8"><a href="generalized-linear-models-poisson.html#cb455-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">value.name =</span> <span class="st">&quot;measure&quot;</span></span>
+<span id="cb455-9"><a href="generalized-linear-models-poisson.html#cb455-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb455-10"><a href="generalized-linear-models-poisson.html#cb455-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb455-11"><a href="generalized-linear-models-poisson.html#cb455-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(s, measure)) <span class="sc">+</span></span>
+<span id="cb455-12"><a href="generalized-linear-models-poisson.html#cb455-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>infl_name)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 </div>
 <div id="interaction" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> Interaction<a href="generalized-linear-models-poisson.html#interaction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s add interaction.</p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="generalized-linear-models-poisson.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="co"># some other equivalent ways of writing breaks ~ tension*wool...</span></span>
-<span id="cb454-2"><a href="generalized-linear-models-poisson.html#cb454-2" aria-hidden="true" tabindex="-1"></a>int_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(breaks <span class="sc">~</span> tension <span class="sc">+</span> wool <span class="sc">+</span> tension<span class="sc">:</span>wool,</span>
-<span id="cb454-3"><a href="generalized-linear-models-poisson.html#cb454-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> warpbreaks, <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span></span>
-<span id="cb454-4"><a href="generalized-linear-models-poisson.html#cb454-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb454-5"><a href="generalized-linear-models-poisson.html#cb454-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(int_glm))</span></code></pre></div>
-<pre><code>##   (Intercept) tensionM tensionH woolB tensionM:woolB tensionH:woolB
-## 1           1        0        0     0              0              0
-## 2           1        0        0     0              0              0
-## 3           1        0        0     0              0              0
-## 4           1        0        0     0              0              0
-## 5           1        0        0     0              0              0
-## 6           1        0        0     0              0              0</code></pre>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="generalized-linear-models-poisson.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as you can see from the design.matrix, it&#39;s the same model</span></span>
-<span id="cb456-2"><a href="generalized-linear-models-poisson.html#cb456-2" aria-hidden="true" tabindex="-1"></a>int_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(breaks <span class="sc">~</span> (tension <span class="sc">+</span> wool)<span class="sc">^</span><span class="dv">2</span>,</span>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="generalized-linear-models-poisson.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="co"># some other equivalent ways of writing breaks ~ tension*wool...</span></span>
+<span id="cb456-2"><a href="generalized-linear-models-poisson.html#cb456-2" aria-hidden="true" tabindex="-1"></a>int_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(breaks <span class="sc">~</span> tension <span class="sc">+</span> wool <span class="sc">+</span> tension<span class="sc">:</span>wool,</span>
 <span id="cb456-3"><a href="generalized-linear-models-poisson.html#cb456-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> warpbreaks, <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span></span>
 <span id="cb456-4"><a href="generalized-linear-models-poisson.html#cb456-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb456-5"><a href="generalized-linear-models-poisson.html#cb456-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(int_glm2))</span></code></pre></div>
+<span id="cb456-5"><a href="generalized-linear-models-poisson.html#cb456-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(int_glm))</span></code></pre></div>
 <pre><code>##   (Intercept) tensionM tensionH woolB tensionM:woolB tensionH:woolB
 ## 1           1        0        0     0              0              0
 ## 2           1        0        0     0              0              0
@@ -765,7 +765,19 @@ Note that the results depend from the parametrization of the model,
 ## 4           1        0        0     0              0              0
 ## 5           1        0        0     0              0              0
 ## 6           1        0        0     0              0              0</code></pre>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="generalized-linear-models-poisson.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(int_glm)</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="generalized-linear-models-poisson.html#cb458-1" aria-hidden="true" tabindex="-1"></a><span class="co"># as you can see from the design.matrix, it&#39;s the same model</span></span>
+<span id="cb458-2"><a href="generalized-linear-models-poisson.html#cb458-2" aria-hidden="true" tabindex="-1"></a>int_glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(breaks <span class="sc">~</span> (tension <span class="sc">+</span> wool)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb458-3"><a href="generalized-linear-models-poisson.html#cb458-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> warpbreaks, <span class="at">family =</span> <span class="st">&quot;poisson&quot;</span></span>
+<span id="cb458-4"><a href="generalized-linear-models-poisson.html#cb458-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb458-5"><a href="generalized-linear-models-poisson.html#cb458-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(int_glm2))</span></code></pre></div>
+<pre><code>##   (Intercept) tensionM tensionH woolB tensionM:woolB tensionH:woolB
+## 1           1        0        0     0              0              0
+## 2           1        0        0     0              0              0
+## 3           1        0        0     0              0              0
+## 4           1        0        0     0              0              0
+## 5           1        0        0     0              0              0
+## 6           1        0        0     0              0              0</code></pre>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="generalized-linear-models-poisson.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(int_glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = breaks ~ tension + wool + tension:wool, family = &quot;poisson&quot;, 
@@ -798,15 +810,15 @@ passing through the mean number of breaks. How do you interpret the graph?</p>
 <div id="testing-interaction" class="section level3 hasAnchor" number="8.6.1">
 <h3><span class="header-section-number">8.6.1</span> Testing interaction<a href="generalized-linear-models-poisson.html#testing-interaction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Is a more complex model worth the additional parameters?</p>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="generalized-linear-models-poisson.html#cb460-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(breaks_glm, int_glm)</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="generalized-linear-models-poisson.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(breaks_glm, int_glm)</span></code></pre></div>
 <pre><code>##            df      AIC
 ## breaks_glm  4 493.0560
 ## int_glm     6 468.9692</code></pre>
 <p>Yes, it is. And, again, we can test it against the
 null model.</p>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="generalized-linear-models-poisson.html#cb462-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> int_glm<span class="sc">$</span>deviance</span>
-<span id="cb462-2"><a href="generalized-linear-models-poisson.html#cb462-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> int_glm<span class="sc">$</span>df.residual</span></code></pre></div>
-<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="generalized-linear-models-poisson.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(breaks_glm, int_glm, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="generalized-linear-models-poisson.html#cb464-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> int_glm<span class="sc">$</span>deviance</span>
+<span id="cb464-2"><a href="generalized-linear-models-poisson.html#cb464-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> int_glm<span class="sc">$</span>df.residual</span></code></pre></div>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="generalized-linear-models-poisson.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(breaks_glm, int_glm, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: breaks ~ tension + wool
@@ -816,7 +828,7 @@ null model.</p>
 ## 2        48     182.31  2   28.087 7.962e-07 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="generalized-linear-models-poisson.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(d1 <span class="sc">-</span> d2, df1 <span class="sc">-</span> df2, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="co"># Mfit - Mnull</span></span></code></pre></div>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="generalized-linear-models-poisson.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(d1 <span class="sc">-</span> d2, df1 <span class="sc">-</span> df2, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="co"># Mfit - Mnull</span></span></code></pre></div>
 <pre><code>## [1] 7.962292e-07</code></pre>
 
 </div>

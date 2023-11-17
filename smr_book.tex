@@ -113,14 +113,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Lab 1 - Iris},
+  pdftitle={Lab 2 - Insulate},
   pdfauthor={Vittorio Zampinetti},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Lab 1 - Iris}
+\title{Lab 2 - Insulate}
 \author{Vittorio Zampinetti}
-\date{2023-11-14}
+\date{2023-11-17}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   8.072637   8.403177  11.481228   9.510749   5.513060   9.778840
-##  [7]   2.656760  -7.458142   7.259882 -10.719861
+##  [1]  -0.1893354   1.9807937  -7.8638378  -0.6649958   1.9536201  13.9472532
+##  [7] -22.2598170  -4.5387533  13.3702249   5.4123244
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1070,11 +1070,11 @@ most of the dataset will be stored in dataframes.
 ##    x  y char
 ## 1  1  1    a
 ## 2  1  2    a
-## 3  1  3    a
+## 3  1  3    b
 ## 4  1  4    a
 ## 5  1  5    b
-## 6  1  6    b
-## 7  1  7    b
+## 6  1  6    a
+## 7  1  7    a
 ## 8  1  8    b
 ## 9  1  9    a
 ## 10 1 10    b
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "a" "a" "b" "b" "b" "b" "a" "b"
+##  [1] "a" "a" "b" "a" "b" "a" "a" "b" "a" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1119,7 +1119,7 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    a
-## 3 1 3    a
+## 3 1 3    b
 ## 4 1 4    a
 \end{verbatim}
 
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.96530204 -0.12238053 -0.23711682  0.76835549 -0.04078934  0.14020515
-##  [7] -0.75407953  0.03149695 -0.10765472 -0.15269769
+##  [1] -0.372978063  1.548094001 -1.076759788  0.001631246  0.475450778
+##  [6] -0.442461082  0.511058093  1.445361786 -0.661076213 -0.625187442
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.004915083 0.041953724 0.032670447 0.186856818 0.049719947 0.070767391
-##  [7] 0.008992040 0.057472962 0.043280948 0.039321171
+##  [1] 0.023886282 0.360217217 0.003509913 0.054167327 0.124797395 0.020206588
+##  [7] 0.131675787 0.342066435 0.011566968 0.012717922
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.1671968 0.4512988 0.4062831 0.7788620 0.4837319 0.5557510 0.2254007
-##  [8] 0.5125634 0.4571348 0.4393183
+##  [1] 0.3545824 0.9392002 0.1407938 0.5006508 0.6827671 0.3290778 0.6953448
+##  [8] 0.9258219 0.2542817 0.2659240
 \end{verbatim}
 
 \begin{Shaded}
@@ -1626,7 +1626,7 @@ And then you can load the package with \texttt{library}.
 \begin{verbatim}
 ## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
 ## v forcats   1.0.0     v readr     2.1.4
-## v lubridate 1.9.3     v stringr   1.5.0
+## v lubridate 1.9.3     v stringr   1.5.1
 ## v purrr     1.0.2     v tidyr     1.3.0
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a          b
-## 1 -0.6860467 0.47066008
-## 2  0.1514042 0.02292322
+##           a         b
+## 1 0.5208245 0.2712582
+## 2 1.0087171 1.0175101
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -5676,6 +5676,16 @@ but how do we know if it's statistically relevant?
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(contrast)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in .recacheSubclasses(def@className, def, env): undefined subclass
+## "ndiMatrix" of class "replValueSp"; definition not updated
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{cont }\OtherTok{\textless{}{-}} \FunctionTok{contrast}\NormalTok{(breaks\_glm,}
   \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \StringTok{"M"}\NormalTok{, }\AttributeTok{wool =} \StringTok{"A"}\NormalTok{),}
   \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \StringTok{"H"}\NormalTok{, }\AttributeTok{wool =} \StringTok{"A"}\NormalTok{),}
@@ -8076,13 +8086,214 @@ Now take this other sample:
 ##   5.62742
 \end{verbatim}
 
-\begin{verbatim}
-## tweaking contrast
-\end{verbatim}
+\hypertarget{linear-regression-lab}{%
+\chapter{Linear regression lab}\label{linear-regression-lab}}
+
+This lab focuses on linear models and on the R functions
+dedicated to fitted linear models inspection.
+
+For the following tasks, we will use a real dataset
+featuring two predictors and one response variable (fuel consumption).
+You can read some information inside the \texttt{insulate.names} text file.
+The dataset can be found \href{https://github.com/toyo97/statistical-models-r/tree/master/datasets}{here}.
+
+\hypertarget{eda-20-min}{%
+\section{EDA (20 min)}\label{eda-20-min}}
+
+Start by loading the \texttt{insulate.csv} data in the R environment,
+making sure that the type of the parsed variables is correctly inferred,
+then explore it using the tools seen in the lectures (e.g.~dimension,
+summary, plots, etc.).
+
+You might answer these questions:
+
+\begin{itemize}
+\item
+  How many observations does the dataset provide?
+\item
+  What are the predictors? Are they qualitative or quantitative?
+\item
+  What is the relationship between the response variable and the two
+  predictors taken individually?
+\item
+  Draw some \emph{useful} plot and interpret what you see.
+\end{itemize}
+
+\hypertarget{fitting-a-linear-model-15-min}{%
+\section{Fitting a linear model (15 min)}\label{fitting-a-linear-model-15-min}}
+
+Now use the \texttt{lm()} function to fit two linear models:
+one which only uses the temperature as predictor, and one
+with both predictors.
+
+\begin{itemize}
+\item
+  Which one is better? Why?
+\item
+  Plot both regression lines (you can use any plotting
+  tool that you prefer)
+\end{itemize}
+
+\hypertarget{interaction-10-min}{%
+\subsection{Interaction (10 min)}\label{interaction-10-min}}
+
+In this setting, we are mostly interested in whether we should
+include the interaction between the two predictors or not.
+If the effects of the predictors are additive, we don't need
+interaction.
+
+\begin{itemize}
+\tightlist
+\item
+  Are the two effects additive? To answer this, follow the task in
+  the next bullet point.
+\item
+  Draw a plot showing the consumption trend against the temperature,
+  separately for before and after insulation. You may (or may not)
+  use the following code as template, which is enough to fulfill the
+  task after replacing the ellipsis with the proper function arguments:
+\end{itemize}
+
+\begin{quote}
+Hint: remember that, in order to differentiate between
+classes (i.e.~\emph{before} and \emph{after}) in the same plot,
+you can select the class to be interpreted as color encoding
+for the points/line: \texttt{aes(...,\ color\ =\ when)}.
+\end{quote}
+
+\begin{itemize}
+\item
+  Fit a linear model which includes interaction between \texttt{temp} and \texttt{when}.
+\item
+  How many additional parameters does the model have to estimate?
+\end{itemize}
+
+\hypertarget{aic-and-model-selection-10-min}{%
+\section{AIC and model selection (10 min)}\label{aic-and-model-selection-10-min}}
+
+Looking at the R-squared index, the model with interaction seems
+to perform a bit better. However, this doesn't mean that the interaction
+model is a better choice.
+
+\begin{itemize}
+\tightlist
+\item
+  After assessing that we can compare the additive with interaction models
+  through the ANOVA test, checking the main prerequisite (nested models),
+  run an ANOVA test comparing the two models, analyze the result,
+  draw a conclusion.
+\end{itemize}
+
+Interaction with \texttt{*} also includes the singular
+variables, therefore the additive model is nested into interaction.
+
+Another criterion used for model selection is the \href{https://en.wikipedia.org/wiki/Akaike_information_criterion}{Akaike Information
+Criterion},
+which is defined as
+
+\[
+\text{AIC} = 2k - 2\ln(\hat L)
+\]
+
+where \(\hat L\) is the maximized likelihood of the data
+i.e.~\(p(y | \hat \beta)\). The AIC takes into consideration
+the model complexity (number of predictors considered),
+favoring small models over the bigger ones.
+
+\begin{itemize}
+\tightlist
+\item
+  Find the AIC index using the dedicated function \texttt{AIC()}.
+  Which model is better according to the AIC? Why?
+\end{itemize}
+
+\hypertarget{prediction-intervals-35-min}{%
+\section{Prediction intervals (35 min)}\label{prediction-intervals-35-min}}
+
+Imagine we have a new unseen (\emph{future}) row of observed measures \(x_f\),
+with no true response observation (\(Y_f\) is unknown).
+
+We are interested in making inference on the mean \(x_f \beta\).
+As you've seen in the theory lectures, this is a particular case of the
+inference of \(C \beta\). Being just one row, the F-type intervals can be
+translated to T-type intervals:
+
+\[
+F_{\alpha}(1, n-p) = t^2_{\frac{\alpha}{2}}(n-p)
+\]
+
+These are standard confidence intervals, and you can find
+them with \texttt{predict.lm(...,\ interval\ =\ "confidence")}.
+
+\begin{itemize}
+\tightlist
+\item
+  Find a prediction for the following additional rows using the best model you
+  found so far, together with their confidence intervals.
+\end{itemize}
 
 \begin{verbatim}
-## tweaking pscl
+when,temp
+before,5.8
+before,-1.0
+after,4.8
+after,9.8
 \end{verbatim}
+
+With new observations, instead of making inference on the coefficients \(\beta\),
+we can make inference on the unseen response variable \(Y_f\). In this
+case we are not doing either estimation or testing, but rather just \emph{prediction}.
+In \emph{machine learning} the focus of inference is prediction: neural networks, for
+instance, have a large set of parameters which are learnt automatically from the data,
+but their values are most of the times non-interpretable, thus not useful per se, while
+the output of interest is \(\hat Y_f\), eventually together with its uncertainty.
+
+Inference on \(Y_f\) can be derived similarly to how you did with confidence intervals.
+Formally (but not too much in detail):
+
+\[
+Y_f \sim \mathcal N(x_f'\beta, \sigma^2)
+\]
+
+independent from \(Y_1, ..., Y_n\). Under the homogeneity assumption of the future
+response with respect to the past,
+
+\[
+x_f'\hat\beta = \hat Y \sim \mathcal N(x_f'\beta, \sigma^2 x_f' (X'X)^{-1}x_f)\,.
+\]
+
+This leads to
+
+\[
+Y_f - \hat Y_f \sim \mathcal N(0, \sigma(1 + x_f'(X'X)^{-1}x_f))\,,
+\]
+
+which gives us the prediction intervals:
+
+\[
+\hat Y_f \pm t_{\frac{\alpha}{2}}(n-p)\sqrt{\text{MSR}(1 + x_f'(X'X)^{-1}x_f)}\,.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  Using this formula, compute the prediction intervals for \emph{one} of the
+  four new future observations written above (from scratch).
+\end{itemize}
+
+\begin{quote}
+Hint: We've seen how to compute the \(\text{MSR}\) (or \(\text{RMS}\)) in the first
+linear regression R lecture
+\end{quote}
+
+\begin{itemize}
+\item
+  Check your computations using \texttt{predict.lm(...,\ interval\ =\ "prediction")}
+\item
+  Is the interval center the same as for the confidence intervals?
+\item
+  Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
