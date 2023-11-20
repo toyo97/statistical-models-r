@@ -1,3 +1,11 @@
+---
+# title: Tools for linear regression
+# latest-revision: November 20th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
+---
+
 # Tools for linear regression analysis
 
 We will still use the advertising dataset. Let's load it.

@@ -1,9 +1,9 @@
 ---
-title: Introduction to R programming
-latest-revision: October 3rd, 2023
-author: Vittorio Zampinetti
-time: 3h
-output: pdf_document
+# title: Introduction to R programming
+# latest-revision: October 3rd, 2023
+# author: Vittorio Zampinetti
+# time: 3h
+# output: pdf_document
 ---
 
 # Introduction

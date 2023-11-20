@@ -1,5 +1,5 @@
 --- 
-title: "Statistical Models in R"
+title: Statistical Models in R
 author: 
  - Vittorio Zampinetti^[Politecnico di Torino]
  - Mauro Gasparini^[Politecnico di Torino]

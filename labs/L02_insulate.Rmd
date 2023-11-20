@@ -1,9 +1,9 @@
 ---
-title: Lab 2 - Insulate
-latest-revision: November 22nd, 2023
-author: Vittorio Zampinetti
-time: 1.5h
-output: pdf_document
+# title: Lab 2 - Insulate
+# latest-revision: November 22nd, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -20,7 +20,7 @@ knit_engines$set(asis = function(options) {
 })
 ```
 
-# Linear regression lab
+# Lab 2
 
 This lab focuses on linear models and on the R functions
 dedicated to fitted linear models inspection.

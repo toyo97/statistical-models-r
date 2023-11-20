@@ -1,9 +1,9 @@
 ---
-title: Elementary statistics
-latest-revision: October 16th, 2023
-author: Vittorio Zampinetti
-time: 1.5h
-output: pdf_document
+# title: Elementary statistics
+# latest-revision: October 16th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
 ---
 
 # Some elementary statistics problems
