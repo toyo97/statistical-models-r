@@ -4,26 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Introduction | Lab 2 - Insulate</title>
+  <title>Chapter 1 Introduction | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Introduction | Lab 2 - Insulate" />
+  <meta property="og:title" content="Chapter 1 Introduction | Statistical Models in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Introduction | Lab 2 - Insulate" />
+  <meta name="twitter:title" content="Chapter 1 Introduction | Statistical Models in R" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
 
 <meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-11-17" />
+<meta name="date" content="2023-11-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -318,15 +319,15 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
 <li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<li class="chapter" data-level="12" data-path="lab-2.html"><a href="lab-2.html"><i class="fa fa-check"></i><b>12</b> Lab 2</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
-<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<li class="chapter" data-level="12.1" data-path="lab-2.html"><a href="lab-2.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="lab-2.html"><a href="lab-2.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+<li class="chapter" data-level="12.2.1" data-path="lab-2.html"><a href="lab-2.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
-<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.3" data-path="lab-2.html"><a href="lab-2.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="lab-2.html"><a href="lab-2.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -341,7 +342,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 2 - Insulate</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
           </h1>
         </div>
 
@@ -422,8 +423,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument,</span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1] 11.8285474 -6.0019830  8.8937474 -2.4256981  8.1022811 14.0668706
-##  [7]  7.9241054 -0.3399892  4.6263899  5.1208163</code></pre>
+<pre><code>##  [1]   5.225179  -8.748661 -10.076995  -6.490421  14.525285 -19.555854
+##  [7]   4.196022   1.358998  -6.887375  17.658288</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -776,22 +777,22 @@ most of the dataset will be stored in dataframes.</p>
 <span id="cb111-3"><a href="introduction.html#cb111-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb111-4"><a href="introduction.html#cb111-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="co"># x was set to just one value and gets repeated (&#39;recycled&#39;)</span></span></code></pre></div>
 <pre><code>##    x  y char
-## 1  1  1    a
+## 1  1  1    b
 ## 2  1  2    b
 ## 3  1  3    a
 ## 4  1  4    a
 ## 5  1  5    a
 ## 6  1  6    b
-## 7  1  7    b
+## 7  1  7    a
 ## 8  1  8    b
-## 9  1  9    a
+## 9  1  9    b
 ## 10 1 10    b</code></pre>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot;</code></pre>
+<pre><code>##  [1] &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
 ## 2 1 2    b
@@ -1042,16 +1043,16 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introduction.html#cb145-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb145-2"><a href="introduction.html#cb145-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb145-3"><a href="introduction.html#cb145-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1] -1.0298034 -1.5760164  1.7157207  1.9886839 -2.2313197  1.7214584
-##  [7] -1.2649957 -0.5405152  0.5944999 -1.0571168</code></pre>
+<pre><code>##  [1]  0.1346747  1.4548541 -0.3126417 -1.0663659  1.7296877  1.0371089
+##  [7] -0.2159742  0.1155126 -0.5337361 -0.2497365</code></pre>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introduction.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the density function (over another Normal)</span></span>
 <span id="cb147-2"><a href="introduction.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.0040509943 0.0006668901 0.3831434237 0.3989167382 0.0000516525
-##  [6] 0.3837625637 0.0019323142 0.0158268502 0.1485767330 0.0037278629</code></pre>
+<pre><code>##  [1] 0.070042171 0.343856597 0.027513065 0.003623777 0.384630205 0.250945827
+##  [7] 0.034245184 0.067570423 0.016101419 0.031758471</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="introduction.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cumulative distribution function</span></span>
 <span id="cb149-2"><a href="introduction.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.15155115 0.05751101 0.95689342 0.97663195 0.01282998 0.95741616
-##  [7] 0.10293644 0.29442087 0.72391111 0.14522914</code></pre>
+<pre><code>##  [1] 0.5535655 0.9271452 0.3772765 0.1431291 0.9581570 0.8501574 0.4145039
+##  [8] 0.5459806 0.2967621 0.4013955</code></pre>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="introduction.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the quantiles of a normal</span></span>
 <span id="cb151-2"><a href="introduction.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
@@ -1121,8 +1122,8 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="introduction.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb164-2"><a href="introduction.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##            a         b
-## 1 -1.6777989 2.8150091
-## 2  0.9249963 0.8556182</code></pre>
+## 1 -0.8270600 0.6840283
+## 2  0.6232685 0.3884636</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes

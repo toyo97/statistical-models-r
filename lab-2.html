@@ -4,26 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 12 Linear regression lab | Lab 2 - Insulate</title>
+  <title>Chapter 12 Lab 2 | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 12 Linear regression lab | Lab 2 - Insulate" />
+  <meta property="og:title" content="Chapter 12 Lab 2 | Statistical Models in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 12 Linear regression lab | Lab 2 - Insulate" />
+  <meta name="twitter:title" content="Chapter 12 Lab 2 | Statistical Models in R" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
 
 <meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-11-17" />
+<meta name="date" content="2023-11-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -318,15 +319,15 @@ div.csl-indent {
 <li class="chapter" data-level="11.4" data-path="lab-1.html"><a href="lab-1.html#confidence-intervals-1"><i class="fa fa-check"></i><b>11.4</b> Confidence intervals</a></li>
 <li class="chapter" data-level="11.5" data-path="lab-1.html"><a href="lab-1.html#p-value-1"><i class="fa fa-check"></i><b>11.5</b> P-value</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html"><i class="fa fa-check"></i><b>12</b> Linear regression lab</a>
+<li class="chapter" data-level="12" data-path="lab-2.html"><a href="lab-2.html"><i class="fa fa-check"></i><b>12</b> Lab 2</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
-<li class="chapter" data-level="12.2" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
+<li class="chapter" data-level="12.1" data-path="lab-2.html"><a href="lab-2.html#eda-20-min"><i class="fa fa-check"></i><b>12.1</b> EDA (20 min)</a></li>
+<li class="chapter" data-level="12.2" data-path="lab-2.html"><a href="lab-2.html#fitting-a-linear-model-15-min"><i class="fa fa-check"></i><b>12.2</b> Fitting a linear model (15 min)</a>
 <ul>
-<li class="chapter" data-level="12.2.1" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
+<li class="chapter" data-level="12.2.1" data-path="lab-2.html"><a href="lab-2.html#interaction-10-min"><i class="fa fa-check"></i><b>12.2.1</b> Interaction (10 min)</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
-<li class="chapter" data-level="12.4" data-path="linear-regression-lab.html"><a href="linear-regression-lab.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.3" data-path="lab-2.html"><a href="lab-2.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
+<li class="chapter" data-level="12.4" data-path="lab-2.html"><a href="lab-2.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -341,7 +342,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Lab 2 - Insulate</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
           </h1>
         </div>
 
@@ -349,8 +350,8 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-regression-lab" class="section level1 hasAnchor" number="12">
-<h1><span class="header-section-number">Chapter 12</span> Linear regression lab<a href="linear-regression-lab.html#linear-regression-lab" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lab-2" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Lab 2<a href="lab-2.html#lab-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This lab focuses on linear models and on the R functions
 dedicated to fitted linear models inspection.</p>
 <p>For the following tasks, we will use a real dataset
@@ -358,7 +359,7 @@ featuring two predictors and one response variable (fuel consumption).
 You can read some information inside the <code>insulate.names</code> text file.
 The dataset can be found <a href="https://github.com/toyo97/statistical-models-r/tree/master/datasets">here</a>.</p>
 <div id="eda-20-min" class="section level2 hasAnchor" number="12.1">
-<h2><span class="header-section-number">12.1</span> EDA (20 min)<a href="linear-regression-lab.html#eda-20-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">12.1</span> EDA (20 min)<a href="lab-2.html#eda-20-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Start by loading the <code>insulate.csv</code> data in the R environment,
 making sure that the type of the parsed variables is correctly inferred,
 then explore it using the tools seen in the lectures (e.g. dimension,
@@ -373,7 +374,7 @@ predictors taken individually?</p></li>
 </ul>
 </div>
 <div id="fitting-a-linear-model-15-min" class="section level2 hasAnchor" number="12.2">
-<h2><span class="header-section-number">12.2</span> Fitting a linear model (15 min)<a href="linear-regression-lab.html#fitting-a-linear-model-15-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">12.2</span> Fitting a linear model (15 min)<a href="lab-2.html#fitting-a-linear-model-15-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now use the <code>lm()</code> function to fit two linear models:
 one which only uses the temperature as predictor, and one
 with both predictors.</p>
@@ -383,7 +384,7 @@ with both predictors.</p>
 tool that you prefer)</p></li>
 </ul>
 <div id="interaction-10-min" class="section level3 hasAnchor" number="12.2.1">
-<h3><span class="header-section-number">12.2.1</span> Interaction (10 min)<a href="linear-regression-lab.html#interaction-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">12.2.1</span> Interaction (10 min)<a href="lab-2.html#interaction-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this setting, we are mostly interested in whether we should
 include the interaction between the two predictors or not.
 If the effects of the predictors are additive, we don’t need
@@ -409,7 +410,7 @@ for the points/line: <code>aes(..., color = when)</code>.</p>
 </div>
 </div>
 <div id="aic-and-model-selection-10-min" class="section level2 hasAnchor" number="12.3">
-<h2><span class="header-section-number">12.3</span> AIC and model selection (10 min)<a href="linear-regression-lab.html#aic-and-model-selection-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">12.3</span> AIC and model selection (10 min)<a href="lab-2.html#aic-and-model-selection-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Looking at the R-squared index, the model with interaction seems
 to perform a bit better. However, this doesn’t mean that the interaction
 model is a better choice.</p>
@@ -437,7 +438,7 @@ Which model is better according to the AIC? Why?</li>
 </ul>
 </div>
 <div id="prediction-intervals-35-min" class="section level2 hasAnchor" number="12.4">
-<h2><span class="header-section-number">12.4</span> Prediction intervals (35 min)<a href="linear-regression-lab.html#prediction-intervals-35-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">12.4</span> Prediction intervals (35 min)<a href="lab-2.html#prediction-intervals-35-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Imagine we have a new unseen (<em>future</em>) row of observed measures <span class="math inline">\(x_f\)</span>,
 with no true response observation (<span class="math inline">\(Y_f\)</span> is unknown).</p>
 <p>We are interested in making inference on the mean <span class="math inline">\(x_f \beta\)</span>.

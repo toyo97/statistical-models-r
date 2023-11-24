@@ -113,14 +113,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Lab 2 - Insulate},
-  pdfauthor={Vittorio Zampinetti},
+  pdftitle={Statistical Models in R},
+  pdfauthor={Vittorio Zampinetti; Mauro Gasparini},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Lab 2 - Insulate}
-\author{Vittorio Zampinetti}
-\date{2023-11-17}
+\title{Statistical Models in R}
+\author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
+\date{2023-11-24}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -0.1893354   1.9807937  -7.8638378  -0.6649958   1.9536201  13.9472532
-##  [7] -22.2598170  -4.5387533  13.3702249   5.4123244
+##  [1]   9.364389  11.674861   9.357764 -16.942924 -15.537923  11.762031
+##  [7] -11.183073 -16.579274   3.690102  23.254651
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1069,14 +1069,14 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##    x  y char
 ## 1  1  1    a
-## 2  1  2    a
-## 3  1  3    b
+## 2  1  2    b
+## 3  1  3    a
 ## 4  1  4    a
 ## 5  1  5    b
-## 6  1  6    a
+## 6  1  6    b
 ## 7  1  7    a
-## 8  1  8    b
-## 9  1  9    a
+## 8  1  8    a
+## 9  1  9    b
 ## 10 1 10    b
 \end{verbatim}
 
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "b" "a" "b" "a" "a" "b" "a" "b"
+##  [1] "a" "b" "a" "a" "b" "b" "a" "a" "b" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,8 +1118,8 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    a
-## 3 1 3    b
+## 2 1 2    b
+## 3 1 3    a
 ## 4 1 4    a
 \end{verbatim}
 
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.372978063  1.548094001 -1.076759788  0.001631246  0.475450778
-##  [6] -0.442461082  0.511058093  1.445361786 -0.661076213 -0.625187442
+##  [1] -0.8293561114 -0.0009341656  0.6097953352 -1.1513101048 -0.5777291280
+##  [6]  0.6890655240  0.1956261948  0.0993962242 -0.5495453956 -0.5926039986
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.023886282 0.360217217 0.003509913 0.054167327 0.124797395 0.020206588
-##  [7] 0.131675787 0.342066435 0.011566968 0.012717922
+##  [1] 0.007287705 0.053890164 0.151787610 0.002782748 0.014389129 0.168939751
+##  [7] 0.078330287 0.065540573 0.015467265 0.013846313
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.3545824 0.9392002 0.1407938 0.5006508 0.6827671 0.3290778 0.6953448
-##  [8] 0.9258219 0.2542817 0.2659240
+##  [1] 0.2034515 0.4996273 0.7290013 0.1248023 0.2817235 0.7546090 0.5775486
+##  [8] 0.5395882 0.2913156 0.2767231
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##           a         b
-## 1 0.5208245 0.2712582
-## 2 1.0087171 1.0175101
+##           a          b
+## 1 0.1149112 0.01320457
+## 2 0.8544025 0.73000357
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -3866,6 +3866,13 @@ Exercise: draw a Q-Q plot ``by hand'':
 \end{Shaded}
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-127-1.pdf}
+
+\begin{quote}
+Note: the standardized residuals are actually computed slightly
+differently by the \texttt{plot.lm} R function, but this standardization
+is good enough for our purpose. Check the details in the help
+document \texttt{?plot.lm}.
+\end{quote}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8086,8 +8093,8 @@ Now take this other sample:
 ##   5.62742
 \end{verbatim}
 
-\hypertarget{linear-regression-lab}{%
-\chapter{Linear regression lab}\label{linear-regression-lab}}
+\hypertarget{lab-2}{%
+\chapter{Lab 2}\label{lab-2}}
 
 This lab focuses on linear models and on the R functions
 dedicated to fitted linear models inspection.
