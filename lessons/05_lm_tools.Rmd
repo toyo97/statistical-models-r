@@ -1,6 +1,6 @@
 ---
 # title: Tools for linear regression
-# latest-revision: November 20th, 2023
+# latest-revision: November 24th, 2023
 # author: Vittorio Zampinetti
 # time: 1.5h
 # output: pdf_document
@@ -59,6 +59,11 @@ std_res <- with(radio_lm, {
 th_q <- qnorm(1:n / n)
 plot(th_q, std_res)
 ```
+
+> Note: the standardized residuals are actually computed slightly
+> differently by the `plot.lm` R function, but this standardization
+> is good enough for our purpose. Check the details in the help
+> document `?plot.lm`.
 
 ```{r}
 # scale-location
