@@ -120,7 +120,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2023-11-24}
+\date{2023-11-30}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   9.364389  11.674861   9.357764 -16.942924 -15.537923  11.762031
-##  [7] -11.183073 -16.579274   3.690102  23.254651
+##  [1]  -8.324975  -6.582022   1.917476   0.656142  -4.043127  10.942614
+##  [7]  -1.226969  -3.721967  15.272685 -13.227319
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1069,15 +1069,15 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##    x  y char
 ## 1  1  1    a
-## 2  1  2    b
-## 3  1  3    a
+## 2  1  2    a
+## 3  1  3    b
 ## 4  1  4    a
-## 5  1  5    b
-## 6  1  6    b
+## 5  1  5    a
+## 6  1  6    a
 ## 7  1  7    a
-## 8  1  8    a
+## 8  1  8    b
 ## 9  1  9    b
-## 10 1 10    b
+## 10 1 10    a
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "b" "a" "a" "b" "b" "a" "a" "b" "b"
+##  [1] "a" "a" "b" "a" "a" "a" "a" "b" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,8 +1118,8 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    b
-## 3 1 3    a
+## 2 1 2    a
+## 3 1 3    b
 ## 4 1 4    a
 \end{verbatim}
 
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.8293561114 -0.0009341656  0.6097953352 -1.1513101048 -0.5777291280
-##  [6]  0.6890655240  0.1956261948  0.0993962242 -0.5495453956 -0.5926039986
+##  [1] -0.70008857  1.39439462 -0.76334785  0.17784646 -0.41268628  0.07951725
+##  [7] -1.26141182  1.17055298 -1.63493419 -0.69419118
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.007287705 0.053890164 0.151787610 0.002782748 0.014389129 0.168939751
-##  [7] 0.078330287 0.065540573 0.015467265 0.013846313
+##  [1] 0.0104184431 0.3321005569 0.0087650400 0.0758452429 0.0217212099
+##  [6] 0.0630980431 0.0019550450 0.2828242178 0.0005392605 0.0105854846
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.2034515 0.4996273 0.7290013 0.1248023 0.2817235 0.7546090 0.5775486
-##  [8] 0.5395882 0.2913156 0.2767231
+##  [1] 0.24193600 0.91840076 0.22262799 0.57057822 0.33991824 0.53168940
+##  [7] 0.10358026 0.87911075 0.05103142 0.24378116
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##           a          b
-## 1 0.1149112 0.01320457
-## 2 0.8544025 0.73000357
+##          a          b
+## 1 0.122835 0.01508845
+## 2 0.279365 0.07804480
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -4178,6 +4178,7 @@ values of \(y\) (definitely not uncorrelated).
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
 \NormalTok{synth }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{res =}\NormalTok{ naive\_lm}\SpecialCharTok{$}\NormalTok{residuals) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# adds the residual column}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
@@ -4252,7 +4253,7 @@ where we can detect a slightly curved trend which resembles
 a curve \(y = \sqrt{x}\).
 
 Let's plot the data after the transformation and observe
-that it's trend better fit a straight line.
+that its trend better fit a straight line.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4271,7 +4272,7 @@ that it's trend better fit a straight line.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-144-1.pdf}
 
-We can fit a linear model. It's \texttt{summary} table
+We can fit a linear model. Its \texttt{summary} table
 will show a better \(R^2\) score.
 
 \begin{Shaded}
@@ -4381,8 +4382,16 @@ seems to improve the accuracy of the regression task.
 \subsection{ANOVA}\label{anova}}
 
 Another way of comparing two models, in particular one model with
-a smaller nested model, is the ANOVA test, which is an instance
-of the F-test.
+a smaller \emph{nested} model, is the ANOVA test, which is an instance
+of the F-test, with statistics
+
+\[
+F = \frac{\left(\frac{RSS_1 - RSS_2}{p_2 - p_1}\right)}{\left(\frac{RSS_2}{n - p_2}\right)}
+\]
+
+where \(RSS\) is the residual sum of squares and \(p_2 > p_1\) (model 1 is
+smaller). We know from theory that \(F \sim F(p_2 - p_1, n - p_2)\)
+
 A low p-value for the F statistic means that we can reject the hypothesis that
 the smaller model explains the data well enough.
 
@@ -4408,6 +4417,11 @@ additional predictor.
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{verbatim}
+
+\begin{quote}
+\emph{Exercise}: compute both the F-statistics and the associated p-value
+``\emph{by hand}'' and verify your solution with the anova summary table.
+\end{quote}
 
 \hypertarget{qualitative-predictors}{%
 \section{Qualitative predictors}\label{qualitative-predictors}}

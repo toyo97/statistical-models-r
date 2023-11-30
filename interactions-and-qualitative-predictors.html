@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-11-24" />
+<meta name="date" content="2023-11-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -381,10 +381,11 @@ extra effort</p>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
 <p>but if we plot the residuals, we can detect some issues for low
 values of <span class="math inline">\(y\)</span> (definitely not uncorrelated).</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="interactions-and-qualitative-predictors.html#cb314-1" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
-<span id="cb314-2"><a href="interactions-and-qualitative-predictors.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> naive_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
-<span id="cb314-3"><a href="interactions-and-qualitative-predictors.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb314-4"><a href="interactions-and-qualitative-predictors.html#cb314-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="interactions-and-qualitative-predictors.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb314-2"><a href="interactions-and-qualitative-predictors.html#cb314-2" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
+<span id="cb314-3"><a href="interactions-and-qualitative-predictors.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> naive_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
+<span id="cb314-4"><a href="interactions-and-qualitative-predictors.html#cb314-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb314-5"><a href="interactions-and-qualitative-predictors.html#cb314-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
 <p>By understanding how <span class="math inline">\(x\)</span> is distributed, we can fix this issue
 and fit the model on a transformation of itself, clearly <span class="math inline">\(\log(x)\)</span>.
@@ -424,7 +425,7 @@ at the scatter plot shown previously (TV against Sales),
 where we can detect a slightly curved trend which resembles
 a curve <span class="math inline">\(y = \sqrt{x}\)</span>.</p>
 <p>Let’s plot the data after the transformation and observe
-that it’s trend better fit a straight line.</p>
+that its trend better fit a straight line.</p>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="interactions-and-qualitative-predictors.html#cb320-1" aria-hidden="true" tabindex="-1"></a>advertising <span class="sc">%&gt;%</span></span>
 <span id="cb320-2"><a href="interactions-and-qualitative-predictors.html#cb320-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Sales, TV) <span class="sc">%&gt;%</span></span>
 <span id="cb320-3"><a href="interactions-and-qualitative-predictors.html#cb320-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sqrtTV =</span> <span class="fu">sqrt</span>(TV)) <span class="sc">%&gt;%</span></span>
@@ -433,7 +434,7 @@ that it’s trend better fit a straight line.</p>
 <span id="cb320-6"><a href="interactions-and-qualitative-predictors.html#cb320-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
-<p>We can fit a linear model. It’s <code>summary</code> table
+<p>We can fit a linear model. Its <code>summary</code> table
 will show a better <span class="math inline">\(R^2\)</span> score.</p>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="interactions-and-qualitative-predictors.html#cb322-1" aria-hidden="true" tabindex="-1"></a>trans_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV), <span class="at">data =</span> advertising)</span></code></pre></div>
 <blockquote>
@@ -499,9 +500,14 @@ seems to improve the accuracy of the regression task.</p>
 <div id="anova" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> ANOVA<a href="interactions-and-qualitative-predictors.html#anova" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another way of comparing two models, in particular one model with
-a smaller nested model, is the ANOVA test, which is an instance
-of the F-test.
-A low p-value for the F statistic means that we can reject the hypothesis that
+a smaller <em>nested</em> model, is the ANOVA test, which is an instance
+of the F-test, with statistics</p>
+<p><span class="math display">\[
+F = \frac{\left(\frac{RSS_1 - RSS_2}{p_2 - p_1}\right)}{\left(\frac{RSS_2}{n - p_2}\right)}
+\]</span></p>
+<p>where <span class="math inline">\(RSS\)</span> is the residual sum of squares and <span class="math inline">\(p_2 &gt; p_1\)</span> (model 1 is
+smaller). We know from theory that <span class="math inline">\(F \sim F(p_2 - p_1, n - p_2)\)</span></p>
+<p>A low p-value for the F statistic means that we can reject the hypothesis that
 the smaller model explains the data well enough.</p>
 <p>Here we compare the model with a single predictor (squared root of TV), which
 is the <em>smaller</em> model, with a model with also the Radio data as
@@ -517,6 +523,10 @@ additional predictor.</p>
 ## 2    197 410.88  1    579.92 278.04 &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<blockquote>
+<p><em>Exercise</em>: compute both the F-statistics and the associated p-value
+“<em>by hand</em>” and verify your solution with the anova summary table.</p>
+</blockquote>
 </div>
 </div>
 <div id="qualitative-predictors" class="section level2 hasAnchor" number="6.3">
