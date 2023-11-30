@@ -1,3 +1,11 @@
+---
+# title: Interactions and factors in lm
+# latest-revision: November 30th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
+---
+
 # Interactions and qualitative predictors
 
 ## Transformations
@@ -41,6 +49,7 @@ but if we plot the residuals, we can detect some issues for low
 values of $y$ (definitely not uncorrelated).
 
 ```{r}
+library(dplyr)
 synth %>%
   mutate(res = naive_lm$residuals) %>% # adds the residual column
   ggplot() +
@@ -87,7 +96,7 @@ where we can detect a slightly curved trend which resembles
 a curve $y = \sqrt{x}$.
 
 Let's plot the data after the transformation and observe
-that it's trend better fit a straight line.
+that its trend better fit a straight line.
 
 ```{r}
 advertising %>%
@@ -98,7 +107,7 @@ advertising %>%
   geom_smooth(method = "lm", color = "red")
 ```
 
-We can fit a linear model. It's `summary` table
+We can fit a linear model. Its `summary` table
 will show a better $R^2$ score.
 
 ```{r}
@@ -144,8 +153,16 @@ summary(trans_lm)$r.squared
 ### ANOVA
 
 Another way of comparing two models, in particular one model with
-a smaller nested model, is the ANOVA test, which is an instance
-of the F-test.
+a smaller *nested* model, is the ANOVA test, which is an instance
+of the F-test, with statistics
+
+$$
+F = \frac{\left(\frac{RSS_1 - RSS_2}{p_2 - p_1}\right)}{\left(\frac{RSS_2}{n - p_2}\right)}
+$$
+
+where $RSS$ is the residual sum of squares and $p_2 > p_1$ (model 1 is
+smaller). We know from theory that $F \sim F(p_2 - p_1, n - p_2)$ 
+
 A low p-value for the F statistic means that we can reject the hypothesis that
 the smaller model explains the data well enough.
 
@@ -157,6 +174,9 @@ additional predictor.
 double_lm <- lm(Sales ~ sqrt(TV) + Radio, data = advertising)
 anova(trans_lm, double_lm)
 ```
+
+> *Exercise*: compute both the F-statistics and the associated p-value
+"*by hand*" and verify your solution with the anova summary table.
 
 ## Qualitative predictors
 
