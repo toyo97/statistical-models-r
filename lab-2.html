@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Lab 2 | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Lab 2 | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-11-30" />
+<meta name="date" content="2023-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -397,6 +397,10 @@ separately for before and after insulation. You may (or may not)
 use the following code as template, which is enough to fulfill the
 task after replacing the ellipsis with the proper function arguments:</li>
 </ul>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="lab-2.html#cb606-1" aria-hidden="true" tabindex="-1"></a>insulate <span class="sc">%&gt;%</span> <span class="co"># dataset</span></span>
+<span id="cb606-2"><a href="lab-2.html#cb606-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(...) <span class="sc">+</span> <span class="co"># main ggplot call</span></span>
+<span id="cb606-3"><a href="lab-2.html#cb606-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(...) <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb606-4"><a href="lab-2.html#cb606-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(...) <span class="co"># trend line</span></span></code></pre></div>
 <blockquote>
 <p>Hint: remember that, in order to differentiate between
 classes (i.e. <em>before</em> and <em>after</em>) in the same plot,

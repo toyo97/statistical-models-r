@@ -120,7 +120,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2023-11-30}
+\date{2023-12-07}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -8.324975  -6.582022   1.917476   0.656142  -4.043127  10.942614
-##  [7]  -1.226969  -3.721967  15.272685 -13.227319
+##  [1]  -6.22788464 -10.64475033  18.37108498  -0.05931575 -18.67200712
+##  [6]  16.11800548   9.72962477  -6.24523569   5.76874558 -12.26084175
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,16 +1068,16 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    a
-## 2  1  2    a
+## 1  1  1    b
+## 2  1  2    b
 ## 3  1  3    b
-## 4  1  4    a
+## 4  1  4    b
 ## 5  1  5    a
 ## 6  1  6    a
 ## 7  1  7    a
 ## 8  1  8    b
 ## 9  1  9    b
-## 10 1 10    a
+## 10 1 10    b
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "b" "a" "a" "a" "a" "b" "b" "a"
+##  [1] "b" "b" "b" "b" "a" "a" "a" "b" "b" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,9 +1118,9 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    a
+## 2 1 2    b
 ## 3 1 3    b
-## 4 1 4    a
+## 4 1 4    b
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.70008857  1.39439462 -0.76334785  0.17784646 -0.41268628  0.07951725
-##  [7] -1.26141182  1.17055298 -1.63493419 -0.69419118
+##  [1] -0.3653222  2.4565940 -0.1171181  1.7523853 -0.7115107 -0.7390541
+##  [7]  0.3566403  0.3768086 -0.4330053 -0.0531538
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.0104184431 0.3321005569 0.0087650400 0.0758452429 0.0217212099
-##  [6] 0.0630980431 0.0019550450 0.2828242178 0.0005392605 0.0105854846
+##  [1] 0.02432348 0.35945094 0.04242433 0.38689766 0.01010137 0.00937089
+##  [7] 0.10338927 0.10685167 0.02067777 0.04847734
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.24193600 0.91840076 0.22262799 0.57057822 0.33991824 0.53168940
-##  [7] 0.10358026 0.87911075 0.05103142 0.24378116
+##  [1] 0.3574355 0.9929869 0.4533832 0.9601462 0.2383839 0.2299371 0.6393194
+##  [8] 0.6468421 0.3325055 0.4788047
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##          a          b
-## 1 0.122835 0.01508845
-## 2 0.279365 0.07804480
+##             a           b
+## 1  0.06288199 0.003954145
+## 2 -0.16305887 0.026588194
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -8174,6 +8174,15 @@ interaction.
   use the following code as template, which is enough to fulfill the
   task after replacing the ellipsis with the proper function arguments:
 \end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{insulate }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# dataset}
+  \FunctionTok{ggplot}\NormalTok{(...) }\SpecialCharTok{+} \CommentTok{\# main ggplot call}
+  \FunctionTok{geom\_point}\NormalTok{(...) }\SpecialCharTok{+} \CommentTok{\# scatter plot}
+  \FunctionTok{geom\_smooth}\NormalTok{(...) }\CommentTok{\# trend line}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{quote}
 Hint: remember that, in order to differentiate between

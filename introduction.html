@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-11-30" />
+<meta name="date" content="2023-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -423,8 +423,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" aria-hidden="true" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument,</span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" aria-hidden="true" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1]  -7.775882  -8.608461   8.782523   7.214382  -6.525532   9.139340
-##  [7]  20.757642   8.961365  -6.254971 -11.296191</code></pre>
+<pre><code>##  [1]   6.4959647  -0.9713929   9.8953831 -12.1001979   0.2491433  10.5616383
+##  [7]   5.5890081 -16.5935903  16.8695068   6.2409421</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -778,24 +778,24 @@ most of the dataset will be stored in dataframes.</p>
 <span id="cb111-4"><a href="introduction.html#cb111-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="co"># x was set to just one value and gets repeated (&#39;recycled&#39;)</span></span></code></pre></div>
 <pre><code>##    x  y char
 ## 1  1  1    b
-## 2  1  2    b
+## 2  1  2    a
 ## 3  1  3    b
 ## 4  1  4    a
 ## 5  1  5    a
-## 6  1  6    b
-## 7  1  7    b
+## 6  1  6    a
+## 7  1  7    a
 ## 8  1  8    a
 ## 9  1  9    b
-## 10 1 10    a</code></pre>
+## 10 1 10    b</code></pre>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" aria-hidden="true" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot;</code></pre>
+<pre><code>##  [1] &quot;b&quot; &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
-## 2 1 2    b
+## 2 1 2    a
 ## 3 1 3    b
 ## 4 1 4    a</code></pre>
 <p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
@@ -1043,16 +1043,16 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introduction.html#cb145-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb145-2"><a href="introduction.html#cb145-2" aria-hidden="true" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb145-3"><a href="introduction.html#cb145-3" aria-hidden="true" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1] -2.0175339 -0.5092936  0.5112642  0.7550023  0.5273843  1.1144337
-##  [7]  0.7289970  0.8159208  1.7085541 -0.6592722</code></pre>
+<pre><code>##  [1]  0.80904532 -0.29618236  0.50642648 -0.55930654 -0.34979694 -0.21481612
+##  [7]  0.36401131  0.08540017 -1.63928319 -1.31625341</code></pre>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introduction.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the density function (over another Normal)</span></span>
 <span id="cb147-2"><a href="introduction.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.0001247464 0.0171250048 0.1317161903 0.1837924499 0.1348979118
-##  [6] 0.2695362446 0.1778770143 0.1979065573 0.3823538071 0.0116226113</code></pre>
+<pre><code>##  [1] 0.1962972756 0.0285766525 0.1307694451 0.0150863712 0.0252302563
+##  [6] 0.0343331555 0.1046464214 0.0638138651 0.0005307977 0.0016323953</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="introduction.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cumulative distribution function</span></span>
 <span id="cb149-2"><a href="introduction.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.02181991 0.30527324 0.69541695 0.77487620 0.70103664 0.86745340
-##  [7] 0.76699824 0.79272729 0.95623321 0.25486050</code></pre>
+<pre><code>##  [1] 0.79075546 0.38354541 0.69372135 0.28797627 0.36324555 0.41495534
+##  [7] 0.64207522 0.53402837 0.05057715 0.09404450</code></pre>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="introduction.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get the quantiles of a normal</span></span>
 <span id="cb151-2"><a href="introduction.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
@@ -1121,9 +1121,9 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <pre><code>## Error in eval(substitute(expr), e): argument is missing, with no default</code></pre>
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="introduction.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb164-2"><a href="introduction.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##            a          b
-## 1 -1.2409277 1.53990168
-## 2 -0.2831676 0.08018389</code></pre>
+<pre><code>##             a            b
+## 1 -0.01603212 0.0002570289
+## 2 -0.56011231 0.3137258017</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes
