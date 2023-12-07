@@ -158,6 +158,13 @@ interaction.
   use the following code as template, which is enough to fulfill the
   task after replacing the ellipsis with the proper function arguments:
 
+```{r, echo=hide_sol, eval=FALSE}
+insulate %>% # dataset
+  ggplot(...) + # main ggplot call
+  geom_point(...) + # scatter plot
+  geom_smooth(...) # trend line
+```
+
 > Hint: remember that, in order to differentiate between
 classes (i.e. _before_ and _after_) in the same plot,
 you can select the class to be interpreted as color encoding
