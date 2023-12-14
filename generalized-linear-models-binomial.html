@@ -410,9 +410,11 @@ analysis.</p>
 <span id="cb350-7"><a href="generalized-linear-models-binomial.html#cb350-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the result is a 3x2 dataframe with mean and sd</span></span>
 <span id="cb350-8"><a href="generalized-linear-models-binomial.html#cb350-8" aria-hidden="true" tabindex="-1"></a><span class="co"># of the two columns</span></span>
 <span id="cb350-9"><a href="generalized-linear-models-binomial.html#cb350-9" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(students, {</span>
-<span id="cb350-10"><a href="generalized-linear-models-binomial.html#cb350-10" aria-hidden="true" tabindex="-1"></a>       <span class="fu">do.call</span>(rbind, <span class="fu">tapply</span>(write, prog, </span>
-<span id="cb350-11"><a href="generalized-linear-models-binomial.html#cb350-11" aria-hidden="true" tabindex="-1"></a>                             <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">m =</span> <span class="fu">mean</span>(x), <span class="at">s =</span> <span class="fu">sd</span>(x))))</span>
-<span id="cb350-12"><a href="generalized-linear-models-binomial.html#cb350-12" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<span id="cb350-10"><a href="generalized-linear-models-binomial.html#cb350-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do.call</span>(rbind, <span class="fu">tapply</span>(</span>
+<span id="cb350-11"><a href="generalized-linear-models-binomial.html#cb350-11" aria-hidden="true" tabindex="-1"></a>    write, prog,</span>
+<span id="cb350-12"><a href="generalized-linear-models-binomial.html#cb350-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">m =</span> <span class="fu">mean</span>(x), <span class="at">s =</span> <span class="fu">sd</span>(x))</span>
+<span id="cb350-13"><a href="generalized-linear-models-binomial.html#cb350-13" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb350-14"><a href="generalized-linear-models-binomial.html#cb350-14" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <pre><code>##                 m        s
 ## vocation 46.76000 9.318754
 ## academic 56.25714 7.943343
@@ -449,8 +451,7 @@ some outliers if present.</p>
 <div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="generalized-linear-models-binomial.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># precise boundaries (numbers) are found with the `quantile()` function</span></span>
 <span id="cb360-2"><a href="generalized-linear-models-binomial.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(students, {</span>
 <span id="cb360-3"><a href="generalized-linear-models-binomial.html#cb360-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">quantile</span>(write[prog <span class="sc">==</span> <span class="st">&quot;vocation&quot;</span>], <span class="at">prob =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> .<span class="dv">25</span>))</span>
-<span id="cb360-4"><a href="generalized-linear-models-binomial.html#cb360-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb360-5"><a href="generalized-linear-models-binomial.html#cb360-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb360-4"><a href="generalized-linear-models-binomial.html#cb360-4" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <pre><code>##    0%   25%   50%   75%  100% 
 ## 31.00 40.25 46.00 53.50 67.00</code></pre>
 <div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="generalized-linear-models-binomial.html#cb362-1" aria-hidden="true" tabindex="-1"></a><span class="co"># boxplot in ggplot</span></span>
@@ -459,22 +460,20 @@ some outliers if present.</p>
 <span id="cb362-4"><a href="generalized-linear-models-binomial.html#cb362-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(prog, write)) <span class="sc">+</span></span>
 <span id="cb362-5"><a href="generalized-linear-models-binomial.html#cb362-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="generalized-linear-models-binomial.html#cb363-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_violin() # try also the &quot;violin plot&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="generalized-linear-models-binomial.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_violin() # try also the &quot;violin plot&quot;</span></span></code></pre></div>
 <p>We can also put all subjects together, but we need to
-switch to long format with <code>melt</code>.</p>
+switch to long format with <code>gather</code> (or <code>reshape2::melt</code>).</p>
 <div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="generalized-linear-models-binomial.html#cb364-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view of the grades distribution depending</span></span>
 <span id="cb364-2"><a href="generalized-linear-models-binomial.html#cb364-2" aria-hidden="true" tabindex="-1"></a><span class="co"># on subject and program</span></span>
 <span id="cb364-3"><a href="generalized-linear-models-binomial.html#cb364-3" aria-hidden="true" tabindex="-1"></a>students <span class="sc">%&gt;%</span></span>
-<span id="cb364-4"><a href="generalized-linear-models-binomial.html#cb364-4" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(<span class="at">measure.vars =</span> <span class="fu">c</span>(<span class="st">&quot;write&quot;</span>, <span class="st">&quot;science&quot;</span>, <span class="st">&quot;math&quot;</span>, <span class="st">&quot;read&quot;</span>),</span>
-<span id="cb364-5"><a href="generalized-linear-models-binomial.html#cb364-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">variable.name =</span> <span class="st">&quot;subject&quot;</span>,</span>
-<span id="cb364-6"><a href="generalized-linear-models-binomial.html#cb364-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">value.name =</span> <span class="st">&quot;grade&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb364-7"><a href="generalized-linear-models-binomial.html#cb364-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb364-8"><a href="generalized-linear-models-binomial.html#cb364-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(prog, grade, <span class="at">fill =</span> subject))</span></code></pre></div>
+<span id="cb364-4"><a href="generalized-linear-models-binomial.html#cb364-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;subject&quot;</span>, <span class="at">value =</span> <span class="st">&quot;grade&quot;</span>, write, science, math, read) <span class="sc">%&gt;%</span></span>
+<span id="cb364-5"><a href="generalized-linear-models-binomial.html#cb364-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb364-6"><a href="generalized-linear-models-binomial.html#cb364-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(prog, grade, <span class="at">fill =</span> subject))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
 <div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="generalized-linear-models-binomial.html#cb365-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or in different plots with</span></span>
 <span id="cb365-2"><a href="generalized-linear-models-binomial.html#cb365-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    ...</span></span>
 <span id="cb365-3"><a href="generalized-linear-models-binomial.html#cb365-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    geom_boxplot(aes(prog, grade)) +</span></span>
-<span id="cb365-4"><a href="generalized-linear-models-binomial.html#cb365-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    facet_wrap(~ subject) # instead of </span></span></code></pre></div>
+<span id="cb365-4"><a href="generalized-linear-models-binomial.html#cb365-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    facet_wrap(~ subject) # instead of</span></span></code></pre></div>
 </div>
 </div>
 <div id="test" class="section level2 hasAnchor" number="7.3">
@@ -483,11 +482,13 @@ switch to long format with <code>melt</code>.</p>
 traditional linear regression fit.</p>
 <div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="generalized-linear-models-binomial.html#cb366-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(students <span class="sc">%&gt;%</span> <span class="fu">filter</span>(prog <span class="sc">!=</span> <span class="st">&quot;vocation&quot;</span>), {</span>
 <span id="cb366-2"><a href="generalized-linear-models-binomial.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  tt_wp <span class="ot">&lt;-</span> <span class="fu">t.test</span>(write[prog <span class="sc">==</span> <span class="st">&quot;general&quot;</span>], <span class="co"># are the two prog distributed the same way?</span></span>
-<span id="cb366-3"><a href="generalized-linear-models-binomial.html#cb366-3" aria-hidden="true" tabindex="-1"></a>         write[prog <span class="sc">==</span> <span class="st">&quot;academic&quot;</span>], <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb366-4"><a href="generalized-linear-models-binomial.html#cb366-4" aria-hidden="true" tabindex="-1"></a>  lm_wp <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(write <span class="sc">~</span> prog)) <span class="co"># lm with qualitative predictor</span></span>
-<span id="cb366-5"><a href="generalized-linear-models-binomial.html#cb366-5" aria-hidden="true" tabindex="-1"></a>  anova_wp <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(write <span class="sc">~</span> prog)) <span class="co"># anova</span></span>
-<span id="cb366-6"><a href="generalized-linear-models-binomial.html#cb366-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(tt_wp, lm_wp, anova_wp)</span>
-<span id="cb366-7"><a href="generalized-linear-models-binomial.html#cb366-7" aria-hidden="true" tabindex="-1"></a> })</span></code></pre></div>
+<span id="cb366-3"><a href="generalized-linear-models-binomial.html#cb366-3" aria-hidden="true" tabindex="-1"></a>    write[prog <span class="sc">==</span> <span class="st">&quot;academic&quot;</span>],</span>
+<span id="cb366-4"><a href="generalized-linear-models-binomial.html#cb366-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">var.equal =</span> <span class="cn">TRUE</span></span>
+<span id="cb366-5"><a href="generalized-linear-models-binomial.html#cb366-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb366-6"><a href="generalized-linear-models-binomial.html#cb366-6" aria-hidden="true" tabindex="-1"></a>  lm_wp <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(write <span class="sc">~</span> prog)) <span class="co"># lm with qualitative predictor</span></span>
+<span id="cb366-7"><a href="generalized-linear-models-binomial.html#cb366-7" aria-hidden="true" tabindex="-1"></a>  anova_wp <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(write <span class="sc">~</span> prog)) <span class="co"># anova</span></span>
+<span id="cb366-8"><a href="generalized-linear-models-binomial.html#cb366-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(tt_wp, lm_wp, anova_wp)</span>
+<span id="cb366-9"><a href="generalized-linear-models-binomial.html#cb366-9" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 <pre><code>## [[1]]
 ## 
 ##  Two Sample t-test
@@ -545,13 +546,14 @@ and set the program as response variable, we have to make a new
 dataset in which we define a binary class instead of a three levels
 factor. Here we arbitrarily choose to create a variable which is
 1 for <code>vocation</code> and 0 for <code>general</code>.</p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="generalized-linear-models-binomial.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataframe </span></span>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="generalized-linear-models-binomial.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataframe</span></span>
 <span id="cb369-2"><a href="generalized-linear-models-binomial.html#cb369-2" aria-hidden="true" tabindex="-1"></a>students_vg <span class="ot">&lt;-</span> students <span class="sc">%&gt;%</span></span>
 <span id="cb369-3"><a href="generalized-linear-models-binomial.html#cb369-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prog <span class="sc">!=</span> <span class="st">&quot;academic&quot;</span>) <span class="sc">%&gt;%</span> <span class="co"># make distinction vocation-general only</span></span>
 <span id="cb369-4"><a href="generalized-linear-models-binomial.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vocation =</span> <span class="fu">ifelse</span>(prog <span class="sc">==</span> <span class="st">&quot;vocation&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="co"># transform class to binary</span></span>
 <span id="cb369-5"><a href="generalized-linear-models-binomial.html#cb369-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb369-6"><a href="generalized-linear-models-binomial.html#cb369-6" aria-hidden="true" tabindex="-1"></a>voc_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(vocation <span class="sc">~</span> ses <span class="sc">+</span> schtyp <span class="sc">+</span> read <span class="sc">+</span> write <span class="sc">+</span> math, <span class="co"># choose some predictors</span></span>
-<span id="cb369-7"><a href="generalized-linear-models-binomial.html#cb369-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> students_vg, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>) <span class="co"># fit glm with binomial link </span></span></code></pre></div>
+<span id="cb369-7"><a href="generalized-linear-models-binomial.html#cb369-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> students_vg, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb369-8"><a href="generalized-linear-models-binomial.html#cb369-8" aria-hidden="true" tabindex="-1"></a>) <span class="co"># fit glm with binomial link</span></span></code></pre></div>
 <div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="generalized-linear-models-binomial.html#cb370-1" aria-hidden="true" tabindex="-1"></a><span class="co"># new pipe operator (base R 4.2 or later) allows to send</span></span>
 <span id="cb370-2"><a href="generalized-linear-models-binomial.html#cb370-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pipe results to any function parameter (not just the first one)</span></span>
 <span id="cb370-3"><a href="generalized-linear-models-binomial.html#cb370-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and it&#39;s compatible with lm/glm calls (no need to create new datasets)</span></span>
@@ -559,8 +561,9 @@ factor. Here we arbitrarily choose to create a variable which is
 <span id="cb370-5"><a href="generalized-linear-models-binomial.html#cb370-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(prog <span class="sc">!=</span> <span class="st">&quot;academic&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb370-6"><a href="generalized-linear-models-binomial.html#cb370-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vocation =</span> <span class="fu">ifelse</span>(prog <span class="sc">==</span> <span class="st">&quot;vocation&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb370-7"><a href="generalized-linear-models-binomial.html#cb370-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(vocation <span class="sc">~</span> ses <span class="sc">+</span> schtyp <span class="sc">+</span> read <span class="sc">+</span> write <span class="sc">+</span> math,</span>
-<span id="cb370-8"><a href="generalized-linear-models-binomial.html#cb370-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> _, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb370-9"><a href="generalized-linear-models-binomial.html#cb370-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># `_` is placeholder for the piped dataframe</span></span></code></pre></div>
+<span id="cb370-8"><a href="generalized-linear-models-binomial.html#cb370-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> _, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb370-9"><a href="generalized-linear-models-binomial.html#cb370-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb370-10"><a href="generalized-linear-models-binomial.html#cb370-10" aria-hidden="true" tabindex="-1"></a><span class="co"># `_` is placeholder for the piped dataframe</span></span></code></pre></div>
 <div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="generalized-linear-models-binomial.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(voc_glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -606,8 +609,9 @@ of parameters equal to the number of observations)</li>
 <span id="cb373-3"><a href="generalized-linear-models-binomial.html#cb373-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">academic =</span> <span class="fu">ifelse</span>(prog <span class="sc">==</span> <span class="st">&quot;academic&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb373-4"><a href="generalized-linear-models-binomial.html#cb373-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb373-5"><a href="generalized-linear-models-binomial.html#cb373-5" aria-hidden="true" tabindex="-1"></a>academic_glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(academic <span class="sc">~</span> ses <span class="sc">+</span> schtyp <span class="sc">+</span> read <span class="sc">+</span> write <span class="sc">+</span> math, <span class="co"># same predictors</span></span>
-<span id="cb373-6"><a href="generalized-linear-models-binomial.html#cb373-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> students_ag, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb373-7"><a href="generalized-linear-models-binomial.html#cb373-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(academic_glm)</span></code></pre></div>
+<span id="cb373-6"><a href="generalized-linear-models-binomial.html#cb373-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> students_ag, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb373-7"><a href="generalized-linear-models-binomial.html#cb373-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb373-8"><a href="generalized-linear-models-binomial.html#cb373-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(academic_glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = academic ~ ses + schtyp + read + write + math, 
@@ -634,8 +638,10 @@ of parameters equal to the number of observations)</li>
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>Of course, we get different coefficient estimates with different models.
 We can compare them:</p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="generalized-linear-models-binomial.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="fu">summary</span>(voc_glm)<span class="sc">$</span>coefficients[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)],</span>
-<span id="cb375-2"><a href="generalized-linear-models-binomial.html#cb375-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summary</span>(academic_glm)<span class="sc">$</span>coefficients[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)])</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="generalized-linear-models-binomial.html#cb375-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(</span>
+<span id="cb375-2"><a href="generalized-linear-models-binomial.html#cb375-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(voc_glm)<span class="sc">$</span>coefficients[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)],</span>
+<span id="cb375-3"><a href="generalized-linear-models-binomial.html#cb375-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(academic_glm)<span class="sc">$</span>coefficients[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span>
+<span id="cb375-4"><a href="generalized-linear-models-binomial.html#cb375-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##                  Estimate   Pr(&gt;|z|)    Estimate     Pr(&gt;|z|)
 ## (Intercept)    3.78961265 0.01945937 -5.07476526 0.0005805405
 ## sesmiddle      1.04148131 0.05029279  0.23316035 0.6254706198
@@ -762,14 +768,18 @@ logits above, we can show that, for each class <span class="math inline">\(v, g,
 \pi_v = \frac{e^{X_{vg}\beta_{vg}}}{1 + e^{X_{vg}\beta_{vg}} + e^{X_{ag}\beta_{ag}}}\,.
 \]</span></p>
 <p>This formula is also called <em>softmax</em>, which converts numbers to probabilities (instead
-of just taking the max index, “hard”-max)</p>
+of just taking the max index, “hard”-max) and makes it possible to generalize
+from logistic regression to multiple category regression, sometimes
+called, indeed, <em>softmax regression</em>.</p>
 <p>Let’s do this in R</p>
 <div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="generalized-linear-models-binomial.html#cb389-1" aria-hidden="true" tabindex="-1"></a>exp_voc <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">predict</span>(voc_glm, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">newdata =</span> students))</span>
 <span id="cb389-2"><a href="generalized-linear-models-binomial.html#cb389-2" aria-hidden="true" tabindex="-1"></a>exp_academic <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">predict</span>(academic_glm, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">newdata =</span> students))</span></code></pre></div>
 <div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="generalized-linear-models-binomial.html#cb390-1" aria-hidden="true" tabindex="-1"></a>norm_const <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> exp_voc <span class="sc">+</span> exp_academic</span>
-<span id="cb390-2"><a href="generalized-linear-models-binomial.html#cb390-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">pred_gen =</span> <span class="dv">1</span>, <span class="at">pred_voc =</span> exp_voc, </span>
-<span id="cb390-3"><a href="generalized-linear-models-binomial.html#cb390-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">pred_acad =</span> exp_academic) <span class="sc">/</span> norm_const</span>
-<span id="cb390-4"><a href="generalized-linear-models-binomial.html#cb390-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pred)</span></code></pre></div>
+<span id="cb390-2"><a href="generalized-linear-models-binomial.html#cb390-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb390-3"><a href="generalized-linear-models-binomial.html#cb390-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pred_gen =</span> <span class="dv">1</span>, <span class="at">pred_voc =</span> exp_voc,</span>
+<span id="cb390-4"><a href="generalized-linear-models-binomial.html#cb390-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pred_acad =</span> exp_academic</span>
+<span id="cb390-5"><a href="generalized-linear-models-binomial.html#cb390-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">/</span> norm_const</span>
+<span id="cb390-6"><a href="generalized-linear-models-binomial.html#cb390-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pred)</span></code></pre></div>
 <pre><code>##    pred_gen  pred_voc  pred_acad
 ## 1 0.3588022 0.5168311 0.12436676
 ## 2 0.1560455 0.7973583 0.04659614
@@ -792,13 +802,11 @@ of just taking the max index, “hard”-max)</p>
 <p>These are some of the ways we can visualize the results.
 The plots interpretation is left as exercise.</p>
 <div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="generalized-linear-models-binomial.html#cb394-1" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(pred, students) <span class="sc">%&gt;%</span></span>
-<span id="cb394-2"><a href="generalized-linear-models-binomial.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(<span class="at">measure.vars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb394-3"><a href="generalized-linear-models-binomial.html#cb394-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">variable.name =</span> <span class="st">&quot;predProg&quot;</span>,</span>
-<span id="cb394-4"><a href="generalized-linear-models-binomial.html#cb394-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">value.name =</span> <span class="st">&quot;prediction&quot;</span>)</span>
-<span id="cb394-5"><a href="generalized-linear-models-binomial.html#cb394-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb394-6"><a href="generalized-linear-models-binomial.html#cb394-6" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
-<span id="cb394-7"><a href="generalized-linear-models-binomial.html#cb394-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb394-8"><a href="generalized-linear-models-binomial.html#cb394-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(write, prediction, <span class="at">color =</span> predProg))</span></code></pre></div>
+<span id="cb394-2"><a href="generalized-linear-models-binomial.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;predProg&quot;</span>, <span class="at">value =</span> <span class="st">&quot;prediction&quot;</span>, pred_gen<span class="sc">:</span>pred_acad)</span>
+<span id="cb394-3"><a href="generalized-linear-models-binomial.html#cb394-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb394-4"><a href="generalized-linear-models-binomial.html#cb394-4" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
+<span id="cb394-5"><a href="generalized-linear-models-binomial.html#cb394-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb394-6"><a href="generalized-linear-models-binomial.html#cb394-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(write, prediction, <span class="at">color =</span> predProg))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
 <div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="generalized-linear-models-binomial.html#cb395-1" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
 <span id="cb395-2"><a href="generalized-linear-models-binomial.html#cb395-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -807,7 +815,7 @@ The plots interpretation is left as exercise.</p>
 <div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="generalized-linear-models-binomial.html#cb396-1" aria-hidden="true" tabindex="-1"></a>pred_stud_long <span class="sc">%&gt;%</span></span>
 <span id="cb396-2"><a href="generalized-linear-models-binomial.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb396-3"><a href="generalized-linear-models-binomial.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(ses, prediction, <span class="at">color =</span> ses)) <span class="sc">+</span></span>
-<span id="cb396-4"><a href="generalized-linear-models-binomial.html#cb396-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> predProg)</span></code></pre></div>
+<span id="cb396-4"><a href="generalized-linear-models-binomial.html#cb396-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>predProg)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 </div>
 <div id="other-tests" class="section level2 hasAnchor" number="7.6">
@@ -818,11 +826,12 @@ arbitrary data.
 Feel free to further experiment the dataset.</p>
 <div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="generalized-linear-models-binomial.html#cb397-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to run this, make sure you have R 4.2 installed.</span></span>
 <span id="cb397-2"><a href="generalized-linear-models-binomial.html#cb397-2" aria-hidden="true" tabindex="-1"></a><span class="co"># otherwise use the alternative way shown in the section above</span></span>
-<span id="cb397-3"><a href="generalized-linear-models-binomial.html#cb397-3" aria-hidden="true" tabindex="-1"></a>general_glm <span class="ot">&lt;-</span> students <span class="sc">|&gt;</span> </span>
+<span id="cb397-3"><a href="generalized-linear-models-binomial.html#cb397-3" aria-hidden="true" tabindex="-1"></a>general_glm <span class="ot">&lt;-</span> students <span class="sc">|&gt;</span></span>
 <span id="cb397-4"><a href="generalized-linear-models-binomial.html#cb397-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">general =</span> <span class="fu">ifelse</span>(prog <span class="sc">==</span> <span class="st">&quot;general&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb397-5"><a href="generalized-linear-models-binomial.html#cb397-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(general <span class="sc">~</span> ses <span class="sc">+</span> schtyp <span class="sc">+</span> read <span class="sc">+</span> write <span class="sc">+</span> math,</span>
-<span id="cb397-6"><a href="generalized-linear-models-binomial.html#cb397-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> _, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb397-7"><a href="generalized-linear-models-binomial.html#cb397-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(general_glm)</span></code></pre></div>
+<span id="cb397-6"><a href="generalized-linear-models-binomial.html#cb397-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> _, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb397-7"><a href="generalized-linear-models-binomial.html#cb397-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb397-8"><a href="generalized-linear-models-binomial.html#cb397-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(general_glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = general ~ ses + schtyp + read + write + math, family = &quot;binomial&quot;, 
@@ -849,8 +858,9 @@ Feel free to further experiment the dataset.</p>
 <div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="generalized-linear-models-binomial.html#cb399-1" aria-hidden="true" tabindex="-1"></a>general_alt_glm <span class="ot">&lt;-</span> students <span class="sc">|&gt;</span> <span class="co"># notice no filter on prog != &quot;academic&quot;</span></span>
 <span id="cb399-2"><a href="generalized-linear-models-binomial.html#cb399-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">general =</span> <span class="fu">ifelse</span>(prog <span class="sc">==</span> <span class="st">&quot;vocation&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb399-3"><a href="generalized-linear-models-binomial.html#cb399-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(general <span class="sc">~</span> ses <span class="sc">+</span> read <span class="sc">+</span> write <span class="sc">+</span> math,</span>
-<span id="cb399-4"><a href="generalized-linear-models-binomial.html#cb399-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> _, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
-<span id="cb399-5"><a href="generalized-linear-models-binomial.html#cb399-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(general_alt_glm)</span></code></pre></div>
+<span id="cb399-4"><a href="generalized-linear-models-binomial.html#cb399-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> _, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span></span>
+<span id="cb399-5"><a href="generalized-linear-models-binomial.html#cb399-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb399-6"><a href="generalized-linear-models-binomial.html#cb399-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(general_alt_glm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = general ~ ses + read + write + math, family = &quot;binomial&quot;, 
@@ -875,24 +885,28 @@ Feel free to further experiment the dataset.</p>
 ## AIC: 191.08
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="generalized-linear-models-binomial.html#cb401-1" aria-hidden="true" tabindex="-1"></a>testdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ses =</span> <span class="fu">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;middle&quot;</span>,<span class="st">&quot;high&quot;</span>),</span>
-<span id="cb401-2"><a href="generalized-linear-models-binomial.html#cb401-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">write =</span> <span class="fu">mean</span>(students<span class="sc">$</span>write),</span>
-<span id="cb401-3"><a href="generalized-linear-models-binomial.html#cb401-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">math =</span> <span class="fu">mean</span>(students<span class="sc">$</span>math),</span>
-<span id="cb401-4"><a href="generalized-linear-models-binomial.html#cb401-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">read =</span> <span class="fu">mean</span>(students<span class="sc">$</span>read))</span>
-<span id="cb401-5"><a href="generalized-linear-models-binomial.html#cb401-5" aria-hidden="true" tabindex="-1"></a>testdata <span class="sc">%&gt;%</span></span>
-<span id="cb401-6"><a href="generalized-linear-models-binomial.html#cb401-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">predict</span>(general_alt_glm, <span class="at">newdata =</span> testdata, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="generalized-linear-models-binomial.html#cb401-1" aria-hidden="true" tabindex="-1"></a>testdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb401-2"><a href="generalized-linear-models-binomial.html#cb401-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ses =</span> <span class="fu">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;high&quot;</span>),</span>
+<span id="cb401-3"><a href="generalized-linear-models-binomial.html#cb401-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">write =</span> <span class="fu">mean</span>(students<span class="sc">$</span>write),</span>
+<span id="cb401-4"><a href="generalized-linear-models-binomial.html#cb401-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">math =</span> <span class="fu">mean</span>(students<span class="sc">$</span>math),</span>
+<span id="cb401-5"><a href="generalized-linear-models-binomial.html#cb401-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">read =</span> <span class="fu">mean</span>(students<span class="sc">$</span>read)</span>
+<span id="cb401-6"><a href="generalized-linear-models-binomial.html#cb401-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb401-7"><a href="generalized-linear-models-binomial.html#cb401-7" aria-hidden="true" tabindex="-1"></a>testdata <span class="sc">%&gt;%</span></span>
+<span id="cb401-8"><a href="generalized-linear-models-binomial.html#cb401-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">predict</span>(general_alt_glm, <span class="at">newdata =</span> testdata, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 5
 ##   ses    write  math  read  prob
 ##   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ## 1 low     52.8  52.6  52.2 0.132
 ## 2 middle  52.8  52.6  52.2 0.261
 ## 3 high    52.8  52.6  52.2 0.119</code></pre>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="generalized-linear-models-binomial.html#cb403-1" aria-hidden="true" tabindex="-1"></a>testdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">ses =</span> <span class="st">&quot;low&quot;</span>,</span>
-<span id="cb403-2"><a href="generalized-linear-models-binomial.html#cb403-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">write =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
-<span id="cb403-3"><a href="generalized-linear-models-binomial.html#cb403-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">math =</span> <span class="fu">mean</span>(students<span class="sc">$</span>math),</span>
-<span id="cb403-4"><a href="generalized-linear-models-binomial.html#cb403-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">read =</span> <span class="fu">mean</span>(students<span class="sc">$</span>read))</span>
-<span id="cb403-5"><a href="generalized-linear-models-binomial.html#cb403-5" aria-hidden="true" tabindex="-1"></a>testdata <span class="sc">%&gt;%</span></span>
-<span id="cb403-6"><a href="generalized-linear-models-binomial.html#cb403-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">predict</span>(general_alt_glm, <span class="at">newdata =</span> testdata, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="generalized-linear-models-binomial.html#cb403-1" aria-hidden="true" tabindex="-1"></a>testdata <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb403-2"><a href="generalized-linear-models-binomial.html#cb403-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ses =</span> <span class="st">&quot;low&quot;</span>,</span>
+<span id="cb403-3"><a href="generalized-linear-models-binomial.html#cb403-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">write =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>),</span>
+<span id="cb403-4"><a href="generalized-linear-models-binomial.html#cb403-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">math =</span> <span class="fu">mean</span>(students<span class="sc">$</span>math),</span>
+<span id="cb403-5"><a href="generalized-linear-models-binomial.html#cb403-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">read =</span> <span class="fu">mean</span>(students<span class="sc">$</span>read)</span>
+<span id="cb403-6"><a href="generalized-linear-models-binomial.html#cb403-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb403-7"><a href="generalized-linear-models-binomial.html#cb403-7" aria-hidden="true" tabindex="-1"></a>testdata <span class="sc">%&gt;%</span></span>
+<span id="cb403-8"><a href="generalized-linear-models-binomial.html#cb403-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">predict</span>(general_alt_glm, <span class="at">newdata =</span> testdata, <span class="at">type =</span> <span class="st">&quot;response&quot;</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 5
 ##   ses   write  math  read  prob
 ##   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;

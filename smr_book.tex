@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -4.755692  -3.388702   4.811185   5.496062   3.601349  -4.487207
-##  [7] -19.079385   5.616559  -5.558424  12.175557
+##  [1] -7.5717183 -7.3015395  9.3869518  6.0096107 22.0774265  0.1804988
+##  [7] 14.3077649 -1.2599691 11.9567968  5.5349774
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,16 +1068,16 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    b
+## 1  1  1    a
 ## 2  1  2    b
-## 3  1  3    a
-## 4  1  4    a
-## 5  1  5    b
-## 6  1  6    b
-## 7  1  7    b
+## 3  1  3    b
+## 4  1  4    b
+## 5  1  5    a
+## 6  1  6    a
+## 7  1  7    a
 ## 8  1  8    a
 ## 9  1  9    b
-## 10 1 10    a
+## 10 1 10    b
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "b" "b" "a" "a" "b" "b" "b" "a" "b" "a"
+##  [1] "a" "b" "b" "b" "a" "a" "a" "a" "b" "b"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1119,8 +1119,8 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    b
-## 3 1 3    a
-## 4 1 4    a
+## 3 1 3    b
+## 4 1 4    b
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.43468303  0.60815972  0.06491408 -0.43236040  2.45830556 -0.73782025
-##  [7] -1.48734749  0.50651996 -0.41020182 -0.57086762
+##  [1]  0.93383365 -0.01662323  0.66680081 -0.53667754  1.18869617  0.79261527
+##  [7] -0.19200987 -0.07235429 -0.37556948 -0.56683083
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.0205935109 0.1514426593 0.0613464923 0.0207102386 0.3591696185
-##  [6] 0.0094026061 0.0009121238 0.1307877035 0.0218517353 0.0146455506
+##  [1] 0.22598337 0.05221825 0.16403941 0.01598180 0.28706532 0.19246759
+##  [7] 0.03610254 0.04659488 0.02373977 0.01479821
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.33189626 0.72845923 0.52587880 0.33273975 0.99302028 0.23031184
-##  [7] 0.06846153 0.69375416 0.34082895 0.28404469
+##  [1] 0.8248051 0.4933686 0.7475503 0.2957452 0.8827204 0.7859990 0.4238672
+##  [8] 0.4711600 0.3536185 0.2854146
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a          b
-## 1 -0.2806148 0.07874465
-## 2  1.0144168 1.02904152
+##            a        b
+## 1  0.6417281 0.411815
+## 2 -1.6112338 2.596074
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -4678,8 +4678,10 @@ analysis.
 \CommentTok{\# the result is a 3x2 dataframe with mean and sd}
 \CommentTok{\# of the two columns}
 \FunctionTok{with}\NormalTok{(students, \{}
-       \FunctionTok{do.call}\NormalTok{(rbind, }\FunctionTok{tapply}\NormalTok{(write, prog, }
-                             \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{c}\NormalTok{(}\AttributeTok{m =} \FunctionTok{mean}\NormalTok{(x), }\AttributeTok{s =} \FunctionTok{sd}\NormalTok{(x))))}
+  \FunctionTok{do.call}\NormalTok{(rbind, }\FunctionTok{tapply}\NormalTok{(}
+\NormalTok{    write, prog,}
+    \ControlFlowTok{function}\NormalTok{(x) }\FunctionTok{c}\NormalTok{(}\AttributeTok{m =} \FunctionTok{mean}\NormalTok{(x), }\AttributeTok{s =} \FunctionTok{sd}\NormalTok{(x))}
+\NormalTok{  ))}
 \NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
@@ -4760,8 +4762,7 @@ some outliers if present.
 \CommentTok{\# precise boundaries (numbers) are found with the \textasciigrave{}quantile()\textasciigrave{} function}
 \FunctionTok{with}\NormalTok{(students, \{}
   \FunctionTok{quantile}\NormalTok{(write[prog }\SpecialCharTok{==} \StringTok{"vocation"}\NormalTok{], }\AttributeTok{prob =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{by =}\NormalTok{ .}\DecValTok{25}\NormalTok{))}
-\NormalTok{  \}}
-\NormalTok{)}
+\NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4784,23 +4785,21 @@ some outliers if present.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-  \CommentTok{\#geom\_violin() \# try also the "violin plot"}
+\CommentTok{\# geom\_violin() \# try also the "violin plot"}
 \end{Highlighting}
 \end{Shaded}
 
 We can also put all subjects together, but we need to
-switch to long format with \texttt{melt}.
+switch to long format with \texttt{gather} (or \texttt{reshape2::melt}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# view of the grades distribution depending}
 \CommentTok{\# on subject and program}
 \NormalTok{students }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(}\AttributeTok{measure.vars =} \FunctionTok{c}\NormalTok{(}\StringTok{"write"}\NormalTok{, }\StringTok{"science"}\NormalTok{, }\StringTok{"math"}\NormalTok{, }\StringTok{"read"}\NormalTok{),}
-       \AttributeTok{variable.name =} \StringTok{"subject"}\NormalTok{,}
-       \AttributeTok{value.name =} \StringTok{"grade"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"subject"}\NormalTok{, }\AttributeTok{value =} \StringTok{"grade"}\NormalTok{, write, science, math, read) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(prog, grade, }\AttributeTok{fill =}\NormalTok{ subject))}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(prog, grade, }\AttributeTok{fill =}\NormalTok{ subject))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4811,7 +4810,7 @@ switch to long format with \texttt{melt}.
 \CommentTok{\# or in different plots with}
 \CommentTok{\#    ...}
 \CommentTok{\#    geom\_boxplot(aes(prog, grade)) +}
-\CommentTok{\#    facet\_wrap(\textasciitilde{} subject) \# instead of }
+\CommentTok{\#    facet\_wrap(\textasciitilde{} subject) \# instead of}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4825,11 +4824,13 @@ traditional linear regression fit.
 \begin{Highlighting}[]
 \FunctionTok{with}\NormalTok{(students }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(prog }\SpecialCharTok{!=} \StringTok{"vocation"}\NormalTok{), \{}
 \NormalTok{  tt\_wp }\OtherTok{\textless{}{-}} \FunctionTok{t.test}\NormalTok{(write[prog }\SpecialCharTok{==} \StringTok{"general"}\NormalTok{], }\CommentTok{\# are the two prog distributed the same way?}
-\NormalTok{         write[prog }\SpecialCharTok{==} \StringTok{"academic"}\NormalTok{], }\AttributeTok{var.equal =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{    write[prog }\SpecialCharTok{==} \StringTok{"academic"}\NormalTok{],}
+    \AttributeTok{var.equal =} \ConstantTok{TRUE}
+\NormalTok{  )}
 \NormalTok{  lm\_wp }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(}\FunctionTok{lm}\NormalTok{(write }\SpecialCharTok{\textasciitilde{}}\NormalTok{ prog)) }\CommentTok{\# lm with qualitative predictor}
 \NormalTok{  anova\_wp }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(}\FunctionTok{aov}\NormalTok{(write }\SpecialCharTok{\textasciitilde{}}\NormalTok{ prog)) }\CommentTok{\# anova}
   \FunctionTok{list}\NormalTok{(tt\_wp, lm\_wp, anova\_wp)}
-\NormalTok{ \})}
+\NormalTok{\})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4904,13 +4905,14 @@ factor. Here we arbitrarily choose to create a variable which is
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# create a new dataframe }
+\CommentTok{\# create a new dataframe}
 \NormalTok{students\_vg }\OtherTok{\textless{}{-}}\NormalTok{ students }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(prog }\SpecialCharTok{!=} \StringTok{"academic"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# make distinction vocation{-}general only}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{vocation =} \FunctionTok{ifelse}\NormalTok{(prog }\SpecialCharTok{==} \StringTok{"vocation"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\CommentTok{\# transform class to binary}
 
 \NormalTok{voc\_glm }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(vocation }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ schtyp }\SpecialCharTok{+}\NormalTok{ read }\SpecialCharTok{+}\NormalTok{ write }\SpecialCharTok{+}\NormalTok{ math, }\CommentTok{\# choose some predictors}
-      \AttributeTok{data =}\NormalTok{ students\_vg, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{) }\CommentTok{\# fit glm with binomial link }
+  \AttributeTok{data =}\NormalTok{ students\_vg, }\AttributeTok{family =} \StringTok{"binomial"}
+\NormalTok{) }\CommentTok{\# fit glm with binomial link}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4923,8 +4925,9 @@ factor. Here we arbitrarily choose to create a variable which is
   \FunctionTok{filter}\NormalTok{(prog }\SpecialCharTok{!=} \StringTok{"academic"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{vocation =} \FunctionTok{ifelse}\NormalTok{(prog }\SpecialCharTok{==} \StringTok{"vocation"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{glm}\NormalTok{(vocation }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ schtyp }\SpecialCharTok{+}\NormalTok{ read }\SpecialCharTok{+}\NormalTok{ write }\SpecialCharTok{+}\NormalTok{ math,}
-      \AttributeTok{data =}\NormalTok{ \_, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
-  \CommentTok{\# \textasciigrave{}\_\textasciigrave{} is placeholder for the piped dataframe}
+    \AttributeTok{data =}\NormalTok{ \_, }\AttributeTok{family =} \StringTok{"binomial"}
+\NormalTok{  )}
+\CommentTok{\# \textasciigrave{}\_\textasciigrave{} is placeholder for the piped dataframe}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4993,7 +4996,8 @@ We can do the same thing with the pair \texttt{academic/general}.
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{academic =} \FunctionTok{ifelse}\NormalTok{(prog }\SpecialCharTok{==} \StringTok{"academic"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{))}
 
 \NormalTok{academic\_glm }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(academic }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ schtyp }\SpecialCharTok{+}\NormalTok{ read }\SpecialCharTok{+}\NormalTok{ write }\SpecialCharTok{+}\NormalTok{ math, }\CommentTok{\# same predictors}
-      \AttributeTok{data =}\NormalTok{ students\_ag, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+  \AttributeTok{data =}\NormalTok{ students\_ag, }\AttributeTok{family =} \StringTok{"binomial"}
+\NormalTok{)}
 \FunctionTok{summary}\NormalTok{(academic\_glm)}
 \end{Highlighting}
 \end{Shaded}
@@ -5030,8 +5034,10 @@ We can compare them:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{cbind}\NormalTok{(}\FunctionTok{summary}\NormalTok{(voc\_glm)}\SpecialCharTok{$}\NormalTok{coefficients[, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)],}
-      \FunctionTok{summary}\NormalTok{(academic\_glm)}\SpecialCharTok{$}\NormalTok{coefficients[, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)])}
+\FunctionTok{cbind}\NormalTok{(}
+  \FunctionTok{summary}\NormalTok{(voc\_glm)}\SpecialCharTok{$}\NormalTok{coefficients[, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)],}
+  \FunctionTok{summary}\NormalTok{(academic\_glm)}\SpecialCharTok{$}\NormalTok{coefficients[, }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)]}
+\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5234,7 +5240,9 @@ logits above, we can show that, for each class \(v, g, a\):
 \]
 
 This formula is also called \emph{softmax}, which converts numbers to probabilities (instead
-of just taking the max index, ``hard''-max)
+of just taking the max index, ``hard''-max) and makes it possible to generalize
+from logistic regression to multiple category regression, sometimes
+called, indeed, \emph{softmax regression}.
 
 Let's do this in R
 
@@ -5248,8 +5256,10 @@ Let's do this in R
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{norm\_const }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{+}\NormalTok{ exp\_voc }\SpecialCharTok{+}\NormalTok{ exp\_academic}
-\NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{pred\_gen =} \DecValTok{1}\NormalTok{, }\AttributeTok{pred\_voc =}\NormalTok{ exp\_voc, }
-               \AttributeTok{pred\_acad =}\NormalTok{ exp\_academic) }\SpecialCharTok{/}\NormalTok{ norm\_const}
+\NormalTok{pred }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{pred\_gen =} \DecValTok{1}\NormalTok{, }\AttributeTok{pred\_voc =}\NormalTok{ exp\_voc,}
+  \AttributeTok{pred\_acad =}\NormalTok{ exp\_academic}
+\NormalTok{) }\SpecialCharTok{/}\NormalTok{ norm\_const}
 \FunctionTok{head}\NormalTok{(pred)}
 \end{Highlighting}
 \end{Shaded}
@@ -5290,9 +5300,7 @@ The plots interpretation is left as exercise.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pred\_stud\_long }\OtherTok{\textless{}{-}} \FunctionTok{bind\_cols}\NormalTok{(pred, students) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(}\AttributeTok{measure.vars =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}
-       \AttributeTok{variable.name =} \StringTok{"predProg"}\NormalTok{,}
-       \AttributeTok{value.name =} \StringTok{"prediction"}\NormalTok{)}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"predProg"}\NormalTok{, }\AttributeTok{value =} \StringTok{"prediction"}\NormalTok{, pred\_gen}\SpecialCharTok{:}\NormalTok{pred\_acad)}
 
 \NormalTok{pred\_stud\_long }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
@@ -5317,7 +5325,7 @@ The plots interpretation is left as exercise.
 \NormalTok{pred\_stud\_long }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(ses, prediction, }\AttributeTok{color =}\NormalTok{ ses)) }\SpecialCharTok{+}
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ predProg)}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{predProg)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5335,10 +5343,11 @@ Feel free to further experiment the dataset.
 \begin{Highlighting}[]
 \CommentTok{\# to run this, make sure you have R 4.2 installed.}
 \CommentTok{\# otherwise use the alternative way shown in the section above}
-\NormalTok{general\_glm }\OtherTok{\textless{}{-}}\NormalTok{ students }\SpecialCharTok{|\textgreater{}} 
+\NormalTok{general\_glm }\OtherTok{\textless{}{-}}\NormalTok{ students }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{general =} \FunctionTok{ifelse}\NormalTok{(prog }\SpecialCharTok{==} \StringTok{"general"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{glm}\NormalTok{(general }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ schtyp }\SpecialCharTok{+}\NormalTok{ read }\SpecialCharTok{+}\NormalTok{ write }\SpecialCharTok{+}\NormalTok{ math,}
-    \AttributeTok{data =}\NormalTok{ \_, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+    \AttributeTok{data =}\NormalTok{ \_, }\AttributeTok{family =} \StringTok{"binomial"}
+\NormalTok{  )}
 \FunctionTok{summary}\NormalTok{(general\_glm)}
 \end{Highlighting}
 \end{Shaded}
@@ -5374,7 +5383,8 @@ Feel free to further experiment the dataset.
 \NormalTok{general\_alt\_glm }\OtherTok{\textless{}{-}}\NormalTok{ students }\SpecialCharTok{|\textgreater{}} \CommentTok{\# notice no filter on prog != "academic"}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{general =} \FunctionTok{ifelse}\NormalTok{(prog }\SpecialCharTok{==} \StringTok{"vocation"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
   \FunctionTok{glm}\NormalTok{(general }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ses }\SpecialCharTok{+}\NormalTok{ read }\SpecialCharTok{+}\NormalTok{ write }\SpecialCharTok{+}\NormalTok{ math,}
-    \AttributeTok{data =}\NormalTok{ \_, }\AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+    \AttributeTok{data =}\NormalTok{ \_, }\AttributeTok{family =} \StringTok{"binomial"}
+\NormalTok{  )}
 \FunctionTok{summary}\NormalTok{(general\_alt\_glm)}
 \end{Highlighting}
 \end{Shaded}
@@ -5408,10 +5418,12 @@ Feel free to further experiment the dataset.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{testdata }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{ses =} \FunctionTok{c}\NormalTok{(}\StringTok{"low"}\NormalTok{,}\StringTok{"middle"}\NormalTok{,}\StringTok{"high"}\NormalTok{),}
-                   \AttributeTok{write =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{write),}
-                   \AttributeTok{math =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{math),}
-                   \AttributeTok{read =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{read))}
+\NormalTok{testdata }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{ses =} \FunctionTok{c}\NormalTok{(}\StringTok{"low"}\NormalTok{, }\StringTok{"middle"}\NormalTok{, }\StringTok{"high"}\NormalTok{),}
+  \AttributeTok{write =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{write),}
+  \AttributeTok{math =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{math),}
+  \AttributeTok{read =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{read)}
+\NormalTok{)}
 \NormalTok{testdata }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prob =} \FunctionTok{predict}\NormalTok{(general\_alt\_glm, }\AttributeTok{newdata =}\NormalTok{ testdata, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{))}
 \end{Highlighting}
@@ -5428,10 +5440,12 @@ Feel free to further experiment the dataset.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{testdata }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{ses =} \StringTok{"low"}\NormalTok{,}
-                   \AttributeTok{write =} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{50}\NormalTok{),}
-                   \AttributeTok{math =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{math),}
-                   \AttributeTok{read =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{read))}
+\NormalTok{testdata }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{ses =} \StringTok{"low"}\NormalTok{,}
+  \AttributeTok{write =} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{50}\NormalTok{),}
+  \AttributeTok{math =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{math),}
+  \AttributeTok{read =} \FunctionTok{mean}\NormalTok{(students}\SpecialCharTok{$}\NormalTok{read)}
+\NormalTok{)}
 \NormalTok{testdata }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{prob =} \FunctionTok{predict}\NormalTok{(general\_alt\_glm, }\AttributeTok{newdata =}\NormalTok{ testdata, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{))}
 \end{Highlighting}
