@@ -8,7 +8,7 @@
 
 ```{r setup, include=FALSE}
 library(knitr)
-hide_sol <- TRUE
+hide_sol <- FALSE
 if (hide_sol) {
   knitr::opts_chunk$set(
     echo = FALSE, warning = FALSE, results = FALSE,
