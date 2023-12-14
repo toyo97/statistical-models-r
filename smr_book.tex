@@ -120,7 +120,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2023-12-07}
+\date{2023-12-14}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -6.22788464 -10.64475033  18.37108498  -0.05931575 -18.67200712
-##  [6]  16.11800548   9.72962477  -6.24523569   5.76874558 -12.26084175
+##  [1]  -4.755692  -3.388702   4.811185   5.496062   3.601349  -4.487207
+##  [7] -19.079385   5.616559  -5.558424  12.175557
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1070,14 +1070,14 @@ most of the dataset will be stored in dataframes.
 ##    x  y char
 ## 1  1  1    b
 ## 2  1  2    b
-## 3  1  3    b
-## 4  1  4    b
-## 5  1  5    a
-## 6  1  6    a
-## 7  1  7    a
-## 8  1  8    b
+## 3  1  3    a
+## 4  1  4    a
+## 5  1  5    b
+## 6  1  6    b
+## 7  1  7    b
+## 8  1  8    a
 ## 9  1  9    b
-## 10 1 10    b
+## 10 1 10    a
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "b" "b" "b" "b" "a" "a" "a" "b" "b" "b"
+##  [1] "b" "b" "a" "a" "b" "b" "b" "a" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1119,8 +1119,8 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    b
-## 3 1 3    b
-## 4 1 4    b
+## 3 1 3    a
+## 4 1 4    a
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.3653222  2.4565940 -0.1171181  1.7523853 -0.7115107 -0.7390541
-##  [7]  0.3566403  0.3768086 -0.4330053 -0.0531538
+##  [1] -0.43468303  0.60815972  0.06491408 -0.43236040  2.45830556 -0.73782025
+##  [7] -1.48734749  0.50651996 -0.41020182 -0.57086762
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.02432348 0.35945094 0.04242433 0.38689766 0.01010137 0.00937089
-##  [7] 0.10338927 0.10685167 0.02067777 0.04847734
+##  [1] 0.0205935109 0.1514426593 0.0613464923 0.0207102386 0.3591696185
+##  [6] 0.0094026061 0.0009121238 0.1307877035 0.0218517353 0.0146455506
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.3574355 0.9929869 0.4533832 0.9601462 0.2383839 0.2299371 0.6393194
-##  [8] 0.6468421 0.3325055 0.4788047
+##  [1] 0.33189626 0.72845923 0.52587880 0.33273975 0.99302028 0.23031184
+##  [7] 0.06846153 0.69375416 0.34082895 0.28404469
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##             a           b
-## 1  0.06288199 0.003954145
-## 2 -0.16305887 0.026588194
+##            a          b
+## 1 -0.2806148 0.07874465
+## 2  1.0144168 1.02904152
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -8129,16 +8129,94 @@ summary, plots, etc.).
 You might answer these questions:
 
 \begin{itemize}
+\tightlist
 \item
   How many observations does the dataset provide?
+\end{itemize}
+
+Although it's not necessary in this case, we explicitly specify
+that the \texttt{when} variable needs to be parsed as factor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(readr)}
+\CommentTok{\# read the dataset}
+\NormalTok{insulate }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/insulate.csv"}\NormalTok{, }\AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
+  \AttributeTok{when =} \FunctionTok{col\_factor}\NormalTok{(),}
+  \AttributeTok{temp =} \FunctionTok{col\_double}\NormalTok{(),}
+  \AttributeTok{cons =} \FunctionTok{col\_double}\NormalTok{()}
+\NormalTok{))}
+\NormalTok{insulate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 56 x 3
+##    when    temp  cons
+##    <fct>  <dbl> <dbl>
+##  1 before  -0.8   7.2
+##  2 before  -0.7   6.9
+##  3 before   0.4   6.4
+##  4 before   2.5   6  
+##  5 before   2.9   5.8
+##  6 before   3.2   5.8
+##  7 before   3.6   5.6
+##  8 before   3.9   4.7
+##  9 before   4.2   5.8
+## 10 before   4.3   5.2
+## # i 46 more rows
+\end{verbatim}
+
+The dataset consists of 56 records.
+
+\begin{itemize}
+\tightlist
 \item
   What are the predictors? Are they qualitative or quantitative?
+\end{itemize}
+
+The predictors are \texttt{when,\ temp}.
+\texttt{when} is a qualitative predictor with two levels (\texttt{before,\ after})
+while \texttt{temp} is a continuous variable in the range \([-0.8, 10.2]\).
+
+\begin{itemize}
+\tightlist
 \item
   What is the relationship between the response variable and the two
   predictors taken individually?
 \item
   Draw some \emph{useful} plot and interpret what you see.
 \end{itemize}
+
+One of the most powerful plotting function is the \emph{pairs} plot.
+In \texttt{ggplot} it's straightforward:
+
+\begin{quote}
+Note: beware that when dealing with bigger datasets (more
+predictors), as the number of plots scales with the square
+of the number of columns.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot (pair plot)}
+\FunctionTok{library}\NormalTok{(GGally)}
+\FunctionTok{ggpairs}\NormalTok{(insulate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-272-1.pdf}
+
+From these plots we can see that, as we could imagine,
+the consumption goes down with higher temperatures
+and also there is a clear difference in the consumption
+mean before and after insulation.
 
 \hypertarget{fitting-a-linear-model-15-min}{%
 \section{Fitting a linear model (15 min)}\label{fitting-a-linear-model-15-min}}
@@ -8148,12 +8226,99 @@ one which only uses the temperature as predictor, and one
 with both predictors.
 
 \begin{itemize}
+\tightlist
 \item
   Which one is better? Why?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{simple\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ insulate)}
+\FunctionTok{summary}\NormalTok{(simple\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = cons ~ temp, data = insulate)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6324 -0.7119 -0.2047  0.8187  1.5327 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   5.4862     0.2357  23.275  < 2e-16 ***
+## temp         -0.2902     0.0422  -6.876 6.55e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.8606 on 54 degrees of freedom
+## Multiple R-squared:  0.4668, Adjusted R-squared:  0.457 
+## F-statistic: 47.28 on 1 and 54 DF,  p-value: 6.545e-09
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{additive\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ insulate)}
+\FunctionTok{summary}\NormalTok{(additive\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = cons ~ ., data = insulate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.74236 -0.22291  0.04338  0.24377  0.74314 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  6.55133    0.11809   55.48   <2e-16 ***
+## whenafter   -1.56520    0.09705  -16.13   <2e-16 ***
+## temp        -0.33670    0.01776  -18.95   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.3574 on 53 degrees of freedom
+## Multiple R-squared:  0.9097, Adjusted R-squared:  0.9063 
+## F-statistic: 267.1 on 2 and 53 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+The R-squared index is much higher in the complete model,
+suggesting that the \texttt{when} attribute retains valuable information.
+
+\begin{itemize}
+\tightlist
 \item
   Plot both regression lines (you can use any plotting
   tool that you prefer)
 \end{itemize}
+
+The additive model regression line actually consists of two (parallel)
+lines, one for each level of the qualitative predictor \texttt{when}.
+Using color encoding in ggplot, we can differentiate between the two.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ insulate, }\FunctionTok{aes}\NormalTok{(temp, cons, }\AttributeTok{color =}\NormalTok{ when)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{linetype =} \StringTok{"simple"}\NormalTok{, }\AttributeTok{intercept =}\NormalTok{ simple\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{], }\AttributeTok{slope =}\NormalTok{ simple\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{])) }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}
+    \AttributeTok{linetype =} \StringTok{"complete"}\NormalTok{, }\AttributeTok{color =} \FunctionTok{c}\NormalTok{(}\StringTok{"after"}\NormalTok{, }\StringTok{"before"}\NormalTok{),}
+    \AttributeTok{intercept =} \FunctionTok{c}\NormalTok{(}
+\NormalTok{      additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{],}
+\NormalTok{      additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}
+\NormalTok{    ),}
+    \AttributeTok{slope =}\NormalTok{ additive\_lm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}
+\NormalTok{  ))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-277-1.pdf}
 
 \hypertarget{interaction-10-min}{%
 \subsection{Interaction (10 min)}\label{interaction-10-min}}
@@ -8175,15 +8340,6 @@ interaction.
   task after replacing the ellipsis with the proper function arguments:
 \end{itemize}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{insulate }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# dataset}
-  \FunctionTok{ggplot}\NormalTok{(...) }\SpecialCharTok{+} \CommentTok{\# main ggplot call}
-  \FunctionTok{geom\_point}\NormalTok{(...) }\SpecialCharTok{+} \CommentTok{\# scatter plot}
-  \FunctionTok{geom\_smooth}\NormalTok{(...) }\CommentTok{\# trend line}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{quote}
 Hint: remember that, in order to differentiate between
 classes (i.e.~\emph{before} and \emph{after}) in the same plot,
@@ -8191,12 +8347,61 @@ you can select the class to be interpreted as color encoding
 for the points/line: \texttt{aes(...,\ color\ =\ when)}.
 \end{quote}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{insulate }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# dataset}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, cons, }\AttributeTok{color =}\NormalTok{ when)) }\SpecialCharTok{+} \CommentTok{\# main ggplot call}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} \CommentTok{\# scatter plot}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{) }\CommentTok{\# trend line}
+\end{Highlighting}
+\end{Shaded}
+
+The two lines are not parallel, which suggests that an additive model
+is not very accurate and we might try to include interaction.
+
 \begin{itemize}
+\tightlist
 \item
   Fit a linear model which includes interaction between \texttt{temp} and \texttt{when}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{interact\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ when }\SpecialCharTok{*}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ insulate)}
+\FunctionTok{summary}\NormalTok{(interact\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = cons ~ when * temp, data = insulate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.97802 -0.18011  0.03757  0.20930  0.63803 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     6.85383    0.13596  50.409  < 2e-16 ***
+## whenafter      -2.12998    0.18009 -11.827 2.32e-16 ***
+## temp           -0.39324    0.02249 -17.487  < 2e-16 ***
+## whenafter:temp  0.11530    0.03211   3.591 0.000731 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.323 on 52 degrees of freedom
+## Multiple R-squared:  0.9277, Adjusted R-squared:  0.9235 
+## F-statistic: 222.3 on 3 and 52 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
 \item
   How many additional parameters does the model have to estimate?
 \end{itemize}
+
+Just one additional parameter is required.
 
 \hypertarget{aic-and-model-selection-10-min}{%
 \section{AIC and model selection (10 min)}\label{aic-and-model-selection-10-min}}
@@ -8213,6 +8418,24 @@ model is a better choice.
   run an ANOVA test comparing the two models, analyze the result,
   draw a conclusion.
 \end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(additive\_lm, interact\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: cons ~ when + temp
+## Model 2: cons ~ when * temp
+##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
+## 1     53 6.7704                                  
+## 2     52 5.4252  1    1.3451 12.893 0.0007307 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
 
 Interaction with \texttt{*} also includes the singular
 variables, therefore the additive model is nested into interaction.
@@ -8236,6 +8459,22 @@ favoring small models over the bigger ones.
   Find the AIC index using the dedicated function \texttt{AIC()}.
   Which model is better according to the AIC? Why?
 \end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{AIC}\NormalTok{(additive\_lm, interact\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             df      AIC
+## additive_lm  4 48.60465
+## interact_lm  5 38.20098
+\end{verbatim}
+
+A lower index for the interaction model means that the
+additional parameter is worth the higher complexity
+in favor of better fit (likelihood).
 
 \hypertarget{prediction-intervals-35-min}{%
 \section{Prediction intervals (35 min)}\label{prediction-intervals-35-min}}
@@ -8316,14 +8555,151 @@ Hint: We've seen how to compute the \(\text{MSR}\) (or \(\text{RMS}\)) in the fi
 linear regression R lecture
 \end{quote}
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compute RMS}
+\NormalTok{e }\OtherTok{\textless{}{-}}\NormalTok{ interact\_lm}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(insulate)}
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(interact\_lm}\SpecialCharTok{$}\NormalTok{coefficients)}
+\NormalTok{rms }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(e) }\SpecialCharTok{\%*\%}\NormalTok{ e }\SpecialCharTok{/}\NormalTok{ (n }\SpecialCharTok{{-}}\NormalTok{ p)}
+
+\FunctionTok{library}\NormalTok{(tibble)}
+\CommentTok{\# x\_f with dummy variables:}
+\CommentTok{\# intercept whenafter   temp  whenafter:temp}
+\CommentTok{\# 1         0 (before)  5.8   0 (0 * 5.8)}
+\NormalTok{x\_f }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{5.8}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{yhat\_f }\OtherTok{\textless{}{-}}\NormalTok{ x\_f }\SpecialCharTok{\%*\%}\NormalTok{ interact\_lm}\SpecialCharTok{$}\NormalTok{coefficients}
+\CommentTok{\# note: there are several ways of getting yhat\_f}
+\CommentTok{\# another way is to use \textasciigrave{}predict\textasciigrave{} with x\_f not "dummyfied"}
+
+\CommentTok{\# get dummy x matrix}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(insulate, }\FunctionTok{model.matrix}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ when }\SpecialCharTok{*}\NormalTok{ temp))}
+
+\CommentTok{\# compute above formula}
+\NormalTok{alpha }\OtherTok{\textless{}{-}}\NormalTok{ .}\DecValTok{05} \CommentTok{\# level}
+\NormalTok{delta }\OtherTok{\textless{}{-}} \FunctionTok{qt}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ (alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{), }\AttributeTok{df =}\NormalTok{ n }\SpecialCharTok{{-}}\NormalTok{ p) }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(rms }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+} \FunctionTok{t}\NormalTok{(x\_f) }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(x) }\SpecialCharTok{\%*\%}\NormalTok{ x) }\SpecialCharTok{\%*\%}\NormalTok{ x\_f))}
+\NormalTok{lwr }\OtherTok{\textless{}{-}}\NormalTok{ yhat\_f }\SpecialCharTok{{-}}\NormalTok{ delta}
+\NormalTok{upr }\OtherTok{\textless{}{-}}\NormalTok{ yhat\_f }\SpecialCharTok{+}\NormalTok{ delta}
+\NormalTok{pred\_interval }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{fit =}\NormalTok{ yhat\_f, }\AttributeTok{lwr =}\NormalTok{ lwr, }\AttributeTok{upr =}\NormalTok{ upr)}
+\NormalTok{pred\_interval}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        fit      lwr      upr
+## 1 4.573043 3.912228 5.233857
+\end{verbatim}
+
 \begin{itemize}
+\tightlist
 \item
   Check your computations using \texttt{predict.lm(...,\ interval\ =\ "prediction")}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check that computations are correct}
+\NormalTok{x\_f0 }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{when =} \StringTok{"before"}\NormalTok{, }\AttributeTok{temp =} \FloatTok{5.8}\NormalTok{) }\CommentTok{\# plain newdata row}
+\FunctionTok{predict}\NormalTok{(interact\_lm, }\AttributeTok{newdata =}\NormalTok{ x\_f0, }\AttributeTok{interval =} \StringTok{"prediction"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        fit      lwr      upr
+## 1 4.573043 3.912228 5.233857
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
 \item
   Is the interval center the same as for the confidence intervals?
+\end{itemize}
+
+Yes, it's still \(\hat Y\).
+
+\begin{itemize}
+\tightlist
 \item
   Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?
 \end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(interact\_lm, }\AttributeTok{newdata =}\NormalTok{ x\_f0, }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        fit      lwr      upr
+## 1 4.573043 4.444317 4.701768
+\end{verbatim}
+
+It is wider because we are trying to predict where a new observation will
+be and that new observation has an additional standard deviation of the error
+term. Confidence intervals are based on only the fitted values and do not
+involve making a prediction. It represents the uncertainty in the ``fitted''
+value. Prediction intervals must account for both the uncertainty in
+estimating the population mean, plus the random variation of the individual
+values. So a prediction interval is always wider than a confidence
+interval.
+
+\hypertarget{plotting-intervals}{%
+\section{Plotting intervals}\label{plotting-intervals}}
+
+Plotting of the intervals was not required, but it might be useful to visualize them.
+For this purpose, we will just use the records of the \texttt{after} class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# build x grid}
+\NormalTok{after\_insulate }\OtherTok{\textless{}{-}}
+\NormalTok{  insulate }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{filter}\NormalTok{(when }\SpecialCharTok{==} \StringTok{"after"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{when)}
+
+\CommentTok{\# fit a simple model}
+\NormalTok{after\_simple\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(cons }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temp, }\AttributeTok{data =}\NormalTok{ after\_insulate)}
+
+\CommentTok{\# build a vector of new data spanning the whole temp support}
+\NormalTok{new\_x }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\AttributeTok{temp =} \FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(after\_insulate}\SpecialCharTok{$}\NormalTok{temp), }\FunctionTok{max}\NormalTok{(after\_insulate}\SpecialCharTok{$}\NormalTok{temp), }\AttributeTok{by =} \FloatTok{0.05}\NormalTok{))}
+
+\CommentTok{\# find confidence and prediction intervals for all of the range elements}
+\CommentTok{\# and change the column names to make them distinguishable}
+\NormalTok{new\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(after\_simple\_lm, }\AttributeTok{newdata =}\NormalTok{ new\_x, }\AttributeTok{interval =} \StringTok{"prediction"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_with}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(.x, }\StringTok{"pred"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{)) }\CommentTok{\#}
+\NormalTok{new\_conf }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(after\_simple\_lm, }\AttributeTok{newdata =}\NormalTok{ new\_x, }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_with}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(.x, }\StringTok{"conf"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{))}
+
+\CommentTok{\# join the two interval details}
+\NormalTok{new\_data }\OtherTok{\textless{}{-}} \FunctionTok{bind\_cols}\NormalTok{(new\_x, new\_pred, new\_conf)}
+
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, cons), }\AttributeTok{data =}\NormalTok{ after\_insulate) }\SpecialCharTok{+} \CommentTok{\# scatter plot}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, fit\_conf), }\AttributeTok{data =}\NormalTok{ new\_data) }\SpecialCharTok{+} \CommentTok{\# regression line}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, }\AttributeTok{ymin =}\NormalTok{ lwr\_pred, }\AttributeTok{ymax =}\NormalTok{ upr\_pred, }\AttributeTok{fill =} \StringTok{"prediction"}\NormalTok{),}
+    \AttributeTok{data =}\NormalTok{ new\_data, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{  ) }\SpecialCharTok{+} \CommentTok{\# pred intervals}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(temp, }\AttributeTok{ymin =}\NormalTok{ lwr\_conf, }\AttributeTok{ymax =}\NormalTok{ upr\_conf, }\AttributeTok{fill =} \StringTok{"confidence"}\NormalTok{),}
+    \AttributeTok{data =}\NormalTok{ new\_data, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{  ) }\CommentTok{\# conf intervals}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-292-1.pdf}
+
+\begin{quote}
+Notice how the intervals get wider when departing from the mean temperature \(\bar x\).
+\end{quote}
+
+\begin{verbatim}
+## tweaking contrast
+\end{verbatim}
+
+\begin{verbatim}
+## tweaking pscl
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 

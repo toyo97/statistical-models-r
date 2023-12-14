@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-12-07" />
+<meta name="date" content="2023-12-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -328,6 +328,7 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="12.3" data-path="lab-2.html"><a href="lab-2.html#aic-and-model-selection-10-min"><i class="fa fa-check"></i><b>12.3</b> AIC and model selection (10 min)</a></li>
 <li class="chapter" data-level="12.4" data-path="lab-2.html"><a href="lab-2.html#prediction-intervals-35-min"><i class="fa fa-check"></i><b>12.4</b> Prediction intervals (35 min)</a></li>
+<li class="chapter" data-level="12.5" data-path="lab-2.html"><a href="lab-2.html#plotting-intervals"><i class="fa fa-check"></i><b>12.5</b> Plotting intervals</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -366,12 +367,62 @@ then explore it using the tools seen in the lectures (e.g. dimension,
 summary, plots, etc.).</p>
 <p>You might answer these questions:</p>
 <ul>
-<li><p>How many observations does the dataset provide?</p></li>
-<li><p>What are the predictors? Are they qualitative or quantitative?</p></li>
-<li><p>What is the relationship between the response variable and the two
-predictors taken individually?</p></li>
-<li><p>Draw some <em>useful</em> plot and interpret what you see.</p></li>
+<li>How many observations does the dataset provide?</li>
 </ul>
+<p>Although it’s not necessary in this case, we explicitly specify
+that the <code>when</code> variable needs to be parsed as factor.</p>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="lab-2.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb606-2"><a href="lab-2.html#cb606-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb606-3"><a href="lab-2.html#cb606-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read the dataset</span></span>
+<span id="cb606-4"><a href="lab-2.html#cb606-4" aria-hidden="true" tabindex="-1"></a>insulate <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/insulate.csv&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb606-5"><a href="lab-2.html#cb606-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">when =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb606-6"><a href="lab-2.html#cb606-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">temp =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb606-7"><a href="lab-2.html#cb606-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">cons =</span> <span class="fu">col_double</span>()</span>
+<span id="cb606-8"><a href="lab-2.html#cb606-8" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb606-9"><a href="lab-2.html#cb606-9" aria-hidden="true" tabindex="-1"></a>insulate</span></code></pre></div>
+<pre><code>## # A tibble: 56 × 3
+##    when    temp  cons
+##    &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;
+##  1 before  -0.8   7.2
+##  2 before  -0.7   6.9
+##  3 before   0.4   6.4
+##  4 before   2.5   6  
+##  5 before   2.9   5.8
+##  6 before   3.2   5.8
+##  7 before   3.6   5.6
+##  8 before   3.9   4.7
+##  9 before   4.2   5.8
+## 10 before   4.3   5.2
+## # ℹ 46 more rows</code></pre>
+<p>The dataset consists of 56 records.</p>
+<ul>
+<li>What are the predictors? Are they qualitative or quantitative?</li>
+</ul>
+<p>The predictors are <code>when, temp</code>.
+<code>when</code> is a qualitative predictor with two levels (<code>before, after</code>)
+while <code>temp</code> is a continuous variable in the range <span class="math inline">\([-0.8, 10.2]\)</span>.</p>
+<ul>
+<li>What is the relationship between the response variable and the two
+predictors taken individually?</li>
+<li>Draw some <em>useful</em> plot and interpret what you see.</li>
+</ul>
+<p>One of the most powerful plotting function is the <em>pairs</em> plot.
+In <code>ggplot</code> it’s straightforward:</p>
+<blockquote>
+<p>Note: beware that when dealing with bigger datasets (more
+predictors), as the number of plots scales with the square
+of the number of columns.</p>
+</blockquote>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="lab-2.html#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot (pair plot)</span></span>
+<span id="cb608-2"><a href="lab-2.html#cb608-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb608-3"><a href="lab-2.html#cb608-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(insulate)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
+<p>From these plots we can see that, as we could imagine,
+the consumption goes down with higher temperatures
+and also there is a clear difference in the consumption
+mean before and after insulation.</p>
 </div>
 <div id="fitting-a-linear-model-15-min" class="section level2 hasAnchor" number="12.2">
 <h2><span class="header-section-number">12.2</span> Fitting a linear model (15 min)<a href="lab-2.html#fitting-a-linear-model-15-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -379,10 +430,70 @@ predictors taken individually?</p></li>
 one which only uses the temperature as predictor, and one
 with both predictors.</p>
 <ul>
-<li><p>Which one is better? Why?</p></li>
-<li><p>Plot both regression lines (you can use any plotting
-tool that you prefer)</p></li>
+<li>Which one is better? Why?</li>
 </ul>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="lab-2.html#cb610-1" aria-hidden="true" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> insulate)</span>
+<span id="cb610-2"><a href="lab-2.html#cb610-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = cons ~ temp, data = insulate)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6324 -0.7119 -0.2047  0.8187  1.5327 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   5.4862     0.2357  23.275  &lt; 2e-16 ***
+## temp         -0.2902     0.0422  -6.876 6.55e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8606 on 54 degrees of freedom
+## Multiple R-squared:  0.4668, Adjusted R-squared:  0.457 
+## F-statistic: 47.28 on 1 and 54 DF,  p-value: 6.545e-09</code></pre>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="lab-2.html#cb612-1" aria-hidden="true" tabindex="-1"></a>additive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> ., <span class="at">data =</span> insulate)</span>
+<span id="cb612-2"><a href="lab-2.html#cb612-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(additive_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = cons ~ ., data = insulate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.74236 -0.22291  0.04338  0.24377  0.74314 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  6.55133    0.11809   55.48   &lt;2e-16 ***
+## whenafter   -1.56520    0.09705  -16.13   &lt;2e-16 ***
+## temp        -0.33670    0.01776  -18.95   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.3574 on 53 degrees of freedom
+## Multiple R-squared:  0.9097, Adjusted R-squared:  0.9063 
+## F-statistic: 267.1 on 2 and 53 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The R-squared index is much higher in the complete model,
+suggesting that the <code>when</code> attribute retains valuable information.</p>
+<ul>
+<li>Plot both regression lines (you can use any plotting
+tool that you prefer)</li>
+</ul>
+<p>The additive model regression line actually consists of two (parallel)
+lines, one for each level of the qualitative predictor <code>when</code>.
+Using color encoding in ggplot, we can differentiate between the two.</p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="lab-2.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb614-2"><a href="lab-2.html#cb614-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> insulate, <span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span></span>
+<span id="cb614-3"><a href="lab-2.html#cb614-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">linetype =</span> <span class="st">&quot;simple&quot;</span>, <span class="at">intercept =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>], <span class="at">slope =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb614-4"><a href="lab-2.html#cb614-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb614-5"><a href="lab-2.html#cb614-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">&quot;complete&quot;</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;after&quot;</span>, <span class="st">&quot;before&quot;</span>),</span>
+<span id="cb614-6"><a href="lab-2.html#cb614-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">c</span>(</span>
+<span id="cb614-7"><a href="lab-2.html#cb614-7" aria-hidden="true" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>],</span>
+<span id="cb614-8"><a href="lab-2.html#cb614-8" aria-hidden="true" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb614-9"><a href="lab-2.html#cb614-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb614-10"><a href="lab-2.html#cb614-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">slope =</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span>
+<span id="cb614-11"><a href="lab-2.html#cb614-11" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
 <div id="interaction-10-min" class="section level3 hasAnchor" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> Interaction (10 min)<a href="lab-2.html#interaction-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this setting, we are mostly interested in whether we should
@@ -397,20 +508,47 @@ separately for before and after insulation. You may (or may not)
 use the following code as template, which is enough to fulfill the
 task after replacing the ellipsis with the proper function arguments:</li>
 </ul>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="lab-2.html#cb606-1" aria-hidden="true" tabindex="-1"></a>insulate <span class="sc">%&gt;%</span> <span class="co"># dataset</span></span>
-<span id="cb606-2"><a href="lab-2.html#cb606-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(...) <span class="sc">+</span> <span class="co"># main ggplot call</span></span>
-<span id="cb606-3"><a href="lab-2.html#cb606-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(...) <span class="sc">+</span> <span class="co"># scatter plot</span></span>
-<span id="cb606-4"><a href="lab-2.html#cb606-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(...) <span class="co"># trend line</span></span></code></pre></div>
 <blockquote>
 <p>Hint: remember that, in order to differentiate between
 classes (i.e. <em>before</em> and <em>after</em>) in the same plot,
 you can select the class to be interpreted as color encoding
 for the points/line: <code>aes(..., color = when)</code>.</p>
 </blockquote>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="lab-2.html#cb615-1" aria-hidden="true" tabindex="-1"></a>insulate <span class="sc">%&gt;%</span> <span class="co"># dataset</span></span>
+<span id="cb615-2"><a href="lab-2.html#cb615-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span> <span class="co"># main ggplot call</span></span>
+<span id="cb615-3"><a href="lab-2.html#cb615-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb615-4"><a href="lab-2.html#cb615-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="co"># trend line</span></span></code></pre></div>
+<p>The two lines are not parallel, which suggests that an additive model
+is not very accurate and we might try to include interaction.</p>
 <ul>
-<li><p>Fit a linear model which includes interaction between <code>temp</code> and <code>when</code>.</p></li>
-<li><p>How many additional parameters does the model have to estimate?</p></li>
+<li>Fit a linear model which includes interaction between <code>temp</code> and <code>when</code>.</li>
 </ul>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="lab-2.html#cb616-1" aria-hidden="true" tabindex="-1"></a>interact_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> when <span class="sc">*</span> temp, <span class="at">data =</span> insulate)</span>
+<span id="cb616-2"><a href="lab-2.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(interact_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = cons ~ when * temp, data = insulate)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.97802 -0.18011  0.03757  0.20930  0.63803 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     6.85383    0.13596  50.409  &lt; 2e-16 ***
+## whenafter      -2.12998    0.18009 -11.827 2.32e-16 ***
+## temp           -0.39324    0.02249 -17.487  &lt; 2e-16 ***
+## whenafter:temp  0.11530    0.03211   3.591 0.000731 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.323 on 52 degrees of freedom
+## Multiple R-squared:  0.9277, Adjusted R-squared:  0.9235 
+## F-statistic: 222.3 on 3 and 52 DF,  p-value: &lt; 2.2e-16</code></pre>
+<ul>
+<li>How many additional parameters does the model have to estimate?</li>
+</ul>
+<p>Just one additional parameter is required.</p>
 </div>
 </div>
 <div id="aic-and-model-selection-10-min" class="section level2 hasAnchor" number="12.3">
@@ -424,6 +562,16 @@ through the ANOVA test, checking the main prerequisite (nested models),
 run an ANOVA test comparing the two models, analyze the result,
 draw a conclusion.</li>
 </ul>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="lab-2.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(additive_lm, interact_lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: cons ~ when + temp
+## Model 2: cons ~ when * temp
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     53 6.7704                                  
+## 2     52 5.4252  1    1.3451 12.893 0.0007307 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Interaction with <code>*</code> also includes the singular
 variables, therefore the additive model is nested into interaction.</p>
 <p>Another criterion used for model selection is the <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike Information
@@ -440,6 +588,13 @@ favoring small models over the bigger ones.</p>
 <li>Find the AIC index using the dedicated function <code>AIC()</code>.
 Which model is better according to the AIC? Why?</li>
 </ul>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="lab-2.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(additive_lm, interact_lm)</span></code></pre></div>
+<pre><code>##             df      AIC
+## additive_lm  4 48.60465
+## interact_lm  5 38.20098</code></pre>
+<p>A lower index for the interaction model means that the
+additional parameter is worth the higher complexity
+in favor of better fit (likelihood).</p>
 </div>
 <div id="prediction-intervals-35-min" class="section level2 hasAnchor" number="12.4">
 <h2><span class="header-section-number">12.4</span> Prediction intervals (35 min)<a href="lab-2.html#prediction-intervals-35-min" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -496,12 +651,104 @@ four new future observations written above (from scratch).</li>
 <p>Hint: We’ve seen how to compute the <span class="math inline">\(\text{MSR}\)</span> (or <span class="math inline">\(\text{RMS}\)</span>) in the first
 linear regression R lecture</p>
 </blockquote>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="lab-2.html#cb623-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute RMS</span></span>
+<span id="cb623-2"><a href="lab-2.html#cb623-2" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> interact_lm<span class="sc">$</span>residuals</span>
+<span id="cb623-3"><a href="lab-2.html#cb623-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(insulate)</span>
+<span id="cb623-4"><a href="lab-2.html#cb623-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(interact_lm<span class="sc">$</span>coefficients)</span>
+<span id="cb623-5"><a href="lab-2.html#cb623-5" aria-hidden="true" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
+<span id="cb623-6"><a href="lab-2.html#cb623-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb623-7"><a href="lab-2.html#cb623-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb623-8"><a href="lab-2.html#cb623-8" aria-hidden="true" tabindex="-1"></a><span class="co"># x_f with dummy variables:</span></span>
+<span id="cb623-9"><a href="lab-2.html#cb623-9" aria-hidden="true" tabindex="-1"></a><span class="co"># intercept whenafter   temp  whenafter:temp</span></span>
+<span id="cb623-10"><a href="lab-2.html#cb623-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 1         0 (before)  5.8   0 (0 * 5.8)</span></span>
+<span id="cb623-11"><a href="lab-2.html#cb623-11" aria-hidden="true" tabindex="-1"></a>x_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">5.8</span>, <span class="dv">0</span>)</span>
+<span id="cb623-12"><a href="lab-2.html#cb623-12" aria-hidden="true" tabindex="-1"></a>yhat_f <span class="ot">&lt;-</span> x_f <span class="sc">%*%</span> interact_lm<span class="sc">$</span>coefficients</span>
+<span id="cb623-13"><a href="lab-2.html#cb623-13" aria-hidden="true" tabindex="-1"></a><span class="co"># note: there are several ways of getting yhat_f</span></span>
+<span id="cb623-14"><a href="lab-2.html#cb623-14" aria-hidden="true" tabindex="-1"></a><span class="co"># another way is to use `predict` with x_f not &quot;dummyfied&quot;</span></span>
+<span id="cb623-15"><a href="lab-2.html#cb623-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb623-16"><a href="lab-2.html#cb623-16" aria-hidden="true" tabindex="-1"></a><span class="co"># get dummy x matrix</span></span>
+<span id="cb623-17"><a href="lab-2.html#cb623-17" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">with</span>(insulate, <span class="fu">model.matrix</span>(<span class="sc">~</span> when <span class="sc">*</span> temp))</span>
+<span id="cb623-18"><a href="lab-2.html#cb623-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb623-19"><a href="lab-2.html#cb623-19" aria-hidden="true" tabindex="-1"></a><span class="co"># compute above formula</span></span>
+<span id="cb623-20"><a href="lab-2.html#cb623-20" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span> <span class="co"># level</span></span>
+<span id="cb623-21"><a href="lab-2.html#cb623-21" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> (alpha <span class="sc">/</span> <span class="dv">2</span>), <span class="at">df =</span> n <span class="sc">-</span> p) <span class="sc">*</span> <span class="fu">sqrt</span>(rms <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">t</span>(x_f) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x) <span class="sc">%*%</span> x_f))</span>
+<span id="cb623-22"><a href="lab-2.html#cb623-22" aria-hidden="true" tabindex="-1"></a>lwr <span class="ot">&lt;-</span> yhat_f <span class="sc">-</span> delta</span>
+<span id="cb623-23"><a href="lab-2.html#cb623-23" aria-hidden="true" tabindex="-1"></a>upr <span class="ot">&lt;-</span> yhat_f <span class="sc">+</span> delta</span>
+<span id="cb623-24"><a href="lab-2.html#cb623-24" aria-hidden="true" tabindex="-1"></a>pred_interval <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fit =</span> yhat_f, <span class="at">lwr =</span> lwr, <span class="at">upr =</span> upr)</span>
+<span id="cb623-25"><a href="lab-2.html#cb623-25" aria-hidden="true" tabindex="-1"></a>pred_interval</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 4.573043 3.912228 5.233857</code></pre>
 <ul>
-<li><p>Check your computations using <code>predict.lm(..., interval = "prediction")</code></p></li>
-<li><p>Is the interval center the same as for the confidence intervals?</p></li>
-<li><p>Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?</p></li>
+<li>Check your computations using <code>predict.lm(..., interval = "prediction")</code></li>
 </ul>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="lab-2.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check that computations are correct</span></span>
+<span id="cb625-2"><a href="lab-2.html#cb625-2" aria-hidden="true" tabindex="-1"></a>x_f0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">when =</span> <span class="st">&quot;before&quot;</span>, <span class="at">temp =</span> <span class="fl">5.8</span>) <span class="co"># plain newdata row</span></span>
+<span id="cb625-3"><a href="lab-2.html#cb625-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 4.573043 3.912228 5.233857</code></pre>
+<ul>
+<li>Is the interval center the same as for the confidence intervals?</li>
+</ul>
+<p>Yes, it’s still <span class="math inline">\(\hat Y\)</span>.</p>
+<ul>
+<li>Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?</li>
+</ul>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="lab-2.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 4.573043 4.444317 4.701768</code></pre>
+<p>It is wider because we are trying to predict where a new observation will
+be and that new observation has an additional standard deviation of the error
+term. Confidence intervals are based on only the fitted values and do not
+involve making a prediction. It represents the uncertainty in the “fitted”
+value. Prediction intervals must account for both the uncertainty in
+estimating the population mean, plus the random variation of the individual
+values. So a prediction interval is always wider than a confidence
+interval.</p>
+</div>
+<div id="plotting-intervals" class="section level2 hasAnchor" number="12.5">
+<h2><span class="header-section-number">12.5</span> Plotting intervals<a href="lab-2.html#plotting-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Plotting of the intervals was not required, but it might be useful to visualize them.
+For this purpose, we will just use the records of the <code>after</code> class.</p>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="lab-2.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="co"># build x grid</span></span>
+<span id="cb629-2"><a href="lab-2.html#cb629-2" aria-hidden="true" tabindex="-1"></a>after_insulate <span class="ot">&lt;-</span></span>
+<span id="cb629-3"><a href="lab-2.html#cb629-3" aria-hidden="true" tabindex="-1"></a>  insulate <span class="sc">%&gt;%</span></span>
+<span id="cb629-4"><a href="lab-2.html#cb629-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(when <span class="sc">==</span> <span class="st">&quot;after&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb629-5"><a href="lab-2.html#cb629-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>when)</span>
+<span id="cb629-6"><a href="lab-2.html#cb629-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-7"><a href="lab-2.html#cb629-7" aria-hidden="true" tabindex="-1"></a><span class="co"># fit a simple model</span></span>
+<span id="cb629-8"><a href="lab-2.html#cb629-8" aria-hidden="true" tabindex="-1"></a>after_simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> after_insulate)</span>
+<span id="cb629-9"><a href="lab-2.html#cb629-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-10"><a href="lab-2.html#cb629-10" aria-hidden="true" tabindex="-1"></a><span class="co"># build a vector of new data spanning the whole temp support</span></span>
+<span id="cb629-11"><a href="lab-2.html#cb629-11" aria-hidden="true" tabindex="-1"></a>new_x <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">temp =</span> <span class="fu">seq</span>(<span class="fu">min</span>(after_insulate<span class="sc">$</span>temp), <span class="fu">max</span>(after_insulate<span class="sc">$</span>temp), <span class="at">by =</span> <span class="fl">0.05</span>))</span>
+<span id="cb629-12"><a href="lab-2.html#cb629-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-13"><a href="lab-2.html#cb629-13" aria-hidden="true" tabindex="-1"></a><span class="co"># find confidence and prediction intervals for all of the range elements</span></span>
+<span id="cb629-14"><a href="lab-2.html#cb629-14" aria-hidden="true" tabindex="-1"></a><span class="co"># and change the column names to make them distinguishable</span></span>
+<span id="cb629-15"><a href="lab-2.html#cb629-15" aria-hidden="true" tabindex="-1"></a>new_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb629-16"><a href="lab-2.html#cb629-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb629-17"><a href="lab-2.html#cb629-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;pred&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)) <span class="co">#</span></span>
+<span id="cb629-18"><a href="lab-2.html#cb629-18" aria-hidden="true" tabindex="-1"></a>new_conf <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb629-19"><a href="lab-2.html#cb629-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb629-20"><a href="lab-2.html#cb629-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;conf&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb629-21"><a href="lab-2.html#cb629-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-22"><a href="lab-2.html#cb629-22" aria-hidden="true" tabindex="-1"></a><span class="co"># join the two interval details</span></span>
+<span id="cb629-23"><a href="lab-2.html#cb629-23" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(new_x, new_pred, new_conf)</span>
+<span id="cb629-24"><a href="lab-2.html#cb629-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb629-25"><a href="lab-2.html#cb629-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb629-26"><a href="lab-2.html#cb629-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(temp, cons), <span class="at">data =</span> after_insulate) <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb629-27"><a href="lab-2.html#cb629-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(temp, fit_conf), <span class="at">data =</span> new_data) <span class="sc">+</span> <span class="co"># regression line</span></span>
+<span id="cb629-28"><a href="lab-2.html#cb629-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_pred, <span class="at">ymax =</span> upr_pred, <span class="at">fill =</span> <span class="st">&quot;prediction&quot;</span>),</span>
+<span id="cb629-29"><a href="lab-2.html#cb629-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb629-30"><a href="lab-2.html#cb629-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># pred intervals</span></span>
+<span id="cb629-31"><a href="lab-2.html#cb629-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_conf, <span class="at">ymax =</span> upr_conf, <span class="at">fill =</span> <span class="st">&quot;confidence&quot;</span>),</span>
+<span id="cb629-32"><a href="lab-2.html#cb629-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb629-33"><a href="lab-2.html#cb629-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="co"># conf intervals</span></span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-292-1.png" width="672" /></p>
+<blockquote>
+<p>Notice how the intervals get wider when departing from the mean temperature <span class="math inline">\(\bar x\)</span>.</p>
+</blockquote>
 
+<pre><code>## tweaking contrast</code></pre>
+<pre><code>## tweaking pscl</code></pre>
 </div>
 </div>
             </section>
