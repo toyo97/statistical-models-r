@@ -1,3 +1,11 @@
+---
+# title: Binomial GLM
+# latest-revision: December 14th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
+---
+
 # Generalized Linear Models (Binomial)
 
 ## Students dataset
@@ -53,8 +61,10 @@ with(students, table(ses, prog))
 # the result is a 3x2 dataframe with mean and sd
 # of the two columns
 with(students, {
-       do.call(rbind, tapply(write, prog, 
-                             function(x) c(m = mean(x), s = sd(x))))
+  do.call(rbind, tapply(
+    write, prog,
+    function(x) c(m = mean(x), s = sd(x))
+  ))
 })
 ```
 
@@ -65,7 +75,6 @@ library(reshape2)
 students %>%
   group_by(prog) %>%
   summarise(mean = mean(write), sd = sd(write))
-
 ```
 
 ```{r}
@@ -89,8 +98,7 @@ boxplot(students$write ~ students$prog)
 # precise boundaries (numbers) are found with the `quantile()` function
 with(students, {
   quantile(write[prog == "vocation"], prob = seq(0, 1, by = .25))
-  }
-)
+})
 ```
 
 ```{r}
@@ -99,25 +107,23 @@ library(ggplot2)
 students %>%
   ggplot(aes(prog, write)) +
   geom_boxplot()
-  #geom_violin() # try also the "violin plot"
+# geom_violin() # try also the "violin plot"
 ```
 
 We can also put all subjects together, but we need to
-switch to long format with `melt`.
+switch to long format with `gather` (or `reshape2::melt`).
 
 ```{r}
 # view of the grades distribution depending
 # on subject and program
 students %>%
-  reshape2::melt(measure.vars = c("write", "science", "math", "read"),
-       variable.name = "subject",
-       value.name = "grade") %>%
+  gather(key = "subject", value = "grade", write, science, math, read) %>%
   ggplot() +
-    geom_boxplot(aes(prog, grade, fill = subject))
+  geom_boxplot(aes(prog, grade, fill = subject))
 # or in different plots with
 #    ...
 #    geom_boxplot(aes(prog, grade)) +
-#    facet_wrap(~ subject) # instead of 
+#    facet_wrap(~ subject) # instead of
 ```
 
 ## Test
@@ -128,11 +134,13 @@ traditional linear regression fit.
 ```{r}
 with(students %>% filter(prog != "vocation"), {
   tt_wp <- t.test(write[prog == "general"], # are the two prog distributed the same way?
-         write[prog == "academic"], var.equal = TRUE)
+    write[prog == "academic"],
+    var.equal = TRUE
+  )
   lm_wp <- summary(lm(write ~ prog)) # lm with qualitative predictor
   anova_wp <- summary(aov(write ~ prog)) # anova
   list(tt_wp, lm_wp, anova_wp)
- })
+})
 ```
 
 Notice how the T-test t-value is equal to the linear model coefficient estimate t-value.
@@ -156,13 +164,14 @@ factor. Here we arbitrarily choose to create a variable which is
 1 for `vocation` and 0 for `general`.
 
 ```{r}
-# create a new dataframe 
+# create a new dataframe
 students_vg <- students %>%
   filter(prog != "academic") %>% # make distinction vocation-general only
   mutate(vocation = ifelse(prog == "vocation", 1, 0)) # transform class to binary
 
 voc_glm <- glm(vocation ~ ses + schtyp + read + write + math, # choose some predictors
-      data = students_vg, family = "binomial") # fit glm with binomial link 
+  data = students_vg, family = "binomial"
+) # fit glm with binomial link
 ```
 
 ```{r, eval=FALSE}
@@ -173,8 +182,9 @@ voc_glm <- students |>
   filter(prog != "academic") |>
   mutate(vocation = ifelse(prog == "vocation", 1, 0)) |>
   glm(vocation ~ ses + schtyp + read + write + math,
-      data = _, family = "binomial")
-  # `_` is placeholder for the piped dataframe
+    data = _, family = "binomial"
+  )
+# `_` is placeholder for the piped dataframe
 ```
 
 ```{r}
@@ -201,7 +211,8 @@ students_ag <- students %>%
   mutate(academic = ifelse(prog == "academic", 1, 0))
 
 academic_glm <- glm(academic ~ ses + schtyp + read + write + math, # same predictors
-      data = students_ag, family = "binomial")
+  data = students_ag, family = "binomial"
+)
 summary(academic_glm)
 ```
 
@@ -209,8 +220,10 @@ Of course, we get different coefficient estimates with different models.
 We can compare them:
 
 ```{r}
-cbind(summary(voc_glm)$coefficients[, c(1, 4)],
-      summary(academic_glm)$coefficients[, c(1, 4)])
+cbind(
+  summary(voc_glm)$coefficients[, c(1, 4)],
+  summary(academic_glm)$coefficients[, c(1, 4)]
+)
 ```
 
 Let's use `step` to chose the minimal set of useful predictors:
@@ -294,7 +307,9 @@ $$
 $$
 
 This formula is also called _softmax_, which converts numbers to probabilities (instead
-of just taking the max index, "hard"-max)
+of just taking the max index, "hard"-max) and makes it possible to generalize
+from logistic regression to multiple category regression, sometimes
+called, indeed, _softmax regression_.
 
 Let's do this in R
 ```{r}
@@ -304,8 +319,10 @@ exp_academic <- exp(predict(academic_glm, type = "link", newdata = students))
 
 ```{r}
 norm_const <- 1 + exp_voc + exp_academic
-pred <- tibble(pred_gen = 1, pred_voc = exp_voc, 
-               pred_acad = exp_academic) / norm_const
+pred <- tibble(
+  pred_gen = 1, pred_voc = exp_voc,
+  pred_acad = exp_academic
+) / norm_const
 head(pred)
 ```
 
@@ -322,9 +339,7 @@ The plots interpretation is left as exercise.
 
 ```{r}
 pred_stud_long <- bind_cols(pred, students) %>%
-  reshape2::melt(measure.vars = 1:3,
-       variable.name = "predProg",
-       value.name = "prediction")
+  gather(key = "predProg", value = "prediction", pred_gen:pred_acad)
 
 pred_stud_long %>%
   ggplot() +
@@ -341,7 +356,7 @@ pred_stud_long %>%
 pred_stud_long %>%
   ggplot() +
   geom_boxplot(aes(ses, prediction, color = ses)) +
-  facet_wrap(~ predProg)
+  facet_wrap(~predProg)
 ```
 
 ## Other tests
@@ -354,10 +369,11 @@ Feel free to further experiment the dataset.
 ```{r}
 # to run this, make sure you have R 4.2 installed.
 # otherwise use the alternative way shown in the section above
-general_glm <- students |> 
+general_glm <- students |>
   mutate(general = ifelse(prog == "general", 1, 0)) |>
   glm(general ~ ses + schtyp + read + write + math,
-    data = _, family = "binomial")
+    data = _, family = "binomial"
+  )
 summary(general_glm)
 ```
 
@@ -365,24 +381,29 @@ summary(general_glm)
 general_alt_glm <- students |> # notice no filter on prog != "academic"
   mutate(general = ifelse(prog == "vocation", 1, 0)) |>
   glm(general ~ ses + read + write + math,
-    data = _, family = "binomial")
+    data = _, family = "binomial"
+  )
 summary(general_alt_glm)
 ```
 
 ```{r}
-testdata <- tibble(ses = c("low","middle","high"),
-                   write = mean(students$write),
-                   math = mean(students$math),
-                   read = mean(students$read))
+testdata <- tibble(
+  ses = c("low", "middle", "high"),
+  write = mean(students$write),
+  math = mean(students$math),
+  read = mean(students$read)
+)
 testdata %>%
   mutate(prob = predict(general_alt_glm, newdata = testdata, type = "response"))
 ```
 
 ```{r}
-testdata <- tibble(ses = "low",
-                   write = c(30, 40, 50),
-                   math = mean(students$math),
-                   read = mean(students$read))
+testdata <- tibble(
+  ses = "low",
+  write = c(30, 40, 50),
+  math = mean(students$math),
+  read = mean(students$read)
+)
 testdata %>%
   mutate(prob = predict(general_alt_glm, newdata = testdata, type = "response"))
 ```
