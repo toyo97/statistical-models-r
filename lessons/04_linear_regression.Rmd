@@ -6,11 +6,6 @@ time: 1.5h
 output: pdf_document
 ---
 
-```{r, echo=FALSE}
-library(knitr)
-opts_knit$set(root.dir = "../")
-```
-
 # The linear model
 
 For this lecture, we will use the *Advertising* dataset,
