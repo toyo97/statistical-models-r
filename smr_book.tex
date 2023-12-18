@@ -113,14 +113,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Statistical Models in R},
-  pdfauthor={Vittorio Zampinetti; Mauro Gasparini},
+  pdftitle={Linear regression},
+  pdfauthor={Vittorio Zampinetti},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Statistical Models in R}
-\author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2023-12-14}
+\title{Linear regression}
+\author{Vittorio Zampinetti}
+\date{2023-12-18}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -7.5717183 -7.3015395  9.3869518  6.0096107 22.0774265  0.1804988
-##  [7] 14.3077649 -1.2599691 11.9567968  5.5349774
+##  [1]  -1.039262 -12.391068  -2.763470  -9.025529  21.781003 -11.640787
+##  [7] -12.499150   5.604776  12.957538   4.484513
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,16 +1068,16 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    a
-## 2  1  2    b
+## 1  1  1    b
+## 2  1  2    a
 ## 3  1  3    b
-## 4  1  4    b
-## 5  1  5    a
-## 6  1  6    a
-## 7  1  7    a
+## 4  1  4    a
+## 5  1  5    b
+## 6  1  6    b
+## 7  1  7    b
 ## 8  1  8    a
 ## 9  1  9    b
-## 10 1 10    b
+## 10 1 10    a
 \end{verbatim}
 
 \begin{Shaded}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "b" "b" "b" "a" "a" "a" "a" "b" "b"
+##  [1] "b" "a" "b" "a" "b" "b" "b" "a" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,9 +1118,9 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    b
+## 2 1 2    a
 ## 3 1 3    b
-## 4 1 4    b
+## 4 1 4    a
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.93383365 -0.01662323  0.66680081 -0.53667754  1.18869617  0.79261527
-##  [7] -0.19200987 -0.07235429 -0.37556948 -0.56683083
+##  [1] -0.50933544  0.62766620 -0.03700027  0.35862773 -0.85449811 -0.50813346
+##  [7] -0.65318854  0.29781306  0.17975724 -1.27177664
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.22598337 0.05221825 0.16403941 0.01598180 0.28706532 0.19246759
-##  [7] 0.03610254 0.04659488 0.02373977 0.01479821
+##  [1] 0.017123205 0.155581034 0.050105546 0.103727293 0.006785154 0.017174917
+##  [7] 0.011811953 0.093699846 0.076109636 0.001889960
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.8248051 0.4933686 0.7475503 0.2957452 0.8827204 0.7859990 0.4238672
-##  [8] 0.4711600 0.3536185 0.2854146
+##  [1] 0.3052586 0.7348887 0.4852424 0.6400632 0.1964145 0.3056799 0.2568174
+##  [8] 0.6170771 0.5713284 0.1017262
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a        b
-## 1  0.6417281 0.411815
-## 2 -1.6112338 2.596074
+##            a         b
+## 1  0.3444448 0.1186422
+## 2 -1.5927244 2.5367711
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -3455,6 +3455,7 @@ and feed everything to ggplot.
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tibble)}
+\FunctionTok{library}\NormalTok{(tidyr)}
 
 \DocumentationTok{\#\# if using melt, need to switch to data.frame}
 \CommentTok{\# library(reshape2)}
