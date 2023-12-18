@@ -1,3 +1,11 @@
+---
+# title: Poisson GLM
+# latest-revision: December 18th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
+---
+
 # Generalized Linear Models (Poisson)
 
 ## Warpbreaks dataset

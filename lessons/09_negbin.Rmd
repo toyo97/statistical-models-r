@@ -1,3 +1,14 @@
+---
+# title: Negative binomial
+# latest-revision: December 18th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output:
+#   pdf_document:
+#     includes:
+#       in_header: "../latex/preamble.tex"
+---
+
 # Negative Binomial and Zero-Inflation
 
 ## Dataset

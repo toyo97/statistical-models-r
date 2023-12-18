@@ -1,3 +1,11 @@
+---
+# title: JAGS
+# latest-revision: December 18th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
+---
+
 # Three JAGS examples
 
 ## Rats - Simple linear regression

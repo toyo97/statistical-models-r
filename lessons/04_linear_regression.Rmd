@@ -1,10 +1,15 @@
 ---
-# title: Linear regression
-# latest-revision: November 14th, 2023
-# author: Vittorio Zampinetti
-# time: 1.5h
-# output: pdf_document
+title: Linear regression
+latest-revision: November 14th, 2023
+author: Vittorio Zampinetti
+time: 1.5h
+output: pdf_document
 ---
+
+```{r, echo=FALSE}
+library(knitr)
+opts_knit$set(root.dir = "../")
+```
 
 # The linear model
 
@@ -180,6 +185,7 @@ and feed everything to ggplot.
 
 ```{r}
 library(tibble)
+library(tidyr)
 
 ## if using melt, need to switch to data.frame
 # library(reshape2)
