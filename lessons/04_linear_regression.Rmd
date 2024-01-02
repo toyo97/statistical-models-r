@@ -1,9 +1,9 @@
 ---
-title: Linear regression
-latest-revision: November 14th, 2023
-author: Vittorio Zampinetti
-time: 1.5h
-output: pdf_document
+# title: Linear regression
+# latest-revision: November 14th, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
 ---
 
 # The linear model
