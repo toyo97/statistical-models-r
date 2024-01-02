@@ -1,6 +1,6 @@
 ---
 # title: Poisson GLM
-# latest-revision: December 18th, 2023
+# latest-revision: January 2nd, 2024
 # author: Vittorio Zampinetti
 # time: 1.5h
 # output: pdf_document
@@ -155,7 +155,7 @@ coeff %*% v # contrast (difference between coeffs)
 
 ```{r}
 # covariance matrix of the coefficients
-covmatJ <- solve(t(x) %*% diag(breaks_glm$weights) %*% x)
+covmat_j <- solve(t(x) %*% diag(breaks_glm$weights) %*% x)
 ```
 
 Weights are related to each combination of the (qualitative)
@@ -164,7 +164,7 @@ the same weight.
 
 ```{r}
 dif <- v %*% coeff
-se <- sqrt(v %*% covmatJ %*% v)
+se <- sqrt(v %*% covmat_j %*% v)
 se # standard error
 ```
 
@@ -186,8 +186,8 @@ We can provide multiple levels at once to contrasts:
 
 ```{r}
 cont_multi <- contrast(breaks_glm,
-  list(tension = "H", wool = levels(warpbreaks$wool)),
-  list(tension = "M", wool = levels(warpbreaks$wool)),
+  list(tension = c("H", "M"), wool = "A"),
+  list(tension = c("M", "L"), wool = "A"),
   type = "individual"
 )
 print(cont_multi, X = TRUE)
@@ -233,7 +233,7 @@ tibble(
   geom_line(aes(x, y)) +
   geom_vline(aes(xintercept = d1), color = "red")
 ```
-The plot tells us how far is the fitted model from being equal 
+The plot tells us how far the fitted model is from being equal 
 to the saturated one. It would be more useful though to
 observe the distance between the fitted and the null models.
 
@@ -264,13 +264,9 @@ We can plot the observations influences:
 summary(infmeas)
 s <- list(s = 1:nrow(warpbreaks))
 # we plot col 1, 2, 3 of influence measures
-library(reshape2)
+library(tidyr)
 bind_cols(infmeasmat, s, warpbreaks) %>%
-  reshape2::melt(
-    measure.vars = 1:4,
-    variable.name = "infl_name",
-    value.name = "measure"
-  ) %>%
+  gather(key = "infl_name", value = "measure", 1:4) %>%
   ggplot() +
   geom_point(aes(s, measure)) +
   facet_wrap(~infl_name)
