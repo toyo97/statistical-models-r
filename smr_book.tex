@@ -113,14 +113,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Linear regression},
-  pdfauthor={Vittorio Zampinetti},
+  pdftitle={Statistical Models in R},
+  pdfauthor={Vittorio Zampinetti; Mauro Gasparini},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{Linear regression}
-\author{Vittorio Zampinetti}
-\date{2023-12-18}
+\title{Statistical Models in R}
+\author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
+\date{2024-01-02}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -1.039262 -12.391068  -2.763470  -9.025529  21.781003 -11.640787
-##  [7] -12.499150   5.604776  12.957538   4.484513
+##  [1]  -2.979930  23.401253  -9.871427  -7.562816  -3.255204  -9.318085
+##  [7]   7.785459   5.768975 -12.562330 -17.651552
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1068,14 +1068,14 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##    x  y char
-## 1  1  1    b
+## 1  1  1    a
 ## 2  1  2    a
-## 3  1  3    b
+## 3  1  3    a
 ## 4  1  4    a
-## 5  1  5    b
+## 5  1  5    a
 ## 6  1  6    b
-## 7  1  7    b
-## 8  1  8    a
+## 7  1  7    a
+## 8  1  8    b
 ## 9  1  9    b
 ## 10 1 10    a
 \end{verbatim}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "b" "a" "b" "a" "b" "b" "b" "a" "b" "a"
+##  [1] "a" "a" "a" "a" "a" "b" "a" "b" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1119,7 +1119,7 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    a
-## 3 1 3    b
+## 3 1 3    a
 ## 4 1 4    a
 \end{verbatim}
 
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.50933544  0.62766620 -0.03700027  0.35862773 -0.85449811 -0.50813346
-##  [7] -0.65318854  0.29781306  0.17975724 -1.27177664
+##  [1]  1.6586906 -1.3839763  0.5758151 -0.4348446  0.2391484 -1.2651492
+##  [7]  0.5605571  1.2628151  0.7234555  0.4691459
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.017123205 0.155581034 0.050105546 0.103727293 0.006785154 0.017174917
-##  [7] 0.011811953 0.093699846 0.076109636 0.001889960
+##  [1] 0.376369244 0.001301047 0.144700412 0.020585413 0.084649360 0.001931346
+##  [7] 0.141573481 0.304020756 0.176625870 0.123601127
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.3052586 0.7348887 0.4852424 0.6400632 0.1964145 0.3056799 0.2568174
-##  [8] 0.6170771 0.5713284 0.1017262
+##  [1] 0.95141092 0.08318286 0.71762993 0.33183763 0.59450474 0.10290892
+##  [7] 0.71245026 0.89667219 0.76529995 0.68051734
 \end{verbatim}
 
 \begin{Shaded}
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##            a         b
-## 1  0.3444448 0.1186422
-## 2 -1.5927244 2.5367711
+##              a            b
+## 1 -1.305903111 1.705383e+00
+## 2  0.006400827 4.097058e-05
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -5792,7 +5792,7 @@ Let's compute the contrast output values manually:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# covariance matrix of the coefficients}
-\NormalTok{covmatJ }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(x) }\SpecialCharTok{\%*\%} \FunctionTok{diag}\NormalTok{(breaks\_glm}\SpecialCharTok{$}\NormalTok{weights) }\SpecialCharTok{\%*\%}\NormalTok{ x)}
+\NormalTok{covmat\_j }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(x) }\SpecialCharTok{\%*\%} \FunctionTok{diag}\NormalTok{(breaks\_glm}\SpecialCharTok{$}\NormalTok{weights) }\SpecialCharTok{\%*\%}\NormalTok{ x)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5803,7 +5803,7 @@ the same weight.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{dif }\OtherTok{\textless{}{-}}\NormalTok{ v }\SpecialCharTok{\%*\%}\NormalTok{ coeff}
-\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(v }\SpecialCharTok{\%*\%}\NormalTok{ covmatJ }\SpecialCharTok{\%*\%}\NormalTok{ v)}
+\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(v }\SpecialCharTok{\%*\%}\NormalTok{ covmat\_j }\SpecialCharTok{\%*\%}\NormalTok{ v)}
 \NormalTok{se }\CommentTok{\# standard error}
 \end{Highlighting}
 \end{Shaded}
@@ -5854,8 +5854,8 @@ We can provide multiple levels at once to contrasts:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{cont\_multi }\OtherTok{\textless{}{-}} \FunctionTok{contrast}\NormalTok{(breaks\_glm,}
-  \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \StringTok{"H"}\NormalTok{, }\AttributeTok{wool =} \FunctionTok{levels}\NormalTok{(warpbreaks}\SpecialCharTok{$}\NormalTok{wool)),}
-  \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \StringTok{"M"}\NormalTok{, }\AttributeTok{wool =} \FunctionTok{levels}\NormalTok{(warpbreaks}\SpecialCharTok{$}\NormalTok{wool)),}
+  \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \FunctionTok{c}\NormalTok{(}\StringTok{"H"}\NormalTok{, }\StringTok{"M"}\NormalTok{), }\AttributeTok{wool =} \StringTok{"A"}\NormalTok{),}
+  \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \FunctionTok{c}\NormalTok{(}\StringTok{"M"}\NormalTok{, }\StringTok{"L"}\NormalTok{), }\AttributeTok{wool =} \StringTok{"A"}\NormalTok{),}
   \AttributeTok{type =} \StringTok{"individual"}
 \NormalTok{)}
 \FunctionTok{print}\NormalTok{(cont\_multi, }\AttributeTok{X =} \ConstantTok{TRUE}\NormalTok{)}
@@ -5867,12 +5867,12 @@ We can provide multiple levels at once to contrasts:
 ## 
 ##    Contrast       S.E.      Lower       Upper     t df Pr(>|t|)
 ##  -0.1971681 0.06833267 -0.3344183 -0.05991786 -2.89 50   0.0058
-##  -0.1971681 0.06833267 -0.3344183 -0.05991786 -2.89 50   0.0058
+##  -0.3213204 0.06026580 -0.4423679 -0.20027301 -5.33 50   0.0000
 ## 
 ## Contrast coefficients:
 ##  (Intercept) tensionM tensionH woolB
 ##            0       -1        1     0
-##            0       -1        1     0
+##            0        1        0     0
 \end{verbatim}
 
 \hypertarget{tests}{%
@@ -6002,7 +6002,7 @@ Graphic representation:
 \end{Shaded}
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-210-1.pdf}
-The plot tells us how far is the fitted model from being equal
+The plot tells us how far the fitted model is from being equal
 to the saturated one. It would be more useful though to
 observe the distance between the fitted and the null models.
 
@@ -6090,13 +6090,9 @@ We can plot the observations influences:
 \begin{Highlighting}[]
 \NormalTok{s }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}\AttributeTok{s =} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(warpbreaks))}
 \CommentTok{\# we plot col 1, 2, 3 of influence measures}
-\FunctionTok{library}\NormalTok{(reshape2)}
+\FunctionTok{library}\NormalTok{(tidyr)}
 \FunctionTok{bind\_cols}\NormalTok{(infmeasmat, s, warpbreaks) }\SpecialCharTok{\%\textgreater{}\%}
-\NormalTok{  reshape2}\SpecialCharTok{::}\FunctionTok{melt}\NormalTok{(}
-    \AttributeTok{measure.vars =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
-    \AttributeTok{variable.name =} \StringTok{"infl\_name"}\NormalTok{,}
-    \AttributeTok{value.name =} \StringTok{"measure"}
-\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"infl\_name"}\NormalTok{, }\AttributeTok{value =} \StringTok{"measure"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(s, measure)) }\SpecialCharTok{+}
   \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{infl\_name)}

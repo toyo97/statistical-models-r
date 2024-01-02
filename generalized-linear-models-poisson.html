@@ -4,26 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Generalized Linear Models (Poisson) | Linear regression</title>
+  <title>Chapter 8 Generalized Linear Models (Poisson) | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Generalized Linear Models (Poisson) | Linear regression" />
+  <meta property="og:title" content="Chapter 8 Generalized Linear Models (Poisson) | Statistical Models in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Generalized Linear Models (Poisson) | Linear regression" />
+  <meta name="twitter:title" content="Chapter 8 Generalized Linear Models (Poisson) | Statistical Models in R" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
 
 <meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-12-18" />
+<meta name="date" content="2024-01-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -342,7 +343,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear regression</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
           </h1>
         </div>
 
@@ -557,12 +558,12 @@ by the <code>glm</code> function and it can be retrieved as follows.</p>
 <pre><code>##           [,1]
 ## [1,] 0.1971681</code></pre>
 <div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="generalized-linear-models-poisson.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># covariance matrix of the coefficients</span></span>
-<span id="cb429-2"><a href="generalized-linear-models-poisson.html#cb429-2" aria-hidden="true" tabindex="-1"></a>covmatJ <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> <span class="fu">diag</span>(breaks_glm<span class="sc">$</span>weights) <span class="sc">%*%</span> x)</span></code></pre></div>
+<span id="cb429-2"><a href="generalized-linear-models-poisson.html#cb429-2" aria-hidden="true" tabindex="-1"></a>covmat_j <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> <span class="fu">diag</span>(breaks_glm<span class="sc">$</span>weights) <span class="sc">%*%</span> x)</span></code></pre></div>
 <p>Weights are related to each combination of the (qualitative)
 predictors. E.g. every row with the same predictor values will have
 the same weight.</p>
 <div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="generalized-linear-models-poisson.html#cb430-1" aria-hidden="true" tabindex="-1"></a>dif <span class="ot">&lt;-</span> v <span class="sc">%*%</span> coeff</span>
-<span id="cb430-2"><a href="generalized-linear-models-poisson.html#cb430-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(v <span class="sc">%*%</span> covmatJ <span class="sc">%*%</span> v)</span>
+<span id="cb430-2"><a href="generalized-linear-models-poisson.html#cb430-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(v <span class="sc">%*%</span> covmat_j <span class="sc">%*%</span> v)</span>
 <span id="cb430-3"><a href="generalized-linear-models-poisson.html#cb430-3" aria-hidden="true" tabindex="-1"></a>se <span class="co"># standard error</span></span></code></pre></div>
 <pre><code>##            [,1]
 ## [1,] 0.06833267</code></pre>
@@ -579,8 +580,8 @@ the same weight.</p>
 ## [1,] 0.005755553</code></pre>
 <p>We can provide multiple levels at once to contrasts:</p>
 <div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="generalized-linear-models-poisson.html#cb438-1" aria-hidden="true" tabindex="-1"></a>cont_multi <span class="ot">&lt;-</span> <span class="fu">contrast</span>(breaks_glm,</span>
-<span id="cb438-2"><a href="generalized-linear-models-poisson.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;H&quot;</span>, <span class="at">wool =</span> <span class="fu">levels</span>(warpbreaks<span class="sc">$</span>wool)),</span>
-<span id="cb438-3"><a href="generalized-linear-models-poisson.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="st">&quot;M&quot;</span>, <span class="at">wool =</span> <span class="fu">levels</span>(warpbreaks<span class="sc">$</span>wool)),</span>
+<span id="cb438-2"><a href="generalized-linear-models-poisson.html#cb438-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="fu">c</span>(<span class="st">&quot;H&quot;</span>, <span class="st">&quot;M&quot;</span>), <span class="at">wool =</span> <span class="st">&quot;A&quot;</span>),</span>
+<span id="cb438-3"><a href="generalized-linear-models-poisson.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">tension =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;L&quot;</span>), <span class="at">wool =</span> <span class="st">&quot;A&quot;</span>),</span>
 <span id="cb438-4"><a href="generalized-linear-models-poisson.html#cb438-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;individual&quot;</span></span>
 <span id="cb438-5"><a href="generalized-linear-models-poisson.html#cb438-5" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb438-6"><a href="generalized-linear-models-poisson.html#cb438-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cont_multi, <span class="at">X =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
@@ -588,12 +589,12 @@ the same weight.</p>
 ## 
 ##    Contrast       S.E.      Lower       Upper     t df Pr(&gt;|t|)
 ##  -0.1971681 0.06833267 -0.3344183 -0.05991786 -2.89 50   0.0058
-##  -0.1971681 0.06833267 -0.3344183 -0.05991786 -2.89 50   0.0058
+##  -0.3213204 0.06026580 -0.4423679 -0.20027301 -5.33 50   0.0000
 ## 
 ## Contrast coefficients:
 ##  (Intercept) tensionM tensionH woolB
 ##            0       -1        1     0
-##            0       -1        1     0</code></pre>
+##            0        1        0     0</code></pre>
 </div>
 </div>
 <div id="tests" class="section level2 hasAnchor" number="8.4">
@@ -684,7 +685,7 @@ No (of course, it’s not a perfect model).</p>
 <span id="cb447-6"><a href="generalized-linear-models-poisson.html#cb447-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
 <span id="cb447-7"><a href="generalized-linear-models-poisson.html#cb447-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="fu">aes</span>(<span class="at">xintercept =</span> d1), <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-210-1.png" width="672" />
-The plot tells us how far is the fitted model from being equal
+The plot tells us how far the fitted model is from being equal
 to the saturated one. It would be more useful though to
 observe the distance between the fitted and the null models.</p>
 <blockquote>
@@ -739,16 +740,12 @@ Note that the results depend from the parametrization of the model,
 <pre><code>## numeric(0)</code></pre>
 <div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="generalized-linear-models-poisson.html#cb455-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">s =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(warpbreaks))</span>
 <span id="cb455-2"><a href="generalized-linear-models-poisson.html#cb455-2" aria-hidden="true" tabindex="-1"></a><span class="co"># we plot col 1, 2, 3 of influence measures</span></span>
-<span id="cb455-3"><a href="generalized-linear-models-poisson.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb455-3"><a href="generalized-linear-models-poisson.html#cb455-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb455-4"><a href="generalized-linear-models-poisson.html#cb455-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(infmeasmat, s, warpbreaks) <span class="sc">%&gt;%</span></span>
-<span id="cb455-5"><a href="generalized-linear-models-poisson.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  reshape2<span class="sc">::</span><span class="fu">melt</span>(</span>
-<span id="cb455-6"><a href="generalized-linear-models-poisson.html#cb455-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">measure.vars =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb455-7"><a href="generalized-linear-models-poisson.html#cb455-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">variable.name =</span> <span class="st">&quot;infl_name&quot;</span>,</span>
-<span id="cb455-8"><a href="generalized-linear-models-poisson.html#cb455-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">value.name =</span> <span class="st">&quot;measure&quot;</span></span>
-<span id="cb455-9"><a href="generalized-linear-models-poisson.html#cb455-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb455-10"><a href="generalized-linear-models-poisson.html#cb455-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb455-11"><a href="generalized-linear-models-poisson.html#cb455-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(s, measure)) <span class="sc">+</span></span>
-<span id="cb455-12"><a href="generalized-linear-models-poisson.html#cb455-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>infl_name)</span></code></pre></div>
+<span id="cb455-5"><a href="generalized-linear-models-poisson.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;infl_name&quot;</span>, <span class="at">value =</span> <span class="st">&quot;measure&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb455-6"><a href="generalized-linear-models-poisson.html#cb455-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb455-7"><a href="generalized-linear-models-poisson.html#cb455-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(s, measure)) <span class="sc">+</span></span>
+<span id="cb455-8"><a href="generalized-linear-models-poisson.html#cb455-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>infl_name)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 </div>
 <div id="interaction" class="section level2 hasAnchor" number="8.6">

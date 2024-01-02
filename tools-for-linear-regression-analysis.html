@@ -4,26 +4,27 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Tools for linear regression analysis | Linear regression</title>
+  <title>Chapter 5 Tools for linear regression analysis | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Tools for linear regression analysis | Linear regression" />
+  <meta property="og:title" content="Chapter 5 Tools for linear regression analysis | Statistical Models in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   <meta name="github-repo" content="toyo97/statistical-models-r" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Tools for linear regression analysis | Linear regression" />
+  <meta name="twitter:title" content="Chapter 5 Tools for linear regression analysis | Statistical Models in R" />
   
   <meta name="twitter:description" content="A modern R tutorial focused on statistical analysis and modeling." />
   
 
 <meta name="author" content="Vittorio Zampinetti" />
+<meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2023-12-18" />
+<meta name="date" content="2024-01-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -342,7 +343,7 @@ div.csl-indent {
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Linear regression</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Statistical Models in R</a>
           </h1>
         </div>
 
@@ -423,7 +424,7 @@ Its diagonal elements are particularly interesting and are called
 leverages of the observations. Note that <span class="math inline">\(h_{ii} \in [0,1]\)</span> and
 <span class="math inline">\(\sum_i h_{ii} = p\)</span>, where <span class="math inline">\(p\)</span> is the number of coefficients in the regression model.
 The leverage of an observation <span class="math inline">\(h_{ii}\)</span> measures how much an observation <span class="math inline">\(y_i\)</span>
-has an impact on the fitted value <span class="math inline">\(\hat y_i\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+has an impact on the fitted value <span class="math inline">\(\hat y_i\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 </div>
 <div id="multiple-predictors" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Multiple predictors<a href="tools-for-linear-regression-analysis.html#multiple-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -537,9 +538,9 @@ is jointly computed, therefore it’s more accurate.</p>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>Explanation taken from
-<a href="https://it.mathworks.com/help/stats/hat-matrix-and-leverage.html">https://it.mathworks.com/help/stats/hat-matrix-and-leverage.html</a><a href="tools-for-linear-regression-analysis.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<ol start="3">
+<li id="fn3"><p>Explanation taken from
+<a href="https://it.mathworks.com/help/stats/hat-matrix-and-leverage.html">https://it.mathworks.com/help/stats/hat-matrix-and-leverage.html</a><a href="tools-for-linear-regression-analysis.html#fnref3" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
