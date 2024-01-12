@@ -120,7 +120,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2024-01-02}
+\date{2024-01-12}
 
 \begin{document}
 \maketitle
@@ -273,8 +273,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -2.979930  23.401253  -9.871427  -7.562816  -3.255204  -9.318085
-##  [7]   7.785459   5.768975 -12.562330 -17.651552
+##  [1]  -4.041921  11.100354  -8.269982  14.498854  -0.531995  -0.588099
+##  [7] -12.099817  -9.996491 -21.468122 -13.083869
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1069,13 +1069,13 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##    x  y char
 ## 1  1  1    a
-## 2  1  2    a
+## 2  1  2    b
 ## 3  1  3    a
 ## 4  1  4    a
-## 5  1  5    a
-## 6  1  6    b
+## 5  1  5    b
+## 6  1  6    a
 ## 7  1  7    a
-## 8  1  8    b
+## 8  1  8    a
 ## 9  1  9    b
 ## 10 1 10    a
 \end{verbatim}
@@ -1107,7 +1107,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "a" "a" "a" "b" "a" "b" "b" "a"
+##  [1] "a" "b" "a" "a" "b" "a" "a" "a" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,7 +1118,7 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    a
+## 2 1 2    b
 ## 3 1 3    a
 ## 4 1 4    a
 \end{verbatim}
@@ -1493,8 +1493,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.6586906 -1.3839763  0.5758151 -0.4348446  0.2391484 -1.2651492
-##  [7]  0.5605571  1.2628151  0.7234555  0.4691459
+##  [1] -0.35767225  0.28018304 -0.27961432  2.26734112  0.71832323 -0.28421068
+##  [7] -0.28927224  0.89835330  0.93098978 -0.03481865
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1505,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.376369244 0.001301047 0.144700412 0.020585413 0.084649360 0.001931346
-##  [7] 0.141573481 0.304020756 0.176625870 0.123601127
+##  [1] 0.02476689 0.09091560 0.02968067 0.38493755 0.17547017 0.02937099
+##  [7] 0.02903300 0.21745763 0.22529830 0.05032859
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1517,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.95141092 0.08318286 0.71762993 0.33183763 0.59450474 0.10290892
-##  [7] 0.71245026 0.89667219 0.76529995 0.68051734
+##  [1] 0.3602943 0.6103315 0.3898867 0.9883153 0.7637210 0.3881245 0.3861865
+##  [8] 0.8155014 0.8240706 0.4861122
 \end{verbatim}
 
 \begin{Shaded}
@@ -1625,7 +1625,7 @@ And then you can load the package with \texttt{library}.
 
 \begin{verbatim}
 ## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
-## v forcats   1.0.0     v readr     2.1.4
+## v forcats   1.0.0     v readr     2.1.5
 ## v lubridate 1.9.3     v stringr   1.5.1
 ## v purrr     1.0.2     v tidyr     1.3.0
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
@@ -1659,9 +1659,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##              a            b
-## 1 -1.305903111 1.705383e+00
-## 2  0.006400827 4.097058e-05
+##           a         b
+## 1 1.1849872 1.4041946
+## 2 0.4683115 0.2193156
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -6812,7 +6812,7 @@ For this reason we introduce a composite model called Zero-Inflated Poisson:
 it's a mixture between a Poisson and a discrete distribution over zero.
 
 \[
-P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!}
+P(Y = y) = \pi \mathrm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!}
 \]
 
 Let's have a look at the generative model and the distribution of ZIP variates.
@@ -7186,7 +7186,7 @@ makes a clear distinction between counts that are zero and counts that are 1 or 
 is the Hurdle-Poisson model for instance:
 
 \[
-P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!} \bm{1}(y > 0)
+P(Y = y) = \pi \mathrm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!} \mathrm{1}(y > 0)
 \]
 This is particularly useful when the data consist of large counts on average, but for
 some reasons (e.g.~reading errors) many values are 0 instead. It probably doesn't make
@@ -7623,7 +7623,7 @@ defining the true parameters.
 \end{Shaded}
 
 \begin{verbatim}
-## Inference for Bugs model at "6", fit using jags,
+## Inference for Bugs model at "4", fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 4
 ##  n.sims = 2000 iterations saved
 ##               mean   sd   2.5%    25%    50%    75%  97.5% Rhat n.eff
@@ -7678,8 +7678,8 @@ components correctly represent the two clusters.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-250-1.pdf}
 
-\hypertarget{lab-1}{%
-\chapter{Lab 1}\label{lab-1}}
+\hypertarget{lab-1---eda-iris}{%
+\chapter{Lab 1 - EDA (iris)}\label{lab-1---eda-iris}}
 
 \hypertarget{iris-dataset}{%
 \section{Iris Dataset}\label{iris-dataset}}
@@ -8118,8 +8118,8 @@ Now take this other sample:
 ##   5.62742
 \end{verbatim}
 
-\hypertarget{lab-2}{%
-\chapter{Lab 2}\label{lab-2}}
+\hypertarget{lab-2---linear-regression-insulate}{%
+\chapter{Lab 2 - Linear regression (insulate)}\label{lab-2---linear-regression-insulate}}
 
 This lab focuses on linear models and on the R functions
 dedicated to fitted linear models inspection.
@@ -8703,6 +8703,267 @@ For this purpose, we will just use the records of the \texttt{after} class.
 \begin{quote}
 Notice how the intervals get wider when departing from the mean temperature \(\bar x\).
 \end{quote}
+
+\hypertarget{lab-3---jags-gmm}{%
+\chapter{Lab 3 - JAGS GMM}\label{lab-3---jags-gmm}}
+
+A 5-stars hotel stocks up a whole bunch of bread loafs from a
+local bakery on a daily bases. Every stock of loafs counts
+50 pieces, each of which varies slightly, but not trascurably,
+in size (volume in cm3) and weight (grams).
+This happens because the bakery
+doesn't have a precise recipe and therefore every baker
+produces different kinds of bread.
+
+You get the chance of measuring weight and size of each
+loaf the hotel buys for an entire month and from those data
+you want to estimate the number of bakers that worked at the
+bakery in that month.
+
+Read the data provided in the \texttt{bread.csv} file, get some insights
+on the nature of the data (summaries, plots, etc.) and write
+down a JAGS model which captures it. You should define a
+Gaussian Mixture Model, just like the one from previous lecture,
+but with the number of components \(K\) (number of bakers) as parameter.
+
+\begin{quote}
+Hint: Maybe plot the data and get a feeling of a range of components
+you would like to try out. You can compare them in several ways, for
+instance preferring the one that gives the largest log-likelihood,
+printing the \href{https://en.wikipedia.org/wiki/Deviance_information_criterion}{DIC}
+(similar to AIC, add the flag \texttt{DIC\ =\ TRUE} in the \texttt{jags()} function call)
+or just by checking how many clusters give accurate estimates.
+\end{quote}
+
+Some notes that may be useful for writing the model:
+
+\begin{itemize}
+\item
+  note that \texttt{ddirich(alpha)} is the JAGS call for a Dirichlet distribution
+  with concentration \texttt{alpha}.
+\item
+  avoid the \emph{label switching} problem by sorting the current clusters probabilities
+  properly. The call \texttt{order(v)} is an alternative to \texttt{sort(v)}, such that
+  \texttt{v{[}order(v){]}\ ==\ sort(v)} (gives a permutation of the indices that orders
+  the elements of a vector in ascending order).
+\item
+  to inspect the likelihood, you can define a new model node
+  e.g.~\texttt{complete\_loglik} as such:
+
+\begin{verbatim}
+model {
+
+  #
+  # ... here's the main model
+  #
+
+  # likelihood
+  for (i in 1:N) {
+    loglikx[i] <- logdensity.norm(x[i], mux_clust[clust[i]], taux)
+    logliky[i] <- logdensity.norm(y[i], muy_clust[clust[i]], tauy)
+  }
+  complete_loglik <- sum(loglikx) + sum(logliky)
+}
+\end{verbatim}
+\end{itemize}
+
+The simulation shouldn't take more than one/two minute. If it runs for too long it's
+either unnecessary or wrong. Decrease the number of iterations/chains.
+
+Good luck!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{42}\NormalTok{)}
+\CommentTok{\# read data}
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(tibble)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{bread }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/bread.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 600 Columns: 2
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl (2): weight, size
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bread }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(weight, size)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-296-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(R2jags)}
+
+\NormalTok{model\_code }\OtherTok{\textless{}{-}} \StringTok{"}
+\StringTok{model \{}
+\StringTok{  \# Likelihood:}
+\StringTok{  for(i in 1:N) \{}
+\StringTok{    x[i] \textasciitilde{} dnorm(mux[i], taux)}
+\StringTok{    y[i] \textasciitilde{} dnorm(muy[i], tauy)}
+\StringTok{    mux[i] \textless{}{-} mux\_clust[clust[i]]}
+\StringTok{    muy[i] \textless{}{-} muy\_clust[clust[i]]}
+\StringTok{    clust[i] \textasciitilde{} dcat(lambda[1:K]) \# categorical}
+\StringTok{  \}}
+
+\StringTok{  \# priors}
+\StringTok{  taux \textasciitilde{} dgamma(0.01, 0.01)}
+\StringTok{  tauy \textasciitilde{} dgamma(0.01, 0.01)}
+\StringTok{  sigmax \textless{}{-} 1 / sqrt(taux)}
+\StringTok{  sigmay \textless{}{-} 1 / sqrt(tauy)}
+
+\StringTok{  for (k in 1:K) \{}
+\StringTok{    mux\_clust\_raw[k] \textasciitilde{} dnorm(0, 10\^{}{-}6)}
+\StringTok{    muy\_clust\_raw[k] \textasciitilde{} dnorm(0, 10\^{}{-}6)}
+\StringTok{  \}}
+
+\StringTok{  perm \textless{}{-} order(mux\_clust\_raw) \# same ordering for both!}
+\StringTok{  for (k in 1:K) \{}
+\StringTok{    mux\_clust[k] \textless{}{-} mux\_clust\_raw[perm[k]]}
+\StringTok{    muy\_clust[k] \textless{}{-} muy\_clust\_raw[perm[k]]}
+\StringTok{  \}}
+\StringTok{  lambda[1:K] \textasciitilde{} ddirch(ones)}
+
+\StringTok{  \# likelihood}
+\StringTok{  for (i in 1:N) \{}
+\StringTok{    loglikx[i] \textless{}{-} logdensity.norm(x[i], mux\_clust[clust[i]], taux)}
+\StringTok{    logliky[i] \textless{}{-} logdensity.norm(y[i], muy\_clust[clust[i]], tauy)}
+\StringTok{  \}}
+\StringTok{  complete\_loglik \textless{}{-} sum(loglikx) + sum(logliky)}
+\StringTok{\}}
+\StringTok{"}
+
+\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{4} \CommentTok{\# change this and see what\textquotesingle{}s best}
+\NormalTok{model\_data }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{x =}\NormalTok{ bread}\SpecialCharTok{$}\NormalTok{weight, }\AttributeTok{y =}\NormalTok{ bread}\SpecialCharTok{$}\NormalTok{size, }\AttributeTok{ones =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, K),}
+  \AttributeTok{K =}\NormalTok{ K, }\AttributeTok{N =} \FunctionTok{nrow}\NormalTok{(bread)}
+\NormalTok{)}
+\NormalTok{model\_params }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"mux\_clust"}\NormalTok{, }\StringTok{"muy\_clust"}\NormalTok{, }\StringTok{"sigmax"}\NormalTok{, }\StringTok{"sigmay"}
+  \CommentTok{\# ,"clust"}
+\NormalTok{  , }\StringTok{"lambda"}\NormalTok{, }\StringTok{"complete\_loglik"}
+\NormalTok{)}
+\NormalTok{model\_inits }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+  \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{mux\_clust\_raw =} \FunctionTok{rnorm}\NormalTok{(K, }\DecValTok{500}\NormalTok{, }\FloatTok{1e4}\NormalTok{), }\AttributeTok{muy\_clust\_raw =} \FunctionTok{rnorm}\NormalTok{(K, }\DecValTok{500}\NormalTok{, }\FloatTok{1e4}\NormalTok{),}
+    \AttributeTok{taux =} \FunctionTok{rgamma}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.1}\NormalTok{), }\AttributeTok{tauy =} \FunctionTok{rgamma}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.1}\NormalTok{),}
+    \AttributeTok{clust =} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{K, }\AttributeTok{size =} \FunctionTok{nrow}\NormalTok{(bread), }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ K, K))}
+\NormalTok{  )}
+\NormalTok{\}}
+\NormalTok{model\_run }\OtherTok{\textless{}{-}} \FunctionTok{jags}\NormalTok{(}
+  \AttributeTok{data =}\NormalTok{ model\_data,}
+  \AttributeTok{parameters.to.save =}\NormalTok{ model\_params,}
+  \AttributeTok{inits =}\NormalTok{ model\_inits,}
+  \AttributeTok{model.file =} \FunctionTok{textConnection}\NormalTok{(model\_code),}
+  \AttributeTok{n.chains =} \DecValTok{2}\NormalTok{,}
+  \AttributeTok{n.iter =} \DecValTok{5000}\NormalTok{,}
+  \AttributeTok{n.burnin =} \DecValTok{1000}\NormalTok{,}
+  \AttributeTok{n.thin =} \DecValTok{5}\NormalTok{,}
+  \AttributeTok{DIC =} \ConstantTok{TRUE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Compiling model graph
+##    Resolving undeclared variables
+##    Allocating nodes
+## Graph information:
+##    Observed stochastic nodes: 1200
+##    Unobserved stochastic nodes: 611
+##    Total graph size: 4248
+## 
+## Initializing model
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_run}\SpecialCharTok{$}\NormalTok{BUGSoutput}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Inference for Bugs model at "4", fit using jags,
+##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 5
+##  n.sims = 1600 iterations saved
+##                    mean    sd    2.5%     25%     50%     75%   97.5% Rhat
+## complete_loglik -6940.6  49.1 -7013.7 -6987.2 -6941.2 -6892.4 -6877.1  9.1
+## deviance        13881.1  98.2 13754.3 13784.8 13882.4 13974.5 14027.3  9.1
+## lambda[1]           0.1   0.0     0.1     0.1     0.1     0.2     0.2  3.8
+## lambda[2]           0.3   0.1     0.2     0.2     0.3     0.3     0.4  5.4
+## lambda[3]           0.3   0.1     0.2     0.2     0.3     0.3     0.4  6.5
+## lambda[4]           0.3   0.0     0.2     0.3     0.3     0.3     0.4  4.4
+## mux_clust[1]      702.5  19.8   656.9   691.5   705.4   716.1   734.4  1.8
+## mux_clust[2]      823.1  25.6   787.4   798.1   824.7   847.5   859.2  9.1
+## mux_clust[3]      891.0  42.2   839.2   848.8   893.5   932.8   940.7 17.8
+## mux_clust[4]      941.6   9.1   926.6   934.3   940.4   948.3   960.0  3.1
+## muy_clust[1]      400.1  14.2   370.3   390.1   401.3   410.4   424.3  2.1
+## muy_clust[2]      638.8 151.5   475.4   487.5   628.9   789.9   801.0 48.6
+## muy_clust[3]      946.8 153.7   780.9   793.5   942.1  1100.3  1109.0 53.7
+## muy_clust[4]      800.1 301.9   487.5   498.3   752.2  1101.7  1110.7 97.7
+## sigmax             85.8   7.1    75.2    79.1    85.6    92.2    97.4  5.7
+## sigmay             72.5   2.5    67.9    70.8    72.4    74.1    77.7  1.0
+##                 n.eff
+## complete_loglik     2
+## deviance            2
+## lambda[1]           2
+## lambda[2]           2
+## lambda[3]           2
+## lambda[4]           2
+## mux_clust[1]        4
+## mux_clust[2]        2
+## mux_clust[3]        2
+## mux_clust[4]        3
+## muy_clust[1]        4
+## muy_clust[2]        2
+## muy_clust[3]        2
+## muy_clust[4]        2
+## sigmax              2
+## sigmay            120
+## 
+## For each parameter, n.eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor (at convergence, Rhat=1).
+## 
+## DIC info (using the rule, pD = var(deviance)/2)
+## pD = 330.3 and DIC = 14211.4
+## DIC is an estimate of expected predictive error (lower deviance is better).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gmm\_mcmc }\OtherTok{\textless{}{-}} \FunctionTok{as.mcmc}\NormalTok{(model\_run)}
+\CommentTok{\# save to pdf}
+\CommentTok{\# pdf(file = "./lab3/mcmc\_out.pdf")}
+\CommentTok{\# plot(gmm\_mcmc)}
+\CommentTok{\# dev.off()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mux }\OtherTok{\textless{}{-}}\NormalTok{ model\_run}\SpecialCharTok{$}\NormalTok{BUGSoutput}\SpecialCharTok{$}\NormalTok{mean}\SpecialCharTok{$}\NormalTok{mux\_clust}
+\NormalTok{muy }\OtherTok{\textless{}{-}}\NormalTok{ model\_run}\SpecialCharTok{$}\NormalTok{BUGSoutput}\SpecialCharTok{$}\NormalTok{mean}\SpecialCharTok{$}\NormalTok{muy\_clust}
+
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(bread}\SpecialCharTok{$}\NormalTok{weight, bread}\SpecialCharTok{$}\NormalTok{size)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(mux, muy), }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-298-1.pdf}
 
 \begin{verbatim}
 ## tweaking contrast
