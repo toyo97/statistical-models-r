@@ -1,5 +1,13 @@
+---
+# title: Lab 3 - JAGS GMM
+# latest-revision: November 22nd, 2023
+# author: Vittorio Zampinetti
+# time: 1.5h
+# output: pdf_document
+---
+
 ```{r, echo=FALSE}
-hide_sol <- TRUE
+hide_sol <- FALSE
 if (hide_sol) {
   knitr::opts_chunk$set(
     echo = FALSE, warning = FALSE, results = FALSE,
@@ -8,7 +16,7 @@ if (hide_sol) {
 }
 ```
 
-# JAGS lab - Gaussian Mixture Model
+# Lab 3 - JAGS GMM
 
 A 5-stars hotel stocks up a whole bunch of bread loafs from a
 local bakery on a daily bases. Every stock of loafs counts

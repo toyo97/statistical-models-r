@@ -19,6 +19,6 @@ rmd_files: [
   "./lessons/10_jags.Rmd",
   "./labs/L01_iris.Rmd",
   "./labs/L02_insulate.Rmd",
-  # "./labs/L03_bread.Rmd",
+  "./labs/L03_bread.Rmd",
   "tail.Rmd"
 ]

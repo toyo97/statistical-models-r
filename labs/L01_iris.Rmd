@@ -1,5 +1,5 @@
 ---
-# title: Lab 1 - Iris
+# title: Lab 1 - EDA (iris)
 # latest-revision: October 31st, 2023
 # author: Vittorio Zampinetti
 # time: 1.5h
@@ -15,7 +15,7 @@ if (hide_sol) {
   )
 }
 ```
-# Lab 1
+# Lab 1 - EDA (iris)
 
 ## Iris Dataset
 

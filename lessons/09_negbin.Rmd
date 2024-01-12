@@ -1,6 +1,6 @@
 ---
 # title: Negative binomial
-# latest-revision: December 18th, 2023
+# latest-revision: January 9th, 2024
 # author: Vittorio Zampinetti
 # time: 1.5h
 # output:
@@ -272,7 +272,7 @@ For this reason we introduce a composite model called Zero-Inflated Poisson:
 it's a mixture between a Poisson and a discrete distribution over zero.
 
 $$
-P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!}
+P(Y = y) = \pi \mathrm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!}
 $$
 
 Let's have a look at the generative model and the distribution of ZIP variates.
@@ -379,7 +379,7 @@ makes a clear distinction between counts that are zero and counts that are 1 or 
 is the Hurdle-Poisson model for instance:
 
 $$
-P(Y = y) = \pi \bm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!} \bm{1}(y > 0)
+P(Y = y) = \pi \mathrm{1}(y = 0) + (1 - \pi) \frac{\lambda^{y} e^{-\lambda}}{y!} \mathrm{1}(y > 0)
 $$
 This is particularly useful when the data consist of large counts on average, but for 
 some reasons (e.g. reading errors) many values are 0 instead. It probably doesn't make

@@ -1,5 +1,5 @@
 ---
-# title: Lab 2 - Insulate
+# title: Lab 2 - Linear regression (insulate)
 # latest-revision: November 22nd, 2023
 # author: Vittorio Zampinetti
 # time: 1.5h
@@ -20,7 +20,7 @@ knit_engines$set(asis = function(options) {
 })
 ```
 
-# Lab 2
+# Lab 2 - Linear regression (insulate)
 
 This lab focuses on linear models and on the R functions
 dedicated to fitted linear models inspection.

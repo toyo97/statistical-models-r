@@ -1,6 +1,6 @@
 ---
 # title: JAGS
-# latest-revision: December 18th, 2023
+# latest-revision: January 11th, 2024
 # author: Vittorio Zampinetti
 # time: 1.5h
 # output: pdf_document
