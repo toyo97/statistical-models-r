@@ -8,17 +8,17 @@
 
 # The linear model
 
-For this lecture, we will use the *Advertising* dataset,
-which can be found [here](https://www.kaggle.com/datasets/ashydv/advertising-dataset).
-It shows, for each line, the revenue (`Sales`) depending on the
-money spent on three different advertising channels: `TV`, `Radio`, `Newspaper`.
-
-Every attribute is continuous, and allows to explain the main R
+During this lecture, we will use the *Advertising* dataset,
+which can be found [in Kaggle](https://www.kaggle.com/datasets/ashydv/advertising-dataset).
+It shows, for each line, the revenue (`Sales`), which is the *response*  depending on 
+three *predictors*, i.e. money spent on three different advertising channels: `TV`, `Radio`, `Newspaper`.
+Every variable is continuous, allowing to explain the main R
 functions used in a plain linear regression task.
 
 ## Dataset import
-Import the dataset (remember to check the current working
-directory).
+Import the dataset (you may have to select properly the current working directory).
+Remember a modern version of a dataset in R is called *tibble* (as opposed to the 
+previous *dataframe*)
 ```{r}
 library(readr)
 # here the wd contains a folder 'dataset' which
@@ -27,15 +27,15 @@ advertising <- read_csv("./datasets/advertising.csv")
 advertising
 ```
 
-## Basic EDA
+## Basic EDA (Exploratory Data Analysis)
 
-Get some statistics with `summary()`
+Get some basic statistics with `summary()`
 ```{r}
 summary(advertising)
 ```
 
-You can attach the dataset to access columns with less code 
-(not recommended). All the columns of the table are then
+You can `attach()` the dataset to access columns writing  less code, although this is not 
+recommended nowadays (see `with()` below). All the columns of the table are then
 available in the R environment without prepending the dataset name
 ```{r}
 attach(advertising)
@@ -47,8 +47,8 @@ To revert back, detach the dataset
 detach(advertising)
 ```
 
-It is better to use `with()` instead, if really needed.
-This function basically attach a certain context object
+It is better to use `with()` instead.
+This function basically attaches a certain context object
 (e.g. the dataset namespace), executes the commands inside
 the curly brackets, and then detaches the context object.
 ```{r}
@@ -70,8 +70,9 @@ names(advertising)
 
 ## Simple plots
 
-In exploration, ggplot might be a bit overkill. Faster
-plots can be drawn with `plot()` and `pairs()`
+When exploring a dataset, `ggplot()` might be a bit excessive
+(recall that `ggplot()` is a modern way to draw cool plots using
+a graphical syntax). Faster plots can be drawn with `plot()` and `pairs()`
 ```{r}
 plot(advertising)
 ```
@@ -145,7 +146,7 @@ with(advertising, {
 })
 ```
 
-The same pictures can also be plotted with `ggplot`,
+The same pictures can also be plotted with `ggplot()`,
 if preferred (in two ways).
 
 ```{r}
@@ -176,7 +177,7 @@ ggarrange(tvplt, radplt, nwsplt,
 ```
 
 Second method: rearrange the dataset first,
-and feed everything to ggplot.
+and feed everything to `ggplot()`.
 
 ```{r}
 library(tibble)
@@ -204,15 +205,17 @@ helper.
 
 ## Simple regression
 
-Check the `lm()` function: first argument is the *formula*.
+The core of this class is the `lm()` function: its first argument is a *formula*, 
+centered around the symbol ~, whith a response on its left and a list of predictors on its right.
 
-Let's fit a simple single predictor linear model
+Let's start with a simple single quantitative predictor linear
+model (simple linear regression)
 
 ```{r}
 simple_reg <- lm(Sales ~ TV, data = advertising)
 ```
 Now that we fitted the model, we have access to the
-coefficient estimates and we can plot the regression
+coefficient estimates and we can plot the *estimated* regression
 line.
 
 ### Plot
@@ -238,8 +241,7 @@ ggplot(simple_reg, mapping = aes(TV, Sales)) +
   geom_smooth(method = "lm", color = "red")
 ```
 
-Actually, `lm()` does a lot more than just compute
-the OLS coefficients.
+Actually, `lm()` does a lot more than just compute the least squares coefficients.
 
 ```{r}
 summary(simple_reg)
@@ -250,17 +252,16 @@ We will analyze in detail this output in the next subsection.
 
 ### Summary
 
-**What's in `summary(lm)`?**
+`summary(lm)` contains information about the following quantities:
 
 - residuals: $Y - X\hat\beta$
-- estimate: $\hat\beta$
-- std. error: errors on the coefficients $S \sqrt{(X'X)^{-1}_{i+1,i+1}}$
+- estimated coefficients: $\hat\beta$
+- (estimated) standard errors on the coefficients (in the `Std. Error` column) $S \sqrt{(X'X)^{-1}_{i+1,i+1}}$
   because $\frac{\hat\beta_i - \beta_i}{S\sqrt{(X'X)^{-1}}}\sim t(n-p)$
-- t-value: value of the beta t-statistic
-  under the null hypothesis ($H_0: \beta_{i+1} = 0$)
-- p-value: probability of the test statistic being beyond t-val
+- in the `t value` column: value of the test statistic for the null hypothesis $H_0: \beta_{i+1} = 0$
+- in the `Pr(>|t|)` column: p-value regarding the null hypothesis above
 
-- residual std error: $S = \sqrt{\frac{e'e}{n-p}}$
+- residual std error: $S = \sqrt{\frac{e'e}{n-p}}$, i.e. the square root of the Mean Square Residual (MSR)
 - multiple R squared: *later*
 - adj R squared: *later*
 
@@ -272,7 +273,7 @@ Easy to retrieve them (actually,
 they are the realization of the residuals)
 
 $$
-e = y - x\hat\beta
+e = y - X\hat\beta
 $$
 
 ```{r}
@@ -304,16 +305,14 @@ head(tibble(
 
 #### Standard Error
 
-For each predictor, this represent the variation in the beta estimator. The lower
-the standard error is, the higher is the accuracy of that particular coefficient.
-For predictor $i$, it's computed as
+For each predictor, this quantifies the estimated variation in the beta estimator.
+The lower the standard error is, the higher is the accuracy of that particular coefficient.
+For predictor $i$, it is computed as
 
 $$
 SE_i = S \sqrt{(X'X)^{-1}_{i+1,i+1}}
 $$
-
-where $S$ is the *residuals standard error* (with $S^2$ being the RMS - residual
-mean squares), we get the $i+1^{\text{th}}$ element because of the $1$ column for the intercept.
+$i+1$ is used here since first column if for the intercept $\beta_0$.
 
 ```{r}
 n <- nrow(x)
@@ -343,9 +342,9 @@ t_val <- simple_reg$coefficients[2] / tv_se
 t_val
 ```
 
-And finally, the p-value is simply the probability
+And finally, the p-value is the probability
 on a $t(n-2)$ distribution of the statistic to be
-beyond that critical value. Remember that with *beyond*
+beyond the value actually observed. Remember that with *beyond*
 we mean on both sides of the distribution, since the 
 alternative hypothesis $H_1: \beta \neq 0$ is two-sided.
 
@@ -358,7 +357,7 @@ Here we cannot appreciate the manual computation since the
 p-value is very low (meaning that we can reject the null,
 favoring the alternative).
 
-Exercise: You can try and compute this value manually on another
+Exercise: You can try to compute this value manually on another
 simple regression model where we use `Radio` as predictor.
 
 ```{r}
