@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Normal sampling | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Normal sampling | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-01-12" />
+<meta name="date" content="2024-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -58,7 +58,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -130,6 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -231,7 +232,7 @@ div.csl-indent {
 <li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
-<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>4.2</b> Basic EDA (Exploratory Data Analysis)</a></li>
 <li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
 <li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
 <ul>
@@ -380,22 +381,22 @@ is useful for reproducibility purposes
 more details).</p>
 <p>This is how you can simulate a
 sample with <span class="math inline">\(n = 50\)</span> i.i.d. Normal random variables in R.</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="normal-sampling.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># for reproducibility</span></span>
-<span id="cb210-2"><a href="normal-sampling.html#cb210-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># plotting</span></span>
-<span id="cb210-3"><a href="normal-sampling.html#cb210-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># dataframe manipulation</span></span>
-<span id="cb210-4"><a href="normal-sampling.html#cb210-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble) <span class="co"># tibble</span></span>
-<span id="cb210-5"><a href="normal-sampling.html#cb210-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb210-6"><a href="normal-sampling.html#cb210-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb210-7"><a href="normal-sampling.html#cb210-7" aria-hidden="true" tabindex="-1"></a>rnorm_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n) <span class="co"># mu = 0, sigma = 1, for instance</span></span>
-<span id="cb210-8"><a href="normal-sampling.html#cb210-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb210-9"><a href="normal-sampling.html#cb210-9" aria-hidden="true" tabindex="-1"></a>iidplt <span class="ot">&lt;-</span> rnorm_sample <span class="sc">%&gt;%</span></span>
-<span id="cb210-10"><a href="normal-sampling.html#cb210-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>() <span class="sc">%&gt;%</span> <span class="co"># creates tibble with name,value columns</span></span>
-<span id="cb210-11"><a href="normal-sampling.html#cb210-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb210-12"><a href="normal-sampling.html#cb210-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb210-13"><a href="normal-sampling.html#cb210-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Random sample&quot;</span>) <span class="sc">+</span> <span class="co"># add title and labels to the plot</span></span>
-<span id="cb210-14"><a href="normal-sampling.html#cb210-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;i&quot;</span>) <span class="sc">+</span></span>
-<span id="cb210-15"><a href="normal-sampling.html#cb210-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_i&quot;</span>)</span>
-<span id="cb210-16"><a href="normal-sampling.html#cb210-16" aria-hidden="true" tabindex="-1"></a>iidplt</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="normal-sampling.html#cb210-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb210-2"><a href="normal-sampling.html#cb210-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># plotting</span></span>
+<span id="cb210-3"><a href="normal-sampling.html#cb210-3" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># dataframe manipulation</span></span>
+<span id="cb210-4"><a href="normal-sampling.html#cb210-4" tabindex="-1"></a><span class="fu">library</span>(tibble) <span class="co"># tibble</span></span>
+<span id="cb210-5"><a href="normal-sampling.html#cb210-5" tabindex="-1"></a></span>
+<span id="cb210-6"><a href="normal-sampling.html#cb210-6" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb210-7"><a href="normal-sampling.html#cb210-7" tabindex="-1"></a>rnorm_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n) <span class="co"># mu = 0, sigma = 1, for instance</span></span>
+<span id="cb210-8"><a href="normal-sampling.html#cb210-8" tabindex="-1"></a></span>
+<span id="cb210-9"><a href="normal-sampling.html#cb210-9" tabindex="-1"></a>iidplt <span class="ot">&lt;-</span> rnorm_sample <span class="sc">%&gt;%</span></span>
+<span id="cb210-10"><a href="normal-sampling.html#cb210-10" tabindex="-1"></a>  <span class="fu">enframe</span>() <span class="sc">%&gt;%</span> <span class="co"># creates tibble with name,value columns</span></span>
+<span id="cb210-11"><a href="normal-sampling.html#cb210-11" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb210-12"><a href="normal-sampling.html#cb210-12" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb210-13"><a href="normal-sampling.html#cb210-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Random sample&quot;</span>) <span class="sc">+</span> <span class="co"># add title and labels to the plot</span></span>
+<span id="cb210-14"><a href="normal-sampling.html#cb210-14" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;i&quot;</span>) <span class="sc">+</span></span>
+<span id="cb210-15"><a href="normal-sampling.html#cb210-15" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb210-16"><a href="normal-sampling.html#cb210-16" tabindex="-1"></a>iidplt</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-79-1.png" width="672" /></p>
 <p>If the random variables are independent but distributed with different mean,
 we can identify two notable cases: <strong>mean shift</strong> and <strong>mean drift</strong>.</p>
@@ -416,30 +417,30 @@ we can identify two notable cases: <strong>mean shift</strong> and <strong>mean 
 \right)\,,
 \]</span></p>
 <p>and in R we can simulate such sample as follows</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="normal-sampling.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (optional) creates a function to simplify other plots</span></span>
-<span id="cb211-2"><a href="normal-sampling.html#cb211-2" aria-hidden="true" tabindex="-1"></a>plot_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">xlab =</span> <span class="cn">NULL</span>, <span class="at">ylab =</span> <span class="cn">NULL</span>) {</span>
-<span id="cb211-3"><a href="normal-sampling.html#cb211-3" aria-hidden="true" tabindex="-1"></a>  plt <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
-<span id="cb211-4"><a href="normal-sampling.html#cb211-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">enframe</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb211-5"><a href="normal-sampling.html#cb211-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb211-6"><a href="normal-sampling.html#cb211-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb211-7"><a href="normal-sampling.html#cb211-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title) <span class="sc">+</span></span>
-<span id="cb211-8"><a href="normal-sampling.html#cb211-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(xlab) <span class="sc">+</span></span>
-<span id="cb211-9"><a href="normal-sampling.html#cb211-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(ylab)</span>
-<span id="cb211-10"><a href="normal-sampling.html#cb211-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(plt)</span>
-<span id="cb211-11"><a href="normal-sampling.html#cb211-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb211-12"><a href="normal-sampling.html#cb211-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb211-13"><a href="normal-sampling.html#cb211-13" aria-hidden="true" tabindex="-1"></a><span class="co"># first half with mean = 0, second half with mean = 3</span></span>
-<span id="cb211-14"><a href="normal-sampling.html#cb211-14" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate by concatenating two rnorm samples</span></span>
-<span id="cb211-15"><a href="normal-sampling.html#cb211-15" aria-hidden="true" tabindex="-1"></a>ms_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)), <span class="fu">rnorm</span>(n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>), <span class="dv">3</span>))</span>
-<span id="cb211-16"><a href="normal-sampling.html#cb211-16" aria-hidden="true" tabindex="-1"></a><span class="co"># or equivalently, by concatenating two mean vectors in one rnorm call</span></span>
-<span id="cb211-17"><a href="normal-sampling.html#cb211-17" aria-hidden="true" tabindex="-1"></a>ms_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="fu">c</span>(</span>
-<span id="cb211-18"><a href="normal-sampling.html#cb211-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)),</span>
-<span id="cb211-19"><a href="normal-sampling.html#cb211-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">3</span>, n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>))</span>
-<span id="cb211-20"><a href="normal-sampling.html#cb211-20" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb211-21"><a href="normal-sampling.html#cb211-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb211-22"><a href="normal-sampling.html#cb211-22" aria-hidden="true" tabindex="-1"></a><span class="co"># save the plot in a variable for later use</span></span>
-<span id="cb211-23"><a href="normal-sampling.html#cb211-23" aria-hidden="true" tabindex="-1"></a>msplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(ms_sample, <span class="st">&quot;Mean-shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
-<span id="cb211-24"><a href="normal-sampling.html#cb211-24" aria-hidden="true" tabindex="-1"></a>msplt</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="normal-sampling.html#cb211-1" tabindex="-1"></a><span class="co"># (optional) creates a function to simplify other plots</span></span>
+<span id="cb211-2"><a href="normal-sampling.html#cb211-2" tabindex="-1"></a>plot_sample <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">xlab =</span> <span class="cn">NULL</span>, <span class="at">ylab =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb211-3"><a href="normal-sampling.html#cb211-3" tabindex="-1"></a>  plt <span class="ot">&lt;-</span> x <span class="sc">%&gt;%</span></span>
+<span id="cb211-4"><a href="normal-sampling.html#cb211-4" tabindex="-1"></a>    <span class="fu">enframe</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb211-5"><a href="normal-sampling.html#cb211-5" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> name, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb211-6"><a href="normal-sampling.html#cb211-6" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb211-7"><a href="normal-sampling.html#cb211-7" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> title) <span class="sc">+</span></span>
+<span id="cb211-8"><a href="normal-sampling.html#cb211-8" tabindex="-1"></a>    <span class="fu">xlab</span>(xlab) <span class="sc">+</span></span>
+<span id="cb211-9"><a href="normal-sampling.html#cb211-9" tabindex="-1"></a>    <span class="fu">ylab</span>(ylab)</span>
+<span id="cb211-10"><a href="normal-sampling.html#cb211-10" tabindex="-1"></a>  <span class="fu">return</span>(plt)</span>
+<span id="cb211-11"><a href="normal-sampling.html#cb211-11" tabindex="-1"></a>}</span>
+<span id="cb211-12"><a href="normal-sampling.html#cb211-12" tabindex="-1"></a></span>
+<span id="cb211-13"><a href="normal-sampling.html#cb211-13" tabindex="-1"></a><span class="co"># first half with mean = 0, second half with mean = 3</span></span>
+<span id="cb211-14"><a href="normal-sampling.html#cb211-14" tabindex="-1"></a><span class="co"># simulate by concatenating two rnorm samples</span></span>
+<span id="cb211-15"><a href="normal-sampling.html#cb211-15" tabindex="-1"></a>ms_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)), <span class="fu">rnorm</span>(n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>), <span class="dv">3</span>))</span>
+<span id="cb211-16"><a href="normal-sampling.html#cb211-16" tabindex="-1"></a><span class="co"># or equivalently, by concatenating two mean vectors in one rnorm call</span></span>
+<span id="cb211-17"><a href="normal-sampling.html#cb211-17" tabindex="-1"></a>ms_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="fu">c</span>(</span>
+<span id="cb211-18"><a href="normal-sampling.html#cb211-18" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)),</span>
+<span id="cb211-19"><a href="normal-sampling.html#cb211-19" tabindex="-1"></a>  <span class="fu">rep</span>(<span class="dv">3</span>, n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>))</span>
+<span id="cb211-20"><a href="normal-sampling.html#cb211-20" tabindex="-1"></a>))</span>
+<span id="cb211-21"><a href="normal-sampling.html#cb211-21" tabindex="-1"></a></span>
+<span id="cb211-22"><a href="normal-sampling.html#cb211-22" tabindex="-1"></a><span class="co"># save the plot in a variable for later use</span></span>
+<span id="cb211-23"><a href="normal-sampling.html#cb211-23" tabindex="-1"></a>msplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(ms_sample, <span class="st">&quot;Mean-shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb211-24"><a href="normal-sampling.html#cb211-24" tabindex="-1"></a>msplt</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
 <p>For the mean drift, the mean changes variable by variable</p>
 <p><strong>Mean drift</strong>:
@@ -459,11 +460,11 @@ we can identify two notable cases: <strong>mean shift</strong> and <strong>mean 
 \]</span></p>
 <p>Similarly, in R, we can simulate a mean drift with
 mean going from <span class="math inline">\(0\)</span> to <span class="math inline">\(n-1\)</span> with unitary step.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="normal-sampling.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean is a range vector</span></span>
-<span id="cb212-2"><a href="normal-sampling.html#cb212-2" aria-hidden="true" tabindex="-1"></a>md_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>))</span>
-<span id="cb212-3"><a href="normal-sampling.html#cb212-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb212-4"><a href="normal-sampling.html#cb212-4" aria-hidden="true" tabindex="-1"></a>mdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(md_sample, <span class="st">&quot;Mean drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
-<span id="cb212-5"><a href="normal-sampling.html#cb212-5" aria-hidden="true" tabindex="-1"></a>mdplt</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="normal-sampling.html#cb212-1" tabindex="-1"></a><span class="co"># mean is a range vector</span></span>
+<span id="cb212-2"><a href="normal-sampling.html#cb212-2" tabindex="-1"></a>md_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb212-3"><a href="normal-sampling.html#cb212-3" tabindex="-1"></a></span>
+<span id="cb212-4"><a href="normal-sampling.html#cb212-4" tabindex="-1"></a>mdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(md_sample, <span class="st">&quot;Mean drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb212-5"><a href="normal-sampling.html#cb212-5" tabindex="-1"></a>mdplt</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
 <p>The same concept is applied also to random variables
 drawn by a normal with changing variance.</p>
@@ -484,13 +485,13 @@ drawn by a normal with changing variance.</p>
 \right)\,,
 \]</span></p>
 <p>in R:</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="normal-sampling.html#cb213-1" aria-hidden="true" tabindex="-1"></a>vs_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb213-2"><a href="normal-sampling.html#cb213-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)), <span class="co"># first half</span></span>
-<span id="cb213-3"><a href="normal-sampling.html#cb213-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>), <span class="at">sd =</span> <span class="dv">4</span>)</span>
-<span id="cb213-4"><a href="normal-sampling.html#cb213-4" aria-hidden="true" tabindex="-1"></a>) <span class="co"># second half</span></span>
-<span id="cb213-5"><a href="normal-sampling.html#cb213-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb213-6"><a href="normal-sampling.html#cb213-6" aria-hidden="true" tabindex="-1"></a>vsplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vs_sample, <span class="st">&quot;Variance shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
-<span id="cb213-7"><a href="normal-sampling.html#cb213-7" aria-hidden="true" tabindex="-1"></a>vsplt</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="normal-sampling.html#cb213-1" tabindex="-1"></a>vs_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb213-2"><a href="normal-sampling.html#cb213-2" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>)), <span class="co"># first half</span></span>
+<span id="cb213-3"><a href="normal-sampling.html#cb213-3" tabindex="-1"></a>  <span class="fu">rnorm</span>(n <span class="sc">-</span> <span class="fu">floor</span>(n <span class="sc">/</span> <span class="dv">2</span>), <span class="at">sd =</span> <span class="dv">4</span>)</span>
+<span id="cb213-4"><a href="normal-sampling.html#cb213-4" tabindex="-1"></a>) <span class="co"># second half</span></span>
+<span id="cb213-5"><a href="normal-sampling.html#cb213-5" tabindex="-1"></a></span>
+<span id="cb213-6"><a href="normal-sampling.html#cb213-6" tabindex="-1"></a>vsplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vs_sample, <span class="st">&quot;Variance shift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb213-7"><a href="normal-sampling.html#cb213-7" tabindex="-1"></a>vsplt</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
 <p><strong>Variance drift</strong></p>
 <p><span class="math display">\[
@@ -508,10 +509,10 @@ drawn by a normal with changing variance.</p>
 \right)\,,
 \]</span></p>
 <p>in R:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="normal-sampling.html#cb214-1" aria-hidden="true" tabindex="-1"></a>vd_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">1</span><span class="sc">:</span>n)</span>
-<span id="cb214-2"><a href="normal-sampling.html#cb214-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-3"><a href="normal-sampling.html#cb214-3" aria-hidden="true" tabindex="-1"></a>vdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vd_sample, <span class="st">&quot;Variance drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
-<span id="cb214-4"><a href="normal-sampling.html#cb214-4" aria-hidden="true" tabindex="-1"></a>vdplt</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="normal-sampling.html#cb214-1" tabindex="-1"></a>vd_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb214-2"><a href="normal-sampling.html#cb214-2" tabindex="-1"></a></span>
+<span id="cb214-3"><a href="normal-sampling.html#cb214-3" tabindex="-1"></a>vdplt <span class="ot">&lt;-</span> <span class="fu">plot_sample</span>(vd_sample, <span class="st">&quot;Variance drift&quot;</span>, <span class="st">&quot;i&quot;</span>, <span class="st">&quot;x_i&quot;</span>)</span>
+<span id="cb214-4"><a href="normal-sampling.html#cb214-4" tabindex="-1"></a>vdplt</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <div id="autocorrelated-sample" class="section level3 hasAnchor" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Autocorrelated sample<a href="normal-sampling.html#autocorrelated-sample" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -540,15 +541,15 @@ a Normal non-random sample with such distribution</p>
 <p>Hint: first compute <span class="math inline">\(E[X_i]\)</span>, then <span class="math inline">\(\text{Var}(X_i)\)</span> and finally <span class="math inline">\(\text{Cov}(X_{i+1}, X_i)\)</span></p>
 </blockquote>
 <p>In R, we build this simulation by simulating <span class="math inline">\(\mathbf Y\)</span> and deriving <span class="math inline">\(\mathbf X\)</span></p>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="normal-sampling.html#cb215-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb215-2"><a href="normal-sampling.html#cb215-2" aria-hidden="true" tabindex="-1"></a><span class="co"># index by removing first and last elements</span></span>
-<span id="cb215-3"><a href="normal-sampling.html#cb215-3" aria-hidden="true" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> y[<span class="sc">-</span>n]</span>
-<span id="cb215-4"><a href="normal-sampling.html#cb215-4" aria-hidden="true" tabindex="-1"></a><span class="co"># equivalent to</span></span>
-<span id="cb215-5"><a href="normal-sampling.html#cb215-5" aria-hidden="true" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y[<span class="dv">2</span><span class="sc">:</span>n] <span class="sc">-</span> y[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="normal-sampling.html#cb215-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb215-2"><a href="normal-sampling.html#cb215-2" tabindex="-1"></a><span class="co"># index by removing first and last elements</span></span>
+<span id="cb215-3"><a href="normal-sampling.html#cb215-3" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">-</span> y[<span class="sc">-</span>n]</span>
+<span id="cb215-4"><a href="normal-sampling.html#cb215-4" tabindex="-1"></a><span class="co"># equivalent to</span></span>
+<span id="cb215-5"><a href="normal-sampling.html#cb215-5" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y[<span class="dv">2</span><span class="sc">:</span>n] <span class="sc">-</span> y[<span class="dv">1</span><span class="sc">:</span>(n <span class="sc">-</span> <span class="dv">1</span>)]</span></code></pre></div>
 <p>or, simpler</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="normal-sampling.html#cb216-1" aria-hidden="true" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y <span class="sc">%&gt;%</span></span>
-<span id="cb216-2"><a href="normal-sampling.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">diff</span>()</span>
-<span id="cb216-3"><a href="normal-sampling.html#cb216-3" aria-hidden="true" tabindex="-1"></a>auto_sample</span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="normal-sampling.html#cb216-1" tabindex="-1"></a>auto_sample <span class="ot">&lt;-</span> y <span class="sc">%&gt;%</span></span>
+<span id="cb216-2"><a href="normal-sampling.html#cb216-2" tabindex="-1"></a>  <span class="fu">diff</span>()</span>
+<span id="cb216-3"><a href="normal-sampling.html#cb216-3" tabindex="-1"></a>auto_sample</span></code></pre></div>
 <pre><code>##  [1]  0.76486294 -0.72125125  0.69608123 -0.88154477  0.08858529  0.54025680
 ##  [7]  0.51057417 -2.23933913  1.21290797 -0.03747466 -0.68795847 -0.27543871
 ## [13]  0.40362741  1.21753967 -1.00313038 -0.36856515  0.94830413 -1.40013055
@@ -558,23 +559,23 @@ a Normal non-random sample with such distribution</p>
 ## [37]  0.08035065  0.53828058  0.24128720  0.50568106  0.69192514 -1.10511511
 ## [43] -0.67926274  1.72098578 -0.33164903  0.88189010 -2.83982793  1.76979995
 ## [49]  1.26604281</code></pre>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="normal-sampling.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sample</span>(auto_sample)</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="normal-sampling.html#cb218-1" tabindex="-1"></a><span class="fu">plot_sample</span>(auto_sample)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 <p>From this plot it is almost impossible to spot the correlation between variables.
 It’s more visible with a plot having <span class="math inline">\(X_i\)</span> on one axis and <span class="math inline">\(X_{i+1}\)</span> on the other.</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="normal-sampling.html#cb219-1" aria-hidden="true" tabindex="-1"></a>autoplt <span class="ot">&lt;-</span> auto_sample <span class="sc">%&gt;%</span></span>
-<span id="cb219-2"><a href="normal-sampling.html#cb219-2" aria-hidden="true" tabindex="-1"></a>  { <span class="co"># group in curly brackets so that tibble is called</span></span>
-<span id="cb219-3"><a href="normal-sampling.html#cb219-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># without passing auto_sample as first implicit argument</span></span>
-<span id="cb219-4"><a href="normal-sampling.html#cb219-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">x =</span> .[<span class="sc">-</span><span class="fu">length</span>(.)], <span class="at">y =</span> .[<span class="sc">-</span><span class="dv">1</span>]) <span class="co"># dot as placeholder</span></span>
-<span id="cb219-5"><a href="normal-sampling.html#cb219-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># equivalent (but more efficient) to:</span></span>
-<span id="cb219-6"><a href="normal-sampling.html#cb219-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># tibble(x = auto_sample[-length(auto_sample)], y = auto_sample[-1])</span></span>
-<span id="cb219-7"><a href="normal-sampling.html#cb219-7" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">%&gt;%</span></span>
-<span id="cb219-8"><a href="normal-sampling.html#cb219-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb219-9"><a href="normal-sampling.html#cb219-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb219-10"><a href="normal-sampling.html#cb219-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;autocorrelation&quot;</span>) <span class="sc">+</span></span>
-<span id="cb219-11"><a href="normal-sampling.html#cb219-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;x_i&quot;</span>) <span class="sc">+</span></span>
-<span id="cb219-12"><a href="normal-sampling.html#cb219-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_{i+1}&quot;</span>)</span>
-<span id="cb219-13"><a href="normal-sampling.html#cb219-13" aria-hidden="true" tabindex="-1"></a>autoplt</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="normal-sampling.html#cb219-1" tabindex="-1"></a>autoplt <span class="ot">&lt;-</span> auto_sample <span class="sc">%&gt;%</span></span>
+<span id="cb219-2"><a href="normal-sampling.html#cb219-2" tabindex="-1"></a>  { <span class="co"># group in curly brackets so that tibble is called</span></span>
+<span id="cb219-3"><a href="normal-sampling.html#cb219-3" tabindex="-1"></a>    <span class="co"># without passing auto_sample as first implicit argument</span></span>
+<span id="cb219-4"><a href="normal-sampling.html#cb219-4" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">x =</span> .[<span class="sc">-</span><span class="fu">length</span>(.)], <span class="at">y =</span> .[<span class="sc">-</span><span class="dv">1</span>]) <span class="co"># dot as placeholder</span></span>
+<span id="cb219-5"><a href="normal-sampling.html#cb219-5" tabindex="-1"></a>    <span class="co"># equivalent (but more efficient) to:</span></span>
+<span id="cb219-6"><a href="normal-sampling.html#cb219-6" tabindex="-1"></a>    <span class="co"># tibble(x = auto_sample[-length(auto_sample)], y = auto_sample[-1])</span></span>
+<span id="cb219-7"><a href="normal-sampling.html#cb219-7" tabindex="-1"></a>  } <span class="sc">%&gt;%</span></span>
+<span id="cb219-8"><a href="normal-sampling.html#cb219-8" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb219-9"><a href="normal-sampling.html#cb219-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb219-10"><a href="normal-sampling.html#cb219-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;autocorrelation&quot;</span>) <span class="sc">+</span></span>
+<span id="cb219-11"><a href="normal-sampling.html#cb219-11" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;x_i&quot;</span>) <span class="sc">+</span></span>
+<span id="cb219-12"><a href="normal-sampling.html#cb219-12" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;x_{i+1}&quot;</span>)</span>
+<span id="cb219-13"><a href="normal-sampling.html#cb219-13" tabindex="-1"></a>autoplt</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <p>Maybe it’s even more clear if the number of observations increases. Try with larger n.</p>
 <p><strong>Questions</strong>:</p>
@@ -585,11 +586,11 @@ It’s more visible with a plot having <span class="math inline">\(X_i\)</span> 
 <p><strong>Exercise</strong>: build <code>Xpos</code> such that correlation is positive</p>
 <p>We can compare these models by grouping all the plots in one
 single picture.</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="normal-sampling.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;ggpubr&quot;)</span></span>
-<span id="cb220-2"><a href="normal-sampling.html#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb220-3"><a href="normal-sampling.html#cb220-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(iidplt, msplt, mdplt, vsplt, vdplt, autoplt,</span>
-<span id="cb220-4"><a href="normal-sampling.html#cb220-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span></span>
-<span id="cb220-5"><a href="normal-sampling.html#cb220-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="normal-sampling.html#cb220-1" tabindex="-1"></a><span class="co"># install.packages(&quot;ggpubr&quot;)</span></span>
+<span id="cb220-2"><a href="normal-sampling.html#cb220-2" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb220-3"><a href="normal-sampling.html#cb220-3" tabindex="-1"></a><span class="fu">ggarrange</span>(iidplt, msplt, mdplt, vsplt, vdplt, autoplt,</span>
+<span id="cb220-4"><a href="normal-sampling.html#cb220-4" tabindex="-1"></a>  <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">2</span></span>
+<span id="cb220-5"><a href="normal-sampling.html#cb220-5" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-87-1.png" width="672" /></p>
 </div>
 </div>
@@ -629,8 +630,8 @@ But if we don’t know <span class="math inline">\(\mu\)</span>, what is the dis
 </blockquote>
 <p>In R, we simply simulate a realization of the mean r.v., then
 use that value to simulate the <span class="math inline">\(\mathbf X\)</span> Normal sample given <span class="math inline">\(\mu\)</span>.</p>
-<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="normal-sampling.html#cb221-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb221-2"><a href="normal-sampling.html#cb221-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu)</span></code></pre></div>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="normal-sampling.html#cb221-1" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb221-2"><a href="normal-sampling.html#cb221-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, mu)</span></code></pre></div>
 </div>
 <div id="multivariate-normal-random-samples" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Multivariate Normal random samples<a href="normal-sampling.html#multivariate-normal-random-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -647,16 +648,16 @@ use that value to simulate the <span class="math inline">\(\mathbf X\)</span> No
 \end{pmatrix}
 \right)
 \]</span></p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="normal-sampling.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;mvtnorm&quot;)</span></span>
-<span id="cb222-2"><a href="normal-sampling.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
-<span id="cb222-3"><a href="normal-sampling.html#cb222-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb222-4"><a href="normal-sampling.html#cb222-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate n bivariate normal r.v.</span></span>
-<span id="cb222-5"><a href="normal-sampling.html#cb222-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">2</span>) <span class="co"># mean vector</span></span>
-<span id="cb222-6"><a href="normal-sampling.html#cb222-6" aria-hidden="true" tabindex="-1"></a>vcov_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>) <span class="co"># Sigma</span></span>
-<span id="cb222-7"><a href="normal-sampling.html#cb222-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb222-8"><a href="normal-sampling.html#cb222-8" aria-hidden="true" tabindex="-1"></a><span class="co"># specify mean vector and var-cov matrix</span></span>
-<span id="cb222-9"><a href="normal-sampling.html#cb222-9" aria-hidden="true" tabindex="-1"></a>bvt_samples <span class="ot">&lt;-</span> mvtnorm<span class="sc">::</span><span class="fu">rmvnorm</span>(n, m, vcov_mat)</span>
-<span id="cb222-10"><a href="normal-sampling.html#cb222-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bvt_samples, <span class="dv">10</span>) <span class="co"># print only the first 10 elements</span></span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="normal-sampling.html#cb222-1" tabindex="-1"></a><span class="co"># install.packages(&quot;mvtnorm&quot;)</span></span>
+<span id="cb222-2"><a href="normal-sampling.html#cb222-2" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb222-3"><a href="normal-sampling.html#cb222-3" tabindex="-1"></a></span>
+<span id="cb222-4"><a href="normal-sampling.html#cb222-4" tabindex="-1"></a><span class="co"># simulate n bivariate normal r.v.</span></span>
+<span id="cb222-5"><a href="normal-sampling.html#cb222-5" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">2</span>) <span class="co"># mean vector</span></span>
+<span id="cb222-6"><a href="normal-sampling.html#cb222-6" tabindex="-1"></a>vcov_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>), <span class="at">nrow =</span> <span class="dv">2</span>) <span class="co"># Sigma</span></span>
+<span id="cb222-7"><a href="normal-sampling.html#cb222-7" tabindex="-1"></a></span>
+<span id="cb222-8"><a href="normal-sampling.html#cb222-8" tabindex="-1"></a><span class="co"># specify mean vector and var-cov matrix</span></span>
+<span id="cb222-9"><a href="normal-sampling.html#cb222-9" tabindex="-1"></a>bvt_samples <span class="ot">&lt;-</span> mvtnorm<span class="sc">::</span><span class="fu">rmvnorm</span>(n, m, vcov_mat)</span>
+<span id="cb222-10"><a href="normal-sampling.html#cb222-10" tabindex="-1"></a><span class="fu">head</span>(bvt_samples, <span class="dv">10</span>) <span class="co"># print only the first 10 elements</span></span></code></pre></div>
 <pre><code>##              [,1]       [,2]
 ##  [1,] -0.78186845 -0.2389248
 ##  [2,] -0.17599524 -0.9582082
@@ -669,29 +670,29 @@ use that value to simulate the <span class="math inline">\(\mathbf X\)</span> No
 ##  [9,] -0.04465341 -0.9858018
 ## [10,]  1.70934985  1.9264325</code></pre>
 <p>Let’s plot this sample</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="normal-sampling.html#cb224-1" aria-hidden="true" tabindex="-1"></a>bvt_samples_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> bvt_samples[, <span class="dv">1</span>], <span class="at">s =</span> bvt_samples[, <span class="dv">2</span>])</span>
-<span id="cb224-2"><a href="normal-sampling.html#cb224-2" aria-hidden="true" tabindex="-1"></a>bvt_scatter <span class="ot">&lt;-</span> bvt_samples_df <span class="sc">%&gt;%</span></span>
-<span id="cb224-3"><a href="normal-sampling.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb224-4"><a href="normal-sampling.html#cb224-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, s)) <span class="sc">+</span></span>
-<span id="cb224-5"><a href="normal-sampling.html#cb224-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span>
-<span id="cb224-6"><a href="normal-sampling.html#cb224-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb224-7"><a href="normal-sampling.html#cb224-7" aria-hidden="true" tabindex="-1"></a>bvt_scatter</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="normal-sampling.html#cb224-1" tabindex="-1"></a>bvt_samples_df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> bvt_samples[, <span class="dv">1</span>], <span class="at">s =</span> bvt_samples[, <span class="dv">2</span>])</span>
+<span id="cb224-2"><a href="normal-sampling.html#cb224-2" tabindex="-1"></a>bvt_scatter <span class="ot">&lt;-</span> bvt_samples_df <span class="sc">%&gt;%</span></span>
+<span id="cb224-3"><a href="normal-sampling.html#cb224-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb224-4"><a href="normal-sampling.html#cb224-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, s)) <span class="sc">+</span></span>
+<span id="cb224-5"><a href="normal-sampling.html#cb224-5" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span>
+<span id="cb224-6"><a href="normal-sampling.html#cb224-6" tabindex="-1"></a></span>
+<span id="cb224-7"><a href="normal-sampling.html#cb224-7" tabindex="-1"></a>bvt_scatter</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="normal-sampling.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the true distribution</span></span>
-<span id="cb225-2"><a href="normal-sampling.html#cb225-2" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a grid (many points with fixed space between them)</span></span>
-<span id="cb225-3"><a href="normal-sampling.html#cb225-3" aria-hidden="true" tabindex="-1"></a>bvt_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb225-4"><a href="normal-sampling.html#cb225-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">200</span>), <span class="co"># seq builds a sequence vector starting from</span></span>
-<span id="cb225-5"><a href="normal-sampling.html#cb225-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3 until 3 with step such that the number of elements in the vector is 200</span></span>
-<span id="cb225-6"><a href="normal-sampling.html#cb225-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">s =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
-<span id="cb225-7"><a href="normal-sampling.html#cb225-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb225-8"><a href="normal-sampling.html#cb225-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb225-9"><a href="normal-sampling.html#cb225-9" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the density at each coordinate of the grid</span></span>
-<span id="cb225-10"><a href="normal-sampling.html#cb225-10" aria-hidden="true" tabindex="-1"></a>probs <span class="ot">&lt;-</span> <span class="fu">dmvnorm</span>(bvt_grid, m, vcov_mat)</span>
-<span id="cb225-11"><a href="normal-sampling.html#cb225-11" aria-hidden="true" tabindex="-1"></a>bvt_grid <span class="sc">%&gt;%</span></span>
-<span id="cb225-12"><a href="normal-sampling.html#cb225-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> probs) <span class="sc">%&gt;%</span> <span class="co"># add a column (?dplyr::mutate)</span></span>
-<span id="cb225-13"><a href="normal-sampling.html#cb225-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb225-14"><a href="normal-sampling.html#cb225-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(x, s, <span class="at">z =</span> prob)) <span class="sc">+</span> <span class="co"># or geom_contour_filled</span></span>
-<span id="cb225-15"><a href="normal-sampling.html#cb225-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="normal-sampling.html#cb225-1" tabindex="-1"></a><span class="co"># plot the true distribution</span></span>
+<span id="cb225-2"><a href="normal-sampling.html#cb225-2" tabindex="-1"></a><span class="co"># generate a grid (many points with fixed space between them)</span></span>
+<span id="cb225-3"><a href="normal-sampling.html#cb225-3" tabindex="-1"></a>bvt_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb225-4"><a href="normal-sampling.html#cb225-4" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">length.out =</span> <span class="dv">200</span>), <span class="co"># seq builds a sequence vector starting from</span></span>
+<span id="cb225-5"><a href="normal-sampling.html#cb225-5" tabindex="-1"></a>  <span class="co"># 3 until 3 with step such that the number of elements in the vector is 200</span></span>
+<span id="cb225-6"><a href="normal-sampling.html#cb225-6" tabindex="-1"></a>  <span class="at">s =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb225-7"><a href="normal-sampling.html#cb225-7" tabindex="-1"></a>)</span>
+<span id="cb225-8"><a href="normal-sampling.html#cb225-8" tabindex="-1"></a></span>
+<span id="cb225-9"><a href="normal-sampling.html#cb225-9" tabindex="-1"></a><span class="co"># compute the density at each coordinate of the grid</span></span>
+<span id="cb225-10"><a href="normal-sampling.html#cb225-10" tabindex="-1"></a>probs <span class="ot">&lt;-</span> <span class="fu">dmvnorm</span>(bvt_grid, m, vcov_mat)</span>
+<span id="cb225-11"><a href="normal-sampling.html#cb225-11" tabindex="-1"></a>bvt_grid <span class="sc">%&gt;%</span></span>
+<span id="cb225-12"><a href="normal-sampling.html#cb225-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> probs) <span class="sc">%&gt;%</span> <span class="co"># add a column (?dplyr::mutate)</span></span>
+<span id="cb225-13"><a href="normal-sampling.html#cb225-13" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb225-14"><a href="normal-sampling.html#cb225-14" tabindex="-1"></a>  <span class="fu">geom_contour</span>(<span class="fu">aes</span>(x, s, <span class="at">z =</span> prob)) <span class="sc">+</span> <span class="co"># or geom_contour_filled</span></span>
+<span id="cb225-15"><a href="normal-sampling.html#cb225-15" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>), <span class="at">ratio =</span> <span class="sc">-</span>.<span class="dv">7</span>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <div id="exercises-1" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Exercises<a href="normal-sampling.html#exercises-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -709,7 +710,7 @@ Complete these tasks:</p>
 <ol style="list-style-type: lower-alpha">
 <li></li>
 </ol>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="normal-sampling.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pmvnorm</span>(<span class="at">upper =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="normal-sampling.html#cb226-1" tabindex="-1"></a><span class="fu">pmvnorm</span>(<span class="at">upper =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat)</span></code></pre></div>
 <pre><code>## [1] 0.3479566
 ## attr(,&quot;error&quot;)
 ## [1] 1e-15
@@ -718,19 +719,19 @@ Complete these tasks:</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li></li>
 </ol>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="normal-sampling.html#cb228-1" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(<span class="dv">100000</span>, <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat) <span class="co"># simulate enough samples</span></span>
-<span id="cb228-2"><a href="normal-sampling.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="co"># count all the observations satisfying the condition</span></span>
-<span id="cb228-3"><a href="normal-sampling.html#cb228-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and divide by the number of total obs to obtain a ratio</span></span>
-<span id="cb228-4"><a href="normal-sampling.html#cb228-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mean() applied to logical values is the proportion of true vars</span></span>
-<span id="cb228-5"><a href="normal-sampling.html#cb228-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sim[, <span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> sim[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="normal-sampling.html#cb228-1" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(<span class="dv">100000</span>, <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat) <span class="co"># simulate enough samples</span></span>
+<span id="cb228-2"><a href="normal-sampling.html#cb228-2" tabindex="-1"></a><span class="co"># count all the observations satisfying the condition</span></span>
+<span id="cb228-3"><a href="normal-sampling.html#cb228-3" tabindex="-1"></a><span class="co"># and divide by the number of total obs to obtain a ratio</span></span>
+<span id="cb228-4"><a href="normal-sampling.html#cb228-4" tabindex="-1"></a><span class="co"># mean() applied to logical values is the proportion of true vars</span></span>
+<span id="cb228-5"><a href="normal-sampling.html#cb228-5" tabindex="-1"></a><span class="fu">mean</span>(sim[, <span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> sim[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 0.34856</code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
 <li></li>
 </ol>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="normal-sampling.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(sim[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="normal-sampling.html#cb230-1" tabindex="-1"></a><span class="fu">mean</span>(sim[, <span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> sim[, <span class="dv">2</span>] <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 0.0238</code></pre>
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="normal-sampling.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use lower and upper limits as described in the pmvnorm docs</span></span>
-<span id="cb232-2"><a href="normal-sampling.html#cb232-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pmvnorm</span>(<span class="at">lower =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="cn">Inf</span>), <span class="at">upper =</span> <span class="fu">c</span>(<span class="cn">Inf</span>, <span class="dv">0</span>), <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="normal-sampling.html#cb232-1" tabindex="-1"></a><span class="co"># use lower and upper limits as described in the pmvnorm docs</span></span>
+<span id="cb232-2"><a href="normal-sampling.html#cb232-2" tabindex="-1"></a><span class="fu">pmvnorm</span>(<span class="at">lower =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="cn">Inf</span>), <span class="at">upper =</span> <span class="fu">c</span>(<span class="cn">Inf</span>, <span class="dv">0</span>), <span class="at">mean =</span> m, <span class="at">sigma =</span> vcov_mat)</span></code></pre></div>
 <pre><code>## [1] 0.0240375
 ## attr(,&quot;error&quot;)
 ## [1] 1e-15

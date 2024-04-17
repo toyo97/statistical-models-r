@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 The linear model | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 The linear model | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-01-12" />
+<meta name="date" content="2024-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -58,7 +58,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -130,6 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -231,7 +232,7 @@ div.csl-indent {
 <li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
-<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>4.2</b> Basic EDA (Exploratory Data Analysis)</a></li>
 <li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
 <li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
 <ul>
@@ -354,20 +355,21 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="the-linear-model" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4</span> The linear model<a href="the-linear-model.html#the-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>For this lecture, we will use the <em>Advertising</em> dataset,
-which can be found <a href="https://www.kaggle.com/datasets/ashydv/advertising-dataset">here</a>.
-It shows, for each line, the revenue (<code>Sales</code>) depending on the
-money spent on three different advertising channels: <code>TV</code>, <code>Radio</code>, <code>Newspaper</code>.</p>
-<p>Every attribute is continuous, and allows to explain the main R
+<p>During this lecture, we will use the <em>Advertising</em> dataset,
+which can be found <a href="https://www.kaggle.com/datasets/ashydv/advertising-dataset">in Kaggle</a>.
+It shows, for each line, the revenue (<code>Sales</code>), which is the <em>response</em> depending on
+three <em>predictors</em>, i.e. money spent on three different advertising channels: <code>TV</code>, <code>Radio</code>, <code>Newspaper</code>.
+Every variable is continuous, allowing to explain the main R
 functions used in a plain linear regression task.</p>
 <div id="dataset-import" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Dataset import<a href="the-linear-model.html#dataset-import" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Import the dataset (remember to check the current working
-directory).</p>
-<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="the-linear-model.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb234-2"><a href="the-linear-model.html#cb234-2" aria-hidden="true" tabindex="-1"></a><span class="co"># here the wd contains a folder &#39;dataset&#39; which</span></span>
-<span id="cb234-3"><a href="the-linear-model.html#cb234-3" aria-hidden="true" tabindex="-1"></a><span class="co"># in turn contains the file to be read</span></span>
-<span id="cb234-4"><a href="the-linear-model.html#cb234-4" aria-hidden="true" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
+<p>Import the dataset (you may have to select properly the current working directory).
+Remember a modern version of a dataset in R is called <em>tibble</em> (as opposed to the
+previous <em>dataframe</em>)</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="the-linear-model.html#cb234-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb234-2"><a href="the-linear-model.html#cb234-2" tabindex="-1"></a><span class="co"># here the wd contains a folder &#39;dataset&#39; which</span></span>
+<span id="cb234-3"><a href="the-linear-model.html#cb234-3" tabindex="-1"></a><span class="co"># in turn contains the file to be read</span></span>
+<span id="cb234-4"><a href="the-linear-model.html#cb234-4" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 200 Columns: 4
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -375,7 +377,7 @@ directory).</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="the-linear-model.html#cb236-1" aria-hidden="true" tabindex="-1"></a>advertising</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="the-linear-model.html#cb236-1" tabindex="-1"></a>advertising</span></code></pre></div>
 <pre><code>## # A tibble: 200 × 4
 ##       TV Radio Newspaper Sales
 ##    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -391,10 +393,10 @@ directory).</p>
 ## 10 200.    2.6      21.2  15.6
 ## # ℹ 190 more rows</code></pre>
 </div>
-<div id="basic-eda" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Basic EDA<a href="the-linear-model.html#basic-eda" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Get some statistics with <code>summary()</code></p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="the-linear-model.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(advertising)</span></code></pre></div>
+<div id="basic-eda-exploratory-data-analysis" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Basic EDA (Exploratory Data Analysis)<a href="the-linear-model.html#basic-eda-exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Get some basic statistics with <code>summary()</code></p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="the-linear-model.html#cb238-1" tabindex="-1"></a><span class="fu">summary</span>(advertising)</span></code></pre></div>
 <pre><code>##        TV             Radio          Newspaper          Sales      
 ##  Min.   :  0.70   Min.   : 0.000   Min.   :  0.30   Min.   : 1.60  
 ##  1st Qu.: 74.38   1st Qu.: 9.975   1st Qu.: 12.75   1st Qu.:11.00  
@@ -402,23 +404,23 @@ directory).</p>
 ##  Mean   :147.04   Mean   :23.264   Mean   : 30.55   Mean   :15.13  
 ##  3rd Qu.:218.82   3rd Qu.:36.525   3rd Qu.: 45.10   3rd Qu.:19.05  
 ##  Max.   :296.40   Max.   :49.600   Max.   :114.00   Max.   :27.00</code></pre>
-<p>You can attach the dataset to access columns with less code
-(not recommended). All the columns of the table are then
+<p>You can <code>attach()</code> the dataset to access columns writing less code, although this is not
+recommended nowadays (see <code>with()</code> below). All the columns of the table are then
 available in the R environment without prepending the dataset name</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="the-linear-model.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attach</span>(advertising)</span>
-<span id="cb240-2"><a href="the-linear-model.html#cb240-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(TV)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="the-linear-model.html#cb240-1" tabindex="-1"></a><span class="fu">attach</span>(advertising)</span>
+<span id="cb240-2"><a href="the-linear-model.html#cb240-2" tabindex="-1"></a><span class="fu">head</span>(TV)</span></code></pre></div>
 <pre><code>## [1] 230.1  44.5  17.2 151.5 180.8   8.7</code></pre>
 <p>To revert back, detach the dataset</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="the-linear-model.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">detach</span>(advertising)</span></code></pre></div>
-<p>It is better to use <code>with()</code> instead, if really needed.
-This function basically attach a certain context object
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="the-linear-model.html#cb242-1" tabindex="-1"></a><span class="fu">detach</span>(advertising)</span></code></pre></div>
+<p>It is better to use <code>with()</code> instead.
+This function basically attaches a certain context object
 (e.g. the dataset namespace), executes the commands inside
 the curly brackets, and then detaches the context object.</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="the-linear-model.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
-<span id="cb243-2"><a href="the-linear-model.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">head</span>(Sales))</span>
-<span id="cb243-3"><a href="the-linear-model.html#cb243-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">mean</span>(TV))</span>
-<span id="cb243-4"><a href="the-linear-model.html#cb243-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(Radio[Radio <span class="sc">&lt;</span> <span class="dv">20</span>])</span>
-<span id="cb243-5"><a href="the-linear-model.html#cb243-5" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="the-linear-model.html#cb243-1" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
+<span id="cb243-2"><a href="the-linear-model.html#cb243-2" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">head</span>(Sales))</span>
+<span id="cb243-3"><a href="the-linear-model.html#cb243-3" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">mean</span>(TV))</span>
+<span id="cb243-4"><a href="the-linear-model.html#cb243-4" tabindex="-1"></a>  <span class="fu">print</span>(Radio[Radio <span class="sc">&lt;</span> <span class="dv">20</span>])</span>
+<span id="cb243-5"><a href="the-linear-model.html#cb243-5" tabindex="-1"></a>})</span></code></pre></div>
 <pre><code>## [1] 22.1 10.4 12.0 16.5 17.9  7.2
 ## [1] 147.0425
 ##  [1] 10.8 19.6  2.1  2.6  5.8  7.6  5.1 15.9 16.9 12.6  3.5 16.7 16.0 17.4  1.5
@@ -429,122 +431,123 @@ the curly brackets, and then detaches the context object.</p>
 ## [76] 10.0  2.6  5.4  5.7  2.1 13.9 12.1 10.8  4.1  3.7  4.9  9.3  8.6</code></pre>
 <p>These are some of the functions that might be useful
 when gathering information about a dataset.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="the-linear-model.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(advertising) <span class="co"># columns!</span></span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="the-linear-model.html#cb245-1" tabindex="-1"></a><span class="fu">length</span>(advertising) <span class="co"># columns!</span></span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="the-linear-model.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(advertising)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="the-linear-model.html#cb247-1" tabindex="-1"></a><span class="fu">nrow</span>(advertising)</span></code></pre></div>
 <pre><code>## [1] 200</code></pre>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="the-linear-model.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(advertising)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="the-linear-model.html#cb249-1" tabindex="-1"></a><span class="fu">dim</span>(advertising)</span></code></pre></div>
 <pre><code>## [1] 200   4</code></pre>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="the-linear-model.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(advertising)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="the-linear-model.html#cb251-1" tabindex="-1"></a><span class="fu">names</span>(advertising)</span></code></pre></div>
 <pre><code>## [1] &quot;TV&quot;        &quot;Radio&quot;     &quot;Newspaper&quot; &quot;Sales&quot;</code></pre>
 </div>
 <div id="simple-plots" class="section level2 hasAnchor" number="4.3">
 <h2><span class="header-section-number">4.3</span> Simple plots<a href="the-linear-model.html#simple-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In exploration, ggplot might be a bit overkill. Faster
-plots can be drawn with <code>plot()</code> and <code>pairs()</code></p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="the-linear-model.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(advertising)</span></code></pre></div>
+<p>When exploring a dataset, <code>ggplot()</code> might be a bit excessive
+(recall that <code>ggplot()</code> is a modern way to draw cool plots using
+a graphical syntax). Faster plots can be drawn with <code>plot()</code> and <code>pairs()</code></p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="the-linear-model.html#cb253-1" tabindex="-1"></a><span class="fu">plot</span>(advertising)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-103-1.png" width="672" /></p>
 <p>A pair-plot gives a bigger picture of the
 cross correlations between variables.
 The base R <code>pairs()</code> function can be tweaked (check <code>?pairs</code>)
 in order to draw other kind of information of interest.</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="the-linear-model.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="do">## put histograms on the diagonal</span></span>
-<span id="cb254-2"><a href="the-linear-model.html#cb254-2" aria-hidden="true" tabindex="-1"></a>panel_hist <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb254-3"><a href="the-linear-model.html#cb254-3" aria-hidden="true" tabindex="-1"></a>  usr <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)</span>
-<span id="cb254-4"><a href="the-linear-model.html#cb254-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">usr =</span> <span class="fu">c</span>(usr[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="dv">0</span>, <span class="fl">1.5</span>))</span>
-<span id="cb254-5"><a href="the-linear-model.html#cb254-5" aria-hidden="true" tabindex="-1"></a>  h <span class="ot">&lt;-</span> <span class="fu">hist</span>(x, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb254-6"><a href="the-linear-model.html#cb254-6" aria-hidden="true" tabindex="-1"></a>  breaks <span class="ot">&lt;-</span> h<span class="sc">$</span>breaks</span>
-<span id="cb254-7"><a href="the-linear-model.html#cb254-7" aria-hidden="true" tabindex="-1"></a>  nb <span class="ot">&lt;-</span> <span class="fu">length</span>(breaks)</span>
-<span id="cb254-8"><a href="the-linear-model.html#cb254-8" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> h<span class="sc">$</span>counts</span>
-<span id="cb254-9"><a href="the-linear-model.html#cb254-9" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> y <span class="sc">/</span> <span class="fu">max</span>(y)</span>
-<span id="cb254-10"><a href="the-linear-model.html#cb254-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rect</span>(breaks[<span class="sc">-</span>nb], <span class="dv">0</span>, breaks[<span class="sc">-</span><span class="dv">1</span>], y, <span class="at">col =</span> <span class="st">&quot;cyan&quot;</span>, ...)</span>
-<span id="cb254-11"><a href="the-linear-model.html#cb254-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb254-12"><a href="the-linear-model.html#cb254-12" aria-hidden="true" tabindex="-1"></a><span class="do">## put (absolute) correlations on the upper panels,</span></span>
-<span id="cb254-13"><a href="the-linear-model.html#cb254-13" aria-hidden="true" tabindex="-1"></a><span class="do">## with size proportional to the correlations.</span></span>
-<span id="cb254-14"><a href="the-linear-model.html#cb254-14" aria-hidden="true" tabindex="-1"></a>panel_cor <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">prefix =</span> <span class="st">&quot;&quot;</span>, cex_cor, ...) {</span>
-<span id="cb254-15"><a href="the-linear-model.html#cb254-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">usr =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb254-16"><a href="the-linear-model.html#cb254-16" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">cor</span>(x, y))</span>
-<span id="cb254-17"><a href="the-linear-model.html#cb254-17" aria-hidden="true" tabindex="-1"></a>  txt <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">c</span>(r, <span class="fl">0.123456789</span>), <span class="at">digits =</span> digits)[<span class="dv">1</span>]</span>
-<span id="cb254-18"><a href="the-linear-model.html#cb254-18" aria-hidden="true" tabindex="-1"></a>  txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(prefix, txt)</span>
-<span id="cb254-19"><a href="the-linear-model.html#cb254-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(cex_cor)) cex_cor <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">/</span> <span class="fu">strwidth</span>(txt)</span>
-<span id="cb254-20"><a href="the-linear-model.html#cb254-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, txt, <span class="at">cex =</span> cex_cor <span class="sc">*</span> r)</span>
-<span id="cb254-21"><a href="the-linear-model.html#cb254-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb254-22"><a href="the-linear-model.html#cb254-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb254-23"><a href="the-linear-model.html#cb254-23" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(advertising,</span>
-<span id="cb254-24"><a href="the-linear-model.html#cb254-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper.panel =</span> panel_cor, <span class="at">diag.panel =</span> panel_hist</span>
-<span id="cb254-25"><a href="the-linear-model.html#cb254-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="the-linear-model.html#cb254-1" tabindex="-1"></a><span class="do">## put histograms on the diagonal</span></span>
+<span id="cb254-2"><a href="the-linear-model.html#cb254-2" tabindex="-1"></a>panel_hist <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb254-3"><a href="the-linear-model.html#cb254-3" tabindex="-1"></a>  usr <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>)</span>
+<span id="cb254-4"><a href="the-linear-model.html#cb254-4" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">usr =</span> <span class="fu">c</span>(usr[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="dv">0</span>, <span class="fl">1.5</span>))</span>
+<span id="cb254-5"><a href="the-linear-model.html#cb254-5" tabindex="-1"></a>  h <span class="ot">&lt;-</span> <span class="fu">hist</span>(x, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb254-6"><a href="the-linear-model.html#cb254-6" tabindex="-1"></a>  breaks <span class="ot">&lt;-</span> h<span class="sc">$</span>breaks</span>
+<span id="cb254-7"><a href="the-linear-model.html#cb254-7" tabindex="-1"></a>  nb <span class="ot">&lt;-</span> <span class="fu">length</span>(breaks)</span>
+<span id="cb254-8"><a href="the-linear-model.html#cb254-8" tabindex="-1"></a>  y <span class="ot">&lt;-</span> h<span class="sc">$</span>counts</span>
+<span id="cb254-9"><a href="the-linear-model.html#cb254-9" tabindex="-1"></a>  y <span class="ot">&lt;-</span> y <span class="sc">/</span> <span class="fu">max</span>(y)</span>
+<span id="cb254-10"><a href="the-linear-model.html#cb254-10" tabindex="-1"></a>  <span class="fu">rect</span>(breaks[<span class="sc">-</span>nb], <span class="dv">0</span>, breaks[<span class="sc">-</span><span class="dv">1</span>], y, <span class="at">col =</span> <span class="st">&quot;cyan&quot;</span>, ...)</span>
+<span id="cb254-11"><a href="the-linear-model.html#cb254-11" tabindex="-1"></a>}</span>
+<span id="cb254-12"><a href="the-linear-model.html#cb254-12" tabindex="-1"></a><span class="do">## put (absolute) correlations on the upper panels,</span></span>
+<span id="cb254-13"><a href="the-linear-model.html#cb254-13" tabindex="-1"></a><span class="do">## with size proportional to the correlations.</span></span>
+<span id="cb254-14"><a href="the-linear-model.html#cb254-14" tabindex="-1"></a>panel_cor <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, <span class="at">digits =</span> <span class="dv">2</span>, <span class="at">prefix =</span> <span class="st">&quot;&quot;</span>, cex_cor, ...) {</span>
+<span id="cb254-15"><a href="the-linear-model.html#cb254-15" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">usr =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb254-16"><a href="the-linear-model.html#cb254-16" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">cor</span>(x, y))</span>
+<span id="cb254-17"><a href="the-linear-model.html#cb254-17" tabindex="-1"></a>  txt <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">c</span>(r, <span class="fl">0.123456789</span>), <span class="at">digits =</span> digits)[<span class="dv">1</span>]</span>
+<span id="cb254-18"><a href="the-linear-model.html#cb254-18" tabindex="-1"></a>  txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(prefix, txt)</span>
+<span id="cb254-19"><a href="the-linear-model.html#cb254-19" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(cex_cor)) cex_cor <span class="ot">&lt;-</span> <span class="fl">0.8</span> <span class="sc">/</span> <span class="fu">strwidth</span>(txt)</span>
+<span id="cb254-20"><a href="the-linear-model.html#cb254-20" tabindex="-1"></a>  <span class="fu">text</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>, txt, <span class="at">cex =</span> cex_cor <span class="sc">*</span> r)</span>
+<span id="cb254-21"><a href="the-linear-model.html#cb254-21" tabindex="-1"></a>}</span>
+<span id="cb254-22"><a href="the-linear-model.html#cb254-22" tabindex="-1"></a></span>
+<span id="cb254-23"><a href="the-linear-model.html#cb254-23" tabindex="-1"></a><span class="fu">pairs</span>(advertising,</span>
+<span id="cb254-24"><a href="the-linear-model.html#cb254-24" tabindex="-1"></a>  <span class="at">upper.panel =</span> panel_cor, <span class="at">diag.panel =</span> panel_hist</span>
+<span id="cb254-25"><a href="the-linear-model.html#cb254-25" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>With much less effort, we can obtain a prettier
 version of the pair-plot.</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="the-linear-model.html#cb255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="the-linear-model.html#cb255-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
 ##   method from   
 ##   +.gg   ggplot2</code></pre>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="the-linear-model.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(advertising, <span class="at">progress =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="the-linear-model.html#cb257-1" tabindex="-1"></a><span class="fu">ggpairs</span>(advertising, <span class="at">progress =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>Again, with base R let’s plot the predictors against the response.
 We know how to do that with a single predictor.</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="the-linear-model.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(advertising<span class="sc">$</span>TV, advertising<span class="sc">$</span>Sales)</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="the-linear-model.html#cb258-1" tabindex="-1"></a><span class="fu">plot</span>(advertising<span class="sc">$</span>TV, advertising<span class="sc">$</span>Sales)</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
 <p>In case we want to add all plots to a single figure,
 we can do it as follow (base R)</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="the-linear-model.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot parameters</span></span>
-<span id="cb259-2"><a href="the-linear-model.html#cb259-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
-<span id="cb259-3"><a href="the-linear-model.html#cb259-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb259-4"><a href="the-linear-model.html#cb259-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(TV, Sales)</span>
-<span id="cb259-5"><a href="the-linear-model.html#cb259-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(Radio, Sales)</span>
-<span id="cb259-6"><a href="the-linear-model.html#cb259-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(Newspaper, Sales)</span>
-<span id="cb259-7"><a href="the-linear-model.html#cb259-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="the-linear-model.html#cb259-1" tabindex="-1"></a><span class="co"># set plot parameters</span></span>
+<span id="cb259-2"><a href="the-linear-model.html#cb259-2" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
+<span id="cb259-3"><a href="the-linear-model.html#cb259-3" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb259-4"><a href="the-linear-model.html#cb259-4" tabindex="-1"></a>  <span class="fu">plot</span>(TV, Sales)</span>
+<span id="cb259-5"><a href="the-linear-model.html#cb259-5" tabindex="-1"></a>  <span class="fu">plot</span>(Radio, Sales)</span>
+<span id="cb259-6"><a href="the-linear-model.html#cb259-6" tabindex="-1"></a>  <span class="fu">plot</span>(Newspaper, Sales)</span>
+<span id="cb259-7"><a href="the-linear-model.html#cb259-7" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>adding a smoothed line would look like this</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="the-linear-model.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot parameters</span></span>
-<span id="cb260-2"><a href="the-linear-model.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
-<span id="cb260-3"><a href="the-linear-model.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb260-4"><a href="the-linear-model.html#cb260-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(TV, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb260-5"><a href="the-linear-model.html#cb260-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(Radio, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb260-6"><a href="the-linear-model.html#cb260-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(Newspaper, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">span =</span> .<span class="dv">3</span>) <span class="co"># tweak with span</span></span>
-<span id="cb260-7"><a href="the-linear-model.html#cb260-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="the-linear-model.html#cb260-1" tabindex="-1"></a><span class="co"># set plot parameters</span></span>
+<span id="cb260-2"><a href="the-linear-model.html#cb260-2" tabindex="-1"></a><span class="fu">with</span>(advertising, {</span>
+<span id="cb260-3"><a href="the-linear-model.html#cb260-3" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb260-4"><a href="the-linear-model.html#cb260-4" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(TV, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb260-5"><a href="the-linear-model.html#cb260-5" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(Radio, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb260-6"><a href="the-linear-model.html#cb260-6" tabindex="-1"></a>  <span class="fu">scatter.smooth</span>(Newspaper, Sales, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">span =</span> .<span class="dv">3</span>) <span class="co"># tweak with span</span></span>
+<span id="cb260-7"><a href="the-linear-model.html#cb260-7" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-108-1.png" width="672" /></p>
-<p>The same pictures can also be plotted with <code>ggplot</code>,
+<p>The same pictures can also be plotted with <code>ggplot()</code>,
 if preferred (in two ways).</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="the-linear-model.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb261-2"><a href="the-linear-model.html#cb261-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb261-3"><a href="the-linear-model.html#cb261-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(advertising) <span class="sc">+</span></span>
-<span id="cb261-4"><a href="the-linear-model.html#cb261-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(TV, Sales))</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="the-linear-model.html#cb261-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb261-2"><a href="the-linear-model.html#cb261-2" tabindex="-1"></a></span>
+<span id="cb261-3"><a href="the-linear-model.html#cb261-3" tabindex="-1"></a><span class="fu">ggplot</span>(advertising) <span class="sc">+</span></span>
+<span id="cb261-4"><a href="the-linear-model.html#cb261-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(TV, Sales))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 <p>First method: draw three separate plots and arrange
 them together with <code>ggarrange()</code></p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="the-linear-model.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb262-2"><a href="the-linear-model.html#cb262-2" aria-hidden="true" tabindex="-1"></a>tvplt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(advertising, <span class="at">mapping =</span> <span class="fu">aes</span>(TV, Sales)) <span class="sc">+</span></span>
-<span id="cb262-3"><a href="the-linear-model.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb262-4"><a href="the-linear-model.html#cb262-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
-<span id="cb262-5"><a href="the-linear-model.html#cb262-5" aria-hidden="true" tabindex="-1"></a>radplt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(advertising, <span class="at">mapping =</span> <span class="fu">aes</span>(Radio, Sales)) <span class="sc">+</span></span>
-<span id="cb262-6"><a href="the-linear-model.html#cb262-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb262-7"><a href="the-linear-model.html#cb262-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
-<span id="cb262-8"><a href="the-linear-model.html#cb262-8" aria-hidden="true" tabindex="-1"></a>nwsplt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(advertising, <span class="at">mapping =</span> <span class="fu">aes</span>(Newspaper, Sales)) <span class="sc">+</span></span>
-<span id="cb262-9"><a href="the-linear-model.html#cb262-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb262-10"><a href="the-linear-model.html#cb262-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
-<span id="cb262-11"><a href="the-linear-model.html#cb262-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb262-12"><a href="the-linear-model.html#cb262-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(tvplt, radplt, nwsplt,</span>
-<span id="cb262-13"><a href="the-linear-model.html#cb262-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">3</span></span>
-<span id="cb262-14"><a href="the-linear-model.html#cb262-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="the-linear-model.html#cb262-1" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb262-2"><a href="the-linear-model.html#cb262-2" tabindex="-1"></a>tvplt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(advertising, <span class="at">mapping =</span> <span class="fu">aes</span>(TV, Sales)) <span class="sc">+</span></span>
+<span id="cb262-3"><a href="the-linear-model.html#cb262-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb262-4"><a href="the-linear-model.html#cb262-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
+<span id="cb262-5"><a href="the-linear-model.html#cb262-5" tabindex="-1"></a>radplt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(advertising, <span class="at">mapping =</span> <span class="fu">aes</span>(Radio, Sales)) <span class="sc">+</span></span>
+<span id="cb262-6"><a href="the-linear-model.html#cb262-6" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb262-7"><a href="the-linear-model.html#cb262-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
+<span id="cb262-8"><a href="the-linear-model.html#cb262-8" tabindex="-1"></a>nwsplt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(advertising, <span class="at">mapping =</span> <span class="fu">aes</span>(Newspaper, Sales)) <span class="sc">+</span></span>
+<span id="cb262-9"><a href="the-linear-model.html#cb262-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb262-10"><a href="the-linear-model.html#cb262-10" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span>
+<span id="cb262-11"><a href="the-linear-model.html#cb262-11" tabindex="-1"></a></span>
+<span id="cb262-12"><a href="the-linear-model.html#cb262-12" tabindex="-1"></a><span class="fu">ggarrange</span>(tvplt, radplt, nwsplt,</span>
+<span id="cb262-13"><a href="the-linear-model.html#cb262-13" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="dv">3</span></span>
+<span id="cb262-14"><a href="the-linear-model.html#cb262-14" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <p>Second method: rearrange the dataset first,
-and feed everything to ggplot.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="the-linear-model.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb264-2"><a href="the-linear-model.html#cb264-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb264-3"><a href="the-linear-model.html#cb264-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb264-4"><a href="the-linear-model.html#cb264-4" aria-hidden="true" tabindex="-1"></a><span class="do">## if using melt, need to switch to data.frame</span></span>
-<span id="cb264-5"><a href="the-linear-model.html#cb264-5" aria-hidden="true" tabindex="-1"></a><span class="co"># library(reshape2)</span></span>
-<span id="cb264-6"><a href="the-linear-model.html#cb264-6" aria-hidden="true" tabindex="-1"></a><span class="co"># advertising &lt;- as.data.frame(advertising)</span></span>
-<span id="cb264-7"><a href="the-linear-model.html#cb264-7" aria-hidden="true" tabindex="-1"></a><span class="co"># long_adv &lt;- melt(advertising, id.vars = &quot;Sales&quot;)</span></span>
-<span id="cb264-8"><a href="the-linear-model.html#cb264-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb264-9"><a href="the-linear-model.html#cb264-9" aria-hidden="true" tabindex="-1"></a>long_adv <span class="ot">&lt;-</span> advertising <span class="sc">%&gt;%</span></span>
-<span id="cb264-10"><a href="the-linear-model.html#cb264-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(channel, value, <span class="sc">-</span>Sales)</span>
-<span id="cb264-11"><a href="the-linear-model.html#cb264-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(long_adv)</span></code></pre></div>
+and feed everything to <code>ggplot()</code>.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="the-linear-model.html#cb264-1" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb264-2"><a href="the-linear-model.html#cb264-2" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb264-3"><a href="the-linear-model.html#cb264-3" tabindex="-1"></a></span>
+<span id="cb264-4"><a href="the-linear-model.html#cb264-4" tabindex="-1"></a><span class="do">## if using melt, need to switch to data.frame</span></span>
+<span id="cb264-5"><a href="the-linear-model.html#cb264-5" tabindex="-1"></a><span class="co"># library(reshape2)</span></span>
+<span id="cb264-6"><a href="the-linear-model.html#cb264-6" tabindex="-1"></a><span class="co"># advertising &lt;- as.data.frame(advertising)</span></span>
+<span id="cb264-7"><a href="the-linear-model.html#cb264-7" tabindex="-1"></a><span class="co"># long_adv &lt;- melt(advertising, id.vars = &quot;Sales&quot;)</span></span>
+<span id="cb264-8"><a href="the-linear-model.html#cb264-8" tabindex="-1"></a></span>
+<span id="cb264-9"><a href="the-linear-model.html#cb264-9" tabindex="-1"></a>long_adv <span class="ot">&lt;-</span> advertising <span class="sc">%&gt;%</span></span>
+<span id="cb264-10"><a href="the-linear-model.html#cb264-10" tabindex="-1"></a>  <span class="fu">gather</span>(channel, value, <span class="sc">-</span>Sales)</span>
+<span id="cb264-11"><a href="the-linear-model.html#cb264-11" tabindex="-1"></a><span class="fu">head</span>(long_adv)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
 ##   Sales channel value
 ##   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -554,10 +557,10 @@ and feed everything to ggplot.</p>
 ## 4  16.5 TV      152. 
 ## 5  17.9 TV      181. 
 ## 6   7.2 TV        8.7</code></pre>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="the-linear-model.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(long_adv, <span class="fu">aes</span>(value, Sales)) <span class="sc">+</span></span>
-<span id="cb266-2"><a href="the-linear-model.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb266-3"><a href="the-linear-model.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
-<span id="cb266-4"><a href="the-linear-model.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>channel, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="the-linear-model.html#cb266-1" tabindex="-1"></a><span class="fu">ggplot</span>(long_adv, <span class="fu">aes</span>(value, Sales)) <span class="sc">+</span></span>
+<span id="cb266-2"><a href="the-linear-model.html#cb266-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb266-3"><a href="the-linear-model.html#cb266-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb266-4"><a href="the-linear-model.html#cb266-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>channel, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p>If you’re not sure why we need to use the <code>melt()</code> function,
@@ -566,34 +569,35 @@ helper.</p>
 </div>
 <div id="simple-regression" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Simple regression<a href="the-linear-model.html#simple-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Check the <code>lm()</code> function: first argument is the <em>formula</em>.</p>
-<p>Let’s fit a simple single predictor linear model</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="the-linear-model.html#cb268-1" aria-hidden="true" tabindex="-1"></a>simple_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV, <span class="at">data =</span> advertising)</span></code></pre></div>
+<p>The core of this class is the <code>lm()</code> function: its first argument is a <em>formula</em>,
+centered around the symbol ~, whith a response on its left and a list of predictors on its right.</p>
+<p>Let’s start with a simple single quantitative predictor linear
+model (simple linear regression)</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="the-linear-model.html#cb268-1" tabindex="-1"></a>simple_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV, <span class="at">data =</span> advertising)</span></code></pre></div>
 <p>Now that we fitted the model, we have access to the
-coefficient estimates and we can plot the regression
+coefficient estimates and we can plot the <em>estimated</em> regression
 line.</p>
 <div id="plot" class="section level3 hasAnchor" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> Plot<a href="the-linear-model.html#plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here two ways of drawing the regression line,
 first in base R</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="the-linear-model.html#cb269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(<span class="at">data =</span> advertising, {</span>
-<span id="cb269-2"><a href="the-linear-model.html#cb269-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">x =</span> TV, <span class="at">y =</span> Sales)</span>
-<span id="cb269-3"><a href="the-linear-model.html#cb269-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># abline draws a line from intercept and slope</span></span>
-<span id="cb269-4"><a href="the-linear-model.html#cb269-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(</span>
-<span id="cb269-5"><a href="the-linear-model.html#cb269-5" aria-hidden="true" tabindex="-1"></a>    simple_reg,</span>
-<span id="cb269-6"><a href="the-linear-model.html#cb269-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;red&quot;</span></span>
-<span id="cb269-7"><a href="the-linear-model.html#cb269-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb269-8"><a href="the-linear-model.html#cb269-8" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="the-linear-model.html#cb269-1" tabindex="-1"></a><span class="fu">with</span>(<span class="at">data =</span> advertising, {</span>
+<span id="cb269-2"><a href="the-linear-model.html#cb269-2" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">x =</span> TV, <span class="at">y =</span> Sales)</span>
+<span id="cb269-3"><a href="the-linear-model.html#cb269-3" tabindex="-1"></a>  <span class="co"># abline draws a line from intercept and slope</span></span>
+<span id="cb269-4"><a href="the-linear-model.html#cb269-4" tabindex="-1"></a>  <span class="fu">abline</span>(</span>
+<span id="cb269-5"><a href="the-linear-model.html#cb269-5" tabindex="-1"></a>    simple_reg,</span>
+<span id="cb269-6"><a href="the-linear-model.html#cb269-6" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;red&quot;</span></span>
+<span id="cb269-7"><a href="the-linear-model.html#cb269-7" tabindex="-1"></a>  )</span>
+<span id="cb269-8"><a href="the-linear-model.html#cb269-8" tabindex="-1"></a>})</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-114-1.png" width="672" /></p>
 <p>and in ggplot</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="the-linear-model.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(simple_reg, <span class="at">mapping =</span> <span class="fu">aes</span>(TV, Sales)) <span class="sc">+</span></span>
-<span id="cb270-2"><a href="the-linear-model.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb270-3"><a href="the-linear-model.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="the-linear-model.html#cb270-1" tabindex="-1"></a><span class="fu">ggplot</span>(simple_reg, <span class="at">mapping =</span> <span class="fu">aes</span>(TV, Sales)) <span class="sc">+</span></span>
+<span id="cb270-2"><a href="the-linear-model.html#cb270-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb270-3"><a href="the-linear-model.html#cb270-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
-<p>Actually, <code>lm()</code> does a lot more than just compute
-the OLS coefficients.</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="the-linear-model.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_reg)</span></code></pre></div>
+<p>Actually, <code>lm()</code> does a lot more than just compute the least squares coefficients.</p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="the-linear-model.html#cb272-1" tabindex="-1"></a><span class="fu">summary</span>(simple_reg)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Sales ~ TV, data = advertising)
@@ -616,16 +620,15 @@ the OLS coefficients.</p>
 </div>
 <div id="summary" class="section level3 hasAnchor" number="4.4.2">
 <h3><span class="header-section-number">4.4.2</span> Summary<a href="the-linear-model.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>What’s in <code>summary(lm)</code>?</strong></p>
+<p><code>summary(lm)</code> contains information about the following quantities:</p>
 <ul>
 <li><p>residuals: <span class="math inline">\(Y - X\hat\beta\)</span></p></li>
-<li><p>estimate: <span class="math inline">\(\hat\beta\)</span></p></li>
-<li><p>std. error: errors on the coefficients <span class="math inline">\(S \sqrt{(X&#39;X)^{-1}_{i+1,i+1}}\)</span>
+<li><p>estimated coefficients: <span class="math inline">\(\hat\beta\)</span></p></li>
+<li><p>(estimated) standard errors on the coefficients (in the <code>Std. Error</code> column) <span class="math inline">\(S \sqrt{(X&#39;X)^{-1}_{i+1,i+1}}\)</span>
 because <span class="math inline">\(\frac{\hat\beta_i - \beta_i}{S\sqrt{(X&#39;X)^{-1}}}\sim t(n-p)\)</span></p></li>
-<li><p>t-value: value of the beta t-statistic
-under the null hypothesis (<span class="math inline">\(H_0: \beta_{i+1} = 0\)</span>)</p></li>
-<li><p>p-value: probability of the test statistic being beyond t-val</p></li>
-<li><p>residual std error: <span class="math inline">\(S = \sqrt{\frac{e&#39;e}{n-p}}\)</span></p></li>
+<li><p>in the <code>t value</code> column: value of the test statistic for the null hypothesis <span class="math inline">\(H_0: \beta_{i+1} = 0\)</span></p></li>
+<li><p>in the <code>Pr(&gt;|t|)</code> column: p-value regarding the null hypothesis above</p></li>
+<li><p>residual std error: <span class="math inline">\(S = \sqrt{\frac{e&#39;e}{n-p}}\)</span>, i.e. the square root of the Mean Square Residual (MSR)</p></li>
 <li><p>multiple R squared: <em>later</em></p></li>
 <li><p>adj R squared: <em>later</em></p></li>
 </ul>
@@ -635,15 +638,15 @@ under the null hypothesis (<span class="math inline">\(H_0: \beta_{i+1} = 0\)</s
 <p>Easy to retrieve them (actually,
 they are the realization of the residuals)</p>
 <p><span class="math display">\[
-e = y - x\hat\beta
+e = y - X\hat\beta
 \]</span></p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="the-linear-model.html#cb274-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> advertising<span class="sc">$</span>Sales</span>
-<span id="cb274-2"><a href="the-linear-model.html#cb274-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, advertising<span class="sc">$</span>TV)</span>
-<span id="cb274-3"><a href="the-linear-model.html#cb274-3" aria-hidden="true" tabindex="-1"></a>e <span class="ot">&lt;-</span> y <span class="sc">-</span> x <span class="sc">%*%</span> simple_reg<span class="sc">$</span>coefficients</span>
-<span id="cb274-4"><a href="the-linear-model.html#cb274-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(</span>
-<span id="cb274-5"><a href="the-linear-model.html#cb274-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">lm_res =</span> simple_reg<span class="sc">$</span>residuals,</span>
-<span id="cb274-6"><a href="the-linear-model.html#cb274-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">manual_res =</span> <span class="fu">as.vector</span>(e)</span>
-<span id="cb274-7"><a href="the-linear-model.html#cb274-7" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="the-linear-model.html#cb274-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> advertising<span class="sc">$</span>Sales</span>
+<span id="cb274-2"><a href="the-linear-model.html#cb274-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, advertising<span class="sc">$</span>TV)</span>
+<span id="cb274-3"><a href="the-linear-model.html#cb274-3" tabindex="-1"></a>e <span class="ot">&lt;-</span> y <span class="sc">-</span> x <span class="sc">%*%</span> simple_reg<span class="sc">$</span>coefficients</span>
+<span id="cb274-4"><a href="the-linear-model.html#cb274-4" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(</span>
+<span id="cb274-5"><a href="the-linear-model.html#cb274-5" tabindex="-1"></a>  <span class="at">lm_res =</span> simple_reg<span class="sc">$</span>residuals,</span>
+<span id="cb274-6"><a href="the-linear-model.html#cb274-6" tabindex="-1"></a>  <span class="at">manual_res =</span> <span class="fu">as.vector</span>(e)</span>
+<span id="cb274-7"><a href="the-linear-model.html#cb274-7" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   lm_res manual_res
 ##    &lt;dbl&gt;      &lt;dbl&gt;
@@ -661,11 +664,11 @@ They are computed with the closed form max likelihood formula.</p>
 <p><span class="math display">\[
 \hat\beta = (X&#39;X)^{-1}X&#39;Y
 \]</span></p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="the-linear-model.html#cb276-1" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x) <span class="sc">%*%</span> <span class="fu">t</span>(x) <span class="sc">%*%</span> y</span>
-<span id="cb276-2"><a href="the-linear-model.html#cb276-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(</span>
-<span id="cb276-3"><a href="the-linear-model.html#cb276-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">lm_coeff =</span> simple_reg<span class="sc">$</span>coefficients,</span>
-<span id="cb276-4"><a href="the-linear-model.html#cb276-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">manual_coeff =</span> <span class="fu">as.vector</span>(beta_hat)</span>
-<span id="cb276-5"><a href="the-linear-model.html#cb276-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="the-linear-model.html#cb276-1" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x) <span class="sc">%*%</span> <span class="fu">t</span>(x) <span class="sc">%*%</span> y</span>
+<span id="cb276-2"><a href="the-linear-model.html#cb276-2" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">tibble</span>(</span>
+<span id="cb276-3"><a href="the-linear-model.html#cb276-3" tabindex="-1"></a>  <span class="at">lm_coeff =</span> simple_reg<span class="sc">$</span>coefficients,</span>
+<span id="cb276-4"><a href="the-linear-model.html#cb276-4" tabindex="-1"></a>  <span class="at">manual_coeff =</span> <span class="fu">as.vector</span>(beta_hat)</span>
+<span id="cb276-5"><a href="the-linear-model.html#cb276-5" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   lm_coeff manual_coeff
 ##      &lt;dbl&gt;        &lt;dbl&gt;
@@ -674,21 +677,20 @@ They are computed with the closed form max likelihood formula.</p>
 </div>
 <div id="standard-error" class="section level4 hasAnchor" number="4.4.2.3">
 <h4><span class="header-section-number">4.4.2.3</span> Standard Error<a href="the-linear-model.html#standard-error" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>For each predictor, this represent the variation in the beta estimator. The lower
-the standard error is, the higher is the accuracy of that particular coefficient.
-For predictor <span class="math inline">\(i\)</span>, it’s computed as</p>
+<p>For each predictor, this quantifies the estimated variation in the beta estimator.
+The lower the standard error is, the higher is the accuracy of that particular coefficient.
+For predictor <span class="math inline">\(i\)</span>, it is computed as</p>
 <p><span class="math display">\[
 SE_i = S \sqrt{(X&#39;X)^{-1}_{i+1,i+1}}
-\]</span></p>
-<p>where <span class="math inline">\(S\)</span> is the <em>residuals standard error</em> (with <span class="math inline">\(S^2\)</span> being the RMS - residual
-mean squares), we get the <span class="math inline">\(i+1^{\text{th}}\)</span> element because of the <span class="math inline">\(1\)</span> column for the intercept.</p>
-<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="the-linear-model.html#cb278-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb278-2"><a href="the-linear-model.html#cb278-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
-<span id="cb278-3"><a href="the-linear-model.html#cb278-3" aria-hidden="true" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
-<span id="cb278-4"><a href="the-linear-model.html#cb278-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb278-5"><a href="the-linear-model.html#cb278-5" aria-hidden="true" tabindex="-1"></a><span class="co"># SE for TV</span></span>
-<span id="cb278-6"><a href="the-linear-model.html#cb278-6" aria-hidden="true" tabindex="-1"></a>tv_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(rms <span class="sc">*</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x)[<span class="dv">2</span>, <span class="dv">2</span>])</span>
-<span id="cb278-7"><a href="the-linear-model.html#cb278-7" aria-hidden="true" tabindex="-1"></a>tv_se</span></code></pre></div>
+\]</span>
+<span class="math inline">\(i+1\)</span> is used here since first column if for the intercept <span class="math inline">\(\beta_0\)</span>.</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="the-linear-model.html#cb278-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb278-2"><a href="the-linear-model.html#cb278-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ncol</span>(x)</span>
+<span id="cb278-3"><a href="the-linear-model.html#cb278-3" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
+<span id="cb278-4"><a href="the-linear-model.html#cb278-4" tabindex="-1"></a></span>
+<span id="cb278-5"><a href="the-linear-model.html#cb278-5" tabindex="-1"></a><span class="co"># SE for TV</span></span>
+<span id="cb278-6"><a href="the-linear-model.html#cb278-6" tabindex="-1"></a>tv_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(rms <span class="sc">*</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x)[<span class="dv">2</span>, <span class="dv">2</span>])</span>
+<span id="cb278-7"><a href="the-linear-model.html#cb278-7" tabindex="-1"></a>tv_se</span></code></pre></div>
 <pre><code>##             [,1]
 ## [1,] 0.001895551</code></pre>
 </div>
@@ -701,28 +703,28 @@ test statistics value, under the null hypothesis
 \frac{\hat\beta_i - \beta_i}{S \sqrt{(X&#39;X)^{-1}}}
 \]</span></p>
 <p>which is student-T distributed with <span class="math inline">\(n-2\)</span> degrees of freedom.</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="the-linear-model.html#cb280-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for TV</span></span>
-<span id="cb280-2"><a href="the-linear-model.html#cb280-2" aria-hidden="true" tabindex="-1"></a>t_val <span class="ot">&lt;-</span> simple_reg<span class="sc">$</span>coefficients[<span class="dv">2</span>] <span class="sc">/</span> tv_se</span>
-<span id="cb280-3"><a href="the-linear-model.html#cb280-3" aria-hidden="true" tabindex="-1"></a>t_val</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="the-linear-model.html#cb280-1" tabindex="-1"></a><span class="co"># for TV</span></span>
+<span id="cb280-2"><a href="the-linear-model.html#cb280-2" tabindex="-1"></a>t_val <span class="ot">&lt;-</span> simple_reg<span class="sc">$</span>coefficients[<span class="dv">2</span>] <span class="sc">/</span> tv_se</span>
+<span id="cb280-3"><a href="the-linear-model.html#cb280-3" tabindex="-1"></a>t_val</span></code></pre></div>
 <pre><code>##         [,1]
 ## [1,] 29.2605</code></pre>
-<p>And finally, the p-value is simply the probability
+<p>And finally, the p-value is the probability
 on a <span class="math inline">\(t(n-2)\)</span> distribution of the statistic to be
-beyond that critical value. Remember that with <em>beyond</em>
+beyond the value actually observed. Remember that with <em>beyond</em>
 we mean on both sides of the distribution, since the
 alternative hypothesis <span class="math inline">\(H_1: \beta \neq 0\)</span> is two-sided.</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="the-linear-model.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="co"># multiply by two because the alternative hyp is two-sided</span></span>
-<span id="cb282-2"><a href="the-linear-model.html#cb282-2" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(t_val, n <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb282-3"><a href="the-linear-model.html#cb282-3" aria-hidden="true" tabindex="-1"></a>p_val</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="the-linear-model.html#cb282-1" tabindex="-1"></a><span class="co"># multiply by two because the alternative hyp is two-sided</span></span>
+<span id="cb282-2"><a href="the-linear-model.html#cb282-2" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(t_val, n <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb282-3"><a href="the-linear-model.html#cb282-3" tabindex="-1"></a>p_val</span></code></pre></div>
 <pre><code>##              [,1]
 ## [1,] 7.927912e-74</code></pre>
 <p>Here we cannot appreciate the manual computation since the
 p-value is very low (meaning that we can reject the null,
 favoring the alternative).</p>
-<p>Exercise: You can try and compute this value manually on another
+<p>Exercise: You can try to compute this value manually on another
 simple regression model where we use <code>Radio</code> as predictor.</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="the-linear-model.html#cb284-1" aria-hidden="true" tabindex="-1"></a>radio_simple_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> Radio, <span class="at">data =</span> advertising)</span>
-<span id="cb284-2"><a href="the-linear-model.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(radio_simple_reg)</span></code></pre></div>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="the-linear-model.html#cb284-1" tabindex="-1"></a>radio_simple_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> Radio, <span class="at">data =</span> advertising)</span>
+<span id="cb284-2"><a href="the-linear-model.html#cb284-2" tabindex="-1"></a><span class="fu">summary</span>(radio_simple_reg)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Sales ~ Radio, data = advertising)

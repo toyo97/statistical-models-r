@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Interactions and qualitative predictors | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Interactions and qualitative predictors | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-01-12" />
+<meta name="date" content="2024-04-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -58,7 +58,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -130,6 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -231,7 +232,7 @@ div.csl-indent {
 <li class="chapter" data-level="4" data-path="the-linear-model.html"><a href="the-linear-model.html"><i class="fa fa-check"></i><b>4</b> The linear model</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="the-linear-model.html"><a href="the-linear-model.html#dataset-import"><i class="fa fa-check"></i><b>4.1</b> Dataset import</a></li>
-<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda"><i class="fa fa-check"></i><b>4.2</b> Basic EDA</a></li>
+<li class="chapter" data-level="4.2" data-path="the-linear-model.html"><a href="the-linear-model.html#basic-eda-exploratory-data-analysis"><i class="fa fa-check"></i><b>4.2</b> Basic EDA (Exploratory Data Analysis)</a></li>
 <li class="chapter" data-level="4.3" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-plots"><i class="fa fa-check"></i><b>4.3</b> Simple plots</a></li>
 <li class="chapter" data-level="4.4" data-path="the-linear-model.html"><a href="the-linear-model.html#simple-regression"><i class="fa fa-check"></i><b>4.4</b> Simple regression</a>
 <ul>
@@ -362,57 +363,57 @@ transforming a variable before fitting the linear model.</p>
 <div id="a-simple-example" class="section level3 hasAnchor" number="6.1.1">
 <h3><span class="header-section-number">6.1.1</span> A simple example<a href="interactions-and-qualitative-predictors.html#a-simple-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For instance, let’s take this synthetic dataset:</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="interactions-and-qualitative-predictors.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb310-2"><a href="interactions-and-qualitative-predictors.html#cb310-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb310-3"><a href="interactions-and-qualitative-predictors.html#cb310-3" aria-hidden="true" tabindex="-1"></a>synth <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb310-4"><a href="interactions-and-qualitative-predictors.html#cb310-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">30</span>, <span class="at">length.out =</span> n),</span>
-<span id="cb310-5"><a href="interactions-and-qualitative-predictors.html#cb310-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">0.2</span>)</span>
-<span id="cb310-6"><a href="interactions-and-qualitative-predictors.html#cb310-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="interactions-and-qualitative-predictors.html#cb310-1" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb310-2"><a href="interactions-and-qualitative-predictors.html#cb310-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb310-3"><a href="interactions-and-qualitative-predictors.html#cb310-3" tabindex="-1"></a>synth <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb310-4"><a href="interactions-and-qualitative-predictors.html#cb310-4" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">30</span>, <span class="at">length.out =</span> n),</span>
+<span id="cb310-5"><a href="interactions-and-qualitative-predictors.html#cb310-5" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">log</span>(x) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">0.2</span>)</span>
+<span id="cb310-6"><a href="interactions-and-qualitative-predictors.html#cb310-6" tabindex="-1"></a>)</span></code></pre></div>
 <p>which looks like this:</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="interactions-and-qualitative-predictors.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb311-2"><a href="interactions-and-qualitative-predictors.html#cb311-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(synth) <span class="sc">+</span></span>
-<span id="cb311-3"><a href="interactions-and-qualitative-predictors.html#cb311-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y))</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="interactions-and-qualitative-predictors.html#cb311-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb311-2"><a href="interactions-and-qualitative-predictors.html#cb311-2" tabindex="-1"></a><span class="fu">ggplot</span>(synth) <span class="sc">+</span></span>
+<span id="cb311-3"><a href="interactions-and-qualitative-predictors.html#cb311-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(x, y))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
 <p>Of course, we can try to fit a linear model without any
 extra effort</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="interactions-and-qualitative-predictors.html#cb312-1" aria-hidden="true" tabindex="-1"></a>naive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> synth)</span>
-<span id="cb312-2"><a href="interactions-and-qualitative-predictors.html#cb312-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(naive_lm, <span class="at">mapping =</span> <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb312-3"><a href="interactions-and-qualitative-predictors.html#cb312-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb312-4"><a href="interactions-and-qualitative-predictors.html#cb312-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="interactions-and-qualitative-predictors.html#cb312-1" tabindex="-1"></a>naive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> synth)</span>
+<span id="cb312-2"><a href="interactions-and-qualitative-predictors.html#cb312-2" tabindex="-1"></a><span class="fu">ggplot</span>(naive_lm, <span class="at">mapping =</span> <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb312-3"><a href="interactions-and-qualitative-predictors.html#cb312-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb312-4"><a href="interactions-and-qualitative-predictors.html#cb312-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
 <p>but if we plot the residuals, we can detect some issues for low
 values of <span class="math inline">\(y\)</span> (definitely not uncorrelated).</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="interactions-and-qualitative-predictors.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb314-2"><a href="interactions-and-qualitative-predictors.html#cb314-2" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
-<span id="cb314-3"><a href="interactions-and-qualitative-predictors.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> naive_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
-<span id="cb314-4"><a href="interactions-and-qualitative-predictors.html#cb314-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb314-5"><a href="interactions-and-qualitative-predictors.html#cb314-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="interactions-and-qualitative-predictors.html#cb314-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb314-2"><a href="interactions-and-qualitative-predictors.html#cb314-2" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
+<span id="cb314-3"><a href="interactions-and-qualitative-predictors.html#cb314-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> naive_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
+<span id="cb314-4"><a href="interactions-and-qualitative-predictors.html#cb314-4" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb314-5"><a href="interactions-and-qualitative-predictors.html#cb314-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
 <p>By understanding how <span class="math inline">\(x\)</span> is distributed, we can fix this issue
 and fit the model on a transformation of itself, clearly <span class="math inline">\(\log(x)\)</span>.
 We do this simply by adding the desired transformation in the
 formula, meaning that we don’t have to tranform the dataset beforehand.</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="interactions-and-qualitative-predictors.html#cb315-1" aria-hidden="true" tabindex="-1"></a>log_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">data =</span> synth)</span>
-<span id="cb315-2"><a href="interactions-and-qualitative-predictors.html#cb315-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(log_lm,</span>
-<span id="cb315-3"><a href="interactions-and-qualitative-predictors.html#cb315-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="st">`</span><span class="at">log(x)</span><span class="st">`</span>, y)</span>
-<span id="cb315-4"><a href="interactions-and-qualitative-predictors.html#cb315-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> <span class="co"># notice the backticks!</span></span>
-<span id="cb315-5"><a href="interactions-and-qualitative-predictors.html#cb315-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb315-6"><a href="interactions-and-qualitative-predictors.html#cb315-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="interactions-and-qualitative-predictors.html#cb315-1" tabindex="-1"></a>log_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">data =</span> synth)</span>
+<span id="cb315-2"><a href="interactions-and-qualitative-predictors.html#cb315-2" tabindex="-1"></a><span class="fu">ggplot</span>(log_lm,</span>
+<span id="cb315-3"><a href="interactions-and-qualitative-predictors.html#cb315-3" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="st">`</span><span class="at">log(x)</span><span class="st">`</span>, y)</span>
+<span id="cb315-4"><a href="interactions-and-qualitative-predictors.html#cb315-4" tabindex="-1"></a>) <span class="sc">+</span> <span class="co"># notice the backticks!</span></span>
+<span id="cb315-5"><a href="interactions-and-qualitative-predictors.html#cb315-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb315-6"><a href="interactions-and-qualitative-predictors.html#cb315-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 <p>and the residuals plot.</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="interactions-and-qualitative-predictors.html#cb317-1" aria-hidden="true" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
-<span id="cb317-2"><a href="interactions-and-qualitative-predictors.html#cb317-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> log_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
-<span id="cb317-3"><a href="interactions-and-qualitative-predictors.html#cb317-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb317-4"><a href="interactions-and-qualitative-predictors.html#cb317-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="interactions-and-qualitative-predictors.html#cb317-1" tabindex="-1"></a>synth <span class="sc">%&gt;%</span></span>
+<span id="cb317-2"><a href="interactions-and-qualitative-predictors.html#cb317-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res =</span> log_lm<span class="sc">$</span>residuals) <span class="sc">%&gt;%</span> <span class="co"># adds the residual column</span></span>
+<span id="cb317-3"><a href="interactions-and-qualitative-predictors.html#cb317-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb317-4"><a href="interactions-and-qualitative-predictors.html#cb317-4" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, res))</span></code></pre></div>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
 </div>
 <div id="on-advertising" class="section level3 hasAnchor" number="6.1.2">
 <h3><span class="header-section-number">6.1.2</span> On <em>advertising</em><a href="interactions-and-qualitative-predictors.html#on-advertising" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Back to our real dataset.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="interactions-and-qualitative-predictors.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb318-2"><a href="interactions-and-qualitative-predictors.html#cb318-2" aria-hidden="true" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="interactions-and-qualitative-predictors.html#cb318-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb318-2"><a href="interactions-and-qualitative-predictors.html#cb318-2" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/advertising.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 200 Columns: 4
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -428,24 +429,24 @@ where we can detect a slightly curved trend which resembles
 a curve <span class="math inline">\(y = \sqrt{x}\)</span>.</p>
 <p>Let’s plot the data after the transformation and observe
 that its trend better fit a straight line.</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="interactions-and-qualitative-predictors.html#cb320-1" aria-hidden="true" tabindex="-1"></a>advertising <span class="sc">%&gt;%</span></span>
-<span id="cb320-2"><a href="interactions-and-qualitative-predictors.html#cb320-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Sales, TV) <span class="sc">%&gt;%</span></span>
-<span id="cb320-3"><a href="interactions-and-qualitative-predictors.html#cb320-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sqrtTV =</span> <span class="fu">sqrt</span>(TV)) <span class="sc">%&gt;%</span></span>
-<span id="cb320-4"><a href="interactions-and-qualitative-predictors.html#cb320-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sqrtTV, Sales)) <span class="sc">+</span></span>
-<span id="cb320-5"><a href="interactions-and-qualitative-predictors.html#cb320-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb320-6"><a href="interactions-and-qualitative-predictors.html#cb320-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="interactions-and-qualitative-predictors.html#cb320-1" tabindex="-1"></a>advertising <span class="sc">%&gt;%</span></span>
+<span id="cb320-2"><a href="interactions-and-qualitative-predictors.html#cb320-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Sales, TV) <span class="sc">%&gt;%</span></span>
+<span id="cb320-3"><a href="interactions-and-qualitative-predictors.html#cb320-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">sqrtTV =</span> <span class="fu">sqrt</span>(TV)) <span class="sc">%&gt;%</span></span>
+<span id="cb320-4"><a href="interactions-and-qualitative-predictors.html#cb320-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sqrtTV, Sales)) <span class="sc">+</span></span>
+<span id="cb320-5"><a href="interactions-and-qualitative-predictors.html#cb320-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb320-6"><a href="interactions-and-qualitative-predictors.html#cb320-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="smr_book_files/figure-html/unnamed-chunk-144-1.png" width="672" /></p>
 <p>We can fit a linear model. Its <code>summary</code> table
 will show a better <span class="math inline">\(R^2\)</span> score.</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="interactions-and-qualitative-predictors.html#cb322-1" aria-hidden="true" tabindex="-1"></a>trans_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV), <span class="at">data =</span> advertising)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="interactions-and-qualitative-predictors.html#cb322-1" tabindex="-1"></a>trans_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV), <span class="at">data =</span> advertising)</span></code></pre></div>
 <blockquote>
 <p><em>Exercise</em>: plot the regression line and compare it with
 the simple model fitted on the raw data</p>
 </blockquote>
 <p>The following two commands might help in inspecting
 a linear model with transformed data.</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="interactions-and-qualitative-predictors.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(trans_lm)) <span class="co"># prints the design matrix</span></span></code></pre></div>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="interactions-and-qualitative-predictors.html#cb323-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">model.matrix</span>(trans_lm)) <span class="co"># prints the design matrix</span></span></code></pre></div>
 <pre><code>##   (Intercept)  sqrt(TV)
 ## 1           1 15.169047
 ## 2           1  6.670832
@@ -453,7 +454,7 @@ a linear model with transformed data.</p>
 ## 4           1 12.308534
 ## 5           1 13.446189
 ## 6           1  2.949576</code></pre>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="interactions-and-qualitative-predictors.html#cb325-1" aria-hidden="true" tabindex="-1"></a>trans_lm<span class="sc">$</span>terms <span class="co"># inspect the linear model specifics</span></span></code></pre></div>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="interactions-and-qualitative-predictors.html#cb325-1" tabindex="-1"></a>trans_lm<span class="sc">$</span>terms <span class="co"># inspect the linear model specifics</span></span></code></pre></div>
 <pre><code>## Sales ~ sqrt(TV)
 ## attr(,&quot;variables&quot;)
 ## list(Sales, sqrt(TV))
@@ -493,10 +494,10 @@ although it should not be considered as an absolute score of the model.
 The closer it is to 1, the better is the model fit.</p>
 <p>This output, for instance, shows how the transformation used above
 seems to improve the accuracy of the regression task.</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="interactions-and-qualitative-predictors.html#cb327-1" aria-hidden="true" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV, <span class="at">data =</span> advertising)</span>
-<span id="cb327-2"><a href="interactions-and-qualitative-predictors.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)<span class="sc">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="interactions-and-qualitative-predictors.html#cb327-1" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> TV, <span class="at">data =</span> advertising)</span>
+<span id="cb327-2"><a href="interactions-and-qualitative-predictors.html#cb327-2" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.8121757</code></pre>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="interactions-and-qualitative-predictors.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(trans_lm)<span class="sc">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="interactions-and-qualitative-predictors.html#cb329-1" tabindex="-1"></a><span class="fu">summary</span>(trans_lm)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.8216696</code></pre>
 </div>
 <div id="anova" class="section level3 hasAnchor" number="6.2.2">
@@ -514,8 +515,8 @@ the smaller model explains the data well enough.</p>
 <p>Here we compare the model with a single predictor (squared root of TV), which
 is the <em>smaller</em> model, with a model with also the Radio data as
 additional predictor.</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="interactions-and-qualitative-predictors.html#cb331-1" aria-hidden="true" tabindex="-1"></a>double_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV) <span class="sc">+</span> Radio, <span class="at">data =</span> advertising)</span>
-<span id="cb331-2"><a href="interactions-and-qualitative-predictors.html#cb331-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(trans_lm, double_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="interactions-and-qualitative-predictors.html#cb331-1" tabindex="-1"></a>double_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sales <span class="sc">~</span> <span class="fu">sqrt</span>(TV) <span class="sc">+</span> Radio, <span class="at">data =</span> advertising)</span>
+<span id="cb331-2"><a href="interactions-and-qualitative-predictors.html#cb331-2" tabindex="-1"></a><span class="fu">anova</span>(trans_lm, double_lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: Sales ~ sqrt(TV)
@@ -538,7 +539,7 @@ Although it’s not always necessary, it is always best to
 explicitly tell R to interpret qualitative predictors data as factors.
 This can be done with <code>read_csv</code>, first by reading the data as it is
 and then calling the <code>spec()</code> function over the new tibble.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="interactions-and-qualitative-predictors.html#cb333-1" aria-hidden="true" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="interactions-and-qualitative-predictors.html#cb333-1" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 10 Columns: 5
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -546,7 +547,7 @@ and then calling the <code>spec()</code> function over the new tibble.</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="interactions-and-qualitative-predictors.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spec</span>(wide_golf) <span class="co"># prints information about the detected data types</span></span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="interactions-and-qualitative-predictors.html#cb335-1" tabindex="-1"></a><span class="fu">spec</span>(wide_golf) <span class="co"># prints information about the detected data types</span></span></code></pre></div>
 <pre><code>## cols(
 ##   golfer = col_double(),
 ##   A = col_double(),
@@ -560,32 +561,32 @@ number is just an identification number.
 Therefore we correct this by copying the output, manually editing
 the first column type from <code>col_double()</code> to <code>col_factor()</code> and
 setting the <code>read_csv</code> parameter <code>col_types</code> to that.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="interactions-and-qualitative-predictors.html#cb337-1" aria-hidden="true" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>,</span>
-<span id="cb337-2"><a href="interactions-and-qualitative-predictors.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
-<span id="cb337-3"><a href="interactions-and-qualitative-predictors.html#cb337-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">golfer =</span> readr<span class="sc">::</span><span class="fu">col_factor</span>(),</span>
-<span id="cb337-4"><a href="interactions-and-qualitative-predictors.html#cb337-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">A =</span> <span class="fu">col_double</span>(),</span>
-<span id="cb337-5"><a href="interactions-and-qualitative-predictors.html#cb337-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">B =</span> <span class="fu">col_double</span>(),</span>
-<span id="cb337-6"><a href="interactions-and-qualitative-predictors.html#cb337-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">C =</span> <span class="fu">col_double</span>(),</span>
-<span id="cb337-7"><a href="interactions-and-qualitative-predictors.html#cb337-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">D =</span> <span class="fu">col_double</span>()</span>
-<span id="cb337-8"><a href="interactions-and-qualitative-predictors.html#cb337-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb337-9"><a href="interactions-and-qualitative-predictors.html#cb337-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb337-10"><a href="interactions-and-qualitative-predictors.html#cb337-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb337-11"><a href="interactions-and-qualitative-predictors.html#cb337-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb337-12"><a href="interactions-and-qualitative-predictors.html#cb337-12" aria-hidden="true" tabindex="-1"></a><span class="co"># need to switch from wide to long format</span></span>
-<span id="cb337-13"><a href="interactions-and-qualitative-predictors.html#cb337-13" aria-hidden="true" tabindex="-1"></a>golf <span class="ot">&lt;-</span> wide_golf <span class="sc">%&gt;%</span></span>
-<span id="cb337-14"><a href="interactions-and-qualitative-predictors.html#cb337-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(brand, distance, <span class="sc">-</span>golfer)</span>
-<span id="cb337-15"><a href="interactions-and-qualitative-predictors.html#cb337-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb337-16"><a href="interactions-and-qualitative-predictors.html#cb337-16" aria-hidden="true" tabindex="-1"></a><span class="do">## if using data.frame, you can use `melt()` from</span></span>
-<span id="cb337-17"><a href="interactions-and-qualitative-predictors.html#cb337-17" aria-hidden="true" tabindex="-1"></a><span class="do">## reshape2</span></span>
-<span id="cb337-18"><a href="interactions-and-qualitative-predictors.html#cb337-18" aria-hidden="true" tabindex="-1"></a><span class="co"># golf &lt;- melt(wide_golf, id.vars = 1,</span></span>
-<span id="cb337-19"><a href="interactions-and-qualitative-predictors.html#cb337-19" aria-hidden="true" tabindex="-1"></a><span class="co">#             variable.name = &quot;brand&quot;,</span></span>
-<span id="cb337-20"><a href="interactions-and-qualitative-predictors.html#cb337-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             value.name = &quot;distance&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="interactions-and-qualitative-predictors.html#cb337-1" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>,</span>
+<span id="cb337-2"><a href="interactions-and-qualitative-predictors.html#cb337-2" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb337-3"><a href="interactions-and-qualitative-predictors.html#cb337-3" tabindex="-1"></a>    <span class="at">golfer =</span> readr<span class="sc">::</span><span class="fu">col_factor</span>(),</span>
+<span id="cb337-4"><a href="interactions-and-qualitative-predictors.html#cb337-4" tabindex="-1"></a>    <span class="at">A =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb337-5"><a href="interactions-and-qualitative-predictors.html#cb337-5" tabindex="-1"></a>    <span class="at">B =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb337-6"><a href="interactions-and-qualitative-predictors.html#cb337-6" tabindex="-1"></a>    <span class="at">C =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb337-7"><a href="interactions-and-qualitative-predictors.html#cb337-7" tabindex="-1"></a>    <span class="at">D =</span> <span class="fu">col_double</span>()</span>
+<span id="cb337-8"><a href="interactions-and-qualitative-predictors.html#cb337-8" tabindex="-1"></a>  )</span>
+<span id="cb337-9"><a href="interactions-and-qualitative-predictors.html#cb337-9" tabindex="-1"></a>)</span>
+<span id="cb337-10"><a href="interactions-and-qualitative-predictors.html#cb337-10" tabindex="-1"></a></span>
+<span id="cb337-11"><a href="interactions-and-qualitative-predictors.html#cb337-11" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb337-12"><a href="interactions-and-qualitative-predictors.html#cb337-12" tabindex="-1"></a><span class="co"># need to switch from wide to long format</span></span>
+<span id="cb337-13"><a href="interactions-and-qualitative-predictors.html#cb337-13" tabindex="-1"></a>golf <span class="ot">&lt;-</span> wide_golf <span class="sc">%&gt;%</span></span>
+<span id="cb337-14"><a href="interactions-and-qualitative-predictors.html#cb337-14" tabindex="-1"></a>  <span class="fu">gather</span>(brand, distance, <span class="sc">-</span>golfer)</span>
+<span id="cb337-15"><a href="interactions-and-qualitative-predictors.html#cb337-15" tabindex="-1"></a></span>
+<span id="cb337-16"><a href="interactions-and-qualitative-predictors.html#cb337-16" tabindex="-1"></a><span class="do">## if using data.frame, you can use `melt()` from</span></span>
+<span id="cb337-17"><a href="interactions-and-qualitative-predictors.html#cb337-17" tabindex="-1"></a><span class="do">## reshape2</span></span>
+<span id="cb337-18"><a href="interactions-and-qualitative-predictors.html#cb337-18" tabindex="-1"></a><span class="co"># golf &lt;- melt(wide_golf, id.vars = 1,</span></span>
+<span id="cb337-19"><a href="interactions-and-qualitative-predictors.html#cb337-19" tabindex="-1"></a><span class="co">#             variable.name = &quot;brand&quot;,</span></span>
+<span id="cb337-20"><a href="interactions-and-qualitative-predictors.html#cb337-20" tabindex="-1"></a><span class="co">#             value.name = &quot;distance&quot;)</span></span></code></pre></div>
 <p>Now, for example, we fit a linear model using all the
 available columns</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="interactions-and-qualitative-predictors.html#cb338-1" aria-hidden="true" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> ., <span class="at">data =</span> golf)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="interactions-and-qualitative-predictors.html#cb338-1" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> ., <span class="at">data =</span> golf)</span></code></pre></div>
 <p>and we can compare it to a smaller model with ANOVA test.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="interactions-and-qualitative-predictors.html#cb339-1" aria-hidden="true" tabindex="-1"></a>small_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer, <span class="at">data =</span> golf)</span>
-<span id="cb339-2"><a href="interactions-and-qualitative-predictors.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(small_lm, complete_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="interactions-and-qualitative-predictors.html#cb339-1" tabindex="-1"></a>small_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer, <span class="at">data =</span> golf)</span>
+<span id="cb339-2"><a href="interactions-and-qualitative-predictors.html#cb339-2" tabindex="-1"></a><span class="fu">anova</span>(small_lm, complete_lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: distance ~ golfer
@@ -597,7 +598,7 @@ available columns</p>
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Another variance test can be performed with <code>aov</code>.
 Check the function documentation for more details.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="interactions-and-qualitative-predictors.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(distance <span class="sc">~</span> golfer <span class="sc">+</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="interactions-and-qualitative-predictors.html#cb341-1" tabindex="-1"></a><span class="fu">aov</span>(distance <span class="sc">~</span> golfer <span class="sc">+</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
 <pre><code>## Call:
 ##    aov(formula = distance ~ golfer + brand, data = golf)
 ## 
@@ -615,9 +616,9 @@ Check the function documentation for more details.</p>
 new unseen data can be easily computed with the <code>predict</code> function,
 which simply applies the regression coefficients to the provided data
 (arbitrarily generated below inside a tibble).</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="interactions-and-qualitative-predictors.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(complete_lm, <span class="fu">tibble</span>(<span class="at">golfer =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>), <span class="at">brand =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>)),</span>
-<span id="cb343-2"><a href="interactions-and-qualitative-predictors.html#cb343-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span></span>
-<span id="cb343-3"><a href="interactions-and-qualitative-predictors.html#cb343-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="interactions-and-qualitative-predictors.html#cb343-1" tabindex="-1"></a><span class="fu">predict</span>(complete_lm, <span class="fu">tibble</span>(<span class="at">golfer =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>), <span class="at">brand =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>)),</span>
+<span id="cb343-2"><a href="interactions-and-qualitative-predictors.html#cb343-2" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span></span>
+<span id="cb343-3"><a href="interactions-and-qualitative-predictors.html#cb343-3" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##       fit      lwr      upr
 ## 1 204.105 193.1719 215.0381
 ## 2 210.235 199.3019 221.1681
@@ -632,7 +633,7 @@ which simply applies the regression coefficients to the provided data
 cross-variable (i.e. writing <code>y ~ a + b + a:b</code> is equivalent to
 writing <code>y ~ a*b</code>)</li>
 </ul>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="interactions-and-qualitative-predictors.html#cb345-1" aria-hidden="true" tabindex="-1"></a>inter_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer <span class="sc">*</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="interactions-and-qualitative-predictors.html#cb345-1" tabindex="-1"></a>inter_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer <span class="sc">*</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
 
 </div>
 </div>

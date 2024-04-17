@@ -5,16 +5,19 @@
 \documentclass[
   oneside]{book}
 \usepackage{amsmath,amssymb}
-\usepackage{lmodern}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+  \usepackage{unicode-math} % this also loads fontspec
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -44,13 +47,13 @@
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
 \newcommand{\BuiltInTok}[1]{#1}
 \newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
@@ -58,7 +61,7 @@
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
 \newcommand{\ExtensionTok}[1]{#1}
 \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\ImportTok}[1]{#1}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
@@ -67,7 +70,7 @@
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
 \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
 \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
@@ -109,9 +112,9 @@
 \fi
 \usepackage[]{natbib}
 \bibliographystyle{plainnat}
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same} % disable monospaced font for URLs
+\urlstyle{same}
 \hypersetup{
   pdftitle={Statistical Models in R},
   pdfauthor={Vittorio Zampinetti; Mauro Gasparini},
@@ -120,7 +123,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2024-01-12}
+\date{2024-04-17}
 
 \begin{document}
 \maketitle
@@ -129,8 +132,7 @@
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
-\hypertarget{about}{%
-\chapter*{About}\label{about}}
+\chapter*{About}\label{about}
 \addcontentsline{toc}{chapter}{About}
 
 The book is built upon the course in Statistical Models at
@@ -138,11 +140,9 @@ Politecnico di Torino, but it is self-contained and thus is
 accessible by any interested reader. For any feedback, send me
 an email: \href{mailto:zampinetti@gmail.com}{\nolinkurl{zampinetti@gmail.com}}. Thank you!
 
-\hypertarget{introduction}{%
-\chapter{Introduction}\label{introduction}}
+\chapter{Introduction}\label{introduction}
 
-\hypertarget{r-and-rstudio}{%
-\section{R and RStudio}\label{r-and-rstudio}}
+\section{R and RStudio}\label{r-and-rstudio}
 
 \begin{itemize}
 \item
@@ -155,15 +155,13 @@ an email: \href{mailto:zampinetti@gmail.com}{\nolinkurl{zampinetti@gmail.com}}. 
   It's going to change name soon, see \href{https://posit.co/}{Posit}
 \end{itemize}
 
-\hypertarget{installation}{%
-\subsection{Installation}\label{installation}}
+\subsection{Installation}\label{installation}
 
 First install R programming language (from \href{https://cran.rstudio.com/}{here}),
 then RStudio environment (from
 \href{https://www.rstudio.com/products/rstudio/download/\#download}{here}).
 
-\hypertarget{r-syntax}{%
-\section{R syntax}\label{r-syntax}}
+\section{R syntax}\label{r-syntax}
 
 Here a brief overview of the main components of the R language.
 
@@ -172,8 +170,7 @@ Here a brief overview of the main components of the R language.
 \emph{and structures, which assumes some very basic programming skills.}
 \emph{For all the rest, Google is your friend (it really is).}
 
-\hypertarget{basic-operations}{%
-\subsection{Basic operations}\label{basic-operations}}
+\subsection{Basic operations}\label{basic-operations}
 
 R can be used as a fully featured calculator, typically directly
 from the console (see bottom panel in RStudio).
@@ -230,7 +227,7 @@ other computations.
 \end{verbatim}
 
 The arrow sign \texttt{\textless{}-} is the traditional sign for the assignment operation,
-but also \texttt{=} works. Check \protect\hyperlink{arrow-sign}{this examples} to see why \texttt{\textless{}-}
+but also \texttt{=} works. Check \hyperref[arrow-sign]{this examples} to see why \texttt{\textless{}-}
 is recommended.
 
 Conditional statements and loops have straightforward syntax (similar to C/C++
@@ -256,10 +253,9 @@ Conditional statements and loops have straightforward syntax (similar to C/C++
 
 While \texttt{\textless{}-} is only used for variable assignment, i.e.~filling up the variable
 allocated space with some value, the \texttt{=} is both used for assignment and
-function argument passing (as introduced in \protect\hyperlink{functions}{Functions}).
+function argument passing (as introduced in \hyperref[functions]{Functions}).
 
-\hypertarget{functions}{%
-\section{Functions}\label{functions}}
+\section{Functions}\label{functions}
 
 Functions are called with the \texttt{()} operator and present named arguments.
 
@@ -273,16 +269,15 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  -4.041921  11.100354  -8.269982  14.498854  -0.531995  -0.588099
-##  [7] -12.099817  -9.996491 -21.468122 -13.083869
+##  [1]   3.097750   1.069282  12.590936  14.083997  -5.103241  -5.594683
+##  [7]   0.684868  -9.394081 -26.877472   3.124083
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
 (e.g.~sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.
 
-\hypertarget{definition}{%
-\subsection{Definition}\label{definition}}
+\subsection{Definition}\label{definition}
 
 To define a custom function
 
@@ -330,13 +325,11 @@ The \texttt{return()} call can be omitted (but it's better not to).
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{data-types}{%
-\section{Data types}\label{data-types}}
+\section{Data types}\label{data-types}
 
 Every variable in R is an object, which holds a value (or collection of values) and some other attributes, properties or methods.
 
-\hypertarget{base-types}{%
-\subsection{Base types}\label{base-types}}
+\subsection{Base types}\label{base-types}
 
 There are 5 basic data types:
 
@@ -354,8 +347,7 @@ There are 5 basic data types:
   \textbf{complex} (complex numbers)
 \end{itemize}
 
-\hypertarget{numeric}{%
-\subsubsection{Numeric}\label{numeric}}
+\subsubsection{Numeric}\label{numeric}
 
 When you write numbers in R, they are going to
 default to numeric type values
@@ -376,8 +368,7 @@ default to numeric type values
 ## [1] "data types | a:numeric, b:numeric, c:numeric"
 \end{verbatim}
 
-\hypertarget{integer}{%
-\subsubsection{Integer}\label{integer}}
+\subsubsection{Integer}\label{integer}
 
 Integer numbers can be enforced typing an \texttt{L} next to the digits.
 Casting is implicit when the result of an operation involving integers
@@ -385,10 +376,10 @@ is not an integer
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{int\_num }\OtherTok{\textless{}{-}}\NormalTok{ 50L }\CommentTok{\# 50 stored as integer}
+\NormalTok{int\_num }\OtherTok{\textless{}{-}} \DecValTok{50}\DataTypeTok{L} \CommentTok{\# 50 stored as integer}
 
-\NormalTok{non\_casted\_num }\OtherTok{\textless{}{-}}\NormalTok{ int\_num }\SpecialCharTok{{-}}\NormalTok{ 2L }\CommentTok{\# result is exactly 48, still int}
-\NormalTok{casted\_num }\OtherTok{\textless{}{-}}\NormalTok{ int\_num }\SpecialCharTok{/}\NormalTok{ 7L }\CommentTok{\# implicit cast to numeric type to store decimals}
+\NormalTok{non\_casted\_num }\OtherTok{\textless{}{-}}\NormalTok{ int\_num }\SpecialCharTok{{-}} \DecValTok{2}\DataTypeTok{L} \CommentTok{\# result is exactly 48, still int}
+\NormalTok{casted\_num }\OtherTok{\textless{}{-}}\NormalTok{ int\_num }\SpecialCharTok{/} \DecValTok{7}\DataTypeTok{L} \CommentTok{\# implicit cast to numeric type to store decimals}
 \FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\FunctionTok{class}\NormalTok{(int\_num), }\FunctionTok{class}\NormalTok{(non\_casted\_num),}
             \FunctionTok{class}\NormalTok{(casted\_num), }\AttributeTok{sep =} \StringTok{", "}\NormalTok{))}
 \end{Highlighting}
@@ -398,8 +389,7 @@ is not an integer
 ## [1] "integer, integer, numeric"
 \end{verbatim}
 
-\hypertarget{logical}{%
-\subsubsection{Logical}\label{logical}}
+\subsubsection{Logical}\label{logical}
 
 The \texttt{logical} type can only hold \texttt{TRUE} or \texttt{FALSE} (in capital letters)
 
@@ -440,8 +430,7 @@ which is useful when counting true values in logical arrays
 ## [1] 2
 \end{verbatim}
 
-\hypertarget{character}{%
-\subsubsection{Character}\label{character}}
+\subsubsection{Character}\label{character}
 
 A character is any number of characters enclosed in quotes \texttt{\textquotesingle{}\ \textquotesingle{}} or double
 quotes \texttt{"\ "}.
@@ -460,12 +449,11 @@ quotes \texttt{"\ "}.
 ## [1] "character"
 \end{verbatim}
 
-\hypertarget{complex}{%
-\subsubsection{Complex}\label{complex}}
+\subsubsection{Complex}\label{complex}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{complex\_num }\OtherTok{\textless{}{-}} \DecValTok{5} \SpecialCharTok{+}\NormalTok{ 4i}
+\NormalTok{complex\_num }\OtherTok{\textless{}{-}} \DecValTok{5} \SpecialCharTok{+} \DecValTok{4}\DataTypeTok{i}
 \FunctionTok{Mod}\NormalTok{(complex\_num) }\CommentTok{\# try all complex operations, e.g. modulus}
 \end{Highlighting}
 \end{Shaded}
@@ -474,8 +462,7 @@ quotes \texttt{"\ "}.
 ## [1] 6.403124
 \end{verbatim}
 
-\hypertarget{special-values}{%
-\subsubsection{Special values}\label{special-values}}
+\subsubsection{Special values}\label{special-values}
 
 \begin{itemize}
 \tightlist
@@ -536,8 +523,7 @@ extra care. E.g. \texttt{Inf} can appear also in case of numerical \emph{overflo
 ## [1] Inf
 \end{verbatim}
 
-\hypertarget{conversion}{%
-\subsubsection{Conversion}\label{conversion}}
+\subsubsection{Conversion}\label{conversion}
 
 Variables types can be converted with \texttt{as.\textless{}typename\textgreater{}()}-like functions, as long
 as conversion makes sense. Some examples:
@@ -547,7 +533,7 @@ as conversion makes sense. Some examples:
 \NormalTok{v }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
 \NormalTok{w }\OtherTok{\textless{}{-}} \StringTok{"0"}
 \NormalTok{x }\OtherTok{\textless{}{-}} \FloatTok{3.2}
-\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ 2L}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{2}\DataTypeTok{L}
 \NormalTok{z }\OtherTok{\textless{}{-}} \StringTok{"F"}
 \FunctionTok{cat}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}
   \FunctionTok{paste}\NormalTok{(x, }\FunctionTok{as.integer}\NormalTok{(x), }\AttributeTok{sep =} \StringTok{" =\textgreater{} "}\NormalTok{), }\CommentTok{\# from numeric to integer}
@@ -582,11 +568,9 @@ as conversion makes sense. Some examples:
 ## [1] NA
 \end{verbatim}
 
-\hypertarget{vectors-and-matrices}{%
-\subsection{Vectors and matrices}\label{vectors-and-matrices}}
+\subsection{Vectors and matrices}\label{vectors-and-matrices}
 
-\hypertarget{vectors}{%
-\subsubsection{Vectors}\label{vectors}}
+\subsubsection{Vectors}\label{vectors}
 
 Vectors are build with the \texttt{c()} function.
 A vector holds values of the same type.
@@ -771,8 +755,7 @@ splicing.
 ## [1] 9 5 8
 \end{verbatim}
 
-\hypertarget{matrices}{%
-\subsubsection{Matrices}\label{matrices}}
+\subsubsection{Matrices}\label{matrices}
 
 Matrices are built with \texttt{matrix()}
 
@@ -940,8 +923,7 @@ Some examples:
 ## [1,]   20
 \end{verbatim}
 
-\hypertarget{arrays}{%
-\subsubsection{Arrays}\label{arrays}}
+\subsubsection{Arrays}\label{arrays}
 
 Arrays are multi-dimensional vectors (generalization
 of a matrix with more than two dimensions).
@@ -1007,8 +989,7 @@ They work pretty much like matrices.
 ## [1] 2 3
 \end{verbatim}
 
-\hypertarget{lists-and-dataframes}{%
-\subsection{Lists and dataframes}\label{lists-and-dataframes}}
+\subsection{Lists and dataframes}\label{lists-and-dataframes}
 
 Lists are containers that can hold different data types. Each entry,
 which can even be another list, has a position in the list and can also
@@ -1069,12 +1050,12 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##    x  y char
 ## 1  1  1    a
-## 2  1  2    b
-## 3  1  3    a
+## 2  1  2    a
+## 3  1  3    b
 ## 4  1  4    a
 ## 5  1  5    b
-## 6  1  6    a
-## 7  1  7    a
+## 6  1  6    b
+## 7  1  7    b
 ## 8  1  8    a
 ## 9  1  9    b
 ## 10 1 10    a
@@ -1107,7 +1088,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "b" "a" "a" "b" "a" "a" "a" "b" "a"
+##  [1] "a" "a" "b" "a" "b" "b" "b" "a" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1118,8 +1099,8 @@ most of the dataset will be stored in dataframes.
 
 \begin{verbatim}
 ##   x y char
-## 2 1 2    b
-## 3 1 3    a
+## 2 1 2    a
+## 3 1 3    b
 ## 4 1 4    a
 \end{verbatim}
 
@@ -1161,8 +1142,7 @@ dataframes, type \texttt{vignette("tibble")} in an R console.
 Notice that you can convert datasets to tibble with \texttt{as\_tibble()}, while
 with \texttt{as.data.frame()} you will get a Base R dataframe.
 
-\hypertarget{data-manipulation}{%
-\section{Data manipulation}\label{data-manipulation}}
+\section{Data manipulation}\label{data-manipulation}
 
 Now that we know what a dataframe is and how it is generated,
 we can focus on data manipulation.
@@ -1252,8 +1232,7 @@ There are many other dplyr functions for data transformation. This useful
 \href{https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf}{cheatsheet}
 summarizes most of them for quick access.
 
-\hypertarget{plotting}{%
-\section{Plotting}\label{plotting}}
+\section{Plotting}\label{plotting}
 
 In base R plots are built with several calls to functions, each of which
 edit the current canvas. For instance, to plot some points and a line:
@@ -1299,8 +1278,7 @@ Check out this
 \href{https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf}{cheatsheet}
 for quick look-up on ggplot functions.
 
-\hypertarget{examples-plot-and-data-manipulation}{%
-\section{Examples: plot and data manipulation}\label{examples-plot-and-data-manipulation}}
+\section{Examples: plot and data manipulation}\label{examples-plot-and-data-manipulation}
 
 Combining altogether, here a data visualization workflow on the
 \href{https://www.gapminder.org/data/}{Gapminder} dataset.
@@ -1466,8 +1444,7 @@ But, since it looks a bit confusing, we might want four separate plots.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-46-1.pdf}
 
-\hypertarget{probability}{%
-\section{Probability}\label{probability}}
+\section{Probability}\label{probability}
 
 Base R provide functions to handle almost any probability distribution.
 These functions are usually divided into four categories:
@@ -1493,8 +1470,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.35767225  0.28018304 -0.27961432  2.26734112  0.71832323 -0.28421068
-##  [7] -0.28927224  0.89835330  0.93098978 -0.03481865
+##  [1] -1.2317960  0.3460598  1.3832943  0.7350193  0.7750545  1.2920892
+##  [7] -1.8497872  1.0520194 -1.0308002  0.3268712
 \end{verbatim}
 
 \begin{Shaded}
@@ -1505,8 +1482,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.02476689 0.09091560 0.02968067 0.38493755 0.17547017 0.02937099
-##  [7] 0.02903300 0.21745763 0.22529830 0.05032859
+##  [1] 0.0021523581 0.1016014415 0.3298552116 0.1792405408 0.1884006912
+##  [6] 0.3105198758 0.0002413242 0.2545464068 0.0040387767 0.0984094475
 \end{verbatim}
 
 \begin{Shaded}
@@ -1517,8 +1494,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.3602943 0.6103315 0.3898867 0.9883153 0.7637210 0.3881245 0.3861865
-##  [8] 0.8155014 0.8240706 0.4861122
+##  [1] 0.10901265 0.63535113 0.91671268 0.76883614 0.78084628 0.90183688
+##  [7] 0.03217211 0.85360468 0.15131727 0.62811736
 \end{verbatim}
 
 \begin{Shaded}
@@ -1532,11 +1509,9 @@ These functions are usually divided into four categories:
 ## [1] -1.644854  1.644854
 \end{verbatim}
 
-\hypertarget{extras}{%
-\section{Extras}\label{extras}}
+\section{Extras}\label{extras}
 
-\hypertarget{file-system-and-helper}{%
-\subsection{File system and helper}\label{file-system-and-helper}}
+\subsection{File system and helper}\label{file-system-and-helper}
 
 R language provides several tools for management of files and function help.
 Here some useful console commands. Note that most of them are also available
@@ -1599,8 +1574,7 @@ will open a formatted page with information about a specific R function or objec
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{packages}{%
-\subsection{Packages}\label{packages}}
+\subsection{Packages}\label{packages}
 
 Packages can be installed via command line using
 \texttt{install.packages("package\_name")}, or through RStudio graphical interface.
@@ -1627,15 +1601,14 @@ And then you can load the package with \texttt{library}.
 ## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
 ## v forcats   1.0.0     v readr     2.1.5
 ## v lubridate 1.9.3     v stringr   1.5.1
-## v purrr     1.0.2     v tidyr     1.3.0
+## v purrr     1.0.2     v tidyr     1.3.1
 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 \end{verbatim}
 
-\hypertarget{arrow-sign}{%
-\subsection{Arrow sign}\label{arrow-sign}}
+\subsection{Arrow sign}\label{arrow-sign}
 
 The difference between \texttt{\textless{}-} and \texttt{=} is not just programming \emph{style} preference.
 Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a difference:
@@ -1659,9 +1632,9 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 \end{Shaded}
 
 \begin{verbatim}
-##           a         b
-## 1 1.1849872 1.4041946
-## 2 0.4683115 0.2193156
+##            a         b
+## 1 -0.8079864 0.6528421
+## 2  1.9477103 3.7935752
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -1702,8 +1675,7 @@ result to variables.
 ## # i 22 more rows
 \end{verbatim}
 
-\hypertarget{exercises}{%
-\section{Exercises}\label{exercises}}
+\section{Exercises}\label{exercises}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1736,17 +1708,14 @@ if you don't know the trick yet.
 ## [1] -Inf
 \end{verbatim}
 
-\hypertarget{some-elementary-statistics-problems}{%
-\chapter{Some elementary statistics problems}\label{some-elementary-statistics-problems}}
+\chapter{Some elementary statistics problems}\label{some-elementary-statistics-problems}
 
 In the following paragraphs, we will see some applications of the R
 software to solve elementary statistics problems.
 
-\hypertarget{hypothesis-testing}{%
-\section{Hypothesis testing}\label{hypothesis-testing}}
+\section{Hypothesis testing}\label{hypothesis-testing}
 
-\hypertarget{example}{%
-\subsection{Example}\label{example}}
+\subsection{Example}\label{example}
 
 The rector of Politecnico di Torino wants to monitor the spread of Covid-19
 virus inside the university, to check whether it is in line with the overall
@@ -1763,8 +1732,7 @@ population at the end of 2021, and we are given a \emph{warning} threshold for t
 prevalence of \(p_1 = 0.04\), above which the rector will have reasons to adopt
 more restrictive measures.
 
-\hypertarget{false-alarm}{%
-\subsection{False alarm}\label{false-alarm}}
+\subsection{False alarm}\label{false-alarm}
 
 \begin{quote}
 \textbf{Question}: given a threshold \(x_0\) of positive tests, what are the false
@@ -1951,8 +1919,7 @@ count of positive tests, realization of the \(X\) r.v.
   if \(x \geq x_0\) we reject \(H_0\) and accept the alternative hypothesis
 \end{itemize}
 
-\hypertarget{the-binomial-approximation}{%
-\subsection{The Binomial approximation}\label{the-binomial-approximation}}
+\subsection{The Binomial approximation}\label{the-binomial-approximation}
 
 \textbf{Exercise}: The plot above shows that the Binomial distribution offers indeed
 a good approximation of the Hypergeometric. However, as an exercise, we can
@@ -1965,8 +1932,7 @@ the Hypergeometric with the Binomial distribution? Feel free to plot different
 quantities, such as the density instead of the cumulative distribution
 \end{quote}
 
-\hypertarget{confidence-intervals}{%
-\section{Confidence intervals}\label{confidence-intervals}}
+\section{Confidence intervals}\label{confidence-intervals}
 
 In case we have two samples \(\mathbf{X} = X_1, ..., X_m\) and
 \(\mathbf{Y} = Y_1, ..., Y_n\) coming from two unknown Normal distributions, we
@@ -1984,8 +1950,7 @@ confidence given the evidence.
 The higher is the confidence that we want to enforce, the larger the interval
 will be, but remember that a wide confidence interval is often not useful.
 
-\hypertarget{example-1}{%
-\subsection{Example}\label{example-1}}
+\subsection{Example}\label{example-1}
 
 Let's start with a simple example, where we have two normal samples,
 of which we know nothing (not the mean, nor the variance):
@@ -2059,8 +2024,7 @@ More in general, when we compare two samples \(\mathbf{x}, \mathbf{y}\)
 there are multiple CIs that we might have to compute. We go through
 them below.
 
-\hypertarget{the-four-cases}{%
-\subsection{The four cases}\label{the-four-cases}}
+\subsection{The four cases}\label{the-four-cases}
 
 To better clarify, we can divide the confidence intervals over
 two samples in four cases:
@@ -2080,8 +2044,7 @@ two samples in four cases:
   cannot be assumed.
 \end{enumerate}
 
-\hypertarget{case-1}{%
-\subsubsection{Case 1}\label{case-1}}
+\subsubsection{Case 1}\label{case-1}
 
 The variable of interest is, just like in any of the following cases,
 \(\mu_x - \mu_y\), which we don't know.
@@ -2119,8 +2082,7 @@ in case 1:
 \frac{\sigma_y^2}{n}}\right)
 \]
 
-\hypertarget{case-2}{%
-\subsubsection{Case 2}\label{case-2}}
+\subsubsection{Case 2}\label{case-2}
 
 If \(m, n\) are ``large'', then the sample variance will asymptotically get
 closer to the variance. In the previous example we assumed large sample
@@ -2133,8 +2095,7 @@ The interval
 \]
 is a confidence interval for \(\mu_x - \mu_y\) with \emph{approximately} level \(1-\alpha\).
 
-\hypertarget{case-3}{%
-\subsubsection{Case 3}\label{case-3}}
+\subsubsection{Case 3}\label{case-3}
 
 In case we assume homoscedasticity, we leverage on the observation as much as we
 can, therefore we compute a weighted average (\emph{pooled}) of the sample variances
@@ -2215,8 +2176,7 @@ Before we computed the CI ``manually'', but luckily there exists a function whic
 ## [1] 0.95
 \end{verbatim}
 
-\hypertarget{case-4}{%
-\subsubsection{Case 4}\label{case-4}}
+\subsubsection{Case 4}\label{case-4}
 
 Otherwise, in case we cannot assume that the two samples have the same variance.
 In R this specific confidence interval can be computed setting the \texttt{var.equal}
@@ -2245,16 +2205,14 @@ flag to false in \texttt{t.test()}.
 
 This is called the Welch-Satterthwaite approximation.
 
-\hypertarget{p-value}{%
-\section{P-value}\label{p-value}}
+\section{P-value}\label{p-value}
 
 In the context of hypothesis testing, the \emph{p-value} is the probability,
 under the null hypothesis, that we obtain a test statistic at least as
 contradictory to \(H_0\) as the statistic from the available sample.
 In other words, it's a measure of the null hypothesis support in a 0 to 1 range.
 
-\hypertarget{example-2}{%
-\subsection{Example}\label{example-2}}
+\subsection{Example}\label{example-2}
 
 In a fair French roulette, the red probability is 18/37.
 
@@ -2545,11 +2503,9 @@ on the case) \texttt{.5} to the \(x\) value.
 The bilateral case with Normal approximation is left to the reader as exercise
 \end{quote}
 
-\hypertarget{normal-sampling}{%
-\chapter{Normal sampling}\label{normal-sampling}}
+\chapter{Normal sampling}\label{normal-sampling}
 
-\hypertarget{random-and-non-random-normal-samples}{%
-\section{Random and non-random normal samples}\label{random-and-non-random-normal-samples}}
+\section{Random and non-random normal samples}\label{random-and-non-random-normal-samples}
 
 First we look at the simplest case: independent and identically distributed
 Normal random variables.
@@ -2755,8 +2711,7 @@ in R:
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-83-1.pdf}
 
-\hypertarget{autocorrelated-sample}{%
-\subsection{Autocorrelated sample}\label{autocorrelated-sample}}
+\subsection{Autocorrelated sample}\label{autocorrelated-sample}
 
 Let \(\mathbf{Y} = Y_1, ..., Y_{n+1}\) an i.i.d. standard
 Normal random sample (i.e.~\(Y_i \sim \mathcal{N}(0, 1)\)).
@@ -2881,8 +2836,7 @@ single picture.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-87-1.pdf}
 
-\hypertarget{exchangeable-normal-random-variables}{%
-\section{Exchangeable normal random variables}\label{exchangeable-normal-random-variables}}
+\section{Exchangeable normal random variables}\label{exchangeable-normal-random-variables}
 
 Let \(\mathbf{X} = (X_1, ..., X_n)\) be a random vector whose elements
 follow the conditional distribution
@@ -2932,8 +2886,7 @@ use that value to simulate the \(\mathbf X\) Normal sample given \(\mu\).
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{multivariate-normal-random-samples}{%
-\section{Multivariate Normal random samples}\label{multivariate-normal-random-samples}}
+\section{Multivariate Normal random samples}\label{multivariate-normal-random-samples}
 
 Multivariate normal distribution functions are provided by the \texttt{mvtnorm} library.
 
@@ -3018,8 +2971,7 @@ Let's plot this sample
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-91-1.pdf}
 
-\hypertarget{exercises-1}{%
-\subsection{Exercises}\label{exercises-1}}
+\subsection{Exercises}\label{exercises-1}
 
 Take two bivariate random variables (the same as before, \(X, S\)).
 Complete these tasks:
@@ -3036,8 +2988,7 @@ Complete these tasks:
   (hint: check \texttt{?pmvnorm})
 \end{enumerate}
 
-\hypertarget{solutions}{%
-\subsection{Solutions}\label{solutions}}
+\subsection{Solutions}\label{solutions}
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi}.}
@@ -3115,22 +3066,20 @@ Complete these tasks:
 Increasing the Monte Carlo samples you will get a more accurate estimate
 of the probability measure.
 
-\hypertarget{the-linear-model}{%
-\chapter{The linear model}\label{the-linear-model}}
+\chapter{The linear model}\label{the-linear-model}
 
-For this lecture, we will use the \emph{Advertising} dataset,
-which can be found \href{https://www.kaggle.com/datasets/ashydv/advertising-dataset}{here}.
-It shows, for each line, the revenue (\texttt{Sales}) depending on the
-money spent on three different advertising channels: \texttt{TV}, \texttt{Radio}, \texttt{Newspaper}.
-
-Every attribute is continuous, and allows to explain the main R
+During this lecture, we will use the \emph{Advertising} dataset,
+which can be found \href{https://www.kaggle.com/datasets/ashydv/advertising-dataset}{in Kaggle}.
+It shows, for each line, the revenue (\texttt{Sales}), which is the \emph{response} depending on
+three \emph{predictors}, i.e.~money spent on three different advertising channels: \texttt{TV}, \texttt{Radio}, \texttt{Newspaper}.
+Every variable is continuous, allowing to explain the main R
 functions used in a plain linear regression task.
 
-\hypertarget{dataset-import}{%
-\section{Dataset import}\label{dataset-import}}
+\section{Dataset import}\label{dataset-import}
 
-Import the dataset (remember to check the current working
-directory).
+Import the dataset (you may have to select properly the current working directory).
+Remember a modern version of a dataset in R is called \emph{tibble} (as opposed to the
+previous \emph{dataframe})
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3174,10 +3123,9 @@ directory).
 ## # i 190 more rows
 \end{verbatim}
 
-\hypertarget{basic-eda}{%
-\section{Basic EDA}\label{basic-eda}}
+\section{Basic EDA (Exploratory Data Analysis)}\label{basic-eda-exploratory-data-analysis}
 
-Get some statistics with \texttt{summary()}
+Get some basic statistics with \texttt{summary()}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3195,8 +3143,8 @@ Get some statistics with \texttt{summary()}
 ##  Max.   :296.40   Max.   :49.600   Max.   :114.00   Max.   :27.00
 \end{verbatim}
 
-You can attach the dataset to access columns with less code
-(not recommended). All the columns of the table are then
+You can \texttt{attach()} the dataset to access columns writing less code, although this is not
+recommended nowadays (see \texttt{with()} below). All the columns of the table are then
 available in the R environment without prepending the dataset name
 
 \begin{Shaded}
@@ -3218,8 +3166,8 @@ To revert back, detach the dataset
 \end{Highlighting}
 \end{Shaded}
 
-It is better to use \texttt{with()} instead, if really needed.
-This function basically attach a certain context object
+It is better to use \texttt{with()} instead.
+This function basically attaches a certain context object
 (e.g.~the dataset namespace), executes the commands inside
 the curly brackets, and then detaches the context object.
 
@@ -3287,11 +3235,11 @@ when gathering information about a dataset.
 ## [1] "TV"        "Radio"     "Newspaper" "Sales"
 \end{verbatim}
 
-\hypertarget{simple-plots}{%
-\section{Simple plots}\label{simple-plots}}
+\section{Simple plots}\label{simple-plots}
 
-In exploration, ggplot might be a bit overkill. Faster
-plots can be drawn with \texttt{plot()} and \texttt{pairs()}
+When exploring a dataset, \texttt{ggplot()} might be a bit excessive
+(recall that \texttt{ggplot()} is a modern way to draw cool plots using
+a graphical syntax). Faster plots can be drawn with \texttt{plot()} and \texttt{pairs()}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3405,7 +3353,7 @@ adding a smoothed line would look like this
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-108-1.pdf}
 
-The same pictures can also be plotted with \texttt{ggplot},
+The same pictures can also be plotted with \texttt{ggplot()},
 if preferred (in two ways).
 
 \begin{Shaded}
@@ -3450,7 +3398,7 @@ them together with \texttt{ggarrange()}
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-110-1.pdf}
 
 Second method: rearrange the dataset first,
-and feed everything to ggplot.
+and feed everything to \texttt{ggplot()}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3499,12 +3447,13 @@ If you're not sure why we need to use the \texttt{melt()} function,
 check the first lab (Iris dataset), or simply read the \texttt{?melt}
 helper.
 
-\hypertarget{simple-regression}{%
-\section{Simple regression}\label{simple-regression}}
+\section{Simple regression}\label{simple-regression}
 
-Check the \texttt{lm()} function: first argument is the \emph{formula}.
+The core of this class is the \texttt{lm()} function: its first argument is a \emph{formula},
+centered around the symbol \textasciitilde, whith a response on its left and a list of predictors on its right.
 
-Let's fit a simple single predictor linear model
+Let's start with a simple single quantitative predictor linear
+model (simple linear regression)
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3513,11 +3462,10 @@ Let's fit a simple single predictor linear model
 \end{Shaded}
 
 Now that we fitted the model, we have access to the
-coefficient estimates and we can plot the regression
+coefficient estimates and we can plot the \emph{estimated} regression
 line.
 
-\hypertarget{plot}{%
-\subsection{Plot}\label{plot}}
+\subsection{Plot}\label{plot}
 
 Here two ways of drawing the regression line,
 first in base R
@@ -3553,8 +3501,7 @@ and in ggplot
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-115-1.pdf}
 
-Actually, \texttt{lm()} does a lot more than just compute
-the OLS coefficients.
+Actually, \texttt{lm()} does a lot more than just compute the least squares coefficients.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3585,26 +3532,24 @@ the OLS coefficients.
 
 We will analyze in detail this output in the next subsection.
 
-\hypertarget{summary}{%
-\subsection{Summary}\label{summary}}
+\subsection{Summary}\label{summary}
 
-\textbf{What's in \texttt{summary(lm)}?}
+\texttt{summary(lm)} contains information about the following quantities:
 
 \begin{itemize}
 \item
   residuals: \(Y - X\hat\beta\)
 \item
-  estimate: \(\hat\beta\)
+  estimated coefficients: \(\hat\beta\)
 \item
-  std. error: errors on the coefficients \(S \sqrt{(X'X)^{-1}_{i+1,i+1}}\)
+  (estimated) standard errors on the coefficients (in the \texttt{Std.\ Error} column) \(S \sqrt{(X'X)^{-1}_{i+1,i+1}}\)
   because \(\frac{\hat\beta_i - \beta_i}{S\sqrt{(X'X)^{-1}}}\sim t(n-p)\)
 \item
-  t-value: value of the beta t-statistic
-  under the null hypothesis (\(H_0: \beta_{i+1} = 0\))
+  in the \texttt{t\ value} column: value of the test statistic for the null hypothesis \(H_0: \beta_{i+1} = 0\)
 \item
-  p-value: probability of the test statistic being beyond t-val
+  in the \texttt{Pr(\textgreater{}\textbar{}t\textbar{})} column: p-value regarding the null hypothesis above
 \item
-  residual std error: \(S = \sqrt{\frac{e'e}{n-p}}\)
+  residual std error: \(S = \sqrt{\frac{e'e}{n-p}}\), i.e.~the square root of the Mean Square Residual (MSR)
 \item
   multiple R squared: \emph{later}
 \item
@@ -3613,14 +3558,13 @@ We will analyze in detail this output in the next subsection.
 
 Let's compute them to make sure we understood the concepts
 
-\hypertarget{residuals}{%
-\subsubsection{Residuals}\label{residuals}}
+\subsubsection{Residuals}\label{residuals}
 
 Easy to retrieve them (actually,
 they are the realization of the residuals)
 
 \[
-e = y - x\hat\beta
+e = y - X\hat\beta
 \]
 
 \begin{Shaded}
@@ -3647,8 +3591,7 @@ e = y - x\hat\beta
 ## 6 -0.257     -0.257
 \end{verbatim}
 
-\hypertarget{estimate}{%
-\subsubsection{Estimate}\label{estimate}}
+\subsubsection{Estimate}\label{estimate}
 
 Estimates are just the \(\hat\beta\) values for each predictor (plus intercept).
 They are computed with the closed form max likelihood formula.
@@ -3675,19 +3618,16 @@ They are computed with the closed form max likelihood formula.
 ## 2   0.0555       0.0555
 \end{verbatim}
 
-\hypertarget{standard-error}{%
-\subsubsection{Standard Error}\label{standard-error}}
+\subsubsection{Standard Error}\label{standard-error}
 
-For each predictor, this represent the variation in the beta estimator. The lower
-the standard error is, the higher is the accuracy of that particular coefficient.
-For predictor \(i\), it's computed as
+For each predictor, this quantifies the estimated variation in the beta estimator.
+The lower the standard error is, the higher is the accuracy of that particular coefficient.
+For predictor \(i\), it is computed as
 
 \[
 SE_i = S \sqrt{(X'X)^{-1}_{i+1,i+1}}
 \]
-
-where \(S\) is the \emph{residuals standard error} (with \(S^2\) being the RMS - residual
-mean squares), we get the \(i+1^{\text{th}}\) element because of the \(1\) column for the intercept.
+\(i+1\) is used here since first column if for the intercept \(\beta_0\).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3706,8 +3646,7 @@ mean squares), we get the \(i+1^{\text{th}}\) element because of the \(1\) colum
 ## [1,] 0.001895551
 \end{verbatim}
 
-\hypertarget{t-value-and-p-value}{%
-\subsubsection{T-value and p-value}\label{t-value-and-p-value}}
+\subsubsection{T-value and p-value}\label{t-value-and-p-value}
 
 These two are related to each other. The first is the
 test statistics value, under the null hypothesis
@@ -3732,9 +3671,9 @@ which is student-T distributed with \(n-2\) degrees of freedom.
 ## [1,] 29.2605
 \end{verbatim}
 
-And finally, the p-value is simply the probability
+And finally, the p-value is the probability
 on a \(t(n-2)\) distribution of the statistic to be
-beyond that critical value. Remember that with \emph{beyond}
+beyond the value actually observed. Remember that with \emph{beyond}
 we mean on both sides of the distribution, since the
 alternative hypothesis \(H_1: \beta \neq 0\) is two-sided.
 
@@ -3755,7 +3694,7 @@ Here we cannot appreciate the manual computation since the
 p-value is very low (meaning that we can reject the null,
 favoring the alternative).
 
-Exercise: You can try and compute this value manually on another
+Exercise: You can try to compute this value manually on another
 simple regression model where we use \texttt{Radio} as predictor.
 
 \begin{Shaded}
@@ -3786,8 +3725,7 @@ simple regression model where we use \texttt{Radio} as predictor.
 ## F-statistic: 27.57 on 1 and 198 DF,  p-value: 3.883e-07
 \end{verbatim}
 
-\hypertarget{tools-for-linear-regression-analysis}{%
-\chapter{Tools for linear regression analysis}\label{tools-for-linear-regression-analysis}}
+\chapter{Tools for linear regression analysis}\label{tools-for-linear-regression-analysis}
 
 We will still use the advertising dataset. Let's load it.
 
@@ -3808,8 +3746,7 @@ We will still use the advertising dataset. Let's load it.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
 \end{verbatim}
 
-\hypertarget{plot-1}{%
-\section{Plot}\label{plot-1}}
+\section{Plot}\label{plot-1}
 
 The plot function \texttt{plot()} provides special plots for a linear
 model object. See details \texttt{?plot.lm}.
@@ -3910,8 +3847,7 @@ The leverage of an observation \(h_{ii}\) measures how much an observation \(y_i
 has an impact on the fitted value \(\hat y_i\).\footnote{Explanation taken from
   \url{https://it.mathworks.com/help/stats/hat-matrix-and-leverage.html}}
 
-\hypertarget{multiple-predictors}{%
-\section{Multiple predictors}\label{multiple-predictors}}
+\section{Multiple predictors}\label{multiple-predictors}
 
 Predictors in R linear models are defined in the formula.
 
@@ -4024,8 +3960,7 @@ The dot stands for all the possible predictors in the dataset.
 ## F-statistic: 605.4 on 3 and 196 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
-\hypertarget{confidence-regions}{%
-\section{Confidence regions}\label{confidence-regions}}
+\section{Confidence regions}\label{confidence-regions}
 
 The hypothesis system setup (in the general case, multiple regression) is:
 
@@ -4118,18 +4053,15 @@ confidence intervals in the second case are computed independently one
 coefficients from the other, while in ggplot's function the confidence region
 is jointly computed, therefore it's more accurate.
 
-\hypertarget{interactions-and-qualitative-predictors}{%
-\chapter{Interactions and qualitative predictors}\label{interactions-and-qualitative-predictors}}
+\chapter{Interactions and qualitative predictors}\label{interactions-and-qualitative-predictors}
 
-\hypertarget{transformations}{%
-\section{Transformations}\label{transformations}}
+\section{Transformations}\label{transformations}
 
 Formulae in R linear models are much more powerful than
 what seen so far. In some cases we might be interested in
 transforming a variable before fitting the linear model.
 
-\hypertarget{a-simple-example}{%
-\subsection{A simple example}\label{a-simple-example}}
+\subsection{A simple example}\label{a-simple-example}
 
 For instance, let's take this synthetic dataset:
 
@@ -4224,8 +4156,7 @@ and the residuals plot.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-142-1.pdf}
 
-\hypertarget{on-advertising}{%
-\subsection{\texorpdfstring{On \emph{advertising}}{On advertising}}\label{on-advertising}}
+\subsection{\texorpdfstring{On \emph{advertising}}{On advertising}}\label{on-advertising}
 
 Back to our real dataset.
 
@@ -4337,11 +4268,9 @@ a linear model with transformed data.
 ## "numeric" "numeric"
 \end{verbatim}
 
-\hypertarget{model-selection}{%
-\section{Model selection}\label{model-selection}}
+\section{Model selection}\label{model-selection}
 
-\hypertarget{r-squared}{%
-\subsection{R-squared}\label{r-squared}}
+\subsection{R-squared}\label{r-squared}
 
 One of the indicators computed with \texttt{summary} on a fitted linear model
 is the \(R^2\) index (R-squared, or coefficient of determination). It is defined as
@@ -4379,8 +4308,7 @@ seems to improve the accuracy of the regression task.
 ## [1] 0.8216696
 \end{verbatim}
 
-\hypertarget{anova}{%
-\subsection{ANOVA}\label{anova}}
+\subsection{ANOVA}\label{anova}
 
 Another way of comparing two models, in particular one model with
 a smaller \emph{nested} model, is the ANOVA test, which is an instance
@@ -4424,8 +4352,7 @@ additional predictor.
 ``\emph{by hand}'' and verify your solution with the anova summary table.
 \end{quote}
 
-\hypertarget{qualitative-predictors}{%
-\section{Qualitative predictors}\label{qualitative-predictors}}
+\section{Qualitative predictors}\label{qualitative-predictors}
 
 Qualitative predictors are represented in R through \emph{factors}.
 Although it's not always necessary, it is always best to
@@ -4549,8 +4476,7 @@ Check the function documentation for more details.
 ## Estimated effects may be unbalanced
 \end{verbatim}
 
-\hypertarget{predict}{%
-\section{Predict}\label{predict}}
+\section{Predict}\label{predict}
 
 Especially when dealing with qualitative data, predictions for
 new unseen data can be easily computed with the \texttt{predict} function,
@@ -4572,8 +4498,7 @@ which simply applies the regression coefficients to the provided data
 ## 3 249.810 238.8769 260.7431
 \end{verbatim}
 
-\hypertarget{interactions}{%
-\section{Interactions}\label{interactions}}
+\section{Interactions}\label{interactions}
 
 Interactions are added in the \texttt{lm} formula. More specifically:
 
@@ -4593,11 +4518,9 @@ Interactions are added in the \texttt{lm} formula. More specifically:
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{generalized-linear-models-binomial}{%
-\chapter{Generalized Linear Models (Binomial)}\label{generalized-linear-models-binomial}}
+\chapter{Generalized Linear Models (Binomial)}\label{generalized-linear-models-binomial}
 
-\hypertarget{students-dataset}{%
-\section{Students dataset}\label{students-dataset}}
+\section{Students dataset}\label{students-dataset}
 
 We want to analyze how students choose the study program
 from general, academic and technic (\emph{vocation})
@@ -4647,8 +4570,7 @@ from general, academic and technic (\emph{vocation})
 ## 6     6 female low    public academic    47    41    46      40
 \end{verbatim}
 
-\hypertarget{eda}{%
-\section{EDA}\label{eda}}
+\section{EDA}\label{eda}
 
 As usual, a bit of data exploration before performing any statistical
 analysis.
@@ -4741,8 +4663,7 @@ analysis.
 ## [1] 51.33333
 \end{verbatim}
 
-\hypertarget{plots}{%
-\subsection{Plots}\label{plots}}
+\subsection{Plots}\label{plots}
 
 Boxplots allow to have a view of the distribution of a
 numeric variable over classes in a minimal representation.
@@ -4815,8 +4736,7 @@ switch to long format with \texttt{gather} (or \texttt{reshape2::melt}).
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{test}{%
-\section{Test}\label{test}}
+\section{Test}\label{test}
 
 We can further analyse the dataset attributes with some tests and
 traditional linear regression fit.
@@ -4882,8 +4802,7 @@ traditional linear regression fit.
 Notice how the T-test t-value is equal to the linear model coefficient estimate t-value.
 They are computed the same way.
 
-\hypertarget{generalized-linear-model}{%
-\section{Generalized Linear Model}\label{generalized-linear-model}}
+\section{Generalized Linear Model}\label{generalized-linear-model}
 
 The \(X\)s have to be independent, thus we check the correlation plots.
 
@@ -5166,8 +5085,7 @@ search.
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{predictions}{%
-\subsection{Predictions}\label{predictions}}
+\subsection{Predictions}\label{predictions}
 
 Working with generalized linear models, we can choose whether to get the
 logit estimate
@@ -5292,8 +5210,7 @@ Predictions must sum to 1 (they're normalized).
 ## [186] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 \end{verbatim}
 
-\hypertarget{graphic-interpretation}{%
-\section{Graphic interpretation}\label{graphic-interpretation}}
+\section{Graphic interpretation}\label{graphic-interpretation}
 
 These are some of the ways we can visualize the results.
 The plots interpretation is left as exercise.
@@ -5332,8 +5249,7 @@ The plots interpretation is left as exercise.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-185-1.pdf}
 
-\hypertarget{other-tests}{%
-\section{Other tests}\label{other-tests}}
+\section{Other tests}\label{other-tests}
 
 The models fitted so fare are not the only one that can give
 insights on the data. Here's some other models and tests made with
@@ -5461,11 +5377,9 @@ Feel free to further experiment the dataset.
 ## 3 low      50  52.6  52.2 0.146
 \end{verbatim}
 
-\hypertarget{generalized-linear-models-poisson}{%
-\chapter{Generalized Linear Models (Poisson)}\label{generalized-linear-models-poisson}}
+\chapter{Generalized Linear Models (Poisson)}\label{generalized-linear-models-poisson}
 
-\hypertarget{warpbreaks-dataset}{%
-\section{Warpbreaks dataset}\label{warpbreaks-dataset}}
+\section{Warpbreaks dataset}\label{warpbreaks-dataset}
 
 We want to analyse how the number of breaks in a wool thread
 depends on both the type of wool and the tension applied.
@@ -5516,8 +5430,7 @@ with its name.
 ##  Max.   :70.00
 \end{verbatim}
 
-\hypertarget{eda-1}{%
-\section{EDA}\label{eda-1}}
+\section{EDA}\label{eda-1}
 
 This dataset is peculiar since we have two predictors, both qualitative.
 Some descriptive statistics might be useful.
@@ -5568,8 +5481,7 @@ along each combination of the two qualitative variables.
 ## 6 B     H        18.8  23.9
 \end{verbatim}
 
-\hypertarget{plots-1}{%
-\subsection{Plots}\label{plots-1}}
+\subsection{Plots}\label{plots-1}
 
 The above information can be easily visualized with
 boxplots. Below we see a variation of the boxplot, called
@@ -5591,8 +5503,7 @@ but with ordered levels, i.e.~\emph{low}, \emph{medium}, \emph{high}).
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-195-1.pdf}
 
-\hypertarget{poisson-family-glm}{%
-\section{Poisson Family GLM}\label{poisson-family-glm}}
+\section{Poisson Family GLM}\label{poisson-family-glm}
 
 Let's now fit a generalized linear model with log-link function
 (i.e.~Poisson family).
@@ -5634,8 +5545,7 @@ The output is similar to the one from the Binomial family seen
 in the previous lecture, although here all the coefficients are
 related to discrete variables.
 
-\hypertarget{response}{%
-\subsection{Response}\label{response}}
+\subsection{Response}\label{response}
 
 The link function is simply
 
@@ -5693,8 +5603,7 @@ the response.
 ## 19.44298 19.44298 19.44298 19.44298 19.44298 19.44298
 \end{verbatim}
 
-\hypertarget{contrasts}{%
-\subsection{Contrasts}\label{contrasts}}
+\subsection{Contrasts}\label{contrasts}
 
 We can use contrasts to compare the coefficients and
 understand whether two levels of a single variable report
@@ -5712,16 +5621,6 @@ but how do we know if it's statistically relevant?
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(contrast)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning in .recacheSubclasses(def@className, def, env): undefined subclass
-## "ndiMatrix" of class "replValueSp"; definition not updated
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{cont }\OtherTok{\textless{}{-}} \FunctionTok{contrast}\NormalTok{(breaks\_glm,}
   \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \StringTok{"M"}\NormalTok{, }\AttributeTok{wool =} \StringTok{"A"}\NormalTok{),}
   \FunctionTok{list}\NormalTok{(}\AttributeTok{tension =} \StringTok{"H"}\NormalTok{, }\AttributeTok{wool =} \StringTok{"A"}\NormalTok{),}
@@ -5875,8 +5774,7 @@ We can provide multiple levels at once to contrasts:
 ##            0        1        0     0
 \end{verbatim}
 
-\hypertarget{tests}{%
-\section{Tests}\label{tests}}
+\section{Tests}\label{tests}
 
 Since we know that the difference of the deviances
 is Chi-squared distributed, we can perform some tests.
@@ -6011,8 +5909,7 @@ Exercise: plot the same graph for the deviance between the fit
 and the null model. Comment it.
 \end{quote}
 
-\hypertarget{influence-measures}{%
-\section{Influence measures}\label{influence-measures}}
+\section{Influence measures}\label{influence-measures}
 
 For each data-point in the dataset, we can measure how that
 observation impacts the fit. The \texttt{influence.measures} function
@@ -6101,8 +5998,7 @@ We can plot the observations influences:
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-212-1.pdf}
 
-\hypertarget{interaction}{%
-\section{Interaction}\label{interaction}}
+\section{Interaction}\label{interaction}
 
 Let's add interaction.
 
@@ -6185,8 +6081,7 @@ the y-axis the breaks. Draw two lines, one for wool A and one for wool B,
 passing through the mean number of breaks. How do you interpret the graph?
 \end{quote}
 
-\hypertarget{testing-interaction}{%
-\subsection{Testing interaction}\label{testing-interaction}}
+\subsection{Testing interaction}\label{testing-interaction}
 
 Is a more complex model worth the additional parameters?
 
@@ -6240,11 +6135,9 @@ null model.
 ## [1] 7.962292e-07
 \end{verbatim}
 
-\hypertarget{negative-binomial-and-zero-inflation}{%
-\chapter{Negative Binomial and Zero-Inflation}\label{negative-binomial-and-zero-inflation}}
+\chapter{Negative Binomial and Zero-Inflation}\label{negative-binomial-and-zero-inflation}
 
-\hypertarget{dataset}{%
-\section{Dataset}\label{dataset}}
+\section{Dataset}\label{dataset}
 
 It is a sample of 4,406 individuals, aged 66 and over, who were covered by Medicare
 in 1988. One of the variables the data provide is number of physician office visits.
@@ -6257,14 +6150,16 @@ are considered to be relevant.
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
-\toprule()
+\toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
 variable
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 description
 \end{minipage} \\
-\midrule()
+\midrule\noalign{}
 \endhead
+\bottomrule\noalign{}
+\endlastfoot
 visits & Number of physician office visits (integer outcome) \\
 nvisits & \\
 ovisits & \\
@@ -6284,7 +6179,6 @@ income & \\
 employed & \\
 insurance & Private insurance indicator (no, yes) \\
 medicaid & \\
-\bottomrule()
 \end{longtable}
 
 \begin{Shaded}
@@ -6388,8 +6282,7 @@ medicaid & \\
 ## 6     17        0    poor       5 female      7        no
 \end{verbatim}
 
-\hypertarget{eda-2}{%
-\section{EDA}\label{eda-2}}
+\section{EDA}\label{eda-2}
 
 As always, let's start with some descriptive plots.
 
@@ -6540,8 +6433,7 @@ of the available data.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-225-1.pdf}
 
-\hypertarget{negative-binomial-regression}{%
-\section{Negative binomial regression}\label{negative-binomial-regression}}
+\section{Negative binomial regression}\label{negative-binomial-regression}
 
 The overdispersion of the data can be captured by a Negative Binomial
 model, which differs from the Poisson model in that the variance can
@@ -6775,8 +6667,7 @@ Let's compare the coefficients and the confidence intervals:
 The confidence intervals are wider, which is an effect of the Negative Binomial
 letting more uncertainty in the model.
 
-\hypertarget{zero-inflation}{%
-\section{Zero-Inflation}\label{zero-inflation}}
+\section{Zero-Inflation}\label{zero-inflation}
 
 With a regression fit, we only obtain the means of the Poisson, or Negative Binomial,
 distributions for each observations. These are the \emph{fitted values}. However,
@@ -6865,11 +6756,13 @@ presence of many zeros.
 \end{verbatim}
 
 \begin{verbatim}
-## Warning: Removed 47 rows containing non-finite values (`stat_bin()`).
+## Warning: Removed 47 rows containing non-finite outside the scale range
+## (`stat_bin()`).
 \end{verbatim}
 
 \begin{verbatim}
-## Warning: Removed 2 rows containing missing values (`geom_bar()`).
+## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_bar()`).
 \end{verbatim}
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-234-1.pdf}
@@ -6897,12 +6790,12 @@ the count (pois) and the zero model (logistic regression).
 \end{Shaded}
 
 \begin{verbatim}
-## Classes and Methods for R developed in the
+## Classes and Methods for R originally developed in the
 ## Political Science Computational Laboratory
 ## Department of Political Science
-## Stanford University
-## Simon Jackman
-## hurdle and zeroinfl functions by Achim Zeileis
+## Stanford University (2002-2015),
+## by and under the direction of Simon Jackman.
+## hurdle and zeroinfl functions by Achim Zeileis.
 \end{verbatim}
 
 \begin{Shaded}
@@ -6926,7 +6819,7 @@ the count (pois) and the zero model (logistic regression).
 ## (Intercept)      1.307611   0.028121  46.499  < 2e-16 ***
 ## hospital         0.162911   0.006033  27.004  < 2e-16 ***
 ## healthpoor       0.278539   0.017354  16.051  < 2e-16 ***
-## healthexcellent -0.283548   0.031288  -9.063  < 2e-16 ***
+## healthexcellent -0.283549   0.031288  -9.063  < 2e-16 ***
 ## chronic_sat1     0.212773   0.020937  10.163  < 2e-16 ***
 ## chronic_sat2     0.361709   0.021714  16.658  < 2e-16 ***
 ## chronic_sat3+    0.440948   0.021973  20.067  < 2e-16 ***
@@ -6949,7 +6842,7 @@ the count (pois) and the zero model (logistic regression).
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ## 
-## Number of iterations in BFGS optimization: 24 
+## Number of iterations in BFGS optimization: 27 
 ## Log-likelihood: -1.611e+04 on 20 Df
 \end{verbatim}
 
@@ -6982,35 +6875,35 @@ the count (pois) and the zero model (logistic regression).
 ## 
 ## Count model coefficients (negbin with log link):
 ##                  Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)      1.096148   0.063810  17.178  < 2e-16 ***
-## hospital         0.202672   0.020602   9.837  < 2e-16 ***
-## healthpoor       0.303137   0.046057   6.582 4.65e-11 ***
-## healthexcellent -0.304766   0.063341  -4.811 1.50e-06 ***
-## chronic_sat1     0.260035   0.045197   5.753 8.75e-09 ***
-## chronic_sat2     0.419527   0.048339   8.679  < 2e-16 ***
-## chronic_sat3+    0.542360   0.049509  10.955  < 2e-16 ***
-## gendermale      -0.072538   0.031212  -2.324   0.0201 *  
+## (Intercept)      1.096144   0.063810  17.178  < 2e-16 ***
+## hospital         0.202671   0.020602   9.837  < 2e-16 ***
+## healthpoor       0.303138   0.046057   6.582 4.65e-11 ***
+## healthexcellent -0.304768   0.063342  -4.812 1.50e-06 ***
+## chronic_sat1     0.260039   0.045197   5.753 8.75e-09 ***
+## chronic_sat2     0.419531   0.048339   8.679  < 2e-16 ***
+## chronic_sat3+    0.542364   0.049509  10.955  < 2e-16 ***
+## gendermale      -0.072537   0.031212  -2.324   0.0201 *  
 ## school           0.022117   0.004415   5.010 5.44e-07 ***
-## insuranceyes     0.106745   0.042311   2.523   0.0116 *  
+## insuranceyes     0.106747   0.042311   2.523   0.0116 *  
 ## Log(theta)       0.401063   0.036208  11.077  < 2e-16 ***
 ## 
 ## Zero-inflation model coefficients (binomial with logit link):
 ##                 Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)     -0.21625    0.29103  -0.743 0.457443    
-## hospital        -0.82498    0.52315  -1.577 0.114809    
-## healthpoor       0.14124    0.41428   0.341 0.733150    
-## healthexcellent  0.05506    0.33697   0.163 0.870217    
-## chronic_sat1    -1.06686    0.22995  -4.640 3.49e-06 ***
-## chronic_sat2    -2.22239    0.45966  -4.835 1.33e-06 ***
-## chronic_sat3+   -3.42830    0.96761  -3.543 0.000396 ***
-## gendermale       0.70379    0.20796   3.384 0.000714 ***
-## school          -0.07603    0.02789  -2.726 0.006415 ** 
+## (Intercept)     -0.21623    0.29103  -0.743 0.457493    
+## hospital        -0.82495    0.52315  -1.577 0.114820    
+## healthpoor       0.14127    0.41427   0.341 0.733091    
+## healthexcellent  0.05502    0.33699   0.163 0.870316    
+## chronic_sat1    -1.06685    0.22995  -4.639 3.49e-06 ***
+## chronic_sat2    -2.22231    0.45963  -4.835 1.33e-06 ***
+## chronic_sat3+   -3.42831    0.96764  -3.543 0.000396 ***
+## gendermale       0.70380    0.20796   3.384 0.000714 ***
+## school          -0.07604    0.02789  -2.726 0.006412 ** 
 ## insuranceyes    -1.25027    0.23645  -5.288 1.24e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ## 
 ## Theta = 1.4934 
-## Number of iterations in BFGS optimization: 62 
+## Number of iterations in BFGS optimization: 36 
 ## Log-likelihood: -1.209e+04 on 21 Df
 \end{verbatim}
 
@@ -7025,16 +6918,16 @@ the count (pois) and the zero model (logistic regression).
 
 \begin{verbatim}
 ##           count      zero
-##  [1,] 3.6973298 1.0483786
-##  [2,] 1.1769320 0.7402720
-##  [3,] 1.3211987 1.0137967
-##  [4,] 0.7531066 1.2028767
-##  [5,] 1.2371035 0.4764772
-##  [6,] 1.4357804 0.2674685
-##  [7,] 1.5541806 0.1544568
-##  [8,] 0.9442535 1.5005316
+##  [1,] 3.6973299 1.0483782
+##  [2,] 1.1769320 0.7402724
+##  [3,] 1.3211986 1.0137962
+##  [4,] 0.7531066 1.2028785
+##  [5,] 1.2371035 0.4764769
+##  [6,] 1.4357804 0.2674684
+##  [7,] 1.5541806 0.1544569
+##  [8,] 0.9442534 1.5005307
 ##  [9,] 1.0193167 0.9446120
-## [10,] 1.0802458 0.4714592
+## [10,] 1.0802458 0.4714595
 \end{verbatim}
 
 We can also set different models for the two parts
@@ -7064,37 +6957,37 @@ Maybe we can remove it:
 ## 
 ## Pearson residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -1.1930 -0.7129 -0.2774  0.3325 17.2309 
+## -1.1930 -0.7129 -0.2774  0.3325 17.2308 
 ## 
 ## Count model coefficients (negbin with log link):
 ##                  Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)      1.095984   0.063712  17.202  < 2e-16 ***
-## hospital         0.203028   0.020519   9.894  < 2e-16 ***
-## healthpoor       0.299893   0.045025   6.661 2.73e-11 ***
-## healthexcellent -0.307844   0.060352  -5.101 3.38e-07 ***
-## chronic_sat1     0.261125   0.045084   5.792 6.96e-09 ***
-## chronic_sat2     0.420111   0.048342   8.690  < 2e-16 ***
-## chronic_sat3+    0.542820   0.049521  10.961  < 2e-16 ***
-## gendermale      -0.073016   0.031222  -2.339   0.0194 *  
-## school           0.022174   0.004399   5.041 4.63e-07 ***
-## insuranceyes     0.105963   0.042155   2.514   0.0119 *  
-## Log(theta)       0.399789   0.036029  11.096  < 2e-16 ***
+## (Intercept)      1.095975   0.063712  17.202  < 2e-16 ***
+## hospital         0.203030   0.020520   9.894  < 2e-16 ***
+## healthpoor       0.299896   0.045025   6.661 2.73e-11 ***
+## healthexcellent -0.307842   0.060352  -5.101 3.38e-07 ***
+## chronic_sat1     0.261129   0.045084   5.792 6.95e-09 ***
+## chronic_sat2     0.420119   0.048342   8.691  < 2e-16 ***
+## chronic_sat3+    0.542827   0.049521  10.962  < 2e-16 ***
+## gendermale      -0.073013   0.031222  -2.339   0.0194 *  
+## school           0.022174   0.004399   5.041 4.64e-07 ***
+## insuranceyes     0.105967   0.042156   2.514   0.0119 *  
+## Log(theta)       0.399783   0.036029  11.096  < 2e-16 ***
 ## 
 ## Zero-inflation model coefficients (binomial with logit link):
 ##               Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)   -0.20013    0.28702  -0.697 0.485640    
-## hospital      -0.81413    0.49138  -1.657 0.097553 .  
-## chronic_sat1  -1.05192    0.22350  -4.706 2.52e-06 ***
-## chronic_sat2  -2.21583    0.46246  -4.791 1.66e-06 ***
-## chronic_sat3+ -3.48976    1.06936  -3.263 0.001101 ** 
-## gendermale     0.69870    0.20782   3.362 0.000774 ***
-## school        -0.07573    0.02732  -2.772 0.005571 ** 
-## insuranceyes  -1.26789    0.23135  -5.480 4.24e-08 ***
+## (Intercept)   -0.20007    0.28703  -0.697 0.485788    
+## hospital      -0.81416    0.49144  -1.657 0.097584 .  
+## chronic_sat1  -1.05197    0.22352  -4.706 2.52e-06 ***
+## chronic_sat2  -2.21569    0.46239  -4.792 1.65e-06 ***
+## chronic_sat3+ -3.48962    1.06920  -3.264 0.001099 ** 
+## gendermale     0.69879    0.20783   3.362 0.000773 ***
+## school        -0.07574    0.02732  -2.772 0.005564 ** 
+## insuranceyes  -1.26793    0.23136  -5.480 4.25e-08 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 ## 
 ## Theta = 1.4915 
-## Number of iterations in BFGS optimization: 62 
+## Number of iterations in BFGS optimization: 33 
 ## Log-likelihood: -1.209e+04 on 19 Df
 \end{verbatim}
 
@@ -7110,7 +7003,7 @@ prediction can be split into the two parts as such:
 
 \begin{verbatim}
 ##          1          2          3          4          5 
-## 0.09447021 0.06957465 0.03630159 0.11149207 0.08585593
+## 0.09447018 0.06957463 0.03630164 0.11149199 0.08585591
 \end{verbatim}
 
 \begin{Shaded}
@@ -7121,7 +7014,7 @@ prediction can be split into the two parts as such:
 
 \begin{verbatim}
 ##         1         2         3         4         5 
-##  7.148150  6.943690 14.986610  8.917319  6.432114
+##  7.148150  6.943690 14.986611  8.917319  6.432114
 \end{verbatim}
 
 \begin{Shaded}
@@ -7132,7 +7025,7 @@ prediction can be split into the two parts as such:
 
 \begin{verbatim}
 ##         1         2         3         4         5 
-##  6.472863  6.460585 14.442573  7.923109  5.879879
+##  6.472863  6.460585 14.442573  7.923110  5.879879
 \end{verbatim}
 
 And finally we can test the models one against the other, comparing the likelihood or
@@ -7177,8 +7070,7 @@ using the AIC score.
 ## zinb_2model 19 24208.69
 \end{verbatim}
 
-\hypertarget{hurdle-v.-zi}{%
-\subsection{Hurdle v. ZI}\label{hurdle-v.-zi}}
+\subsection{Hurdle v. ZI}\label{hurdle-v.-zi}
 
 In general, zeros can come both from the zero model and the count model. Sometimes we might
 want to model a zero as a separate event. The Hurdle model in fact, alternatively to the ZI model,
@@ -7268,11 +7160,9 @@ In R, this can be done by using the \texttt{hurdle} function from the same libra
 ##  6.472374  6.460350 14.453157  7.923691  5.879604
 \end{verbatim}
 
-\hypertarget{three-jags-examples}{%
-\chapter{Three JAGS examples}\label{three-jags-examples}}
+\chapter{Three JAGS examples}\label{three-jags-examples}
 
-\hypertarget{rats---simple-linear-regression}{%
-\section{Rats - Simple linear regression}\label{rats---simple-linear-regression}}
+\section{Rats - Simple linear regression}\label{rats---simple-linear-regression}
 
 We use the data from \citep{rats} and select the 9th
 observation which features the weight at 5 different
@@ -7426,8 +7316,7 @@ This example is taken from \citep{bugs}
 
 We obtain same values for \(\alpha\) (intercept) and \(\beta\) (slope).
 
-\hypertarget{zip-model}{%
-\section{ZIP model}\label{zip-model}}
+\section{ZIP model}\label{zip-model}
 
 We generate some synthetic data according to a set of
 pre-defined parameters (\(p, \lambda\)).
@@ -7519,8 +7408,7 @@ Check that:
 - the true values fall inside the 95\% CI
 - Rhat is close to 1 (chain convergence)
 
-\hypertarget{gaussian-mixture-model-gmm}{%
-\section{Gaussian Mixture Model (GMM)}\label{gaussian-mixture-model-gmm}}
+\section{Gaussian Mixture Model (GMM)}\label{gaussian-mixture-model-gmm}
 
 GMMs are used for clustering data, i.e.~group
 observations which are similar and come from a Gaussian
@@ -7623,7 +7511,7 @@ defining the true parameters.
 \end{Shaded}
 
 \begin{verbatim}
-## Inference for Bugs model at "4", fit using jags,
+## Inference for Bugs model at "6", fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 4
 ##  n.sims = 2000 iterations saved
 ##               mean   sd   2.5%    25%    50%    75%  97.5% Rhat n.eff
@@ -7678,11 +7566,9 @@ components correctly represent the two clusters.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-250-1.pdf}
 
-\hypertarget{lab-1---eda-iris}{%
-\chapter{Lab 1 - EDA (iris)}\label{lab-1---eda-iris}}
+\chapter{Lab 1 - EDA (iris)}\label{lab-1---eda-iris}
 
-\hypertarget{iris-dataset}{%
-\section{Iris Dataset}\label{iris-dataset}}
+\section{Iris Dataset}\label{iris-dataset}
 
 Download the dataset at this link (\url{https://archive.ics.uci.edu/ml/datasets/iris})
 (look for the \texttt{iris.data} file) and place the file together with your R script (for simplicity).
@@ -7693,8 +7579,7 @@ The dataset is available as Comma-Separated Values (CSV) file, which is nothing
 but a plain text file where each row is a row of a table and every column is separated
 by a comma. To make it look more like a CSV file, rename it from \texttt{iris.data} to \texttt{iris.csv}.
 
-\hypertarget{import-data}{%
-\section{Import data}\label{import-data}}
+\section{Import data}\label{import-data}
 
 Now we're ready to import the data in R and view it as a table.
 
@@ -7789,8 +7674,7 @@ Answer these questions:
 ## [1] "Iris-setosa"     "Iris-versicolor" "Iris-virginica"
 \end{verbatim}
 
-\hypertarget{exploratory-data-analysis-eda}{%
-\section{Exploratory Data Analysis (EDA)}\label{exploratory-data-analysis-eda}}
+\section{Exploratory Data Analysis (EDA)}\label{exploratory-data-analysis-eda}
 
 First compute the mean and standard deviation of each measure for each
 class separately.
@@ -7884,8 +7768,7 @@ read the help document of the \texttt{ggpairs()} function. You can also use R ba
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-258-1.pdf}
 
-\hypertarget{confidence-intervals-1}{%
-\section{Confidence intervals}\label{confidence-intervals-1}}
+\section{Confidence intervals}\label{confidence-intervals-1}
 
 Let's make our decision more statistically relevant.
 Select only one class, the Setosa type, and one measure, petal length.
@@ -7975,8 +7858,7 @@ values you got for each class for the petal length measure.
   differentiate between Setosa and the other two types? Why?
 \end{itemize}
 
-\hypertarget{p-value-1}{%
-\section{P-value}\label{p-value-1}}
+\section{P-value}\label{p-value-1}
 
 Imagine you get measurements in terms of all 4 indicators of
 5 iris flowers belonging to the same class, but you don't know
@@ -8118,8 +8000,7 @@ Now take this other sample:
 ##   5.62742
 \end{verbatim}
 
-\hypertarget{lab-2---linear-regression-insulate}{%
-\chapter{Lab 2 - Linear regression (insulate)}\label{lab-2---linear-regression-insulate}}
+\chapter{Lab 2 - Linear regression (insulate)}\label{lab-2---linear-regression-insulate}
 
 This lab focuses on linear models and on the R functions
 dedicated to fitted linear models inspection.
@@ -8129,8 +8010,7 @@ featuring two predictors and one response variable (fuel consumption).
 You can read some information inside the \texttt{insulate.names} text file.
 The dataset can be found \href{https://github.com/toyo97/statistical-models-r/tree/master/datasets}{here}.
 
-\hypertarget{eda-20-min}{%
-\section{EDA (20 min)}\label{eda-20-min}}
+\section{EDA (20 min)}\label{eda-20-min}
 
 Start by loading the \texttt{insulate.csv} data in the R environment,
 making sure that the type of the parsed variables is correctly inferred,
@@ -8189,7 +8069,8 @@ The dataset consists of 56 records.
 
 The predictors are \texttt{when,\ temp}.
 \texttt{when} is a qualitative predictor with two levels (\texttt{before,\ after})
-while \texttt{temp} is a continuous variable in the range \([-0.8, 10.2]\).
+while \texttt{temp} is a continuous variable in the range \([-0.8,
+10.2]\).
 
 \begin{itemize}
 \tightlist
@@ -8229,8 +8110,7 @@ the consumption goes down with higher temperatures
 and also there is a clear difference in the consumption
 mean before and after insulation.
 
-\hypertarget{fitting-a-linear-model-15-min}{%
-\section{Fitting a linear model (15 min)}\label{fitting-a-linear-model-15-min}}
+\section{Fitting a linear model (15 min)}\label{fitting-a-linear-model-15-min}
 
 Now use the \texttt{lm()} function to fit two linear models:
 one which only uses the temperature as predictor, and one
@@ -8331,8 +8211,7 @@ Using color encoding in ggplot, we can differentiate between the two.
 
 \includegraphics{smr_book_files/figure-latex/unnamed-chunk-277-1.pdf}
 
-\hypertarget{interaction-10-min}{%
-\subsection{Interaction (10 min)}\label{interaction-10-min}}
+\subsection{Interaction (10 min)}\label{interaction-10-min}
 
 In this setting, we are mostly interested in whether we should
 include the interaction between the two predictors or not.
@@ -8414,8 +8293,7 @@ is not very accurate and we might try to include interaction.
 
 Just one additional parameter is required.
 
-\hypertarget{aic-and-model-selection-10-min}{%
-\section{AIC and model selection (10 min)}\label{aic-and-model-selection-10-min}}
+\section{AIC and model selection (10 min)}\label{aic-and-model-selection-10-min}
 
 Looking at the R-squared index, the model with interaction seems
 to perform a bit better. However, this doesn't mean that the interaction
@@ -8487,8 +8365,7 @@ A lower index for the interaction model means that the
 additional parameter is worth the higher complexity
 in favor of better fit (likelihood).
 
-\hypertarget{prediction-intervals-35-min}{%
-\section{Prediction intervals (35 min)}\label{prediction-intervals-35-min}}
+\section{Prediction intervals (35 min)}\label{prediction-intervals-35-min}
 
 Imagine we have a new unseen (\emph{future}) row of observed measures \(x_f\),
 with no true response observation (\(Y_f\) is unknown).
@@ -8654,8 +8531,7 @@ estimating the population mean, plus the random variation of the individual
 values. So a prediction interval is always wider than a confidence
 interval.
 
-\hypertarget{plotting-intervals}{%
-\section{Plotting intervals}\label{plotting-intervals}}
+\section{Plotting intervals}\label{plotting-intervals}
 
 Plotting of the intervals was not required, but it might be useful to visualize them.
 For this purpose, we will just use the records of the \texttt{after} class.
@@ -8704,8 +8580,7 @@ For this purpose, we will just use the records of the \texttt{after} class.
 Notice how the intervals get wider when departing from the mean temperature \(\bar x\).
 \end{quote}
 
-\hypertarget{lab-3---jags-gmm}{%
-\chapter{Lab 3 - JAGS GMM}\label{lab-3---jags-gmm}}
+\chapter{Lab 3 - JAGS GMM}\label{lab-3---jags-gmm}
 
 A 5-stars hotel stocks up a whole bunch of bread loafs from a
 local bakery on a daily bases. Every stock of loafs counts
