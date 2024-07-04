@@ -180,28 +180,37 @@ anova(trans_lm, double_lm)
 
 ## Qualitative predictors
 
-Qualitative predictors are represented in R through *factors*.
-Although it's not always necessary, it is always best to
-explicitly tell R to interpret qualitative predictors data as factors.
-This can be done with `read_csv`, first by reading the data as it is
-and then calling the `spec()` function over the new tibble.
+We recycle a textbook example taken from
+McClave JT., Benson PG. e Sincich T. (2014). 
+*Statistics for Business and Economics.* 
+Pearson Education Limited.   
+We want to study the effect on the response (variable *distance*)
+of 4 different brands of golf ball (A,B,C,D) (variable *brand*)
+and the club  type (DRIVER/IRON) (variable *club*).
+These two features are qualitative predictors, also called factors.
+A robot player is used.
 
 ```{r}
-wide_golf <- read_csv("./datasets/golfer.csv")
+wide_golf <- read_tsv("../datasets/golfer.tsv")
 spec(wide_golf) # prints information about the detected data types
 ```
+
+Although it's not always necessary, it is always best to
+explicitly tell R to interpret qualitative predictors data as factors.
+This can be done with `read_tsv`, first by reading the data as it is
+and then calling the `spec()` function over the new tibble.
 
 In this case, the output is saying that the first column has
 been detected as `numeric`, which is false, because the golfer
 number is just an identification number.
 Therefore we correct this by copying the output, manually editing
 the first column type from `col_double()` to `col_factor()` and
-setting the `read_csv` parameter `col_types` to that.
+setting the `read_tsv` parameter `col_types` to that.
 
 ```{r}
-wide_golf <- read_csv("./datasets/golfer.csv",
+wide_golf <- read_tsv("../datasets/golfer.tsv",
   col_types = cols(
-    golfer = readr::col_factor(),
+    club = readr::col_factor(),
     A = col_double(),
     B = col_double(),
     C = col_double(),
@@ -212,7 +221,7 @@ wide_golf <- read_csv("./datasets/golfer.csv",
 library(dplyr)
 # need to switch from wide to long format
 golf <- wide_golf %>%
-  gather(brand, distance, -golfer)
+  gather(brand, distance, A:D)
 
 ## if using data.frame, you can use `melt()` from
 ## reshape2
@@ -221,37 +230,27 @@ golf <- wide_golf %>%
 #             value.name = "distance")
 ```
 
-Now, for example, we fit a linear model using all the 
-available columns
-
+Let us study first the effect of *brand* on the *distance*.
 ```{r}
-complete_lm <- lm(distance ~ ., data = golf)
+lm_brand <- lm(distance ~ brand, data = golf)
+summary(lm_brand)
+```
+```{r}
+model.matrix(lm_brand) # this is the design matrix
 ```
 
-and we can compare it to a smaller model with ANOVA test.
+### Data visualization
+
+To visualize the data, we can use boxplots or more specialized
+graphics for qualitative predictors (for the latter, 
+we have to define the predictors explicitly as factor 
+objects in R). Recall that prettier graphics can always
+be produced using *ggplot2*.
 
 ```{r}
-small_lm <- lm(distance ~ golfer, data = golf)
-anova(small_lm, complete_lm)
-```
-
-Another variance test can be performed with `aov`.
-Check the function documentation for more details.
-```{r}
-aov(distance ~ golfer + brand, data = golf)
-```
-
-## Predict
-
-Especially when dealing with qualitative data, predictions for
-new unseen data can be easily computed with the `predict` function,
-which simply applies the regression coefficients to the provided data
-(arbitrarily generated below inside a tibble).
-
-```{r}
-predict(complete_lm, tibble(golfer = c("1", "1", "2"), brand = c("A", "B", "B")),
-  interval = "confidence"
-)
+boxplot(distance ~ brand, data = golf)
+golf$brand <- as.factor(golf$brand)
+plot.design(distance ~ brand, data = golf)
 ```
 
 ## Interactions
@@ -264,6 +263,74 @@ Interactions are added in the `lm` formula. More specifically:
   cross-variable (i.e. writing `y ~ a + b + a:b` is equivalent to 
   writing `y ~ a*b`)
 
+Back to our dataset, let us now add the second factor *club* and build a 'small'
+additive model...
+
 ```{r}
-inter_lm <- lm(distance ~ golfer * brand, data = golf)
+small_lm <- lm(distance ~ brand + club, data = golf)
+summary(small_lm)
+```
+... and a larger one with interaction.
+
+```{r}
+large_lm <- lm(distance ~ brand * club, data = golf)
+summary(large_lm)
+```
+
+An interaction plot suggests interactions may be significant
+(the lines are not parallel),
+but we have to test for it since interaction plots are
+subject to sampling variation.
+
+```{r}
+plot.design(distance ~ brand * club, data = golf)
+interaction.plot(golf$brand, golf$club, golf$distance)
+```
+
+## Model comparison
+
+We can compare the complete model to a smaller one
+with ANOVA test.
+
+```{r}
+anova(large_lm)
+```
+
+With the last *anova()* command we have built a more
+traditional anova table.
+We can compare the two models also with the *anova* command.
+
+```{r}
+anova(small_lm, large_lm)
+```
+
+Interactions are significant, meaning each combination of the two factors
+tells a different story.
+
+```{r}
+fitted(large_lm)
+```
+
+## Predict
+
+Especially when dealing with qualitative data, predictions for
+new unseen data can be easily computed with the `predict` function,
+which simply applies the regression coefficients to the provided data
+(arbitrarily generated below inside a tibble).
+
+```{r}
+predict.lm(small_lm,
+  newdata = data.frame(
+    club = c("DRIVER", "IRON", "IRON"),
+    brand = c("A", "B", "B")
+  ),
+  interval = "confidence"
+)
+
+# for prediction intervals...
+predict.lm(large_lm,
+  newdata = data.frame(club = "DRIVER", brand = "A"),
+  interval = "prediction",
+  level = .99
+)
 ```
