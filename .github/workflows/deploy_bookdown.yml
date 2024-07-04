@@ -10,7 +10,7 @@ name: renderbook
 jobs:
   bookdown:
     name: Render-Book
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v2
 
