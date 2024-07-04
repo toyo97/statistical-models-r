@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Interactions and qualitative predictors | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Interactions and qualitative predictors | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-04-17" />
+<meta name="date" content="2024-07-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,9 +258,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
 <li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
-<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
-<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#data-visualization"><i class="fa fa-check"></i><b>6.3.1</b> Data visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.4</b> Interactions</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-comparison"><i class="fa fa-check"></i><b>6.5</b> Model comparison</a></li>
+<li class="chapter" data-level="6.6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.6</b> Predict</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
 <ul>
@@ -534,36 +538,45 @@ additional predictor.</p>
 </div>
 <div id="qualitative-predictors" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Qualitative predictors<a href="interactions-and-qualitative-predictors.html#qualitative-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Qualitative predictors are represented in R through <em>factors</em>.
-Although it’s not always necessary, it is always best to
-explicitly tell R to interpret qualitative predictors data as factors.
-This can be done with <code>read_csv</code>, first by reading the data as it is
-and then calling the <code>spec()</code> function over the new tibble.</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="interactions-and-qualitative-predictors.html#cb333-1" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## Rows: 10 Columns: 5
+<p>We recycle a textbook example taken from
+McClave JT., Benson PG. e Sincich T. (2014).
+<em>Statistics for Business and Economics.</em>
+Pearson Education Limited.<br />
+We want to study the effect on the response (variable <em>distance</em>)
+of 4 different brands of golf ball (A,B,C,D) (variable <em>brand</em>)
+and the club type (DRIVER/IRON) (variable <em>club</em>).
+These two features are qualitative predictors, also called factors.
+A robot player is used.</p>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="interactions-and-qualitative-predictors.html#cb333-1" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;./datasets/golfer.tsv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 8 Columns: 5
 ## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## dbl (5): golfer, A, B, C, D
+## Delimiter: &quot;\t&quot;
+## chr (1): club
+## dbl (4): A, B, C, D
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="interactions-and-qualitative-predictors.html#cb335-1" tabindex="-1"></a><span class="fu">spec</span>(wide_golf) <span class="co"># prints information about the detected data types</span></span></code></pre></div>
 <pre><code>## cols(
-##   golfer = col_double(),
+##   club = col_character(),
 ##   A = col_double(),
 ##   B = col_double(),
 ##   C = col_double(),
 ##   D = col_double()
 ## )</code></pre>
+<p>Although it’s not always necessary, it is always best to
+explicitly tell R to interpret qualitative predictors data as factors.
+This can be done with <code>read_tsv</code>, first by reading the data as it is
+and then calling the <code>spec()</code> function over the new tibble.</p>
 <p>In this case, the output is saying that the first column has
 been detected as <code>numeric</code>, which is false, because the golfer
 number is just an identification number.
 Therefore we correct this by copying the output, manually editing
 the first column type from <code>col_double()</code> to <code>col_factor()</code> and
-setting the <code>read_csv</code> parameter <code>col_types</code> to that.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="interactions-and-qualitative-predictors.html#cb337-1" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/golfer.csv&quot;</span>,</span>
+setting the <code>read_tsv</code> parameter <code>col_types</code> to that.</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="interactions-and-qualitative-predictors.html#cb337-1" tabindex="-1"></a>wide_golf <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">&quot;./datasets/golfer.tsv&quot;</span>,</span>
 <span id="cb337-2"><a href="interactions-and-qualitative-predictors.html#cb337-2" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
-<span id="cb337-3"><a href="interactions-and-qualitative-predictors.html#cb337-3" tabindex="-1"></a>    <span class="at">golfer =</span> readr<span class="sc">::</span><span class="fu">col_factor</span>(),</span>
+<span id="cb337-3"><a href="interactions-and-qualitative-predictors.html#cb337-3" tabindex="-1"></a>    <span class="at">club =</span> readr<span class="sc">::</span><span class="fu">col_factor</span>(),</span>
 <span id="cb337-4"><a href="interactions-and-qualitative-predictors.html#cb337-4" tabindex="-1"></a>    <span class="at">A =</span> <span class="fu">col_double</span>(),</span>
 <span id="cb337-5"><a href="interactions-and-qualitative-predictors.html#cb337-5" tabindex="-1"></a>    <span class="at">B =</span> <span class="fu">col_double</span>(),</span>
 <span id="cb337-6"><a href="interactions-and-qualitative-predictors.html#cb337-6" tabindex="-1"></a>    <span class="at">C =</span> <span class="fu">col_double</span>(),</span>
@@ -574,58 +587,91 @@ setting the <code>read_csv</code> parameter <code>col_types</code> to that.</p>
 <span id="cb337-11"><a href="interactions-and-qualitative-predictors.html#cb337-11" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb337-12"><a href="interactions-and-qualitative-predictors.html#cb337-12" tabindex="-1"></a><span class="co"># need to switch from wide to long format</span></span>
 <span id="cb337-13"><a href="interactions-and-qualitative-predictors.html#cb337-13" tabindex="-1"></a>golf <span class="ot">&lt;-</span> wide_golf <span class="sc">%&gt;%</span></span>
-<span id="cb337-14"><a href="interactions-and-qualitative-predictors.html#cb337-14" tabindex="-1"></a>  <span class="fu">gather</span>(brand, distance, <span class="sc">-</span>golfer)</span>
+<span id="cb337-14"><a href="interactions-and-qualitative-predictors.html#cb337-14" tabindex="-1"></a>  <span class="fu">gather</span>(brand, distance, A<span class="sc">:</span>D)</span>
 <span id="cb337-15"><a href="interactions-and-qualitative-predictors.html#cb337-15" tabindex="-1"></a></span>
 <span id="cb337-16"><a href="interactions-and-qualitative-predictors.html#cb337-16" tabindex="-1"></a><span class="do">## if using data.frame, you can use `melt()` from</span></span>
 <span id="cb337-17"><a href="interactions-and-qualitative-predictors.html#cb337-17" tabindex="-1"></a><span class="do">## reshape2</span></span>
 <span id="cb337-18"><a href="interactions-and-qualitative-predictors.html#cb337-18" tabindex="-1"></a><span class="co"># golf &lt;- melt(wide_golf, id.vars = 1,</span></span>
 <span id="cb337-19"><a href="interactions-and-qualitative-predictors.html#cb337-19" tabindex="-1"></a><span class="co">#             variable.name = &quot;brand&quot;,</span></span>
 <span id="cb337-20"><a href="interactions-and-qualitative-predictors.html#cb337-20" tabindex="-1"></a><span class="co">#             value.name = &quot;distance&quot;)</span></span></code></pre></div>
-<p>Now, for example, we fit a linear model using all the
-available columns</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="interactions-and-qualitative-predictors.html#cb338-1" tabindex="-1"></a>complete_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> ., <span class="at">data =</span> golf)</span></code></pre></div>
-<p>and we can compare it to a smaller model with ANOVA test.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="interactions-and-qualitative-predictors.html#cb339-1" tabindex="-1"></a>small_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer, <span class="at">data =</span> golf)</span>
-<span id="cb339-2"><a href="interactions-and-qualitative-predictors.html#cb339-2" tabindex="-1"></a><span class="fu">anova</span>(small_lm, complete_lm)</span></code></pre></div>
-<pre><code>## Analysis of Variance Table
+<p>Let us study first the effect of <em>brand</em> on the <em>distance</em>.</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="interactions-and-qualitative-predictors.html#cb338-1" tabindex="-1"></a>lm_brand <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> brand, <span class="at">data =</span> golf)</span>
+<span id="cb338-2"><a href="interactions-and-qualitative-predictors.html#cb338-2" tabindex="-1"></a><span class="fu">summary</span>(lm_brand)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = distance ~ brand, data = golf)
 ## 
-## Model 1: distance ~ golfer
-## Model 2: distance ~ golfer + brand
-##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1     30 6026.0                                  
-## 2     27 2358.8  3    3667.2 13.992 1.076e-05 ***
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -48.638 -31.703  -0.481  32.947  42.475 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  199.862     12.262  16.299 8.04e-16 ***
+## brandB         8.338     17.341   0.481    0.634    
+## brandC         5.275     17.341   0.304    0.763    
+## brandD        -4.737     17.341  -0.273    0.787    
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Another variance test can be performed with <code>aov</code>.
-Check the function documentation for more details.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="interactions-and-qualitative-predictors.html#cb341-1" tabindex="-1"></a><span class="fu">aov</span>(distance <span class="sc">~</span> golfer <span class="sc">+</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
-<pre><code>## Call:
-##    aov(formula = distance ~ golfer + brand, data = golf)
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Terms:
-##                   golfer    brand Residuals
-## Sum of Squares  9745.734 3667.226  2358.764
-## Deg. of Freedom        9        3        27
-## 
-## Residual standard error: 9.346744
-## Estimated effects may be unbalanced</code></pre>
+## Residual standard error: 34.68 on 28 degrees of freedom
+## Multiple R-squared:  0.02322,    Adjusted R-squared:  -0.08143 
+## F-statistic: 0.2219 on 3 and 28 DF,  p-value: 0.8804</code></pre>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="interactions-and-qualitative-predictors.html#cb340-1" tabindex="-1"></a><span class="fu">model.matrix</span>(lm_brand) <span class="co"># this is the design matrix</span></span></code></pre></div>
+<pre><code>##    (Intercept) brandB brandC brandD
+## 1            1      0      0      0
+## 2            1      0      0      0
+## 3            1      0      0      0
+## 4            1      0      0      0
+## 5            1      0      0      0
+## 6            1      0      0      0
+## 7            1      0      0      0
+## 8            1      0      0      0
+## 9            1      1      0      0
+## 10           1      1      0      0
+## 11           1      1      0      0
+## 12           1      1      0      0
+## 13           1      1      0      0
+## 14           1      1      0      0
+## 15           1      1      0      0
+## 16           1      1      0      0
+## 17           1      0      1      0
+## 18           1      0      1      0
+## 19           1      0      1      0
+## 20           1      0      1      0
+## 21           1      0      1      0
+## 22           1      0      1      0
+## 23           1      0      1      0
+## 24           1      0      1      0
+## 25           1      0      0      1
+## 26           1      0      0      1
+## 27           1      0      0      1
+## 28           1      0      0      1
+## 29           1      0      0      1
+## 30           1      0      0      1
+## 31           1      0      0      1
+## 32           1      0      0      1
+## attr(,&quot;assign&quot;)
+## [1] 0 1 1 1
+## attr(,&quot;contrasts&quot;)
+## attr(,&quot;contrasts&quot;)$brand
+## [1] &quot;contr.treatment&quot;</code></pre>
+<div id="data-visualization" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Data visualization<a href="interactions-and-qualitative-predictors.html#data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To visualize the data, we can use boxplots or more specialized
+graphics for qualitative predictors (for the latter,
+we have to define the predictors explicitly as factor
+objects in R). Recall that prettier graphics can always
+be produced using <em>ggplot2</em>.</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="interactions-and-qualitative-predictors.html#cb342-1" tabindex="-1"></a><span class="fu">boxplot</span>(distance <span class="sc">~</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="interactions-and-qualitative-predictors.html#cb343-1" tabindex="-1"></a>golf<span class="sc">$</span>brand <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(golf<span class="sc">$</span>brand)</span>
+<span id="cb343-2"><a href="interactions-and-qualitative-predictors.html#cb343-2" tabindex="-1"></a><span class="fu">plot.design</span>(distance <span class="sc">~</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-153-2.png" width="672" /></p>
 </div>
-<div id="predict" class="section level2 hasAnchor" number="6.4">
-<h2><span class="header-section-number">6.4</span> Predict<a href="interactions-and-qualitative-predictors.html#predict" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Especially when dealing with qualitative data, predictions for
-new unseen data can be easily computed with the <code>predict</code> function,
-which simply applies the regression coefficients to the provided data
-(arbitrarily generated below inside a tibble).</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="interactions-and-qualitative-predictors.html#cb343-1" tabindex="-1"></a><span class="fu">predict</span>(complete_lm, <span class="fu">tibble</span>(<span class="at">golfer =</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>, <span class="st">&quot;2&quot;</span>), <span class="at">brand =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>)),</span>
-<span id="cb343-2"><a href="interactions-and-qualitative-predictors.html#cb343-2" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span></span>
-<span id="cb343-3"><a href="interactions-and-qualitative-predictors.html#cb343-3" tabindex="-1"></a>)</span></code></pre></div>
-<pre><code>##       fit      lwr      upr
-## 1 204.105 193.1719 215.0381
-## 2 210.235 199.3019 221.1681
-## 3 249.810 238.8769 260.7431</code></pre>
 </div>
-<div id="interactions" class="section level2 hasAnchor" number="6.5">
-<h2><span class="header-section-number">6.5</span> Interactions<a href="interactions-and-qualitative-predictors.html#interactions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="interactions" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Interactions<a href="interactions-and-qualitative-predictors.html#interactions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Interactions are added in the <code>lm</code> formula. More specifically:</p>
 <ul>
 <li><code>a:b</code> (colon op) includes the cross-variable between two predictors</li>
@@ -633,7 +679,132 @@ which simply applies the regression coefficients to the provided data
 cross-variable (i.e. writing <code>y ~ a + b + a:b</code> is equivalent to
 writing <code>y ~ a*b</code>)</li>
 </ul>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="interactions-and-qualitative-predictors.html#cb345-1" tabindex="-1"></a>inter_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> golfer <span class="sc">*</span> brand, <span class="at">data =</span> golf)</span></code></pre></div>
+<p>Back to our dataset, let us now add the second factor <em>club</em> and build a ‘small’
+additive model…</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="interactions-and-qualitative-predictors.html#cb344-1" tabindex="-1"></a>small_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> brand <span class="sc">+</span> club, <span class="at">data =</span> golf)</span>
+<span id="cb344-2"><a href="interactions-and-qualitative-predictors.html#cb344-2" tabindex="-1"></a><span class="fu">summary</span>(small_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = distance ~ brand + club, data = golf)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -16.9688  -5.2156   0.7375   5.2875  11.2063 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  231.531      3.032  76.371   &lt;2e-16 ***
+## brandB         8.338      3.835   2.174   0.0386 *  
+## brandC         5.275      3.835   1.376   0.1803    
+## brandD        -4.737      3.835  -1.235   0.2273    
+## clubIRON     -63.337      2.712 -23.358   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 7.67 on 27 degrees of freedom
+## Multiple R-squared:  0.9539, Adjusted R-squared:  0.9471 
+## F-statistic: 139.8 on 4 and 27 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>… and a larger one with interaction.</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="interactions-and-qualitative-predictors.html#cb346-1" tabindex="-1"></a>large_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(distance <span class="sc">~</span> brand <span class="sc">*</span> club, <span class="at">data =</span> golf)</span>
+<span id="cb346-2"><a href="interactions-and-qualitative-predictors.html#cb346-2" tabindex="-1"></a><span class="fu">summary</span>(large_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = distance ~ brand * club, data = golf)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.6750  -2.7000   0.3125   3.4875  11.8250 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      228.425      2.927  78.051  &lt; 2e-16 ***
+## brandB             5.300      4.139   1.281  0.21259    
+## brandC            14.675      4.139   3.546  0.00165 ** 
+## brandD             1.325      4.139   0.320  0.75163    
+## clubIRON         -57.125      4.139 -13.802 6.55e-13 ***
+## brandB:clubIRON    6.075      5.853   1.038  0.30966    
+## brandC:clubIRON  -18.800      5.853  -3.212  0.00373 ** 
+## brandD:clubIRON  -12.125      5.853  -2.072  0.04923 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 5.853 on 24 degrees of freedom
+## Multiple R-squared:  0.9762, Adjusted R-squared:  0.9692 
+## F-statistic: 140.4 on 7 and 24 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>An interaction plot suggests interactions may be significant
+(the lines are not parallel),
+but we have to test for it since interaction plots are
+subject to sampling variation.</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="interactions-and-qualitative-predictors.html#cb348-1" tabindex="-1"></a><span class="fu">plot.design</span>(distance <span class="sc">~</span> brand <span class="sc">*</span> club, <span class="at">data =</span> golf)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-156-1.png" width="672" /></p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="interactions-and-qualitative-predictors.html#cb349-1" tabindex="-1"></a><span class="fu">interaction.plot</span>(golf<span class="sc">$</span>brand, golf<span class="sc">$</span>club, golf<span class="sc">$</span>distance)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-156-2.png" width="672" /></p>
+</div>
+<div id="model-comparison" class="section level2 hasAnchor" number="6.5">
+<h2><span class="header-section-number">6.5</span> Model comparison<a href="interactions-and-qualitative-predictors.html#model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can compare the complete model to a smaller one
+with ANOVA test.</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="interactions-and-qualitative-predictors.html#cb350-1" tabindex="-1"></a><span class="fu">anova</span>(large_lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: distance
+##            Df Sum Sq Mean Sq  F value    Pr(&gt;F)    
+## brand       3    801     267   7.7908 0.0008401 ***
+## club        1  32093   32093 936.7516 &lt; 2.2e-16 ***
+## brand:club  3    766     255   7.4524 0.0010789 ** 
+## Residuals  24    822      34                       
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>With the last <em>anova()</em> command we have built a more
+traditional anova table.
+We can compare the two models also with the <em>anova</em> command.</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="interactions-and-qualitative-predictors.html#cb352-1" tabindex="-1"></a><span class="fu">anova</span>(small_lm, large_lm)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: distance ~ brand + club
+## Model 2: distance ~ brand * club
+##   Res.Df     RSS Df Sum of Sq      F   Pr(&gt;F)   
+## 1     27 1588.20                                
+## 2     24  822.24  3    765.96 7.4524 0.001079 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Interactions are significant, meaning each combination of the two factors
+tells a different story.</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="interactions-and-qualitative-predictors.html#cb354-1" tabindex="-1"></a><span class="fu">fitted</span>(large_lm)</span></code></pre></div>
+<pre><code>##       1       2       3       4       5       6       7       8       9      10 
+## 228.425 228.425 228.425 228.425 171.300 171.300 171.300 171.300 233.725 233.725 
+##      11      12      13      14      15      16      17      18      19      20 
+## 233.725 233.725 182.675 182.675 182.675 182.675 243.100 243.100 243.100 243.100 
+##      21      22      23      24      25      26      27      28      29      30 
+## 167.175 167.175 167.175 167.175 229.750 229.750 229.750 229.750 160.500 160.500 
+##      31      32 
+## 160.500 160.500</code></pre>
+</div>
+<div id="predict" class="section level2 hasAnchor" number="6.6">
+<h2><span class="header-section-number">6.6</span> Predict<a href="interactions-and-qualitative-predictors.html#predict" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Especially when dealing with qualitative data, predictions for
+new unseen data can be easily computed with the <code>predict</code> function,
+which simply applies the regression coefficients to the provided data
+(arbitrarily generated below inside a tibble).</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="interactions-and-qualitative-predictors.html#cb356-1" tabindex="-1"></a><span class="fu">predict.lm</span>(small_lm,</span>
+<span id="cb356-2"><a href="interactions-and-qualitative-predictors.html#cb356-2" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="fu">data.frame</span>(</span>
+<span id="cb356-3"><a href="interactions-and-qualitative-predictors.html#cb356-3" tabindex="-1"></a>    <span class="at">club =</span> <span class="fu">c</span>(<span class="st">&quot;DRIVER&quot;</span>, <span class="st">&quot;IRON&quot;</span>, <span class="st">&quot;IRON&quot;</span>),</span>
+<span id="cb356-4"><a href="interactions-and-qualitative-predictors.html#cb356-4" tabindex="-1"></a>    <span class="at">brand =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>)</span>
+<span id="cb356-5"><a href="interactions-and-qualitative-predictors.html#cb356-5" tabindex="-1"></a>  ),</span>
+<span id="cb356-6"><a href="interactions-and-qualitative-predictors.html#cb356-6" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span></span>
+<span id="cb356-7"><a href="interactions-and-qualitative-predictors.html#cb356-7" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 231.5312 225.3108 237.7517
+## 2 176.5312 170.3108 182.7517
+## 3 176.5312 170.3108 182.7517</code></pre>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="interactions-and-qualitative-predictors.html#cb358-1" tabindex="-1"></a><span class="co"># for prediction intervals...</span></span>
+<span id="cb358-2"><a href="interactions-and-qualitative-predictors.html#cb358-2" tabindex="-1"></a><span class="fu">predict.lm</span>(large_lm,</span>
+<span id="cb358-3"><a href="interactions-and-qualitative-predictors.html#cb358-3" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">club =</span> <span class="st">&quot;DRIVER&quot;</span>, <span class="at">brand =</span> <span class="st">&quot;A&quot;</span>),</span>
+<span id="cb358-4"><a href="interactions-and-qualitative-predictors.html#cb358-4" tabindex="-1"></a>  <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
+<span id="cb358-5"><a href="interactions-and-qualitative-predictors.html#cb358-5" tabindex="-1"></a>  <span class="at">level =</span> .<span class="dv">99</span></span>
+<span id="cb358-6"><a href="interactions-and-qualitative-predictors.html#cb358-6" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##       fit      lwr      upr
+## 1 228.425 210.1216 246.7284</code></pre>
 
 </div>
 </div>

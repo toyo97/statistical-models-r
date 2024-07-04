@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 10 Three JAGS examples | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 10 Three JAGS examples | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-04-17" />
+<meta name="date" content="2024-07-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,9 +258,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
 <li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
-<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
-<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#data-visualization"><i class="fa fa-check"></i><b>6.3.1</b> Data visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.4</b> Interactions</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-comparison"><i class="fa fa-check"></i><b>6.5</b> Model comparison</a></li>
+<li class="chapter" data-level="6.6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.6</b> Predict</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
 <ul>
@@ -364,14 +368,14 @@ time points of a single rat.</p>
 in a Bayesian framework using JAGS,
 then validate our result with the traditional <code>lm</code>.
 This example is taken from <span class="citation">(<a href="#ref-bugs">Lunn et al. 2013</a>)</span></p>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="three-jags-examples.html#cb547-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb547-2"><a href="three-jags-examples.html#cb547-2" tabindex="-1"></a><span class="co"># load data</span></span>
-<span id="cb547-3"><a href="three-jags-examples.html#cb547-3" tabindex="-1"></a><span class="co"># install.packages(&quot;R2MLwiN&quot;)</span></span>
-<span id="cb547-4"><a href="three-jags-examples.html#cb547-4" tabindex="-1"></a></span>
-<span id="cb547-5"><a href="three-jags-examples.html#cb547-5" tabindex="-1"></a><span class="fu">data</span>(rats, <span class="at">package =</span> <span class="st">&quot;R2MLwiN&quot;</span>)</span>
-<span id="cb547-6"><a href="three-jags-examples.html#cb547-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">unlist</span>(rats[<span class="dv">9</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb547-7"><a href="three-jags-examples.html#cb547-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">22</span>, <span class="dv">29</span>, <span class="dv">36</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="three-jags-examples.html#cb548-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="three-jags-examples.html#cb561-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb561-2"><a href="three-jags-examples.html#cb561-2" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb561-3"><a href="three-jags-examples.html#cb561-3" tabindex="-1"></a><span class="co"># install.packages(&quot;R2MLwiN&quot;)</span></span>
+<span id="cb561-4"><a href="three-jags-examples.html#cb561-4" tabindex="-1"></a></span>
+<span id="cb561-5"><a href="three-jags-examples.html#cb561-5" tabindex="-1"></a><span class="fu">data</span>(rats, <span class="at">package =</span> <span class="st">&quot;R2MLwiN&quot;</span>)</span>
+<span id="cb561-6"><a href="three-jags-examples.html#cb561-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">unlist</span>(rats[<span class="dv">9</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb561-7"><a href="three-jags-examples.html#cb561-7" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">15</span>, <span class="dv">22</span>, <span class="dv">29</span>, <span class="dv">36</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="three-jags-examples.html#cb562-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span></code></pre></div>
 <pre><code>## Loading required package: rjags</code></pre>
 <pre><code>## Loading required package: coda</code></pre>
 <pre><code>## Linked to JAGS 4.3.2</code></pre>
@@ -381,27 +385,27 @@ This example is taken from <span class="citation">(<a href="#ref-bugs">Lunn et a
 <pre><code>## The following object is masked from &#39;package:coda&#39;:
 ## 
 ##     traceplot</code></pre>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="three-jags-examples.html#cb555-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb555-2"><a href="three-jags-examples.html#cb555-2" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb555-3"><a href="three-jags-examples.html#cb555-3" tabindex="-1"></a><span class="st">  for (i in 1:5) {</span></span>
-<span id="cb555-4"><a href="three-jags-examples.html#cb555-4" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(mu[i], tau)</span></span>
-<span id="cb555-5"><a href="three-jags-examples.html#cb555-5" tabindex="-1"></a><span class="st">    mu[i] &lt;- alpha + beta*x[i]</span></span>
-<span id="cb555-6"><a href="three-jags-examples.html#cb555-6" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb555-7"><a href="three-jags-examples.html#cb555-7" tabindex="-1"></a></span>
-<span id="cb555-8"><a href="three-jags-examples.html#cb555-8" tabindex="-1"></a><span class="st">  alpha ~ dnorm(0, 10^-5)</span></span>
-<span id="cb555-9"><a href="three-jags-examples.html#cb555-9" tabindex="-1"></a><span class="st">  beta ~ dnorm(0, 10^-5)</span></span>
-<span id="cb555-10"><a href="three-jags-examples.html#cb555-10" tabindex="-1"></a><span class="st">  tau ~ dgamma(0.0001, 0.0001)</span></span>
-<span id="cb555-11"><a href="three-jags-examples.html#cb555-11" tabindex="-1"></a><span class="st">  sigma2 &lt;- 1 / tau</span></span>
-<span id="cb555-12"><a href="three-jags-examples.html#cb555-12" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb555-13"><a href="three-jags-examples.html#cb555-13" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb555-14"><a href="three-jags-examples.html#cb555-14" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> y, <span class="at">x =</span> x)</span>
-<span id="cb555-15"><a href="three-jags-examples.html#cb555-15" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma2&quot;</span>)</span>
-<span id="cb555-16"><a href="three-jags-examples.html#cb555-16" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
-<span id="cb555-17"><a href="three-jags-examples.html#cb555-17" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb555-18"><a href="three-jags-examples.html#cb555-18" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
-<span id="cb555-19"><a href="three-jags-examples.html#cb555-19" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
-<span id="cb555-20"><a href="three-jags-examples.html#cb555-20" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>, <span class="at">n.burnin =</span> <span class="dv">500</span>, <span class="at">n.iter =</span> <span class="dv">5000</span></span>
-<span id="cb555-21"><a href="three-jags-examples.html#cb555-21" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="three-jags-examples.html#cb569-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb569-2"><a href="three-jags-examples.html#cb569-2" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb569-3"><a href="three-jags-examples.html#cb569-3" tabindex="-1"></a><span class="st">  for (i in 1:5) {</span></span>
+<span id="cb569-4"><a href="three-jags-examples.html#cb569-4" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(mu[i], tau)</span></span>
+<span id="cb569-5"><a href="three-jags-examples.html#cb569-5" tabindex="-1"></a><span class="st">    mu[i] &lt;- alpha + beta*x[i]</span></span>
+<span id="cb569-6"><a href="three-jags-examples.html#cb569-6" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb569-7"><a href="three-jags-examples.html#cb569-7" tabindex="-1"></a></span>
+<span id="cb569-8"><a href="three-jags-examples.html#cb569-8" tabindex="-1"></a><span class="st">  alpha ~ dnorm(0, 10^-5)</span></span>
+<span id="cb569-9"><a href="three-jags-examples.html#cb569-9" tabindex="-1"></a><span class="st">  beta ~ dnorm(0, 10^-5)</span></span>
+<span id="cb569-10"><a href="three-jags-examples.html#cb569-10" tabindex="-1"></a><span class="st">  tau ~ dgamma(0.0001, 0.0001)</span></span>
+<span id="cb569-11"><a href="three-jags-examples.html#cb569-11" tabindex="-1"></a><span class="st">  sigma2 &lt;- 1 / tau</span></span>
+<span id="cb569-12"><a href="three-jags-examples.html#cb569-12" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb569-13"><a href="three-jags-examples.html#cb569-13" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb569-14"><a href="three-jags-examples.html#cb569-14" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> y, <span class="at">x =</span> x)</span>
+<span id="cb569-15"><a href="three-jags-examples.html#cb569-15" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;alpha&quot;</span>, <span class="st">&quot;beta&quot;</span>, <span class="st">&quot;sigma2&quot;</span>)</span>
+<span id="cb569-16"><a href="three-jags-examples.html#cb569-16" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
+<span id="cb569-17"><a href="three-jags-examples.html#cb569-17" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb569-18"><a href="three-jags-examples.html#cb569-18" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
+<span id="cb569-19"><a href="three-jags-examples.html#cb569-19" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb569-20"><a href="three-jags-examples.html#cb569-20" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>, <span class="at">n.burnin =</span> <span class="dv">500</span>, <span class="at">n.iter =</span> <span class="dv">5000</span></span>
+<span id="cb569-21"><a href="three-jags-examples.html#cb569-21" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## module glm loaded</code></pre>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
@@ -412,7 +416,7 @@ This example is taken from <span class="citation">(<a href="#ref-bugs">Lunn et a
 ##    Total graph size: 31
 ## 
 ## Initializing model</code></pre>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="three-jags-examples.html#cb558-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="three-jags-examples.html#cb572-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
 <pre><code>## Inference for Bugs model at &quot;4&quot;, fit using jags,
 ##  2 chains, each with 5000 iterations (first 500 discarded), n.thin = 4
 ##  n.sims = 2250 iterations saved
@@ -428,10 +432,10 @@ This example is taken from <span class="citation">(<a href="#ref-bugs">Lunn et a
 ## DIC info (using the rule, pD = var(deviance)/2)
 ## pD = 7.2 and DIC = 47.2
 ## DIC is an estimate of expected predictive error (lower deviance is better).</code></pre>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="three-jags-examples.html#cb560-1" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb560-2"><a href="three-jags-examples.html#cb560-2" tabindex="-1"></a></span>
-<span id="cb560-3"><a href="three-jags-examples.html#cb560-3" tabindex="-1"></a>lmfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))</span>
-<span id="cb560-4"><a href="three-jags-examples.html#cb560-4" tabindex="-1"></a><span class="fu">summary</span>(lmfit)</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="three-jags-examples.html#cb574-1" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb574-2"><a href="three-jags-examples.html#cb574-2" tabindex="-1"></a></span>
+<span id="cb574-3"><a href="three-jags-examples.html#cb574-3" tabindex="-1"></a>lmfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))</span>
+<span id="cb574-4"><a href="three-jags-examples.html#cb574-4" tabindex="-1"></a><span class="fu">summary</span>(lmfit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x, data = tibble(x = x, y = y))
@@ -456,40 +460,40 @@ This example is taken from <span class="citation">(<a href="#ref-bugs">Lunn et a
 <h2><span class="header-section-number">10.2</span> ZIP model<a href="three-jags-examples.html#zip-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We generate some synthetic data according to a set of
 pre-defined parameters (<span class="math inline">\(p, \lambda\)</span>).</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="three-jags-examples.html#cb562-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb562-2"><a href="three-jags-examples.html#cb562-2" tabindex="-1"></a></span>
-<span id="cb562-3"><a href="three-jags-examples.html#cb562-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb562-4"><a href="three-jags-examples.html#cb562-4" tabindex="-1"></a>pp <span class="ot">&lt;-</span> .<span class="dv">3</span> <span class="co"># probability of zero event</span></span>
-<span id="cb562-5"><a href="three-jags-examples.html#cb562-5" tabindex="-1"></a>ll <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb562-6"><a href="three-jags-examples.html#cb562-6" tabindex="-1"></a>zi_sample <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="dv">1</span> <span class="sc">-</span> pp)</span>
-<span id="cb562-7"><a href="three-jags-examples.html#cb562-7" tabindex="-1"></a>zi_sample[zi_sample <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="fu">sum</span>(zi_sample), <span class="at">lambda =</span> ll) <span class="co"># sample poisson</span></span>
-<span id="cb562-8"><a href="three-jags-examples.html#cb562-8" tabindex="-1"></a></span>
-<span id="cb562-9"><a href="three-jags-examples.html#cb562-9" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">y =</span> zi_sample) <span class="sc">%&gt;%</span></span>
-<span id="cb562-10"><a href="three-jags-examples.html#cb562-10" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb562-11"><a href="three-jags-examples.html#cb562-11" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y))</span></code></pre></div>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="three-jags-examples.html#cb576-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb576-2"><a href="three-jags-examples.html#cb576-2" tabindex="-1"></a></span>
+<span id="cb576-3"><a href="three-jags-examples.html#cb576-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb576-4"><a href="three-jags-examples.html#cb576-4" tabindex="-1"></a>pp <span class="ot">&lt;-</span> .<span class="dv">3</span> <span class="co"># probability of zero event</span></span>
+<span id="cb576-5"><a href="three-jags-examples.html#cb576-5" tabindex="-1"></a>ll <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb576-6"><a href="three-jags-examples.html#cb576-6" tabindex="-1"></a>zi_sample <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, <span class="dv">1</span> <span class="sc">-</span> pp)</span>
+<span id="cb576-7"><a href="three-jags-examples.html#cb576-7" tabindex="-1"></a>zi_sample[zi_sample <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="fu">sum</span>(zi_sample), <span class="at">lambda =</span> ll) <span class="co"># sample poisson</span></span>
+<span id="cb576-8"><a href="three-jags-examples.html#cb576-8" tabindex="-1"></a></span>
+<span id="cb576-9"><a href="three-jags-examples.html#cb576-9" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">y =</span> zi_sample) <span class="sc">%&gt;%</span></span>
+<span id="cb576-10"><a href="three-jags-examples.html#cb576-10" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb576-11"><a href="three-jags-examples.html#cb576-11" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y))</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-246-1.png" width="672" /></p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="three-jags-examples.html#cb564-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb564-2"><a href="three-jags-examples.html#cb564-2" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb564-3"><a href="three-jags-examples.html#cb564-3" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
-<span id="cb564-4"><a href="three-jags-examples.html#cb564-4" tabindex="-1"></a><span class="st">    y[i] ~ dpois(m[i])</span></span>
-<span id="cb564-5"><a href="three-jags-examples.html#cb564-5" tabindex="-1"></a><span class="st">    m[i] &lt;- group[i] * mu</span></span>
-<span id="cb564-6"><a href="three-jags-examples.html#cb564-6" tabindex="-1"></a><span class="st">    group[i] ~ dbern(p)</span></span>
-<span id="cb564-7"><a href="three-jags-examples.html#cb564-7" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb564-8"><a href="three-jags-examples.html#cb564-8" tabindex="-1"></a></span>
-<span id="cb564-9"><a href="three-jags-examples.html#cb564-9" tabindex="-1"></a><span class="st">  p ~ dunif(0, 1) # probability of y being drawn from a Poisson</span></span>
-<span id="cb564-10"><a href="three-jags-examples.html#cb564-10" tabindex="-1"></a><span class="st">  mu ~ dgamma(0.5, 0.0001)</span></span>
-<span id="cb564-11"><a href="three-jags-examples.html#cb564-11" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb564-12"><a href="three-jags-examples.html#cb564-12" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb564-13"><a href="three-jags-examples.html#cb564-13" tabindex="-1"></a></span>
-<span id="cb564-14"><a href="three-jags-examples.html#cb564-14" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> zi_sample, <span class="at">N =</span> n)</span>
-<span id="cb564-15"><a href="three-jags-examples.html#cb564-15" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;p&quot;</span>)</span>
-<span id="cb564-16"><a href="three-jags-examples.html#cb564-16" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
-<span id="cb564-17"><a href="three-jags-examples.html#cb564-17" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb564-18"><a href="three-jags-examples.html#cb564-18" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
-<span id="cb564-19"><a href="three-jags-examples.html#cb564-19" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
-<span id="cb564-20"><a href="three-jags-examples.html#cb564-20" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>, <span class="at">n.burnin =</span> <span class="dv">500</span>, <span class="at">n.iter =</span> <span class="dv">2000</span></span>
-<span id="cb564-21"><a href="three-jags-examples.html#cb564-21" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-251-1.png" width="672" /></p>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="three-jags-examples.html#cb578-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb578-2"><a href="three-jags-examples.html#cb578-2" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb578-3"><a href="three-jags-examples.html#cb578-3" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
+<span id="cb578-4"><a href="three-jags-examples.html#cb578-4" tabindex="-1"></a><span class="st">    y[i] ~ dpois(m[i])</span></span>
+<span id="cb578-5"><a href="three-jags-examples.html#cb578-5" tabindex="-1"></a><span class="st">    m[i] &lt;- group[i] * mu</span></span>
+<span id="cb578-6"><a href="three-jags-examples.html#cb578-6" tabindex="-1"></a><span class="st">    group[i] ~ dbern(p)</span></span>
+<span id="cb578-7"><a href="three-jags-examples.html#cb578-7" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb578-8"><a href="three-jags-examples.html#cb578-8" tabindex="-1"></a></span>
+<span id="cb578-9"><a href="three-jags-examples.html#cb578-9" tabindex="-1"></a><span class="st">  p ~ dunif(0, 1) # probability of y being drawn from a Poisson</span></span>
+<span id="cb578-10"><a href="three-jags-examples.html#cb578-10" tabindex="-1"></a><span class="st">  mu ~ dgamma(0.5, 0.0001)</span></span>
+<span id="cb578-11"><a href="three-jags-examples.html#cb578-11" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb578-12"><a href="three-jags-examples.html#cb578-12" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb578-13"><a href="three-jags-examples.html#cb578-13" tabindex="-1"></a></span>
+<span id="cb578-14"><a href="three-jags-examples.html#cb578-14" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> zi_sample, <span class="at">N =</span> n)</span>
+<span id="cb578-15"><a href="three-jags-examples.html#cb578-15" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;p&quot;</span>)</span>
+<span id="cb578-16"><a href="three-jags-examples.html#cb578-16" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
+<span id="cb578-17"><a href="three-jags-examples.html#cb578-17" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb578-18"><a href="three-jags-examples.html#cb578-18" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
+<span id="cb578-19"><a href="three-jags-examples.html#cb578-19" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb578-20"><a href="three-jags-examples.html#cb578-20" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>, <span class="at">n.burnin =</span> <span class="dv">500</span>, <span class="at">n.iter =</span> <span class="dv">2000</span></span>
+<span id="cb578-21"><a href="three-jags-examples.html#cb578-21" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
@@ -499,7 +503,7 @@ pre-defined parameters (<span class="math inline">\(p, \lambda\)</span>).</p>
 ##    Total graph size: 307
 ## 
 ## Initializing model</code></pre>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="three-jags-examples.html#cb566-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="three-jags-examples.html#cb580-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
 <pre><code>## Inference for Bugs model at &quot;5&quot;, fit using jags,
 ##  2 chains, each with 2000 iterations (first 500 discarded)
 ##  n.sims = 3000 iterations saved
@@ -532,62 +536,62 @@ distribution) and the Negative Binomial (mixture of a Poisson and a Gamma -
 <a href="https://en.wikipedia.org/wiki/Negative_binomial_distribution#Gamma%E2%80%93Poisson_mixture">details</a>).</p>
 <p>We generate a sample from a GMM with just two components, arbitrarily
 defining the true parameters.</p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="three-jags-examples.html#cb568-1" tabindex="-1"></a><span class="co"># synthetic dataset</span></span>
-<span id="cb568-2"><a href="three-jags-examples.html#cb568-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb568-3"><a href="three-jags-examples.html#cb568-3" tabindex="-1"></a>group_prob <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
-<span id="cb568-4"><a href="three-jags-examples.html#cb568-4" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.</span>, <span class="fl">9.</span>)</span>
-<span id="cb568-5"><a href="three-jags-examples.html#cb568-5" tabindex="-1"></a>stdev <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># same sd for simplicity</span></span>
-<span id="cb568-6"><a href="three-jags-examples.html#cb568-6" tabindex="-1"></a></span>
-<span id="cb568-7"><a href="three-jags-examples.html#cb568-7" tabindex="-1"></a><span class="co"># sample the component to which the observation</span></span>
-<span id="cb568-8"><a href="three-jags-examples.html#cb568-8" tabindex="-1"></a>mixt_groups <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, group_prob) <span class="co"># bernoulli trials</span></span>
-<span id="cb568-9"><a href="three-jags-examples.html#cb568-9" tabindex="-1"></a><span class="co"># sample the Gaussian variable setting the mean</span></span>
-<span id="cb568-10"><a href="three-jags-examples.html#cb568-10" tabindex="-1"></a><span class="co"># equal to means[1] or means[2] depending on the</span></span>
-<span id="cb568-11"><a href="three-jags-examples.html#cb568-11" tabindex="-1"></a><span class="co"># group to which each observation belongs</span></span>
-<span id="cb568-12"><a href="three-jags-examples.html#cb568-12" tabindex="-1"></a>mixt_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,</span>
-<span id="cb568-13"><a href="three-jags-examples.html#cb568-13" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(mixt_groups, <span class="at">FUN =</span> <span class="cf">function</span>(g) means[g <span class="sc">+</span> <span class="dv">1</span>])),</span>
-<span id="cb568-14"><a href="three-jags-examples.html#cb568-14" tabindex="-1"></a>  <span class="at">sd =</span> stdev</span>
-<span id="cb568-15"><a href="three-jags-examples.html#cb568-15" tabindex="-1"></a>)</span>
-<span id="cb568-16"><a href="three-jags-examples.html#cb568-16" tabindex="-1"></a></span>
-<span id="cb568-17"><a href="three-jags-examples.html#cb568-17" tabindex="-1"></a><span class="co"># plot the data</span></span>
-<span id="cb568-18"><a href="three-jags-examples.html#cb568-18" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">y =</span> mixt_sample) <span class="sc">%&gt;%</span></span>
-<span id="cb568-19"><a href="three-jags-examples.html#cb568-19" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb568-20"><a href="three-jags-examples.html#cb568-20" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y), <span class="at">binwidth =</span> <span class="fl">0.4</span>)</span></code></pre></div>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="three-jags-examples.html#cb569-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb569-2"><a href="three-jags-examples.html#cb569-2" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb569-3"><a href="three-jags-examples.html#cb569-3" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
-<span id="cb569-4"><a href="three-jags-examples.html#cb569-4" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(mu[i] , tau)</span></span>
-<span id="cb569-5"><a href="three-jags-examples.html#cb569-5" tabindex="-1"></a><span class="st">    mu[i] &lt;- mu_clust[clust[i] + 1]</span></span>
-<span id="cb569-6"><a href="three-jags-examples.html#cb569-6" tabindex="-1"></a><span class="st">    clust[i] ~ dbern(gp)</span></span>
-<span id="cb569-7"><a href="three-jags-examples.html#cb569-7" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb569-8"><a href="three-jags-examples.html#cb569-8" tabindex="-1"></a></span>
-<span id="cb569-9"><a href="three-jags-examples.html#cb569-9" tabindex="-1"></a><span class="st">  # priors</span></span>
-<span id="cb569-10"><a href="three-jags-examples.html#cb569-10" tabindex="-1"></a><span class="st">  gp ~ dbeta(1, 1) # uniform prior</span></span>
-<span id="cb569-11"><a href="three-jags-examples.html#cb569-11" tabindex="-1"></a><span class="st">  tau ~ dgamma(0.01, 0.01)</span></span>
-<span id="cb569-12"><a href="three-jags-examples.html#cb569-12" tabindex="-1"></a><span class="st">  sigma &lt;- sqrt(1/tau)</span></span>
-<span id="cb569-13"><a href="three-jags-examples.html#cb569-13" tabindex="-1"></a></span>
-<span id="cb569-14"><a href="three-jags-examples.html#cb569-14" tabindex="-1"></a><span class="st">  mu_clust_raw[1] ~ dnorm(0, 10^-2)</span></span>
-<span id="cb569-15"><a href="three-jags-examples.html#cb569-15" tabindex="-1"></a><span class="st">  mu_clust_raw[2] ~ dnorm(0, 10^-2)</span></span>
-<span id="cb569-16"><a href="three-jags-examples.html#cb569-16" tabindex="-1"></a></span>
-<span id="cb569-17"><a href="three-jags-examples.html#cb569-17" tabindex="-1"></a><span class="st">  mu_clust &lt;- sort(mu_clust_raw) # ensure order to prevent label switch</span></span>
-<span id="cb569-18"><a href="three-jags-examples.html#cb569-18" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb569-19"><a href="three-jags-examples.html#cb569-19" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb569-20"><a href="three-jags-examples.html#cb569-20" tabindex="-1"></a></span>
-<span id="cb569-21"><a href="three-jags-examples.html#cb569-21" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> mixt_sample, <span class="at">N =</span> n)</span>
-<span id="cb569-22"><a href="three-jags-examples.html#cb569-22" tabindex="-1"></a><span class="co"># save the parameters and, optionally, the</span></span>
-<span id="cb569-23"><a href="three-jags-examples.html#cb569-23" tabindex="-1"></a><span class="co"># `clust` variable representing the labeling</span></span>
-<span id="cb569-24"><a href="three-jags-examples.html#cb569-24" tabindex="-1"></a><span class="co"># of each observation (clust[i] = 1 if y[i] is found</span></span>
-<span id="cb569-25"><a href="three-jags-examples.html#cb569-25" tabindex="-1"></a><span class="co"># to belong to the second cluster, 0 otherwise)</span></span>
-<span id="cb569-26"><a href="three-jags-examples.html#cb569-26" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb569-27"><a href="three-jags-examples.html#cb569-27" tabindex="-1"></a>  <span class="st">&quot;mu_clust&quot;</span>, <span class="st">&quot;gp&quot;</span>, <span class="st">&quot;sigma&quot;</span></span>
-<span id="cb569-28"><a href="three-jags-examples.html#cb569-28" tabindex="-1"></a>  <span class="co"># , &quot;clust&quot;</span></span>
-<span id="cb569-29"><a href="three-jags-examples.html#cb569-29" tabindex="-1"></a>)</span>
-<span id="cb569-30"><a href="three-jags-examples.html#cb569-30" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
-<span id="cb569-31"><a href="three-jags-examples.html#cb569-31" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb569-32"><a href="three-jags-examples.html#cb569-32" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
-<span id="cb569-33"><a href="three-jags-examples.html#cb569-33" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
-<span id="cb569-34"><a href="three-jags-examples.html#cb569-34" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>, <span class="at">n.iter =</span> <span class="dv">5000</span></span>
-<span id="cb569-35"><a href="three-jags-examples.html#cb569-35" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="three-jags-examples.html#cb582-1" tabindex="-1"></a><span class="co"># synthetic dataset</span></span>
+<span id="cb582-2"><a href="three-jags-examples.html#cb582-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb582-3"><a href="three-jags-examples.html#cb582-3" tabindex="-1"></a>group_prob <span class="ot">&lt;-</span> .<span class="dv">2</span></span>
+<span id="cb582-4"><a href="three-jags-examples.html#cb582-4" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">4.</span>, <span class="fl">9.</span>)</span>
+<span id="cb582-5"><a href="three-jags-examples.html#cb582-5" tabindex="-1"></a>stdev <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># same sd for simplicity</span></span>
+<span id="cb582-6"><a href="three-jags-examples.html#cb582-6" tabindex="-1"></a></span>
+<span id="cb582-7"><a href="three-jags-examples.html#cb582-7" tabindex="-1"></a><span class="co"># sample the component to which the observation</span></span>
+<span id="cb582-8"><a href="three-jags-examples.html#cb582-8" tabindex="-1"></a>mixt_groups <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, group_prob) <span class="co"># bernoulli trials</span></span>
+<span id="cb582-9"><a href="three-jags-examples.html#cb582-9" tabindex="-1"></a><span class="co"># sample the Gaussian variable setting the mean</span></span>
+<span id="cb582-10"><a href="three-jags-examples.html#cb582-10" tabindex="-1"></a><span class="co"># equal to means[1] or means[2] depending on the</span></span>
+<span id="cb582-11"><a href="three-jags-examples.html#cb582-11" tabindex="-1"></a><span class="co"># group to which each observation belongs</span></span>
+<span id="cb582-12"><a href="three-jags-examples.html#cb582-12" tabindex="-1"></a>mixt_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n,</span>
+<span id="cb582-13"><a href="three-jags-examples.html#cb582-13" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(mixt_groups, <span class="at">FUN =</span> <span class="cf">function</span>(g) means[g <span class="sc">+</span> <span class="dv">1</span>])),</span>
+<span id="cb582-14"><a href="three-jags-examples.html#cb582-14" tabindex="-1"></a>  <span class="at">sd =</span> stdev</span>
+<span id="cb582-15"><a href="three-jags-examples.html#cb582-15" tabindex="-1"></a>)</span>
+<span id="cb582-16"><a href="three-jags-examples.html#cb582-16" tabindex="-1"></a></span>
+<span id="cb582-17"><a href="three-jags-examples.html#cb582-17" tabindex="-1"></a><span class="co"># plot the data</span></span>
+<span id="cb582-18"><a href="three-jags-examples.html#cb582-18" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">y =</span> mixt_sample) <span class="sc">%&gt;%</span></span>
+<span id="cb582-19"><a href="three-jags-examples.html#cb582-19" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb582-20"><a href="three-jags-examples.html#cb582-20" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(y), <span class="at">binwidth =</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-253-1.png" width="672" /></p>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="three-jags-examples.html#cb583-1" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb583-2"><a href="three-jags-examples.html#cb583-2" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb583-3"><a href="three-jags-examples.html#cb583-3" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
+<span id="cb583-4"><a href="three-jags-examples.html#cb583-4" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(mu[i] , tau)</span></span>
+<span id="cb583-5"><a href="three-jags-examples.html#cb583-5" tabindex="-1"></a><span class="st">    mu[i] &lt;- mu_clust[clust[i] + 1]</span></span>
+<span id="cb583-6"><a href="three-jags-examples.html#cb583-6" tabindex="-1"></a><span class="st">    clust[i] ~ dbern(gp)</span></span>
+<span id="cb583-7"><a href="three-jags-examples.html#cb583-7" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb583-8"><a href="three-jags-examples.html#cb583-8" tabindex="-1"></a></span>
+<span id="cb583-9"><a href="three-jags-examples.html#cb583-9" tabindex="-1"></a><span class="st">  # priors</span></span>
+<span id="cb583-10"><a href="three-jags-examples.html#cb583-10" tabindex="-1"></a><span class="st">  gp ~ dbeta(1, 1) # uniform prior</span></span>
+<span id="cb583-11"><a href="three-jags-examples.html#cb583-11" tabindex="-1"></a><span class="st">  tau ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb583-12"><a href="three-jags-examples.html#cb583-12" tabindex="-1"></a><span class="st">  sigma &lt;- sqrt(1/tau)</span></span>
+<span id="cb583-13"><a href="three-jags-examples.html#cb583-13" tabindex="-1"></a></span>
+<span id="cb583-14"><a href="three-jags-examples.html#cb583-14" tabindex="-1"></a><span class="st">  mu_clust_raw[1] ~ dnorm(0, 10^-2)</span></span>
+<span id="cb583-15"><a href="three-jags-examples.html#cb583-15" tabindex="-1"></a><span class="st">  mu_clust_raw[2] ~ dnorm(0, 10^-2)</span></span>
+<span id="cb583-16"><a href="three-jags-examples.html#cb583-16" tabindex="-1"></a></span>
+<span id="cb583-17"><a href="three-jags-examples.html#cb583-17" tabindex="-1"></a><span class="st">  mu_clust &lt;- sort(mu_clust_raw) # ensure order to prevent label switch</span></span>
+<span id="cb583-18"><a href="three-jags-examples.html#cb583-18" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb583-19"><a href="three-jags-examples.html#cb583-19" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb583-20"><a href="three-jags-examples.html#cb583-20" tabindex="-1"></a></span>
+<span id="cb583-21"><a href="three-jags-examples.html#cb583-21" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> mixt_sample, <span class="at">N =</span> n)</span>
+<span id="cb583-22"><a href="three-jags-examples.html#cb583-22" tabindex="-1"></a><span class="co"># save the parameters and, optionally, the</span></span>
+<span id="cb583-23"><a href="three-jags-examples.html#cb583-23" tabindex="-1"></a><span class="co"># `clust` variable representing the labeling</span></span>
+<span id="cb583-24"><a href="three-jags-examples.html#cb583-24" tabindex="-1"></a><span class="co"># of each observation (clust[i] = 1 if y[i] is found</span></span>
+<span id="cb583-25"><a href="three-jags-examples.html#cb583-25" tabindex="-1"></a><span class="co"># to belong to the second cluster, 0 otherwise)</span></span>
+<span id="cb583-26"><a href="three-jags-examples.html#cb583-26" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb583-27"><a href="three-jags-examples.html#cb583-27" tabindex="-1"></a>  <span class="st">&quot;mu_clust&quot;</span>, <span class="st">&quot;gp&quot;</span>, <span class="st">&quot;sigma&quot;</span></span>
+<span id="cb583-28"><a href="three-jags-examples.html#cb583-28" tabindex="-1"></a>  <span class="co"># , &quot;clust&quot;</span></span>
+<span id="cb583-29"><a href="three-jags-examples.html#cb583-29" tabindex="-1"></a>)</span>
+<span id="cb583-30"><a href="three-jags-examples.html#cb583-30" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
+<span id="cb583-31"><a href="three-jags-examples.html#cb583-31" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb583-32"><a href="three-jags-examples.html#cb583-32" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
+<span id="cb583-33"><a href="three-jags-examples.html#cb583-33" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb583-34"><a href="three-jags-examples.html#cb583-34" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>, <span class="at">n.burnin =</span> <span class="dv">1000</span>, <span class="at">n.iter =</span> <span class="dv">5000</span></span>
+<span id="cb583-35"><a href="three-jags-examples.html#cb583-35" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
@@ -597,7 +601,7 @@ defining the true parameters.</p>
 ##    Total graph size: 2018
 ## 
 ## Initializing model</code></pre>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="three-jags-examples.html#cb571-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="three-jags-examples.html#cb585-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
 <pre><code>## Inference for Bugs model at &quot;6&quot;, fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 4
 ##  n.sims = 2000 iterations saved
@@ -616,13 +620,13 @@ defining the true parameters.</p>
 ## DIC is an estimate of expected predictive error (lower deviance is better).</code></pre>
 <p>We can plot the chain samples in order to verify that the
 components correctly represent the two clusters.</p>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="three-jags-examples.html#cb573-1" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
-<span id="cb573-2"><a href="three-jags-examples.html#cb573-2" tabindex="-1"></a>jags_model <span class="ot">&lt;-</span> <span class="fu">jags.model</span>(</span>
-<span id="cb573-3"><a href="three-jags-examples.html#cb573-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">textConnection</span>(model_code),</span>
-<span id="cb573-4"><a href="three-jags-examples.html#cb573-4" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb573-5"><a href="three-jags-examples.html#cb573-5" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
-<span id="cb573-6"><a href="three-jags-examples.html#cb573-6" tabindex="-1"></a>  <span class="at">n.adapt =</span> <span class="dv">1000</span></span>
-<span id="cb573-7"><a href="three-jags-examples.html#cb573-7" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="three-jags-examples.html#cb587-1" tabindex="-1"></a><span class="fu">library</span>(coda)</span>
+<span id="cb587-2"><a href="three-jags-examples.html#cb587-2" tabindex="-1"></a>jags_model <span class="ot">&lt;-</span> <span class="fu">jags.model</span>(</span>
+<span id="cb587-3"><a href="three-jags-examples.html#cb587-3" tabindex="-1"></a>  <span class="at">file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb587-4"><a href="three-jags-examples.html#cb587-4" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb587-5"><a href="three-jags-examples.html#cb587-5" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
+<span id="cb587-6"><a href="three-jags-examples.html#cb587-6" tabindex="-1"></a>  <span class="at">n.adapt =</span> <span class="dv">1000</span></span>
+<span id="cb587-7"><a href="three-jags-examples.html#cb587-7" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
@@ -632,10 +636,10 @@ components correctly represent the two clusters.</p>
 ##    Total graph size: 2018
 ## 
 ## Initializing model</code></pre>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="three-jags-examples.html#cb575-1" tabindex="-1"></a>samps <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jags_model, model_params, <span class="at">n.iter =</span> <span class="dv">5000</span>)</span>
-<span id="cb575-2"><a href="three-jags-examples.html#cb575-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="co"># correct plot size</span></span>
-<span id="cb575-3"><a href="three-jags-examples.html#cb575-3" tabindex="-1"></a><span class="fu">plot</span>(samps)</span></code></pre></div>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-250-1.png" width="672" /></p>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="three-jags-examples.html#cb589-1" tabindex="-1"></a>samps <span class="ot">&lt;-</span> <span class="fu">coda.samples</span>(jags_model, model_params, <span class="at">n.iter =</span> <span class="dv">5000</span>)</span>
+<span id="cb589-2"><a href="three-jags-examples.html#cb589-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="co"># correct plot size</span></span>
+<span id="cb589-3"><a href="three-jags-examples.html#cb589-3" tabindex="-1"></a><span class="fu">plot</span>(samps)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-255-1.png" width="672" /></p>
 
 </div>
 </div>

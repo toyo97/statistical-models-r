@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 Introduction | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 Introduction | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-04-17" />
+<meta name="date" content="2024-07-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,9 +258,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
 <li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
-<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
-<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#data-visualization"><i class="fa fa-check"></i><b>6.3.1</b> Data visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.4</b> Interactions</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-comparison"><i class="fa fa-check"></i><b>6.5</b> Model comparison</a></li>
+<li class="chapter" data-level="6.6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.6</b> Predict</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
 <ul>
@@ -426,8 +430,8 @@ function argument passing (as introduced in <a href="introduction.html#functions
 <span id="cb11-2"><a href="introduction.html#cb11-2" tabindex="-1"></a>array <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># sd is an argument,</span></span>
 <span id="cb11-3"><a href="introduction.html#cb11-3" tabindex="-1"></a>                            <span class="co"># the mean is left to the default 0</span></span>
 <span id="cb11-4"><a href="introduction.html#cb11-4" tabindex="-1"></a>array</span></code></pre></div>
-<pre><code>##  [1]  -3.567386 -21.690433   1.252009  -9.201181  17.607539   2.906967
-##  [7]   3.363240  -9.208889   3.178126  -7.975133</code></pre>
+<pre><code>##  [1]   2.2122111  15.5501461   3.6440240  -7.2013880  -9.2220237   3.5074603
+##  [7] -12.8923085  -4.4643633   0.8044537  13.8015212</code></pre>
 <p>You can explicitly call the arguments to which you want to pass the parameters
 (e.g. sd of the Gaussian). In this case it is necessary, because the second
 position argument is the mean, but we want it to be the default.</p>
@@ -783,24 +787,24 @@ most of the dataset will be stored in dataframes.</p>
 ## 1  1  1    a
 ## 2  1  2    b
 ## 3  1  3    b
-## 4  1  4    a
-## 5  1  5    a
-## 6  1  6    a
+## 4  1  4    b
+## 5  1  5    b
+## 6  1  6    b
 ## 7  1  7    b
-## 8  1  8    b
-## 9  1  9    b
-## 10 1 10    a</code></pre>
+## 8  1  8    a
+## 9  1  9    a
+## 10 1 10    b</code></pre>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="introduction.html#cb113-1" tabindex="-1"></a>df1[[<span class="dv">2</span>]] <span class="co"># access through column index</span></span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 <div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="introduction.html#cb115-1" tabindex="-1"></a>df1<span class="sc">$</span>x <span class="co"># access through column name</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="introduction.html#cb117-1" tabindex="-1"></a>df1[, <span class="dv">3</span>] <span class="co"># access with matrix-style index</span></span></code></pre></div>
-<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot;</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;b&quot; &quot;a&quot; &quot;a&quot; &quot;b&quot;</code></pre>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="introduction.html#cb119-1" tabindex="-1"></a>df1[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ] <span class="co"># can also select subset of rows</span></span></code></pre></div>
 <pre><code>##   x y char
 ## 2 1 2    b
 ## 3 1 3    b
-## 4 1 4    a</code></pre>
+## 4 1 4    b</code></pre>
 <p>The <code>dplyr</code> library provides another dataframe object (called <em>tibble</em>) which has all
 the effective features of Base R <code>data.frame</code> and none of the
 deprecated functionalities. It’s simply a newer version of dataframes (therefore
@@ -1046,16 +1050,16 @@ These functions are usually divided into four categories:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="introduction.html#cb145-1" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
 <span id="cb145-2"><a href="introduction.html#cb145-2" tabindex="-1"></a>normal_samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># sample 10 Gaussian samples</span></span>
 <span id="cb145-3"><a href="introduction.html#cb145-3" tabindex="-1"></a>normal_samples</span></code></pre></div>
-<pre><code>##  [1] -0.1650817 -0.4644123 -0.9372407  0.9132640 -0.4251503  0.9964252
-##  [7]  0.7261843 -0.8688369  0.9714636  1.9779862</code></pre>
+<pre><code>##  [1] -1.69323775 -0.16895647  0.43849260 -0.11836184  0.37104864  0.04193511
+##  [7] -1.90674237  0.90455160  1.59088381  0.09928534</code></pre>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="introduction.html#cb147-1" tabindex="-1"></a><span class="co"># compute the density function (over another Normal)</span></span>
 <span id="cb147-2"><a href="introduction.html#cb147-2" tabindex="-1"></a><span class="fu">dnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.038283818 0.019147129 0.005339464 0.221034573 0.021076102 0.241105720
-##  [7] 0.177241562 0.006512375 0.235067622 0.398845627</code></pre>
+<pre><code>##  [1] 0.0004355325 0.0379637081 0.1178796350 0.0423127430 0.1058555560
+##  [6] 0.0586629112 0.0001934955 0.2189433766 0.3669144512 0.0655267619</code></pre>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="introduction.html#cb149-1" tabindex="-1"></a><span class="co"># cumulative distribution function</span></span>
 <span id="cb149-2"><a href="introduction.html#cb149-2" tabindex="-1"></a><span class="fu">pnorm</span>(normal_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##  [1] 0.4344398 0.3211762 0.1743174 0.8194481 0.3353636 0.8404782 0.7661371
-##  [8] 0.1924682 0.8343413 0.9760349</code></pre>
+<pre><code>##  [1] 0.04520511 0.43291544 0.66948538 0.45289048 0.64469935 0.51672479
+##  [7] 0.02827698 0.81714851 0.94418214 0.53954414</code></pre>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="introduction.html#cb151-1" tabindex="-1"></a><span class="co"># get the quantiles of a normal</span></span>
 <span id="cb151-2"><a href="introduction.html#cb151-2" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.95</span>), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] -1.644854  1.644854</code></pre>
@@ -1125,8 +1129,8 @@ Here an example where using <code>=</code> rather than <code>&lt;-</code> makes 
 <div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="introduction.html#cb164-1" tabindex="-1"></a><span class="co"># &#39;b&lt;-a^2&#39; is the value passed to the expr argument of within()</span></span>
 <span id="cb164-2"><a href="introduction.html#cb164-2" tabindex="-1"></a><span class="fu">within</span>(<span class="fu">data.frame</span>(<span class="at">a =</span> <span class="fu">rnorm</span>(<span class="dv">2</span>)), b <span class="ot">&lt;-</span> a<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##           a        b
-## 1 -1.195296 1.428734
-## 2  1.254981 1.574978</code></pre>
+## 1  1.492388 2.227221
+## 2 -1.137960 1.294953</code></pre>
 <p>Although this event might never occur in one’s programming experience, it’s
 safer (and more elegant) to use <code>&lt;-</code> when assigning variable.</p>
 <p>Besides, <code>-&gt;</code> is also valid and it is used (more intuitive) when assigning pipes

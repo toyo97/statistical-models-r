@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Lab 3 - JAGS GMM | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Lab 3 - JAGS GMM | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-04-17" />
+<meta name="date" content="2024-07-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,9 +258,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
 <li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
-<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
-<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#data-visualization"><i class="fa fa-check"></i><b>6.3.1</b> Data visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.4</b> Interactions</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-comparison"><i class="fa fa-check"></i><b>6.5</b> Model comparison</a></li>
+<li class="chapter" data-level="6.6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.6</b> Predict</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
 <ul>
@@ -406,13 +410,13 @@ e.g. <code>complete_loglik</code> as such:</p>
 <p>The simulation shouldn’t take more than one/two minute. If it runs for too long it’s
 either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 <p>Good luck!</p>
-<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="lab-3---jags-gmm.html#cb629-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb629-2"><a href="lab-3---jags-gmm.html#cb629-2" tabindex="-1"></a><span class="co"># read data</span></span>
-<span id="cb629-3"><a href="lab-3---jags-gmm.html#cb629-3" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb629-4"><a href="lab-3---jags-gmm.html#cb629-4" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb629-5"><a href="lab-3---jags-gmm.html#cb629-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb629-6"><a href="lab-3---jags-gmm.html#cb629-6" tabindex="-1"></a></span>
-<span id="cb629-7"><a href="lab-3---jags-gmm.html#cb629-7" tabindex="-1"></a>bread <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/bread.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="lab-3---jags-gmm.html#cb643-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb643-2"><a href="lab-3---jags-gmm.html#cb643-2" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb643-3"><a href="lab-3---jags-gmm.html#cb643-3" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb643-4"><a href="lab-3---jags-gmm.html#cb643-4" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb643-5"><a href="lab-3---jags-gmm.html#cb643-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb643-6"><a href="lab-3---jags-gmm.html#cb643-6" tabindex="-1"></a></span>
+<span id="cb643-7"><a href="lab-3---jags-gmm.html#cb643-7" tabindex="-1"></a>bread <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/bread.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 600 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -420,78 +424,78 @@ either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="lab-3---jags-gmm.html#cb631-1" tabindex="-1"></a>bread <span class="sc">%&gt;%</span></span>
-<span id="cb631-2"><a href="lab-3---jags-gmm.html#cb631-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(weight, size)) <span class="sc">+</span></span>
-<span id="cb631-3"><a href="lab-3---jags-gmm.html#cb631-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-296-1.png" width="672" /></p>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="lab-3---jags-gmm.html#cb632-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
-<span id="cb632-2"><a href="lab-3---jags-gmm.html#cb632-2" tabindex="-1"></a></span>
-<span id="cb632-3"><a href="lab-3---jags-gmm.html#cb632-3" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
-<span id="cb632-4"><a href="lab-3---jags-gmm.html#cb632-4" tabindex="-1"></a><span class="st">model {</span></span>
-<span id="cb632-5"><a href="lab-3---jags-gmm.html#cb632-5" tabindex="-1"></a><span class="st">  # Likelihood:</span></span>
-<span id="cb632-6"><a href="lab-3---jags-gmm.html#cb632-6" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
-<span id="cb632-7"><a href="lab-3---jags-gmm.html#cb632-7" tabindex="-1"></a><span class="st">    x[i] ~ dnorm(mux[i], taux)</span></span>
-<span id="cb632-8"><a href="lab-3---jags-gmm.html#cb632-8" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(muy[i], tauy)</span></span>
-<span id="cb632-9"><a href="lab-3---jags-gmm.html#cb632-9" tabindex="-1"></a><span class="st">    mux[i] &lt;- mux_clust[clust[i]]</span></span>
-<span id="cb632-10"><a href="lab-3---jags-gmm.html#cb632-10" tabindex="-1"></a><span class="st">    muy[i] &lt;- muy_clust[clust[i]]</span></span>
-<span id="cb632-11"><a href="lab-3---jags-gmm.html#cb632-11" tabindex="-1"></a><span class="st">    clust[i] ~ dcat(lambda[1:K]) # categorical</span></span>
-<span id="cb632-12"><a href="lab-3---jags-gmm.html#cb632-12" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb632-13"><a href="lab-3---jags-gmm.html#cb632-13" tabindex="-1"></a></span>
-<span id="cb632-14"><a href="lab-3---jags-gmm.html#cb632-14" tabindex="-1"></a><span class="st">  # priors</span></span>
-<span id="cb632-15"><a href="lab-3---jags-gmm.html#cb632-15" tabindex="-1"></a><span class="st">  taux ~ dgamma(0.01, 0.01)</span></span>
-<span id="cb632-16"><a href="lab-3---jags-gmm.html#cb632-16" tabindex="-1"></a><span class="st">  tauy ~ dgamma(0.01, 0.01)</span></span>
-<span id="cb632-17"><a href="lab-3---jags-gmm.html#cb632-17" tabindex="-1"></a><span class="st">  sigmax &lt;- 1 / sqrt(taux)</span></span>
-<span id="cb632-18"><a href="lab-3---jags-gmm.html#cb632-18" tabindex="-1"></a><span class="st">  sigmay &lt;- 1 / sqrt(tauy)</span></span>
-<span id="cb632-19"><a href="lab-3---jags-gmm.html#cb632-19" tabindex="-1"></a></span>
-<span id="cb632-20"><a href="lab-3---jags-gmm.html#cb632-20" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
-<span id="cb632-21"><a href="lab-3---jags-gmm.html#cb632-21" tabindex="-1"></a><span class="st">    mux_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
-<span id="cb632-22"><a href="lab-3---jags-gmm.html#cb632-22" tabindex="-1"></a><span class="st">    muy_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
-<span id="cb632-23"><a href="lab-3---jags-gmm.html#cb632-23" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb632-24"><a href="lab-3---jags-gmm.html#cb632-24" tabindex="-1"></a></span>
-<span id="cb632-25"><a href="lab-3---jags-gmm.html#cb632-25" tabindex="-1"></a><span class="st">  perm &lt;- order(mux_clust_raw) # same ordering for both!</span></span>
-<span id="cb632-26"><a href="lab-3---jags-gmm.html#cb632-26" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
-<span id="cb632-27"><a href="lab-3---jags-gmm.html#cb632-27" tabindex="-1"></a><span class="st">    mux_clust[k] &lt;- mux_clust_raw[perm[k]]</span></span>
-<span id="cb632-28"><a href="lab-3---jags-gmm.html#cb632-28" tabindex="-1"></a><span class="st">    muy_clust[k] &lt;- muy_clust_raw[perm[k]]</span></span>
-<span id="cb632-29"><a href="lab-3---jags-gmm.html#cb632-29" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb632-30"><a href="lab-3---jags-gmm.html#cb632-30" tabindex="-1"></a><span class="st">  lambda[1:K] ~ ddirch(ones)</span></span>
-<span id="cb632-31"><a href="lab-3---jags-gmm.html#cb632-31" tabindex="-1"></a></span>
-<span id="cb632-32"><a href="lab-3---jags-gmm.html#cb632-32" tabindex="-1"></a><span class="st">  # likelihood</span></span>
-<span id="cb632-33"><a href="lab-3---jags-gmm.html#cb632-33" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
-<span id="cb632-34"><a href="lab-3---jags-gmm.html#cb632-34" tabindex="-1"></a><span class="st">    loglikx[i] &lt;- logdensity.norm(x[i], mux_clust[clust[i]], taux)</span></span>
-<span id="cb632-35"><a href="lab-3---jags-gmm.html#cb632-35" tabindex="-1"></a><span class="st">    logliky[i] &lt;- logdensity.norm(y[i], muy_clust[clust[i]], tauy)</span></span>
-<span id="cb632-36"><a href="lab-3---jags-gmm.html#cb632-36" tabindex="-1"></a><span class="st">  }</span></span>
-<span id="cb632-37"><a href="lab-3---jags-gmm.html#cb632-37" tabindex="-1"></a><span class="st">  complete_loglik &lt;- sum(loglikx) + sum(logliky)</span></span>
-<span id="cb632-38"><a href="lab-3---jags-gmm.html#cb632-38" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb632-39"><a href="lab-3---jags-gmm.html#cb632-39" tabindex="-1"></a><span class="st">&quot;</span></span>
-<span id="cb632-40"><a href="lab-3---jags-gmm.html#cb632-40" tabindex="-1"></a></span>
-<span id="cb632-41"><a href="lab-3---jags-gmm.html#cb632-41" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># change this and see what&#39;s best</span></span>
-<span id="cb632-42"><a href="lab-3---jags-gmm.html#cb632-42" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb632-43"><a href="lab-3---jags-gmm.html#cb632-43" tabindex="-1"></a>  <span class="at">x =</span> bread<span class="sc">$</span>weight, <span class="at">y =</span> bread<span class="sc">$</span>size, <span class="at">ones =</span> <span class="fu">rep</span>(<span class="dv">1</span>, K),</span>
-<span id="cb632-44"><a href="lab-3---jags-gmm.html#cb632-44" tabindex="-1"></a>  <span class="at">K =</span> K, <span class="at">N =</span> <span class="fu">nrow</span>(bread)</span>
-<span id="cb632-45"><a href="lab-3---jags-gmm.html#cb632-45" tabindex="-1"></a>)</span>
-<span id="cb632-46"><a href="lab-3---jags-gmm.html#cb632-46" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb632-47"><a href="lab-3---jags-gmm.html#cb632-47" tabindex="-1"></a>  <span class="st">&quot;mux_clust&quot;</span>, <span class="st">&quot;muy_clust&quot;</span>, <span class="st">&quot;sigmax&quot;</span>, <span class="st">&quot;sigmay&quot;</span></span>
-<span id="cb632-48"><a href="lab-3---jags-gmm.html#cb632-48" tabindex="-1"></a>  <span class="co"># ,&quot;clust&quot;</span></span>
-<span id="cb632-49"><a href="lab-3---jags-gmm.html#cb632-49" tabindex="-1"></a>  , <span class="st">&quot;lambda&quot;</span>, <span class="st">&quot;complete_loglik&quot;</span></span>
-<span id="cb632-50"><a href="lab-3---jags-gmm.html#cb632-50" tabindex="-1"></a>)</span>
-<span id="cb632-51"><a href="lab-3---jags-gmm.html#cb632-51" tabindex="-1"></a>model_inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb632-52"><a href="lab-3---jags-gmm.html#cb632-52" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb632-53"><a href="lab-3---jags-gmm.html#cb632-53" tabindex="-1"></a>    <span class="at">mux_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>), <span class="at">muy_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>),</span>
-<span id="cb632-54"><a href="lab-3---jags-gmm.html#cb632-54" tabindex="-1"></a>    <span class="at">taux =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">tauy =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>),</span>
-<span id="cb632-55"><a href="lab-3---jags-gmm.html#cb632-55" tabindex="-1"></a>    <span class="at">clust =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">size =</span> <span class="fu">nrow</span>(bread), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> K, K))</span>
-<span id="cb632-56"><a href="lab-3---jags-gmm.html#cb632-56" tabindex="-1"></a>  )</span>
-<span id="cb632-57"><a href="lab-3---jags-gmm.html#cb632-57" tabindex="-1"></a>}</span>
-<span id="cb632-58"><a href="lab-3---jags-gmm.html#cb632-58" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
-<span id="cb632-59"><a href="lab-3---jags-gmm.html#cb632-59" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
-<span id="cb632-60"><a href="lab-3---jags-gmm.html#cb632-60" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
-<span id="cb632-61"><a href="lab-3---jags-gmm.html#cb632-61" tabindex="-1"></a>  <span class="at">inits =</span> model_inits,</span>
-<span id="cb632-62"><a href="lab-3---jags-gmm.html#cb632-62" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
-<span id="cb632-63"><a href="lab-3---jags-gmm.html#cb632-63" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
-<span id="cb632-64"><a href="lab-3---jags-gmm.html#cb632-64" tabindex="-1"></a>  <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
-<span id="cb632-65"><a href="lab-3---jags-gmm.html#cb632-65" tabindex="-1"></a>  <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
-<span id="cb632-66"><a href="lab-3---jags-gmm.html#cb632-66" tabindex="-1"></a>  <span class="at">n.thin =</span> <span class="dv">5</span>,</span>
-<span id="cb632-67"><a href="lab-3---jags-gmm.html#cb632-67" tabindex="-1"></a>  <span class="at">DIC =</span> <span class="cn">TRUE</span></span>
-<span id="cb632-68"><a href="lab-3---jags-gmm.html#cb632-68" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="lab-3---jags-gmm.html#cb645-1" tabindex="-1"></a>bread <span class="sc">%&gt;%</span></span>
+<span id="cb645-2"><a href="lab-3---jags-gmm.html#cb645-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(weight, size)) <span class="sc">+</span></span>
+<span id="cb645-3"><a href="lab-3---jags-gmm.html#cb645-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-301-1.png" width="672" /></p>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="lab-3---jags-gmm.html#cb646-1" tabindex="-1"></a><span class="fu">library</span>(R2jags)</span>
+<span id="cb646-2"><a href="lab-3---jags-gmm.html#cb646-2" tabindex="-1"></a></span>
+<span id="cb646-3"><a href="lab-3---jags-gmm.html#cb646-3" tabindex="-1"></a>model_code <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb646-4"><a href="lab-3---jags-gmm.html#cb646-4" tabindex="-1"></a><span class="st">model {</span></span>
+<span id="cb646-5"><a href="lab-3---jags-gmm.html#cb646-5" tabindex="-1"></a><span class="st">  # Likelihood:</span></span>
+<span id="cb646-6"><a href="lab-3---jags-gmm.html#cb646-6" tabindex="-1"></a><span class="st">  for(i in 1:N) {</span></span>
+<span id="cb646-7"><a href="lab-3---jags-gmm.html#cb646-7" tabindex="-1"></a><span class="st">    x[i] ~ dnorm(mux[i], taux)</span></span>
+<span id="cb646-8"><a href="lab-3---jags-gmm.html#cb646-8" tabindex="-1"></a><span class="st">    y[i] ~ dnorm(muy[i], tauy)</span></span>
+<span id="cb646-9"><a href="lab-3---jags-gmm.html#cb646-9" tabindex="-1"></a><span class="st">    mux[i] &lt;- mux_clust[clust[i]]</span></span>
+<span id="cb646-10"><a href="lab-3---jags-gmm.html#cb646-10" tabindex="-1"></a><span class="st">    muy[i] &lt;- muy_clust[clust[i]]</span></span>
+<span id="cb646-11"><a href="lab-3---jags-gmm.html#cb646-11" tabindex="-1"></a><span class="st">    clust[i] ~ dcat(lambda[1:K]) # categorical</span></span>
+<span id="cb646-12"><a href="lab-3---jags-gmm.html#cb646-12" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb646-13"><a href="lab-3---jags-gmm.html#cb646-13" tabindex="-1"></a></span>
+<span id="cb646-14"><a href="lab-3---jags-gmm.html#cb646-14" tabindex="-1"></a><span class="st">  # priors</span></span>
+<span id="cb646-15"><a href="lab-3---jags-gmm.html#cb646-15" tabindex="-1"></a><span class="st">  taux ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb646-16"><a href="lab-3---jags-gmm.html#cb646-16" tabindex="-1"></a><span class="st">  tauy ~ dgamma(0.01, 0.01)</span></span>
+<span id="cb646-17"><a href="lab-3---jags-gmm.html#cb646-17" tabindex="-1"></a><span class="st">  sigmax &lt;- 1 / sqrt(taux)</span></span>
+<span id="cb646-18"><a href="lab-3---jags-gmm.html#cb646-18" tabindex="-1"></a><span class="st">  sigmay &lt;- 1 / sqrt(tauy)</span></span>
+<span id="cb646-19"><a href="lab-3---jags-gmm.html#cb646-19" tabindex="-1"></a></span>
+<span id="cb646-20"><a href="lab-3---jags-gmm.html#cb646-20" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
+<span id="cb646-21"><a href="lab-3---jags-gmm.html#cb646-21" tabindex="-1"></a><span class="st">    mux_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
+<span id="cb646-22"><a href="lab-3---jags-gmm.html#cb646-22" tabindex="-1"></a><span class="st">    muy_clust_raw[k] ~ dnorm(0, 10^-6)</span></span>
+<span id="cb646-23"><a href="lab-3---jags-gmm.html#cb646-23" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb646-24"><a href="lab-3---jags-gmm.html#cb646-24" tabindex="-1"></a></span>
+<span id="cb646-25"><a href="lab-3---jags-gmm.html#cb646-25" tabindex="-1"></a><span class="st">  perm &lt;- order(mux_clust_raw) # same ordering for both!</span></span>
+<span id="cb646-26"><a href="lab-3---jags-gmm.html#cb646-26" tabindex="-1"></a><span class="st">  for (k in 1:K) {</span></span>
+<span id="cb646-27"><a href="lab-3---jags-gmm.html#cb646-27" tabindex="-1"></a><span class="st">    mux_clust[k] &lt;- mux_clust_raw[perm[k]]</span></span>
+<span id="cb646-28"><a href="lab-3---jags-gmm.html#cb646-28" tabindex="-1"></a><span class="st">    muy_clust[k] &lt;- muy_clust_raw[perm[k]]</span></span>
+<span id="cb646-29"><a href="lab-3---jags-gmm.html#cb646-29" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb646-30"><a href="lab-3---jags-gmm.html#cb646-30" tabindex="-1"></a><span class="st">  lambda[1:K] ~ ddirch(ones)</span></span>
+<span id="cb646-31"><a href="lab-3---jags-gmm.html#cb646-31" tabindex="-1"></a></span>
+<span id="cb646-32"><a href="lab-3---jags-gmm.html#cb646-32" tabindex="-1"></a><span class="st">  # likelihood</span></span>
+<span id="cb646-33"><a href="lab-3---jags-gmm.html#cb646-33" tabindex="-1"></a><span class="st">  for (i in 1:N) {</span></span>
+<span id="cb646-34"><a href="lab-3---jags-gmm.html#cb646-34" tabindex="-1"></a><span class="st">    loglikx[i] &lt;- logdensity.norm(x[i], mux_clust[clust[i]], taux)</span></span>
+<span id="cb646-35"><a href="lab-3---jags-gmm.html#cb646-35" tabindex="-1"></a><span class="st">    logliky[i] &lt;- logdensity.norm(y[i], muy_clust[clust[i]], tauy)</span></span>
+<span id="cb646-36"><a href="lab-3---jags-gmm.html#cb646-36" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb646-37"><a href="lab-3---jags-gmm.html#cb646-37" tabindex="-1"></a><span class="st">  complete_loglik &lt;- sum(loglikx) + sum(logliky)</span></span>
+<span id="cb646-38"><a href="lab-3---jags-gmm.html#cb646-38" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb646-39"><a href="lab-3---jags-gmm.html#cb646-39" tabindex="-1"></a><span class="st">&quot;</span></span>
+<span id="cb646-40"><a href="lab-3---jags-gmm.html#cb646-40" tabindex="-1"></a></span>
+<span id="cb646-41"><a href="lab-3---jags-gmm.html#cb646-41" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="co"># change this and see what&#39;s best</span></span>
+<span id="cb646-42"><a href="lab-3---jags-gmm.html#cb646-42" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb646-43"><a href="lab-3---jags-gmm.html#cb646-43" tabindex="-1"></a>  <span class="at">x =</span> bread<span class="sc">$</span>weight, <span class="at">y =</span> bread<span class="sc">$</span>size, <span class="at">ones =</span> <span class="fu">rep</span>(<span class="dv">1</span>, K),</span>
+<span id="cb646-44"><a href="lab-3---jags-gmm.html#cb646-44" tabindex="-1"></a>  <span class="at">K =</span> K, <span class="at">N =</span> <span class="fu">nrow</span>(bread)</span>
+<span id="cb646-45"><a href="lab-3---jags-gmm.html#cb646-45" tabindex="-1"></a>)</span>
+<span id="cb646-46"><a href="lab-3---jags-gmm.html#cb646-46" tabindex="-1"></a>model_params <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb646-47"><a href="lab-3---jags-gmm.html#cb646-47" tabindex="-1"></a>  <span class="st">&quot;mux_clust&quot;</span>, <span class="st">&quot;muy_clust&quot;</span>, <span class="st">&quot;sigmax&quot;</span>, <span class="st">&quot;sigmay&quot;</span></span>
+<span id="cb646-48"><a href="lab-3---jags-gmm.html#cb646-48" tabindex="-1"></a>  <span class="co"># ,&quot;clust&quot;</span></span>
+<span id="cb646-49"><a href="lab-3---jags-gmm.html#cb646-49" tabindex="-1"></a>  , <span class="st">&quot;lambda&quot;</span>, <span class="st">&quot;complete_loglik&quot;</span></span>
+<span id="cb646-50"><a href="lab-3---jags-gmm.html#cb646-50" tabindex="-1"></a>)</span>
+<span id="cb646-51"><a href="lab-3---jags-gmm.html#cb646-51" tabindex="-1"></a>model_inits <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb646-52"><a href="lab-3---jags-gmm.html#cb646-52" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb646-53"><a href="lab-3---jags-gmm.html#cb646-53" tabindex="-1"></a>    <span class="at">mux_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>), <span class="at">muy_clust_raw =</span> <span class="fu">rnorm</span>(K, <span class="dv">500</span>, <span class="fl">1e4</span>),</span>
+<span id="cb646-54"><a href="lab-3---jags-gmm.html#cb646-54" tabindex="-1"></a>    <span class="at">taux =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">tauy =</span> <span class="fu">rgamma</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>),</span>
+<span id="cb646-55"><a href="lab-3---jags-gmm.html#cb646-55" tabindex="-1"></a>    <span class="at">clust =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>K, <span class="at">size =</span> <span class="fu">nrow</span>(bread), <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> K, K))</span>
+<span id="cb646-56"><a href="lab-3---jags-gmm.html#cb646-56" tabindex="-1"></a>  )</span>
+<span id="cb646-57"><a href="lab-3---jags-gmm.html#cb646-57" tabindex="-1"></a>}</span>
+<span id="cb646-58"><a href="lab-3---jags-gmm.html#cb646-58" tabindex="-1"></a>model_run <span class="ot">&lt;-</span> <span class="fu">jags</span>(</span>
+<span id="cb646-59"><a href="lab-3---jags-gmm.html#cb646-59" tabindex="-1"></a>  <span class="at">data =</span> model_data,</span>
+<span id="cb646-60"><a href="lab-3---jags-gmm.html#cb646-60" tabindex="-1"></a>  <span class="at">parameters.to.save =</span> model_params,</span>
+<span id="cb646-61"><a href="lab-3---jags-gmm.html#cb646-61" tabindex="-1"></a>  <span class="at">inits =</span> model_inits,</span>
+<span id="cb646-62"><a href="lab-3---jags-gmm.html#cb646-62" tabindex="-1"></a>  <span class="at">model.file =</span> <span class="fu">textConnection</span>(model_code),</span>
+<span id="cb646-63"><a href="lab-3---jags-gmm.html#cb646-63" tabindex="-1"></a>  <span class="at">n.chains =</span> <span class="dv">2</span>,</span>
+<span id="cb646-64"><a href="lab-3---jags-gmm.html#cb646-64" tabindex="-1"></a>  <span class="at">n.iter =</span> <span class="dv">5000</span>,</span>
+<span id="cb646-65"><a href="lab-3---jags-gmm.html#cb646-65" tabindex="-1"></a>  <span class="at">n.burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb646-66"><a href="lab-3---jags-gmm.html#cb646-66" tabindex="-1"></a>  <span class="at">n.thin =</span> <span class="dv">5</span>,</span>
+<span id="cb646-67"><a href="lab-3---jags-gmm.html#cb646-67" tabindex="-1"></a>  <span class="at">DIC =</span> <span class="cn">TRUE</span></span>
+<span id="cb646-68"><a href="lab-3---jags-gmm.html#cb646-68" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Compiling model graph
 ##    Resolving undeclared variables
 ##    Allocating nodes
@@ -501,7 +505,7 @@ either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 ##    Total graph size: 4248
 ## 
 ## Initializing model</code></pre>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="lab-3---jags-gmm.html#cb634-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="lab-3---jags-gmm.html#cb648-1" tabindex="-1"></a>model_run<span class="sc">$</span>BUGSoutput</span></code></pre></div>
 <pre><code>## Inference for Bugs model at &quot;4&quot;, fit using jags,
 ##  2 chains, each with 5000 iterations (first 1000 discarded), n.thin = 5
 ##  n.sims = 1600 iterations saved
@@ -546,18 +550,18 @@ either unnecessary or wrong. Decrease the number of iterations/chains.</p>
 ## DIC info (using the rule, pD = var(deviance)/2)
 ## pD = 330.3 and DIC = 14211.4
 ## DIC is an estimate of expected predictive error (lower deviance is better).</code></pre>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="lab-3---jags-gmm.html#cb636-1" tabindex="-1"></a>gmm_mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(model_run)</span>
-<span id="cb636-2"><a href="lab-3---jags-gmm.html#cb636-2" tabindex="-1"></a><span class="co"># save to pdf</span></span>
-<span id="cb636-3"><a href="lab-3---jags-gmm.html#cb636-3" tabindex="-1"></a><span class="co"># pdf(file = &quot;./lab3/mcmc_out.pdf&quot;)</span></span>
-<span id="cb636-4"><a href="lab-3---jags-gmm.html#cb636-4" tabindex="-1"></a><span class="co"># plot(gmm_mcmc)</span></span>
-<span id="cb636-5"><a href="lab-3---jags-gmm.html#cb636-5" tabindex="-1"></a><span class="co"># dev.off()</span></span></code></pre></div>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="lab-3---jags-gmm.html#cb637-1" tabindex="-1"></a>mux <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>mux_clust</span>
-<span id="cb637-2"><a href="lab-3---jags-gmm.html#cb637-2" tabindex="-1"></a>muy <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>muy_clust</span>
-<span id="cb637-3"><a href="lab-3---jags-gmm.html#cb637-3" tabindex="-1"></a></span>
-<span id="cb637-4"><a href="lab-3---jags-gmm.html#cb637-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb637-5"><a href="lab-3---jags-gmm.html#cb637-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bread<span class="sc">$</span>weight, bread<span class="sc">$</span>size)) <span class="sc">+</span></span>
-<span id="cb637-6"><a href="lab-3---jags-gmm.html#cb637-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(mux, muy), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-298-1.png" width="672" /></p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="lab-3---jags-gmm.html#cb650-1" tabindex="-1"></a>gmm_mcmc <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(model_run)</span>
+<span id="cb650-2"><a href="lab-3---jags-gmm.html#cb650-2" tabindex="-1"></a><span class="co"># save to pdf</span></span>
+<span id="cb650-3"><a href="lab-3---jags-gmm.html#cb650-3" tabindex="-1"></a><span class="co"># pdf(file = &quot;./lab3/mcmc_out.pdf&quot;)</span></span>
+<span id="cb650-4"><a href="lab-3---jags-gmm.html#cb650-4" tabindex="-1"></a><span class="co"># plot(gmm_mcmc)</span></span>
+<span id="cb650-5"><a href="lab-3---jags-gmm.html#cb650-5" tabindex="-1"></a><span class="co"># dev.off()</span></span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="lab-3---jags-gmm.html#cb651-1" tabindex="-1"></a>mux <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>mux_clust</span>
+<span id="cb651-2"><a href="lab-3---jags-gmm.html#cb651-2" tabindex="-1"></a>muy <span class="ot">&lt;-</span> model_run<span class="sc">$</span>BUGSoutput<span class="sc">$</span>mean<span class="sc">$</span>muy_clust</span>
+<span id="cb651-3"><a href="lab-3---jags-gmm.html#cb651-3" tabindex="-1"></a></span>
+<span id="cb651-4"><a href="lab-3---jags-gmm.html#cb651-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb651-5"><a href="lab-3---jags-gmm.html#cb651-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bread<span class="sc">$</span>weight, bread<span class="sc">$</span>size)) <span class="sc">+</span></span>
+<span id="cb651-6"><a href="lab-3---jags-gmm.html#cb651-6" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(mux, muy), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-303-1.png" width="672" /></p>
 
 <pre><code>## tweaking contrast</code></pre>
 <pre><code>## tweaking pscl</code></pre>

@@ -123,7 +123,7 @@
 
 \title{Statistical Models in R}
 \author{Vittorio Zampinetti\footnote{Politecnico di Torino} \and Mauro Gasparini\footnote{Politecnico di Torino}}
-\date{2024-04-17}
+\date{2024-07-04}
 
 \begin{document}
 \maketitle
@@ -269,8 +269,8 @@ Functions are called with the \texttt{()} operator and present named arguments.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]   3.097750   1.069282  12.590936  14.083997  -5.103241  -5.594683
-##  [7]   0.684868  -9.394081 -26.877472   3.124083
+##  [1]   3.481589 -14.993989  -0.263854 -10.533974  -9.974914  -4.220047
+##  [7]   9.341907   8.410405  -5.788265   5.764697
 \end{verbatim}
 
 You can explicitly call the arguments to which you want to pass the parameters
@@ -1051,12 +1051,12 @@ most of the dataset will be stored in dataframes.
 ##    x  y char
 ## 1  1  1    a
 ## 2  1  2    a
-## 3  1  3    b
-## 4  1  4    a
-## 5  1  5    b
-## 6  1  6    b
+## 3  1  3    a
+## 4  1  4    b
+## 5  1  5    a
+## 6  1  6    a
 ## 7  1  7    b
-## 8  1  8    a
+## 8  1  8    b
 ## 9  1  9    b
 ## 10 1 10    a
 \end{verbatim}
@@ -1088,7 +1088,7 @@ most of the dataset will be stored in dataframes.
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] "a" "a" "b" "a" "b" "b" "b" "a" "b" "a"
+##  [1] "a" "a" "a" "b" "a" "a" "b" "b" "b" "a"
 \end{verbatim}
 
 \begin{Shaded}
@@ -1100,8 +1100,8 @@ most of the dataset will be stored in dataframes.
 \begin{verbatim}
 ##   x y char
 ## 2 1 2    a
-## 3 1 3    b
-## 4 1 4    a
+## 3 1 3    a
+## 4 1 4    b
 \end{verbatim}
 
 The \texttt{dplyr} library provides another dataframe object (called \emph{tibble}) which has all
@@ -1470,8 +1470,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.2317960  0.3460598  1.3832943  0.7350193  0.7750545  1.2920892
-##  [7] -1.8497872  1.0520194 -1.0308002  0.3268712
+##  [1]  1.1786512  0.5189134 -1.0445893 -2.8316918  0.1804755 -0.4073548
+##  [7]  1.0915080 -2.1503819 -0.6723944  0.6825851
 \end{verbatim}
 
 \begin{Shaded}
@@ -1482,8 +1482,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.0021523581 0.1016014415 0.3298552116 0.1792405408 0.1884006912
-##  [6] 0.3105198758 0.0002413242 0.2545464068 0.0040387767 0.0984094475
+##  [1] 2.847210e-01 1.332208e-01 3.873098e-03 3.400591e-06 7.620919e-02
+##  [6] 2.200211e-02 2.640498e-01 7.251092e-05 1.122306e-02 1.675071e-01
 \end{verbatim}
 
 \begin{Shaded}
@@ -1494,8 +1494,8 @@ These functions are usually divided into four categories:
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 0.10901265 0.63535113 0.91671268 0.76883614 0.78084628 0.90183688
-##  [7] 0.03217211 0.85360468 0.15131727 0.62811736
+##  [1] 0.880731460 0.698089442 0.148106411 0.002315123 0.571610364 0.341873709
+##  [7] 0.862475294 0.015762510 0.250666311 0.752565484
 \end{verbatim}
 
 \begin{Shaded}
@@ -1633,8 +1633,8 @@ Here an example where using \texttt{=} rather than \texttt{\textless{}-} makes a
 
 \begin{verbatim}
 ##            a         b
-## 1 -0.8079864 0.6528421
-## 2  1.9477103 3.7935752
+## 1 -0.4801796 0.2305724
+## 2  0.9055271 0.8199793
 \end{verbatim}
 
 Although this event might never occur in one's programming experience, it's
@@ -4354,23 +4354,28 @@ additional predictor.
 
 \section{Qualitative predictors}\label{qualitative-predictors}
 
-Qualitative predictors are represented in R through \emph{factors}.
-Although it's not always necessary, it is always best to
-explicitly tell R to interpret qualitative predictors data as factors.
-This can be done with \texttt{read\_csv}, first by reading the data as it is
-and then calling the \texttt{spec()} function over the new tibble.
+We recycle a textbook example taken from
+McClave JT., Benson PG. e Sincich T. (2014).
+\emph{Statistics for Business and Economics.}
+Pearson Education Limited.\\
+We want to study the effect on the response (variable \emph{distance})
+of 4 different brands of golf ball (A,B,C,D) (variable \emph{brand})
+and the club type (DRIVER/IRON) (variable \emph{club}).
+These two features are qualitative predictors, also called factors.
+A robot player is used.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{wide\_golf }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/golfer.csv"}\NormalTok{)}
+\NormalTok{wide\_golf }\OtherTok{\textless{}{-}} \FunctionTok{read\_tsv}\NormalTok{(}\StringTok{"./datasets/golfer.tsv"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Rows: 10 Columns: 5
+## Rows: 8 Columns: 5
 ## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## dbl (5): golfer, A, B, C, D
+## Delimiter: "\t"
+## chr (1): club
+## dbl (4): A, B, C, D
 ## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
@@ -4384,7 +4389,7 @@ and then calling the \texttt{spec()} function over the new tibble.
 
 \begin{verbatim}
 ## cols(
-##   golfer = col_double(),
+##   club = col_character(),
 ##   A = col_double(),
 ##   B = col_double(),
 ##   C = col_double(),
@@ -4392,18 +4397,23 @@ and then calling the \texttt{spec()} function over the new tibble.
 ## )
 \end{verbatim}
 
+Although it's not always necessary, it is always best to
+explicitly tell R to interpret qualitative predictors data as factors.
+This can be done with \texttt{read\_tsv}, first by reading the data as it is
+and then calling the \texttt{spec()} function over the new tibble.
+
 In this case, the output is saying that the first column has
 been detected as \texttt{numeric}, which is false, because the golfer
 number is just an identification number.
 Therefore we correct this by copying the output, manually editing
 the first column type from \texttt{col\_double()} to \texttt{col\_factor()} and
-setting the \texttt{read\_csv} parameter \texttt{col\_types} to that.
+setting the \texttt{read\_tsv} parameter \texttt{col\_types} to that.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{wide\_golf }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"./datasets/golfer.csv"}\NormalTok{,}
+\NormalTok{wide\_golf }\OtherTok{\textless{}{-}} \FunctionTok{read\_tsv}\NormalTok{(}\StringTok{"./datasets/golfer.tsv"}\NormalTok{,}
   \AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}
-    \AttributeTok{golfer =}\NormalTok{ readr}\SpecialCharTok{::}\FunctionTok{col\_factor}\NormalTok{(),}
+    \AttributeTok{club =}\NormalTok{ readr}\SpecialCharTok{::}\FunctionTok{col\_factor}\NormalTok{(),}
     \AttributeTok{A =} \FunctionTok{col\_double}\NormalTok{(),}
     \AttributeTok{B =} \FunctionTok{col\_double}\NormalTok{(),}
     \AttributeTok{C =} \FunctionTok{col\_double}\NormalTok{(),}
@@ -4414,7 +4424,7 @@ setting the \texttt{read\_csv} parameter \texttt{col\_types} to that.
 \FunctionTok{library}\NormalTok{(dplyr)}
 \CommentTok{\# need to switch from wide to long format}
 \NormalTok{golf }\OtherTok{\textless{}{-}}\NormalTok{ wide\_golf }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{gather}\NormalTok{(brand, distance, }\SpecialCharTok{{-}}\NormalTok{golfer)}
+  \FunctionTok{gather}\NormalTok{(brand, distance, A}\SpecialCharTok{:}\NormalTok{D)}
 
 \DocumentationTok{\#\# if using data.frame, you can use \textasciigrave{}melt()\textasciigrave{} from}
 \DocumentationTok{\#\# reshape2}
@@ -4424,79 +4434,109 @@ setting the \texttt{read\_csv} parameter \texttt{col\_types} to that.
 \end{Highlighting}
 \end{Shaded}
 
-Now, for example, we fit a linear model using all the
-available columns
+Let us study first the effect of \emph{brand} on the \emph{distance}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{complete\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ golf)}
-\end{Highlighting}
-\end{Shaded}
-
-and we can compare it to a smaller model with ANOVA test.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{small\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ golfer, }\AttributeTok{data =}\NormalTok{ golf)}
-\FunctionTok{anova}\NormalTok{(small\_lm, complete\_lm)}
+\NormalTok{lm\_brand }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ brand, }\AttributeTok{data =}\NormalTok{ golf)}
+\FunctionTok{summary}\NormalTok{(lm\_brand)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Analysis of Variance Table
 ## 
-## Model 1: distance ~ golfer
-## Model 2: distance ~ golfer + brand
-##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-## 1     30 6026.0                                  
-## 2     27 2358.8  3    3667.2 13.992 1.076e-05 ***
+## Call:
+## lm(formula = distance ~ brand, data = golf)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -48.638 -31.703  -0.481  32.947  42.475 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  199.862     12.262  16.299 8.04e-16 ***
+## brandB         8.338     17.341   0.481    0.634    
+## brandC         5.275     17.341   0.304    0.763    
+## brandD        -4.737     17.341  -0.273    0.787    
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 34.68 on 28 degrees of freedom
+## Multiple R-squared:  0.02322,    Adjusted R-squared:  -0.08143 
+## F-statistic: 0.2219 on 3 and 28 DF,  p-value: 0.8804
 \end{verbatim}
-
-Another variance test can be performed with \texttt{aov}.
-Check the function documentation for more details.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{aov}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ golfer }\SpecialCharTok{+}\NormalTok{ brand, }\AttributeTok{data =}\NormalTok{ golf)}
+\FunctionTok{model.matrix}\NormalTok{(lm\_brand) }\CommentTok{\# this is the design matrix}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## Call:
-##    aov(formula = distance ~ golfer + brand, data = golf)
-## 
-## Terms:
-##                   golfer    brand Residuals
-## Sum of Squares  9745.734 3667.226  2358.764
-## Deg. of Freedom        9        3        27
-## 
-## Residual standard error: 9.346744
-## Estimated effects may be unbalanced
+##    (Intercept) brandB brandC brandD
+## 1            1      0      0      0
+## 2            1      0      0      0
+## 3            1      0      0      0
+## 4            1      0      0      0
+## 5            1      0      0      0
+## 6            1      0      0      0
+## 7            1      0      0      0
+## 8            1      0      0      0
+## 9            1      1      0      0
+## 10           1      1      0      0
+## 11           1      1      0      0
+## 12           1      1      0      0
+## 13           1      1      0      0
+## 14           1      1      0      0
+## 15           1      1      0      0
+## 16           1      1      0      0
+## 17           1      0      1      0
+## 18           1      0      1      0
+## 19           1      0      1      0
+## 20           1      0      1      0
+## 21           1      0      1      0
+## 22           1      0      1      0
+## 23           1      0      1      0
+## 24           1      0      1      0
+## 25           1      0      0      1
+## 26           1      0      0      1
+## 27           1      0      0      1
+## 28           1      0      0      1
+## 29           1      0      0      1
+## 30           1      0      0      1
+## 31           1      0      0      1
+## 32           1      0      0      1
+## attr(,"assign")
+## [1] 0 1 1 1
+## attr(,"contrasts")
+## attr(,"contrasts")$brand
+## [1] "contr.treatment"
 \end{verbatim}
 
-\section{Predict}\label{predict}
+\subsection{Data visualization}\label{data-visualization}
 
-Especially when dealing with qualitative data, predictions for
-new unseen data can be easily computed with the \texttt{predict} function,
-which simply applies the regression coefficients to the provided data
-(arbitrarily generated below inside a tibble).
+To visualize the data, we can use boxplots or more specialized
+graphics for qualitative predictors (for the latter,
+we have to define the predictors explicitly as factor
+objects in R). Recall that prettier graphics can always
+be produced using \emph{ggplot2}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{predict}\NormalTok{(complete\_lm, }\FunctionTok{tibble}\NormalTok{(}\AttributeTok{golfer =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"1"}\NormalTok{, }\StringTok{"2"}\NormalTok{), }\AttributeTok{brand =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"B"}\NormalTok{)),}
-  \AttributeTok{interval =} \StringTok{"confidence"}
-\NormalTok{)}
+\FunctionTok{boxplot}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ brand, }\AttributeTok{data =}\NormalTok{ golf)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-##       fit      lwr      upr
-## 1 204.105 193.1719 215.0381
-## 2 210.235 199.3019 221.1681
-## 3 249.810 238.8769 260.7431
-\end{verbatim}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-153-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{golf}\SpecialCharTok{$}\NormalTok{brand }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(golf}\SpecialCharTok{$}\NormalTok{brand)}
+\FunctionTok{plot.design}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ brand, }\AttributeTok{data =}\NormalTok{ golf)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-153-2.pdf}
 
 \section{Interactions}\label{interactions}
 
@@ -4512,11 +4552,204 @@ Interactions are added in the \texttt{lm} formula. More specifically:
   writing \texttt{y\ \textasciitilde{}\ a*b})
 \end{itemize}
 
+Back to our dataset, let us now add the second factor \emph{club} and build a `small'
+additive model\ldots{}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{inter\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ golfer }\SpecialCharTok{*}\NormalTok{ brand, }\AttributeTok{data =}\NormalTok{ golf)}
+\NormalTok{small\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ brand }\SpecialCharTok{+}\NormalTok{ club, }\AttributeTok{data =}\NormalTok{ golf)}
+\FunctionTok{summary}\NormalTok{(small\_lm)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = distance ~ brand + club, data = golf)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -16.9688  -5.2156   0.7375   5.2875  11.2063 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  231.531      3.032  76.371   <2e-16 ***
+## brandB         8.338      3.835   2.174   0.0386 *  
+## brandC         5.275      3.835   1.376   0.1803    
+## brandD        -4.737      3.835  -1.235   0.2273    
+## clubIRON     -63.337      2.712 -23.358   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.67 on 27 degrees of freedom
+## Multiple R-squared:  0.9539, Adjusted R-squared:  0.9471 
+## F-statistic: 139.8 on 4 and 27 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\ldots{} and a larger one with interaction.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{large\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ brand }\SpecialCharTok{*}\NormalTok{ club, }\AttributeTok{data =}\NormalTok{ golf)}
+\FunctionTok{summary}\NormalTok{(large\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = distance ~ brand * club, data = golf)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.6750  -2.7000   0.3125   3.4875  11.8250 
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)      228.425      2.927  78.051  < 2e-16 ***
+## brandB             5.300      4.139   1.281  0.21259    
+## brandC            14.675      4.139   3.546  0.00165 ** 
+## brandD             1.325      4.139   0.320  0.75163    
+## clubIRON         -57.125      4.139 -13.802 6.55e-13 ***
+## brandB:clubIRON    6.075      5.853   1.038  0.30966    
+## brandC:clubIRON  -18.800      5.853  -3.212  0.00373 ** 
+## brandD:clubIRON  -12.125      5.853  -2.072  0.04923 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.853 on 24 degrees of freedom
+## Multiple R-squared:  0.9762, Adjusted R-squared:  0.9692 
+## F-statistic: 140.4 on 7 and 24 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+An interaction plot suggests interactions may be significant
+(the lines are not parallel),
+but we have to test for it since interaction plots are
+subject to sampling variation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot.design}\NormalTok{(distance }\SpecialCharTok{\textasciitilde{}}\NormalTok{ brand }\SpecialCharTok{*}\NormalTok{ club, }\AttributeTok{data =}\NormalTok{ golf)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-156-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{interaction.plot}\NormalTok{(golf}\SpecialCharTok{$}\NormalTok{brand, golf}\SpecialCharTok{$}\NormalTok{club, golf}\SpecialCharTok{$}\NormalTok{distance)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-156-2.pdf}
+
+\section{Model comparison}\label{model-comparison}
+
+We can compare the complete model to a smaller one
+with ANOVA test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(large\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: distance
+##            Df Sum Sq Mean Sq  F value    Pr(>F)    
+## brand       3    801     267   7.7908 0.0008401 ***
+## club        1  32093   32093 936.7516 < 2.2e-16 ***
+## brand:club  3    766     255   7.4524 0.0010789 ** 
+## Residuals  24    822      34                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+With the last \emph{anova()} command we have built a more
+traditional anova table.
+We can compare the two models also with the \emph{anova} command.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(small\_lm, large\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: distance ~ brand + club
+## Model 2: distance ~ brand * club
+##   Res.Df     RSS Df Sum of Sq      F   Pr(>F)   
+## 1     27 1588.20                                
+## 2     24  822.24  3    765.96 7.4524 0.001079 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Interactions are significant, meaning each combination of the two factors
+tells a different story.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fitted}\NormalTok{(large\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       1       2       3       4       5       6       7       8       9      10 
+## 228.425 228.425 228.425 228.425 171.300 171.300 171.300 171.300 233.725 233.725 
+##      11      12      13      14      15      16      17      18      19      20 
+## 233.725 233.725 182.675 182.675 182.675 182.675 243.100 243.100 243.100 243.100 
+##      21      22      23      24      25      26      27      28      29      30 
+## 167.175 167.175 167.175 167.175 229.750 229.750 229.750 229.750 160.500 160.500 
+##      31      32 
+## 160.500 160.500
+\end{verbatim}
+
+\section{Predict}\label{predict}
+
+Especially when dealing with qualitative data, predictions for
+new unseen data can be easily computed with the \texttt{predict} function,
+which simply applies the regression coefficients to the provided data
+(arbitrarily generated below inside a tibble).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict.lm}\NormalTok{(small\_lm,}
+  \AttributeTok{newdata =} \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{club =} \FunctionTok{c}\NormalTok{(}\StringTok{"DRIVER"}\NormalTok{, }\StringTok{"IRON"}\NormalTok{, }\StringTok{"IRON"}\NormalTok{),}
+    \AttributeTok{brand =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"B"}\NormalTok{)}
+\NormalTok{  ),}
+  \AttributeTok{interval =} \StringTok{"confidence"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        fit      lwr      upr
+## 1 231.5312 225.3108 237.7517
+## 2 176.5312 170.3108 182.7517
+## 3 176.5312 170.3108 182.7517
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# for prediction intervals...}
+\FunctionTok{predict.lm}\NormalTok{(large\_lm,}
+  \AttributeTok{newdata =} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{club =} \StringTok{"DRIVER"}\NormalTok{, }\AttributeTok{brand =} \StringTok{"A"}\NormalTok{),}
+  \AttributeTok{interval =} \StringTok{"prediction"}\NormalTok{,}
+  \AttributeTok{level =}\NormalTok{ .}\DecValTok{99}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       fit      lwr      upr
+## 1 228.425 210.1216 246.7284
+\end{verbatim}
 
 \chapter{Generalized Linear Models (Binomial)}\label{generalized-linear-models-binomial}
 
@@ -4677,7 +4910,7 @@ some outliers if present.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-163-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-168-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4703,7 +4936,7 @@ some outliers if present.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-165-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-170-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4725,7 +4958,7 @@ switch to long format with \texttt{gather} (or \texttt{reshape2::melt}).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-166-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-171-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4815,7 +5048,7 @@ The \(X\)s have to be independent, thus we check the correlation plots.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-168-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-173-1.pdf}
 
 In order to be able to use the Binomial generalized linear model
 and set the program as response variable, we have to make a new
@@ -5226,7 +5459,7 @@ The plots interpretation is left as exercise.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-183-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-188-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5236,7 +5469,7 @@ The plots interpretation is left as exercise.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-184-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-189-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5247,7 +5480,7 @@ The plots interpretation is left as exercise.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-185-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-190-1.pdf}
 
 \section{Other tests}\label{other-tests}
 
@@ -5501,7 +5734,7 @@ but with ordered levels, i.e.~\emph{low}, \emph{medium}, \emph{high}).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-195-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-200-1.pdf}
 
 \section{Poisson Family GLM}\label{poisson-family-glm}
 
@@ -5899,7 +6132,7 @@ Graphic representation:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-210-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-215-1.pdf}
 The plot tells us how far the fitted model is from being equal
 to the saturated one. It would be more useful though to
 observe the distance between the fitted and the null models.
@@ -5996,7 +6229,7 @@ We can plot the observations influences:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-212-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-217-1.pdf}
 
 \section{Interaction}\label{interaction}
 
@@ -6304,7 +6537,7 @@ As always, let's start with some descriptive plots.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-220-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-225-1.pdf}
 
 The response presents high variability, we can reduce this by taking the log.
 
@@ -6324,7 +6557,7 @@ The response presents high variability, we can reduce this by taking the log.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-221-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-226-1.pdf}
 
 Now we analyse the relationship with the number of chronic diseases.
 
@@ -6348,7 +6581,7 @@ Now we analyse the relationship with the number of chronic diseases.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-222-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-227-1.pdf}
 This variable seems to have too low support on values from 4 above. This will lead
 to low accuracy in the visit estimation when we observe a number of chronic diseases higher than 4.
 We may fix this issue by assuming that a patient having 4 or more diseases will get visited as
@@ -6366,7 +6599,7 @@ and we transform the data accordingly.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-223-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-228-1.pdf}
 
 To summarize, here the two data transformations discussed so far (which we can compare to the
 original dataset). With a log-transform we fix the highly skewed distribution on the response
@@ -6393,7 +6626,7 @@ variable, while with a saturation point on the \texttt{chronic} predictor, we cr
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-224-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-229-1.pdf}
 There are many less outliers and less variability among classes,
 which suggests that we can better capture its distribution
 
@@ -6431,7 +6664,7 @@ of the available data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-225-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-230-1.pdf}
 
 \section{Negative binomial regression}\label{negative-binomial-regression}
 
@@ -6736,7 +6969,7 @@ It can be seen as a two-steps process:
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-233-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-238-1.pdf}
 
 With our data, we do not observe something really like a zero inflation
 model, but still, with a ZI model, we can have more insight on the
@@ -6765,7 +6998,7 @@ presence of many zeros.
 ## (`geom_bar()`).
 \end{verbatim}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-234-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-239-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6776,7 +7009,7 @@ presence of many zeros.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-235-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-240-1.pdf}
 
 Let's try to fit a zero inflation model.
 
@@ -7341,7 +7574,7 @@ pre-defined parameters (\(p, \lambda\)).
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-246-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-251-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7450,7 +7683,7 @@ defining the true parameters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-248-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-253-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7564,7 +7797,7 @@ components correctly represent the two clusters.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-250-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-255-1.pdf}
 
 \chapter{Lab 1 - EDA (iris)}\label{lab-1---eda-iris}
 
@@ -7740,7 +7973,7 @@ color encoding on the four measures.
 ## Using class as id variables
 \end{verbatim}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-257-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-262-1.pdf}
 
 We can also visualize the four measures on a set of plots that shows
 the correlation between variables, two-by-two. This is easily
@@ -7766,7 +7999,7 @@ read the help document of the \texttt{ggpairs()} function. You can also use R ba
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-258-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-263-1.pdf}
 
 \section{Confidence intervals}\label{confidence-intervals-1}
 
@@ -8103,7 +8336,7 @@ of the number of columns.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 \end{verbatim}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-272-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-277-1.pdf}
 
 From these plots we can see that, as we could imagine,
 the consumption goes down with higher temperatures
@@ -8209,7 +8442,7 @@ Using color encoding in ggplot, we can differentiate between the two.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-277-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-282-1.pdf}
 
 \subsection{Interaction (10 min)}\label{interaction-10-min}
 
@@ -8574,7 +8807,7 @@ For this purpose, we will just use the records of the \texttt{after} class.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-292-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-297-1.pdf}
 
 \begin{quote}
 Notice how the intervals get wider when departing from the mean temperature \(\bar x\).
@@ -8677,7 +8910,7 @@ Good luck!
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-296-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-301-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8838,7 +9071,7 @@ Good luck!
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smr_book_files/figure-latex/unnamed-chunk-298-1.pdf}
+\includegraphics{smr_book_files/figure-latex/unnamed-chunk-303-1.pdf}
 
 \begin{verbatim}
 ## tweaking contrast

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Lab 2 - Linear regression (insulate) | Statistical Models in R</title>
   <meta name="description" content="A modern R tutorial focused on statistical analysis and modeling." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Lab 2 - Linear regression (insulate) | Statistical Models in R" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Mauro Gasparini" />
 
 
-<meta name="date" content="2024-04-17" />
+<meta name="date" content="2024-07-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,9 +258,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.2.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#r-squared"><i class="fa fa-check"></i><b>6.2.1</b> R-squared</a></li>
 <li class="chapter" data-level="6.2.2" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#anova"><i class="fa fa-check"></i><b>6.2.2</b> ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a></li>
-<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.4</b> Predict</a></li>
-<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.5</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#qualitative-predictors"><i class="fa fa-check"></i><b>6.3</b> Qualitative predictors</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#data-visualization"><i class="fa fa-check"></i><b>6.3.1</b> Data visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#interactions"><i class="fa fa-check"></i><b>6.4</b> Interactions</a></li>
+<li class="chapter" data-level="6.5" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#model-comparison"><i class="fa fa-check"></i><b>6.5</b> Model comparison</a></li>
+<li class="chapter" data-level="6.6" data-path="interactions-and-qualitative-predictors.html"><a href="interactions-and-qualitative-predictors.html#predict"><i class="fa fa-check"></i><b>6.6</b> Predict</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="generalized-linear-models-binomial.html"><a href="generalized-linear-models-binomial.html"><i class="fa fa-check"></i><b>7</b> Generalized Linear Models (Binomial)</a>
 <ul>
@@ -373,15 +377,15 @@ summary, plots, etc.).</p>
 </ul>
 <p>Although it’s not necessary in this case, we explicitly specify
 that the <code>when</code> variable needs to be parsed as factor.</p>
-<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="lab-2---linear-regression-insulate.html#cb604-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb604-2"><a href="lab-2---linear-regression-insulate.html#cb604-2" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb604-3"><a href="lab-2---linear-regression-insulate.html#cb604-3" tabindex="-1"></a><span class="co"># read the dataset</span></span>
-<span id="cb604-4"><a href="lab-2---linear-regression-insulate.html#cb604-4" tabindex="-1"></a>insulate <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/insulate.csv&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
-<span id="cb604-5"><a href="lab-2---linear-regression-insulate.html#cb604-5" tabindex="-1"></a>  <span class="at">when =</span> <span class="fu">col_factor</span>(),</span>
-<span id="cb604-6"><a href="lab-2---linear-regression-insulate.html#cb604-6" tabindex="-1"></a>  <span class="at">temp =</span> <span class="fu">col_double</span>(),</span>
-<span id="cb604-7"><a href="lab-2---linear-regression-insulate.html#cb604-7" tabindex="-1"></a>  <span class="at">cons =</span> <span class="fu">col_double</span>()</span>
-<span id="cb604-8"><a href="lab-2---linear-regression-insulate.html#cb604-8" tabindex="-1"></a>))</span>
-<span id="cb604-9"><a href="lab-2---linear-regression-insulate.html#cb604-9" tabindex="-1"></a>insulate</span></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="lab-2---linear-regression-insulate.html#cb618-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb618-2"><a href="lab-2---linear-regression-insulate.html#cb618-2" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb618-3"><a href="lab-2---linear-regression-insulate.html#cb618-3" tabindex="-1"></a><span class="co"># read the dataset</span></span>
+<span id="cb618-4"><a href="lab-2---linear-regression-insulate.html#cb618-4" tabindex="-1"></a>insulate <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;./datasets/insulate.csv&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb618-5"><a href="lab-2---linear-regression-insulate.html#cb618-5" tabindex="-1"></a>  <span class="at">when =</span> <span class="fu">col_factor</span>(),</span>
+<span id="cb618-6"><a href="lab-2---linear-regression-insulate.html#cb618-6" tabindex="-1"></a>  <span class="at">temp =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb618-7"><a href="lab-2---linear-regression-insulate.html#cb618-7" tabindex="-1"></a>  <span class="at">cons =</span> <span class="fu">col_double</span>()</span>
+<span id="cb618-8"><a href="lab-2---linear-regression-insulate.html#cb618-8" tabindex="-1"></a>))</span>
+<span id="cb618-9"><a href="lab-2---linear-regression-insulate.html#cb618-9" tabindex="-1"></a>insulate</span></code></pre></div>
 <pre><code>## # A tibble: 56 × 3
 ##    when    temp  cons
 ##    &lt;fct&gt;  &lt;dbl&gt; &lt;dbl&gt;
@@ -416,12 +420,12 @@ In <code>ggplot</code> it’s straightforward:</p>
 predictors), as the number of plots scales with the square
 of the number of columns.</p>
 </blockquote>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="lab-2---linear-regression-insulate.html#cb606-1" tabindex="-1"></a><span class="co"># plot (pair plot)</span></span>
-<span id="cb606-2"><a href="lab-2---linear-regression-insulate.html#cb606-2" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb606-3"><a href="lab-2---linear-regression-insulate.html#cb606-3" tabindex="-1"></a><span class="fu">ggpairs</span>(insulate)</span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="lab-2---linear-regression-insulate.html#cb620-1" tabindex="-1"></a><span class="co"># plot (pair plot)</span></span>
+<span id="cb620-2"><a href="lab-2---linear-regression-insulate.html#cb620-2" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb620-3"><a href="lab-2---linear-regression-insulate.html#cb620-3" tabindex="-1"></a><span class="fu">ggpairs</span>(insulate)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
 <p>From these plots we can see that, as we could imagine,
 the consumption goes down with higher temperatures
 and also there is a clear difference in the consumption
@@ -435,8 +439,8 @@ with both predictors.</p>
 <ul>
 <li>Which one is better? Why?</li>
 </ul>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="lab-2---linear-regression-insulate.html#cb608-1" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> insulate)</span>
-<span id="cb608-2"><a href="lab-2---linear-regression-insulate.html#cb608-2" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="lab-2---linear-regression-insulate.html#cb622-1" tabindex="-1"></a>simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> insulate)</span>
+<span id="cb622-2"><a href="lab-2---linear-regression-insulate.html#cb622-2" tabindex="-1"></a><span class="fu">summary</span>(simple_lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = cons ~ temp, data = insulate)
@@ -455,8 +459,8 @@ with both predictors.</p>
 ## Residual standard error: 0.8606 on 54 degrees of freedom
 ## Multiple R-squared:  0.4668, Adjusted R-squared:  0.457 
 ## F-statistic: 47.28 on 1 and 54 DF,  p-value: 6.545e-09</code></pre>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="lab-2---linear-regression-insulate.html#cb610-1" tabindex="-1"></a>additive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> ., <span class="at">data =</span> insulate)</span>
-<span id="cb610-2"><a href="lab-2---linear-regression-insulate.html#cb610-2" tabindex="-1"></a><span class="fu">summary</span>(additive_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="lab-2---linear-regression-insulate.html#cb624-1" tabindex="-1"></a>additive_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> ., <span class="at">data =</span> insulate)</span>
+<span id="cb624-2"><a href="lab-2---linear-regression-insulate.html#cb624-2" tabindex="-1"></a><span class="fu">summary</span>(additive_lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = cons ~ ., data = insulate)
@@ -485,18 +489,18 @@ tool that you prefer)</li>
 <p>The additive model regression line actually consists of two (parallel)
 lines, one for each level of the qualitative predictor <code>when</code>.
 Using color encoding in ggplot, we can differentiate between the two.</p>
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="lab-2---linear-regression-insulate.html#cb612-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb612-2"><a href="lab-2---linear-regression-insulate.html#cb612-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> insulate, <span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span></span>
-<span id="cb612-3"><a href="lab-2---linear-regression-insulate.html#cb612-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">linetype =</span> <span class="st">&quot;simple&quot;</span>, <span class="at">intercept =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>], <span class="at">slope =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>])) <span class="sc">+</span></span>
-<span id="cb612-4"><a href="lab-2---linear-regression-insulate.html#cb612-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb612-5"><a href="lab-2---linear-regression-insulate.html#cb612-5" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">&quot;complete&quot;</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;after&quot;</span>, <span class="st">&quot;before&quot;</span>),</span>
-<span id="cb612-6"><a href="lab-2---linear-regression-insulate.html#cb612-6" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">c</span>(</span>
-<span id="cb612-7"><a href="lab-2---linear-regression-insulate.html#cb612-7" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>],</span>
-<span id="cb612-8"><a href="lab-2---linear-regression-insulate.html#cb612-8" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
-<span id="cb612-9"><a href="lab-2---linear-regression-insulate.html#cb612-9" tabindex="-1"></a>    ),</span>
-<span id="cb612-10"><a href="lab-2---linear-regression-insulate.html#cb612-10" tabindex="-1"></a>    <span class="at">slope =</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span>
-<span id="cb612-11"><a href="lab-2---linear-regression-insulate.html#cb612-11" tabindex="-1"></a>  ))</span></code></pre></div>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="lab-2---linear-regression-insulate.html#cb626-1" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb626-2"><a href="lab-2---linear-regression-insulate.html#cb626-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> insulate, <span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span></span>
+<span id="cb626-3"><a href="lab-2---linear-regression-insulate.html#cb626-3" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">linetype =</span> <span class="st">&quot;simple&quot;</span>, <span class="at">intercept =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>], <span class="at">slope =</span> simple_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb626-4"><a href="lab-2---linear-regression-insulate.html#cb626-4" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb626-5"><a href="lab-2---linear-regression-insulate.html#cb626-5" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">&quot;complete&quot;</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">&quot;after&quot;</span>, <span class="st">&quot;before&quot;</span>),</span>
+<span id="cb626-6"><a href="lab-2---linear-regression-insulate.html#cb626-6" tabindex="-1"></a>    <span class="at">intercept =</span> <span class="fu">c</span>(</span>
+<span id="cb626-7"><a href="lab-2---linear-regression-insulate.html#cb626-7" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">2</span>],</span>
+<span id="cb626-8"><a href="lab-2---linear-regression-insulate.html#cb626-8" tabindex="-1"></a>      additive_lm<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb626-9"><a href="lab-2---linear-regression-insulate.html#cb626-9" tabindex="-1"></a>    ),</span>
+<span id="cb626-10"><a href="lab-2---linear-regression-insulate.html#cb626-10" tabindex="-1"></a>    <span class="at">slope =</span> additive_lm<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span>
+<span id="cb626-11"><a href="lab-2---linear-regression-insulate.html#cb626-11" tabindex="-1"></a>  ))</span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-282-1.png" width="672" /></p>
 <div id="interaction-10-min" class="section level3 hasAnchor" number="12.2.1">
 <h3><span class="header-section-number">12.2.1</span> Interaction (10 min)<a href="lab-2---linear-regression-insulate.html#interaction-10-min" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In this setting, we are mostly interested in whether we should
@@ -517,17 +521,17 @@ classes (i.e. <em>before</em> and <em>after</em>) in the same plot,
 you can select the class to be interpreted as color encoding
 for the points/line: <code>aes(..., color = when)</code>.</p>
 </blockquote>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="lab-2---linear-regression-insulate.html#cb613-1" tabindex="-1"></a>insulate <span class="sc">%&gt;%</span> <span class="co"># dataset</span></span>
-<span id="cb613-2"><a href="lab-2---linear-regression-insulate.html#cb613-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span> <span class="co"># main ggplot call</span></span>
-<span id="cb613-3"><a href="lab-2---linear-regression-insulate.html#cb613-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># scatter plot</span></span>
-<span id="cb613-4"><a href="lab-2---linear-regression-insulate.html#cb613-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="co"># trend line</span></span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="lab-2---linear-regression-insulate.html#cb627-1" tabindex="-1"></a>insulate <span class="sc">%&gt;%</span> <span class="co"># dataset</span></span>
+<span id="cb627-2"><a href="lab-2---linear-regression-insulate.html#cb627-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(temp, cons, <span class="at">color =</span> when)) <span class="sc">+</span> <span class="co"># main ggplot call</span></span>
+<span id="cb627-3"><a href="lab-2---linear-regression-insulate.html#cb627-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb627-4"><a href="lab-2---linear-regression-insulate.html#cb627-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>) <span class="co"># trend line</span></span></code></pre></div>
 <p>The two lines are not parallel, which suggests that an additive model
 is not very accurate and we might try to include interaction.</p>
 <ul>
 <li>Fit a linear model which includes interaction between <code>temp</code> and <code>when</code>.</li>
 </ul>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="lab-2---linear-regression-insulate.html#cb614-1" tabindex="-1"></a>interact_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> when <span class="sc">*</span> temp, <span class="at">data =</span> insulate)</span>
-<span id="cb614-2"><a href="lab-2---linear-regression-insulate.html#cb614-2" tabindex="-1"></a><span class="fu">summary</span>(interact_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="lab-2---linear-regression-insulate.html#cb628-1" tabindex="-1"></a>interact_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> when <span class="sc">*</span> temp, <span class="at">data =</span> insulate)</span>
+<span id="cb628-2"><a href="lab-2---linear-regression-insulate.html#cb628-2" tabindex="-1"></a><span class="fu">summary</span>(interact_lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = cons ~ when * temp, data = insulate)
@@ -565,7 +569,7 @@ through the ANOVA test, checking the main prerequisite (nested models),
 run an ANOVA test comparing the two models, analyze the result,
 draw a conclusion.</li>
 </ul>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="lab-2---linear-regression-insulate.html#cb616-1" tabindex="-1"></a><span class="fu">anova</span>(additive_lm, interact_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="lab-2---linear-regression-insulate.html#cb630-1" tabindex="-1"></a><span class="fu">anova</span>(additive_lm, interact_lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: cons ~ when + temp
@@ -591,7 +595,7 @@ favoring small models over the bigger ones.</p>
 <li>Find the AIC index using the dedicated function <code>AIC()</code>.
 Which model is better according to the AIC? Why?</li>
 </ul>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="lab-2---linear-regression-insulate.html#cb618-1" tabindex="-1"></a><span class="fu">AIC</span>(additive_lm, interact_lm)</span></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="lab-2---linear-regression-insulate.html#cb632-1" tabindex="-1"></a><span class="fu">AIC</span>(additive_lm, interact_lm)</span></code></pre></div>
 <pre><code>##             df      AIC
 ## additive_lm  4 48.60465
 ## interact_lm  5 38.20098</code></pre>
@@ -654,39 +658,39 @@ four new future observations written above (from scratch).</li>
 <p>Hint: We’ve seen how to compute the <span class="math inline">\(\text{MSR}\)</span> (or <span class="math inline">\(\text{RMS}\)</span>) in the first
 linear regression R lecture</p>
 </blockquote>
-<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="lab-2---linear-regression-insulate.html#cb621-1" tabindex="-1"></a><span class="co"># compute RMS</span></span>
-<span id="cb621-2"><a href="lab-2---linear-regression-insulate.html#cb621-2" tabindex="-1"></a>e <span class="ot">&lt;-</span> interact_lm<span class="sc">$</span>residuals</span>
-<span id="cb621-3"><a href="lab-2---linear-regression-insulate.html#cb621-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(insulate)</span>
-<span id="cb621-4"><a href="lab-2---linear-regression-insulate.html#cb621-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(interact_lm<span class="sc">$</span>coefficients)</span>
-<span id="cb621-5"><a href="lab-2---linear-regression-insulate.html#cb621-5" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
-<span id="cb621-6"><a href="lab-2---linear-regression-insulate.html#cb621-6" tabindex="-1"></a></span>
-<span id="cb621-7"><a href="lab-2---linear-regression-insulate.html#cb621-7" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb621-8"><a href="lab-2---linear-regression-insulate.html#cb621-8" tabindex="-1"></a><span class="co"># x_f with dummy variables:</span></span>
-<span id="cb621-9"><a href="lab-2---linear-regression-insulate.html#cb621-9" tabindex="-1"></a><span class="co"># intercept whenafter   temp  whenafter:temp</span></span>
-<span id="cb621-10"><a href="lab-2---linear-regression-insulate.html#cb621-10" tabindex="-1"></a><span class="co"># 1         0 (before)  5.8   0 (0 * 5.8)</span></span>
-<span id="cb621-11"><a href="lab-2---linear-regression-insulate.html#cb621-11" tabindex="-1"></a>x_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">5.8</span>, <span class="dv">0</span>)</span>
-<span id="cb621-12"><a href="lab-2---linear-regression-insulate.html#cb621-12" tabindex="-1"></a>yhat_f <span class="ot">&lt;-</span> x_f <span class="sc">%*%</span> interact_lm<span class="sc">$</span>coefficients</span>
-<span id="cb621-13"><a href="lab-2---linear-regression-insulate.html#cb621-13" tabindex="-1"></a><span class="co"># note: there are several ways of getting yhat_f</span></span>
-<span id="cb621-14"><a href="lab-2---linear-regression-insulate.html#cb621-14" tabindex="-1"></a><span class="co"># another way is to use `predict` with x_f not &quot;dummyfied&quot;</span></span>
-<span id="cb621-15"><a href="lab-2---linear-regression-insulate.html#cb621-15" tabindex="-1"></a></span>
-<span id="cb621-16"><a href="lab-2---linear-regression-insulate.html#cb621-16" tabindex="-1"></a><span class="co"># get dummy x matrix</span></span>
-<span id="cb621-17"><a href="lab-2---linear-regression-insulate.html#cb621-17" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">with</span>(insulate, <span class="fu">model.matrix</span>(<span class="sc">~</span> when <span class="sc">*</span> temp))</span>
-<span id="cb621-18"><a href="lab-2---linear-regression-insulate.html#cb621-18" tabindex="-1"></a></span>
-<span id="cb621-19"><a href="lab-2---linear-regression-insulate.html#cb621-19" tabindex="-1"></a><span class="co"># compute above formula</span></span>
-<span id="cb621-20"><a href="lab-2---linear-regression-insulate.html#cb621-20" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span> <span class="co"># level</span></span>
-<span id="cb621-21"><a href="lab-2---linear-regression-insulate.html#cb621-21" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> (alpha <span class="sc">/</span> <span class="dv">2</span>), <span class="at">df =</span> n <span class="sc">-</span> p) <span class="sc">*</span> <span class="fu">sqrt</span>(rms <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">t</span>(x_f) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x) <span class="sc">%*%</span> x_f))</span>
-<span id="cb621-22"><a href="lab-2---linear-regression-insulate.html#cb621-22" tabindex="-1"></a>lwr <span class="ot">&lt;-</span> yhat_f <span class="sc">-</span> delta</span>
-<span id="cb621-23"><a href="lab-2---linear-regression-insulate.html#cb621-23" tabindex="-1"></a>upr <span class="ot">&lt;-</span> yhat_f <span class="sc">+</span> delta</span>
-<span id="cb621-24"><a href="lab-2---linear-regression-insulate.html#cb621-24" tabindex="-1"></a>pred_interval <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fit =</span> yhat_f, <span class="at">lwr =</span> lwr, <span class="at">upr =</span> upr)</span>
-<span id="cb621-25"><a href="lab-2---linear-regression-insulate.html#cb621-25" tabindex="-1"></a>pred_interval</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="lab-2---linear-regression-insulate.html#cb635-1" tabindex="-1"></a><span class="co"># compute RMS</span></span>
+<span id="cb635-2"><a href="lab-2---linear-regression-insulate.html#cb635-2" tabindex="-1"></a>e <span class="ot">&lt;-</span> interact_lm<span class="sc">$</span>residuals</span>
+<span id="cb635-3"><a href="lab-2---linear-regression-insulate.html#cb635-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(insulate)</span>
+<span id="cb635-4"><a href="lab-2---linear-regression-insulate.html#cb635-4" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(interact_lm<span class="sc">$</span>coefficients)</span>
+<span id="cb635-5"><a href="lab-2---linear-regression-insulate.html#cb635-5" tabindex="-1"></a>rms <span class="ot">&lt;-</span> <span class="fu">t</span>(e) <span class="sc">%*%</span> e <span class="sc">/</span> (n <span class="sc">-</span> p)</span>
+<span id="cb635-6"><a href="lab-2---linear-regression-insulate.html#cb635-6" tabindex="-1"></a></span>
+<span id="cb635-7"><a href="lab-2---linear-regression-insulate.html#cb635-7" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb635-8"><a href="lab-2---linear-regression-insulate.html#cb635-8" tabindex="-1"></a><span class="co"># x_f with dummy variables:</span></span>
+<span id="cb635-9"><a href="lab-2---linear-regression-insulate.html#cb635-9" tabindex="-1"></a><span class="co"># intercept whenafter   temp  whenafter:temp</span></span>
+<span id="cb635-10"><a href="lab-2---linear-regression-insulate.html#cb635-10" tabindex="-1"></a><span class="co"># 1         0 (before)  5.8   0 (0 * 5.8)</span></span>
+<span id="cb635-11"><a href="lab-2---linear-regression-insulate.html#cb635-11" tabindex="-1"></a>x_f <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">5.8</span>, <span class="dv">0</span>)</span>
+<span id="cb635-12"><a href="lab-2---linear-regression-insulate.html#cb635-12" tabindex="-1"></a>yhat_f <span class="ot">&lt;-</span> x_f <span class="sc">%*%</span> interact_lm<span class="sc">$</span>coefficients</span>
+<span id="cb635-13"><a href="lab-2---linear-regression-insulate.html#cb635-13" tabindex="-1"></a><span class="co"># note: there are several ways of getting yhat_f</span></span>
+<span id="cb635-14"><a href="lab-2---linear-regression-insulate.html#cb635-14" tabindex="-1"></a><span class="co"># another way is to use `predict` with x_f not &quot;dummyfied&quot;</span></span>
+<span id="cb635-15"><a href="lab-2---linear-regression-insulate.html#cb635-15" tabindex="-1"></a></span>
+<span id="cb635-16"><a href="lab-2---linear-regression-insulate.html#cb635-16" tabindex="-1"></a><span class="co"># get dummy x matrix</span></span>
+<span id="cb635-17"><a href="lab-2---linear-regression-insulate.html#cb635-17" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">with</span>(insulate, <span class="fu">model.matrix</span>(<span class="sc">~</span> when <span class="sc">*</span> temp))</span>
+<span id="cb635-18"><a href="lab-2---linear-regression-insulate.html#cb635-18" tabindex="-1"></a></span>
+<span id="cb635-19"><a href="lab-2---linear-regression-insulate.html#cb635-19" tabindex="-1"></a><span class="co"># compute above formula</span></span>
+<span id="cb635-20"><a href="lab-2---linear-regression-insulate.html#cb635-20" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> .<span class="dv">05</span> <span class="co"># level</span></span>
+<span id="cb635-21"><a href="lab-2---linear-regression-insulate.html#cb635-21" tabindex="-1"></a>delta <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> (alpha <span class="sc">/</span> <span class="dv">2</span>), <span class="at">df =</span> n <span class="sc">-</span> p) <span class="sc">*</span> <span class="fu">sqrt</span>(rms <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="fu">t</span>(x_f) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">t</span>(x) <span class="sc">%*%</span> x) <span class="sc">%*%</span> x_f))</span>
+<span id="cb635-22"><a href="lab-2---linear-regression-insulate.html#cb635-22" tabindex="-1"></a>lwr <span class="ot">&lt;-</span> yhat_f <span class="sc">-</span> delta</span>
+<span id="cb635-23"><a href="lab-2---linear-regression-insulate.html#cb635-23" tabindex="-1"></a>upr <span class="ot">&lt;-</span> yhat_f <span class="sc">+</span> delta</span>
+<span id="cb635-24"><a href="lab-2---linear-regression-insulate.html#cb635-24" tabindex="-1"></a>pred_interval <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fit =</span> yhat_f, <span class="at">lwr =</span> lwr, <span class="at">upr =</span> upr)</span>
+<span id="cb635-25"><a href="lab-2---linear-regression-insulate.html#cb635-25" tabindex="-1"></a>pred_interval</span></code></pre></div>
 <pre><code>##        fit      lwr      upr
 ## 1 4.573043 3.912228 5.233857</code></pre>
 <ul>
 <li>Check your computations using <code>predict.lm(..., interval = "prediction")</code></li>
 </ul>
-<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="lab-2---linear-regression-insulate.html#cb623-1" tabindex="-1"></a><span class="co"># check that computations are correct</span></span>
-<span id="cb623-2"><a href="lab-2---linear-regression-insulate.html#cb623-2" tabindex="-1"></a>x_f0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">when =</span> <span class="st">&quot;before&quot;</span>, <span class="at">temp =</span> <span class="fl">5.8</span>) <span class="co"># plain newdata row</span></span>
-<span id="cb623-3"><a href="lab-2---linear-regression-insulate.html#cb623-3" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="lab-2---linear-regression-insulate.html#cb637-1" tabindex="-1"></a><span class="co"># check that computations are correct</span></span>
+<span id="cb637-2"><a href="lab-2---linear-regression-insulate.html#cb637-2" tabindex="-1"></a>x_f0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">when =</span> <span class="st">&quot;before&quot;</span>, <span class="at">temp =</span> <span class="fl">5.8</span>) <span class="co"># plain newdata row</span></span>
+<span id="cb637-3"><a href="lab-2---linear-regression-insulate.html#cb637-3" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>)</span></code></pre></div>
 <pre><code>##        fit      lwr      upr
 ## 1 4.573043 3.912228 5.233857</code></pre>
 <ul>
@@ -696,7 +700,7 @@ linear regression R lecture</p>
 <ul>
 <li>Is the prediction interval wider or more narrow than the CI? Can you tell why (intuitively)?</li>
 </ul>
-<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="lab-2---linear-regression-insulate.html#cb625-1" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="lab-2---linear-regression-insulate.html#cb639-1" tabindex="-1"></a><span class="fu">predict</span>(interact_lm, <span class="at">newdata =</span> x_f0, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
 <pre><code>##        fit      lwr      upr
 ## 1 4.573043 4.444317 4.701768</code></pre>
 <p>It is wider because we are trying to predict where a new observation will
@@ -712,40 +716,40 @@ interval.</p>
 <h2><span class="header-section-number">12.5</span> Plotting intervals<a href="lab-2---linear-regression-insulate.html#plotting-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Plotting of the intervals was not required, but it might be useful to visualize them.
 For this purpose, we will just use the records of the <code>after</code> class.</p>
-<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="lab-2---linear-regression-insulate.html#cb627-1" tabindex="-1"></a><span class="co"># build x grid</span></span>
-<span id="cb627-2"><a href="lab-2---linear-regression-insulate.html#cb627-2" tabindex="-1"></a>after_insulate <span class="ot">&lt;-</span></span>
-<span id="cb627-3"><a href="lab-2---linear-regression-insulate.html#cb627-3" tabindex="-1"></a>  insulate <span class="sc">%&gt;%</span></span>
-<span id="cb627-4"><a href="lab-2---linear-regression-insulate.html#cb627-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(when <span class="sc">==</span> <span class="st">&quot;after&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb627-5"><a href="lab-2---linear-regression-insulate.html#cb627-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>when)</span>
-<span id="cb627-6"><a href="lab-2---linear-regression-insulate.html#cb627-6" tabindex="-1"></a></span>
-<span id="cb627-7"><a href="lab-2---linear-regression-insulate.html#cb627-7" tabindex="-1"></a><span class="co"># fit a simple model</span></span>
-<span id="cb627-8"><a href="lab-2---linear-regression-insulate.html#cb627-8" tabindex="-1"></a>after_simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> after_insulate)</span>
-<span id="cb627-9"><a href="lab-2---linear-regression-insulate.html#cb627-9" tabindex="-1"></a></span>
-<span id="cb627-10"><a href="lab-2---linear-regression-insulate.html#cb627-10" tabindex="-1"></a><span class="co"># build a vector of new data spanning the whole temp support</span></span>
-<span id="cb627-11"><a href="lab-2---linear-regression-insulate.html#cb627-11" tabindex="-1"></a>new_x <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">temp =</span> <span class="fu">seq</span>(<span class="fu">min</span>(after_insulate<span class="sc">$</span>temp), <span class="fu">max</span>(after_insulate<span class="sc">$</span>temp), <span class="at">by =</span> <span class="fl">0.05</span>))</span>
-<span id="cb627-12"><a href="lab-2---linear-regression-insulate.html#cb627-12" tabindex="-1"></a></span>
-<span id="cb627-13"><a href="lab-2---linear-regression-insulate.html#cb627-13" tabindex="-1"></a><span class="co"># find confidence and prediction intervals for all of the range elements</span></span>
-<span id="cb627-14"><a href="lab-2---linear-regression-insulate.html#cb627-14" tabindex="-1"></a><span class="co"># and change the column names to make them distinguishable</span></span>
-<span id="cb627-15"><a href="lab-2---linear-regression-insulate.html#cb627-15" tabindex="-1"></a>new_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb627-16"><a href="lab-2---linear-regression-insulate.html#cb627-16" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb627-17"><a href="lab-2---linear-regression-insulate.html#cb627-17" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;pred&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)) <span class="co">#</span></span>
-<span id="cb627-18"><a href="lab-2---linear-regression-insulate.html#cb627-18" tabindex="-1"></a>new_conf <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb627-19"><a href="lab-2---linear-regression-insulate.html#cb627-19" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb627-20"><a href="lab-2---linear-regression-insulate.html#cb627-20" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;conf&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
-<span id="cb627-21"><a href="lab-2---linear-regression-insulate.html#cb627-21" tabindex="-1"></a></span>
-<span id="cb627-22"><a href="lab-2---linear-regression-insulate.html#cb627-22" tabindex="-1"></a><span class="co"># join the two interval details</span></span>
-<span id="cb627-23"><a href="lab-2---linear-regression-insulate.html#cb627-23" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(new_x, new_pred, new_conf)</span>
-<span id="cb627-24"><a href="lab-2---linear-regression-insulate.html#cb627-24" tabindex="-1"></a></span>
-<span id="cb627-25"><a href="lab-2---linear-regression-insulate.html#cb627-25" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb627-26"><a href="lab-2---linear-regression-insulate.html#cb627-26" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(temp, cons), <span class="at">data =</span> after_insulate) <span class="sc">+</span> <span class="co"># scatter plot</span></span>
-<span id="cb627-27"><a href="lab-2---linear-regression-insulate.html#cb627-27" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(temp, fit_conf), <span class="at">data =</span> new_data) <span class="sc">+</span> <span class="co"># regression line</span></span>
-<span id="cb627-28"><a href="lab-2---linear-regression-insulate.html#cb627-28" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_pred, <span class="at">ymax =</span> upr_pred, <span class="at">fill =</span> <span class="st">&quot;prediction&quot;</span>),</span>
-<span id="cb627-29"><a href="lab-2---linear-regression-insulate.html#cb627-29" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
-<span id="cb627-30"><a href="lab-2---linear-regression-insulate.html#cb627-30" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># pred intervals</span></span>
-<span id="cb627-31"><a href="lab-2---linear-regression-insulate.html#cb627-31" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_conf, <span class="at">ymax =</span> upr_conf, <span class="at">fill =</span> <span class="st">&quot;confidence&quot;</span>),</span>
-<span id="cb627-32"><a href="lab-2---linear-regression-insulate.html#cb627-32" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
-<span id="cb627-33"><a href="lab-2---linear-regression-insulate.html#cb627-33" tabindex="-1"></a>  ) <span class="co"># conf intervals</span></span></code></pre></div>
-<p><img src="smr_book_files/figure-html/unnamed-chunk-292-1.png" width="672" /></p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="lab-2---linear-regression-insulate.html#cb641-1" tabindex="-1"></a><span class="co"># build x grid</span></span>
+<span id="cb641-2"><a href="lab-2---linear-regression-insulate.html#cb641-2" tabindex="-1"></a>after_insulate <span class="ot">&lt;-</span></span>
+<span id="cb641-3"><a href="lab-2---linear-regression-insulate.html#cb641-3" tabindex="-1"></a>  insulate <span class="sc">%&gt;%</span></span>
+<span id="cb641-4"><a href="lab-2---linear-regression-insulate.html#cb641-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(when <span class="sc">==</span> <span class="st">&quot;after&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb641-5"><a href="lab-2---linear-regression-insulate.html#cb641-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>when)</span>
+<span id="cb641-6"><a href="lab-2---linear-regression-insulate.html#cb641-6" tabindex="-1"></a></span>
+<span id="cb641-7"><a href="lab-2---linear-regression-insulate.html#cb641-7" tabindex="-1"></a><span class="co"># fit a simple model</span></span>
+<span id="cb641-8"><a href="lab-2---linear-regression-insulate.html#cb641-8" tabindex="-1"></a>after_simple_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(cons <span class="sc">~</span> temp, <span class="at">data =</span> after_insulate)</span>
+<span id="cb641-9"><a href="lab-2---linear-regression-insulate.html#cb641-9" tabindex="-1"></a></span>
+<span id="cb641-10"><a href="lab-2---linear-regression-insulate.html#cb641-10" tabindex="-1"></a><span class="co"># build a vector of new data spanning the whole temp support</span></span>
+<span id="cb641-11"><a href="lab-2---linear-regression-insulate.html#cb641-11" tabindex="-1"></a>new_x <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">temp =</span> <span class="fu">seq</span>(<span class="fu">min</span>(after_insulate<span class="sc">$</span>temp), <span class="fu">max</span>(after_insulate<span class="sc">$</span>temp), <span class="at">by =</span> <span class="fl">0.05</span>))</span>
+<span id="cb641-12"><a href="lab-2---linear-regression-insulate.html#cb641-12" tabindex="-1"></a></span>
+<span id="cb641-13"><a href="lab-2---linear-regression-insulate.html#cb641-13" tabindex="-1"></a><span class="co"># find confidence and prediction intervals for all of the range elements</span></span>
+<span id="cb641-14"><a href="lab-2---linear-regression-insulate.html#cb641-14" tabindex="-1"></a><span class="co"># and change the column names to make them distinguishable</span></span>
+<span id="cb641-15"><a href="lab-2---linear-regression-insulate.html#cb641-15" tabindex="-1"></a>new_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb641-16"><a href="lab-2---linear-regression-insulate.html#cb641-16" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb641-17"><a href="lab-2---linear-regression-insulate.html#cb641-17" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;pred&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)) <span class="co">#</span></span>
+<span id="cb641-18"><a href="lab-2---linear-regression-insulate.html#cb641-18" tabindex="-1"></a>new_conf <span class="ot">&lt;-</span> <span class="fu">predict</span>(after_simple_lm, <span class="at">newdata =</span> new_x, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb641-19"><a href="lab-2---linear-regression-insulate.html#cb641-19" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb641-20"><a href="lab-2---linear-regression-insulate.html#cb641-20" tabindex="-1"></a>  <span class="fu">rename_with</span>(<span class="sc">~</span> <span class="fu">paste</span>(.x, <span class="st">&quot;conf&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>))</span>
+<span id="cb641-21"><a href="lab-2---linear-regression-insulate.html#cb641-21" tabindex="-1"></a></span>
+<span id="cb641-22"><a href="lab-2---linear-regression-insulate.html#cb641-22" tabindex="-1"></a><span class="co"># join the two interval details</span></span>
+<span id="cb641-23"><a href="lab-2---linear-regression-insulate.html#cb641-23" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(new_x, new_pred, new_conf)</span>
+<span id="cb641-24"><a href="lab-2---linear-regression-insulate.html#cb641-24" tabindex="-1"></a></span>
+<span id="cb641-25"><a href="lab-2---linear-regression-insulate.html#cb641-25" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb641-26"><a href="lab-2---linear-regression-insulate.html#cb641-26" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(temp, cons), <span class="at">data =</span> after_insulate) <span class="sc">+</span> <span class="co"># scatter plot</span></span>
+<span id="cb641-27"><a href="lab-2---linear-regression-insulate.html#cb641-27" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(temp, fit_conf), <span class="at">data =</span> new_data) <span class="sc">+</span> <span class="co"># regression line</span></span>
+<span id="cb641-28"><a href="lab-2---linear-regression-insulate.html#cb641-28" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_pred, <span class="at">ymax =</span> upr_pred, <span class="at">fill =</span> <span class="st">&quot;prediction&quot;</span>),</span>
+<span id="cb641-29"><a href="lab-2---linear-regression-insulate.html#cb641-29" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb641-30"><a href="lab-2---linear-regression-insulate.html#cb641-30" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="co"># pred intervals</span></span>
+<span id="cb641-31"><a href="lab-2---linear-regression-insulate.html#cb641-31" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(temp, <span class="at">ymin =</span> lwr_conf, <span class="at">ymax =</span> upr_conf, <span class="at">fill =</span> <span class="st">&quot;confidence&quot;</span>),</span>
+<span id="cb641-32"><a href="lab-2---linear-regression-insulate.html#cb641-32" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="at">alpha =</span> .<span class="dv">5</span></span>
+<span id="cb641-33"><a href="lab-2---linear-regression-insulate.html#cb641-33" tabindex="-1"></a>  ) <span class="co"># conf intervals</span></span></code></pre></div>
+<p><img src="smr_book_files/figure-html/unnamed-chunk-297-1.png" width="672" /></p>
 <blockquote>
 <p>Notice how the intervals get wider when departing from the mean temperature <span class="math inline">\(\bar x\)</span>.</p>
 </blockquote>
