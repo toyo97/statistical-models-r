@@ -191,7 +191,7 @@ These two features are qualitative predictors, also called factors.
 A robot player is used.
 
 ```{r}
-wide_golf <- read_tsv("../datasets/golfer.tsv")
+wide_golf <- read_tsv("./datasets/golfer.tsv")
 spec(wide_golf) # prints information about the detected data types
 ```
 
@@ -208,7 +208,7 @@ the first column type from `col_double()` to `col_factor()` and
 setting the `read_tsv` parameter `col_types` to that.
 
 ```{r}
-wide_golf <- read_tsv("../datasets/golfer.tsv",
+wide_golf <- read_tsv("./datasets/golfer.tsv",
   col_types = cols(
     club = readr::col_factor(),
     A = col_double(),
